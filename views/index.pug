@@ -1,5 +1,10 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  h1 Kehu
+  p Welcome to Kehu
+
+  if user
+    a(href="/user/logout") Kirjaudu ulos
+  else
+    a(href="/user/login") Kirjaudu sisään
