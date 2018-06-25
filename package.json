@@ -22,7 +22,8 @@
     "pg": "7.4.3",
     "pug": "2.0.3",
     "serve-favicon": "2.5.0",
-    "sqlite3": "4.0.0"
+    "sqlite3": "4.0.0",
+    "winston": "3.0.0"
   },
   "devDependencies": {
     "husky": "0.14.3",
