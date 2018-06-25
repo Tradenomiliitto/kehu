@@ -1,10 +1,15 @@
 extends layout
 
 block content
-  h1 Kehu
-  p Welcome to Kehu
+  main.container(role='main')
+    .starter-template
+      h1 Bootstrap starter template
+      p.lead
+        | Use this document as a way to quickly start any new project.
+        br
+        |  All you get is this text and a mostly barebones HTML document.
 
-  if user
-    a(href="/user/logout") Kirjaudu ulos
-  else
-    a(href="/user/login") Kirjaudu sisään
+      if user
+        a(href="/user/logout") Kirjaudu ulos
+      else
+        a(href="/user/login") Kirjaudu sisään

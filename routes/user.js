@@ -10,6 +10,10 @@ router.get("/login", (req, res) => {
   res.render("login", { env: process.env });
 });
 
+router.get("/register", (req, res) => {
+  res.render("login", { env: process.env, initialScreen: "signUp" });
+});
+
 router.get("/logout", (req, res) => {
   req.logout();
   res.redirect("/");
@@ -17,7 +21,7 @@ router.get("/logout", (req, res) => {
 
 router.get(
   "/callback",
-  passport.authenticate("auth0", { failureRedirect: "/login" }),
+  passport.authenticate("auth0", { failureRedirect: "/" }),
   (req, res) => {
     res.redirect(req.session.returnTo || "/");
   }
