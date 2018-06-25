@@ -1,0 +1,30 @@
+extends ../layout
+
+block content
+    .container
+        .row
+            .col-12.col-lg-6.offset-lg-3
+                h1 Lisää kehu
+
+                form(method="POST", action="/kehu")
+                    input(name="_csrf", type="hidden", value=csrfToken)
+                    input(name="giver_id", type="hidden", value=user.id)
+                    input(name="owner_id", type="hidden", value=user.id)
+
+                    .form-group
+                        label(for="title") Kehun otsikko
+                        input#title.form-control(name="title", type="text")
+
+                    .form-group
+                        label(for="text") Kehu
+                        textarea#text.form-control(name="text", rows=7)
+
+                    .form-group
+                        label(for="location") Sijainti
+                        input#location.form-control(name="location", type="text")
+
+                    .form-group
+                        label(for="giver_name") Kehun antaja
+                        input#giver_name.form-control(name="giver_name", type="text")
+
+                    button.btn.btn-primary(type="submit") Tallenna

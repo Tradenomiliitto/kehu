@@ -10,4 +10,11 @@ router.get("/", async (req, res) => {
   });
 });
 
+router.get("/new", (req, res) => {
+  res.render("kehus/new", {
+    user: req.user,
+    csrfToken: req.csrfToken()
+  });
+});
+
 module.exports = router;
