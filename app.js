@@ -10,9 +10,11 @@ const Knex = require("knex");
 const pg = require("pg");
 const Model = require("objection").Model;
 const Redis = require("connect-redis");
+const csrf = require("csurf");
 
 const DEVELOPMENT = process.env.NODE_ENV !== "production";
 const RedisStore = Redis(session);
+const csrfProtection = csrf({ cookie: true });
 
 const setupPassport = require("./passport");
 const setupRoutes = require("./routes");
@@ -37,6 +39,7 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(csrfProtection);
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
