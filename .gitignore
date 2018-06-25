@@ -1,5 +1,7 @@
 .idea
 *.sqlite
+/public/main.css*
+/public/main.js*
 
 # Logs
 logs
