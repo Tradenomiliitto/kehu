@@ -3,11 +3,14 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   mode: "production",
-  entry: "./public/js/index.js",
+  entry: {
+    main: path.resolve(__dirname, "assets", "js", "index.js"),
+    bootstrap: path.resolve(__dirname, "assets", "js", "bootstrap.js")
+  },
   devtool: "source-map",
   output: {
     libraryTarget: "umd",
-    filename: "main.js",
+    filename: "[name].bundle.js",
     path: path.resolve(__dirname, "public"),
     globalObject: "this"
   },
