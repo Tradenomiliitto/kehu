@@ -1,4 +1,5 @@
 const Auth0Strategy = require("passport-auth0");
+const UserService = require("./services/UserService");
 
 function setupPassport(passport) {
   const strategy = new Auth0Strategy(
@@ -17,8 +18,15 @@ function setupPassport(passport) {
     done(null, user);
   });
 
-  passport.deserializeUser(function(user, done) {
-    done(null, user);
+  passport.deserializeUser(async function(user, done) {
+    const kehuUser = await UserService.findUserByAuth0Id(user.id);
+
+    if (kehuUser) {
+      done(null, kehuUser);
+    } else {
+      const createdUser = await UserService.createUser(user);
+      done(null, createdUser);
+    }
   });
 
   passport.use(strategy);
