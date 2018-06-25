@@ -2,14 +2,18 @@ extends layout
 
 block content
   main.container(role='main')
-    .starter-template
-      h1 Bootstrap starter template
-      p.lead
-        | Use this document as a way to quickly start any new project.
-        br
-        |  All you get is this text and a mostly barebones HTML document.
-
-      if user
-        a(href="/user/logout") Kirjaudu ulos
-      else
-        a(href="/user/login") Kirjaudu sisään
+    if user
+      .jumbotron.Jumbotron
+        .container
+          h1.display-4 Päivän kehu:
+          p= kehu.text
+          p= kehu.giver_name
+    else
+      .jumbotron
+        .container
+          h1.display-3 Kehu
+          p Kehu on lorem ipsum dolor sid amend jne.
+          p
+            a.btn.btn-primary(href="/user/login") Kirjaudu sisään
+            span tai
+            a.btn.btn-outline-primary(href="/user/register") rekisteröidy
