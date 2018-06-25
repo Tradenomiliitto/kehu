@@ -2,6 +2,7 @@
 *.sqlite
 /public/main*
 /public/*.bundle*
+dump.rdb
 
 # Logs
 logs

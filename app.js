@@ -9,8 +9,10 @@ const passport = require("passport");
 const Knex = require("knex");
 const pg = require("pg");
 const Model = require("objection").Model;
+const Redis = require("connect-redis");
 
 const DEVELOPMENT = process.env.NODE_ENV !== "production";
+const RedisStore = Redis(session);
 
 const setupPassport = require("./passport");
 const setupRoutes = require("./routes");
@@ -38,8 +40,11 @@ app.use(cookieParser());
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
-    resave: true,
-    saveUninitialized: true
+    resave: false,
+    saveUninitialized: false,
+    store: new RedisStore({
+      url: process.env.REDIS_URL
+    })
   })
 );
 app.use(passport.initialize());
