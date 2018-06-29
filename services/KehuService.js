@@ -28,10 +28,10 @@ function parseKehu(data) {
   } = data;
   return {
     date_given: moment(date_given, "D.M.YYYY").format(),
-    giver_id: parseInt(giver_id, 10),
+    giver_id,
     giver_name,
     location,
-    owner_id: parseInt(owner_id, 10),
+    owner_id,
     text,
     title
   };

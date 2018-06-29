@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const createError = require("http-errors");
+const { checkSchema, validationResult } = require("express-validator/check");
+const { kehuSchema } = require("../utils/ValidationSchemas");
 const KehuService = require("../services/KehuService");
 const logger = require("../logger");
 
@@ -17,10 +19,20 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/", checkSchema(kehuSchema), async (req, res, next) => {
   try {
-    const kehu = await KehuService.createKehu(req.body);
-    res.redirect(`/kehu/${kehu.id}`);
+    const validations = validationResult(req);
+    if (validations.isEmpty()) {
+      const kehu = await KehuService.createKehu(req.body);
+      res.redirect(`/kehu/${kehu.id}`);
+    } else {
+      res.render("kehus/new", {
+        user: req.user,
+        csrfToken: req.csrfToken(),
+        errors: validations.array(),
+        values: req.body
+      });
+    }
   } catch (err) {
     logger.error(err.message);
     next(createError(500, err.message));

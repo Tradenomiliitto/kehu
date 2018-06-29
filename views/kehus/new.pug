@@ -1,5 +1,26 @@
 extends ../layout
 
+mixin form-group-input (name, label, errors, values)
+    .form-group
+        label(for=name)= label
+        if errors && errors.find((e) => e.param === name)
+            input.form-control.is-invalid(id=name, name=name, type="text", value=values[name])
+            .invalid-feedback
+                span= errors.find((e) => e.param === name).msg
+        else
+            input.form-control(id=name, name=name, type="text", value=values ? values[name] : '')
+
+
+mixin form-group-textarea (name, label, errors, values)
+    .form-group
+        label(for=name) label
+        if errors && errors.find((e) => e.param === name)
+            textarea.form-control.is-invalid(id=name, name=name, rows=7, value=values[name])
+            .invalid-feedback
+                span= errors.find((e) => e.param === name).msg
+        else
+            textarea.form-control(id=name, name=name, rows=7, value=values ? values[name] : '')
+
 block content
     .container
         .row
@@ -10,25 +31,10 @@ block content
                     input(name="_csrf", type="hidden", value=csrfToken)
                     input(name="giver_id", type="hidden", value=user.id)
                     input(name="owner_id", type="hidden", value=user.id)
-
-                    .form-group
-                        label(for="title") Kehun otsikko
-                        input#title.form-control(name="title", type="text")
-
-                    .form-group
-                        label(for="text") Kehu
-                        textarea#text.form-control(name="text", rows=7)
-
-                    .form-group
-                        label(for="giver_name") Kehun antaja
-                        input#giver_name.form-control(name="giver_name", type="text")
-
-                    .form-group
-                        label(for="location") Sijainti
-                        input#location.form-control(name="location", type="text")
-
-                    .form-group.date
-                        label(for="date_given") Ajankohta
-                        input#date_given.form-control(name="date_given", type="text")
+                    +form-group-input('title', 'Kehun otsikko', errors, values)
+                    +form-group-textarea('text', 'Kehu', errors, values)
+                    +form-group-input('giver_name', 'Kehun antaja', errors, values)
+                    +form-group-input('location', 'Sijainti', errors, values)
+                    +form-group-input('date_given', 'Ajankohta', errors, values)
 
                     button.btn.btn-primary(type="submit") Tallenna
