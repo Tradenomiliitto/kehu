@@ -12,19 +12,16 @@ const Model = require("objection").Model;
 const Redis = require("connect-redis");
 const csrf = require("csurf");
 
-const DEVELOPMENT = process.env.NODE_ENV !== "production";
 const RedisStore = Redis(session);
 const csrfProtection = csrf({ cookie: true });
 
 const setupPassport = require("./passport");
 const setupRoutes = require("./routes");
 
-pg.defaults.ssl = true;
+pg.defaults.ssl = process.env.NODE_ENV === "production";
 const knex = Knex({
-  client: DEVELOPMENT ? "sqlite3" : "pg",
-  connection: DEVELOPMENT
-    ? { filename: "./kehu_database.sqlite" }
-    : process.env.DATABASE_URL
+  client: "pg",
+  connection: process.env.DATABASE_URL
 });
 Model.knex(knex);
 
