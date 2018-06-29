@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const createError = require('http-errors');
+const createError = require("http-errors");
 const KehuService = require("../services/KehuService");
 const logger = require("../logger");
 
@@ -31,6 +31,14 @@ router.get("/new", (req, res) => {
   res.render("kehus/new", {
     user: req.user,
     csrfToken: req.csrfToken()
+  });
+});
+
+router.get("/:id", async (req, res) => {
+  const kehu = await KehuService.getKehu(req.user.id, req.params.id);
+  res.render("kehus/show", {
+    user: req.user,
+    kehu
   });
 });
 
