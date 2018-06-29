@@ -1,6 +1,14 @@
 extends ../layout
 
 block content
-    h1 Kehut
+    .container
+        .row
+            .col-12
+                h1 Kehut
+                a.btn.btn-success(href="/kehu/new") Lisää kehu
+            each kehu in kehus
+                .col-12
+                    h2= kehu.title
 
-    a.btn.btn-success(href="/kehu/new") Lisää kehu
+
+
