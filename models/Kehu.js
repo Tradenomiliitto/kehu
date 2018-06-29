@@ -1,6 +1,4 @@
 const Model = require("objection").Model;
-const Tag = require("./Tag");
-const User = require("./User");
 
 class Kehu extends Model {
   static get tableName() {
@@ -10,7 +8,14 @@ class Kehu extends Model {
   static get jsonSchema() {
     return {
       type: "object",
-      required: ["date_given", "giver_id", "owner_id", "text", "title"],
+      required: [
+        "date_given",
+        "giver_id",
+        "location",
+        "owner_id",
+        "text",
+        "title"
+      ],
       properties: {
         id: { type: "integer" },
         date_given: { type: "string" },
@@ -28,7 +33,7 @@ class Kehu extends Model {
     return {
       tags: {
         relation: Model.ManyToManyRelation,
-        modelClass: Tag,
+        modelClass: `${__dirname}/Tag`,
         join: {
           from: "Kehus.id",
           through: {
@@ -40,7 +45,7 @@ class Kehu extends Model {
       },
       giver: {
         relation: Model.BelongsToOneRelation,
-        modelClass: User,
+        modelClass: `${__dirname}/User`,
         join: {
           from: "Users.id",
           to: "Kehus.giver_id"
@@ -48,7 +53,7 @@ class Kehu extends Model {
       },
       owner: {
         relation: Model.BelongsToOneRelation,
-        modelClass: User,
+        modelClass: `${__dirname}/User`,
         join: {
           from: "Users.id",
           to: "Kehus.owner_id"

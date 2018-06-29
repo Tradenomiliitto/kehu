@@ -20,11 +20,15 @@ block content
                         textarea#text.form-control(name="text", rows=7)
 
                     .form-group
+                        label(for="giver_name") Kehun antaja
+                        input#giver_name.form-control(name="giver_name", type="text")
+
+                    .form-group
                         label(for="location") Sijainti
                         input#location.form-control(name="location", type="text")
 
-                    .form-group
-                        label(for="giver_name") Kehun antaja
-                        input#giver_name.form-control(name="giver_name", type="text")
+                    .form-group.date
+                        label(for="date_given") Ajankohta
+                        input#date_given.form-control(name="date_given", type="text")
 
                     button.btn.btn-primary(type="submit") Tallenna
