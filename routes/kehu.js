@@ -46,10 +46,10 @@ router.post("/", checkSchema(kehuSchema), async (req, res, next) => {
     if (validations.isEmpty()) {
       const kehu = await KehuService.createKehu(req.body);
       resetErrors(req);
-      res.redirect(`/kehu/${kehu.id}`);
+      res.redirect(`/kehut/${kehu.id}`);
     } else {
       req.session.errors = validations.array();
-      res.redirect("/kehus/new");
+      res.redirect("/kehut/uusi");
     }
   } catch (err) {
     logger.error(err.message);
@@ -57,9 +57,9 @@ router.post("/", checkSchema(kehuSchema), async (req, res, next) => {
   }
 });
 
-router.get("/new", renderNewForm);
+router.get("/uusi", renderNewForm);
 
-router.get("/:id/edit", async (req, res) => {
+router.get("/:id/muokkaa", async (req, res) => {
   req.body = await KehuService.getKehu(req.user.id, req.params.id);
   renderEditForm(req, res);
 });
@@ -70,10 +70,10 @@ router.put("/:id", checkSchema(kehuSchema), async (req, res, next) => {
     if (validations.isEmpty()) {
       await KehuService.updateKehu(req.user.id, req.params.id, req.body);
       resetErrors(req);
-      res.redirect(`/kehu/${req.params.id}`);
+      res.redirect(`/kehut/${req.params.id}`);
     } else {
       req.session.errors = validations.array();
-      res.redirect(`/kehu/${req.params.id}/edit`);
+      res.redirect(`/kehut/${req.params.id}/muokkaa`);
     }
   } catch (err) {
     logger.error(err.message);

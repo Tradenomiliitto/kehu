@@ -5,10 +5,10 @@ block content
         .row
             .col-12
                 h1.d-inline-block.KehuTitle Kehut
-                a.btn.btn-success.float-right(href="/kehu/new") Lisää kehu
+                a.btn.btn-success.float-right(href="/kehut/uusi") Lisää kehu
             each kehu in kehus
                 .col-12.Kehu
                     blockquote.blockquote
-                        a.btn.btn-info.btn-sm.float-right(href=`/kehu/${kehu.id}/edit`) Muokkaa
+                        a.btn.btn-info.btn-sm.float-right(href=`/kehut/${kehu.id}/muokkaa`) Muokkaa
                         p.mb-0= kehu.text
                         footer.blockquote-footer #{kehu.giver_name}, #{moment(kehu.date_given).format('D.M.YYYY')}
