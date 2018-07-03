@@ -1,0 +1,11 @@
+.KehuTitle {
+  margin-bottom: 32px;
+}
+
+.Kehu {
+  margin-bottom: 1rem;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid #ddd;
+  }
+}

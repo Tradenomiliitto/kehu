@@ -11,6 +11,7 @@ const pg = require("pg");
 const Model = require("objection").Model;
 const Redis = require("connect-redis");
 const csrf = require("csurf");
+const moment = require("moment");
 
 const RedisStore = Redis(session);
 const csrfProtection = csrf({ cookie: true });
@@ -50,6 +51,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, "public")));
+app.locals.moment = moment;
 
 setupRoutes(app);
 
