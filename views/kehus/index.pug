@@ -10,5 +10,5 @@ block content
                 .col-12.Kehu
                     blockquote.blockquote
                         a.btn.btn-info.btn-sm.float-right(href=`/kehut/${kehu.id}/muokkaa`) Muokkaa
-                        p.mb-0= kehu.text
+                        a.mb-0(href=`/kehut/${kehu.id}`)= kehu.text
                         footer.blockquote-footer #{kehu.giver_name}, #{moment(kehu.date_given).format('D.M.YYYY')}
