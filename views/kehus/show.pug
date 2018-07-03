@@ -1,6 +1,11 @@
 extends ../layout
 
 block content
-    h1= kehu.title
-    p= kehu.text
-    p= kehu.giver_name + ', ' + kehu.location
+    .container
+        .row
+            .col-12.col-lg-6.offset-lg-3
+                .card.bg-light.mb-3
+                    .card-body
+                        h4.card-title= kehu.title
+                        p.card-text= kehu.text
+                        p.card-text= kehu.giver_name + ', ' + kehu.location
