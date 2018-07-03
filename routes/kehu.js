@@ -6,16 +6,14 @@ const { kehuSchema } = require("../utils/ValidationSchemas");
 const KehuService = require("../services/KehuService");
 const logger = require("../logger");
 
-function resetErrors(req) {
-  req.session.errors = null;
-}
-
 function renderForm(form, req, res) {
+  const errors = req.session.errors;
+  req.session.errors = null;
   res.render(`kehus/${form}`, {
     user: req.user,
     csrfToken: req.csrfToken(),
     values: req.body,
-    errors: req.session.errors
+    errors
   });
 }
 
@@ -45,7 +43,6 @@ router.post("/", checkSchema(kehuSchema), async (req, res, next) => {
     const validations = validationResult(req);
     if (validations.isEmpty()) {
       const kehu = await KehuService.createKehu(req.body);
-      resetErrors(req);
       res.redirect(`/kehut/${kehu.id}`);
     } else {
       req.session.errors = validations.array();
@@ -69,7 +66,6 @@ router.put("/:id", checkSchema(kehuSchema), async (req, res, next) => {
     const validations = validationResult(req);
     if (validations.isEmpty()) {
       await KehuService.updateKehu(req.user.id, req.params.id, req.body);
-      resetErrors(req);
       res.redirect(`/kehut/${req.params.id}`);
     } else {
       req.session.errors = validations.array();
