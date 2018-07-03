@@ -5,9 +5,9 @@ block content
     .container
         .row
             .col-12.col-lg-6.offset-lg-3
-                h1 Lisää kehu
+                h1 Muokkaa kehua
 
-                form(method="POST", action="/kehu")
+                form(method="POST", action=`/kehu/${values.id}?_method=PUT`)
                     input(name="_csrf", type="hidden", value=csrfToken)
                     input(name="giver_id", type="hidden", value=user.id)
                     input(name="owner_id", type="hidden", value=user.id)

@@ -12,6 +12,7 @@ const Model = require("objection").Model;
 const Redis = require("connect-redis");
 const csrf = require("csurf");
 const moment = require("moment");
+const methodOverride = require("method-override");
 
 const RedisStore = Redis(session);
 const csrfProtection = csrf({ cookie: true });
@@ -37,6 +38,7 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(methodOverride("_method"));
 app.use(csrfProtection);
 app.use(
   session({

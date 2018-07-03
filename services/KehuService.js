@@ -18,6 +18,13 @@ async function createKehu(data) {
   return await Kehu.query().insert(parseKehu(data));
 }
 
+async function updateKehu(user_id, kehu_id, data) {
+  return await Kehu.query()
+    .where("owner_id", user_id)
+    .andWhere("id", kehu_id)
+    .patch(parseKehu(data));
+}
+
 function parseKehu(data) {
   const {
     date_given,
@@ -42,5 +49,6 @@ function parseKehu(data) {
 module.exports = {
   getKehus,
   getKehu,
-  createKehu
+  createKehu,
+  updateKehu
 };

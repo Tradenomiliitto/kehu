@@ -1,0 +1,30 @@
+mixin form-group-input (name, label, errors, values)
+    .form-group
+        label(for=name)= label
+        if errors && errors.find((e) => e.param === name)
+            input.form-control.is-invalid(id=name, name=name, type="text", value=values[name])
+            .invalid-feedback
+                span= errors.find((e) => e.param === name).msg
+        else
+            input.form-control(id=name, name=name, type="text", value=values ? values[name] : '')
+
+mixin form-group-timestamp (name, label, errors, values)
+    .form-group
+        label(for=name)= label
+        if errors && errors.find((e) => e.param === name)
+            input.form-control.is-invalid(id=name, name=name, type="text", value=moment(values[name]).format('D.M.YYYY'))
+            .invalid-feedback
+                span= errors.find((e) => e.param === name).msg
+        else
+            input.form-control(id=name, name=name, type="text", value=values ? moment(values[name]).format('D.M.YYYY') : '')
+
+
+mixin form-group-textarea (name, label, errors, values)
+    .form-group
+        label(for=name) label
+        if errors && errors.find((e) => e.param === name)
+            textarea.form-control.is-invalid(id=name, name=name, rows=7)= values[name]
+            .invalid-feedback
+                span= errors.find((e) => e.param === name).msg
+        else
+            textarea.form-control(id=name, name=name, rows=7)= values ? values[name] : ''

@@ -46,6 +46,36 @@ router.get("/new", (req, res) => {
   });
 });
 
+function renderEditForm(req, res) {
+  res.render("kehus/edit", {
+    user: req.user,
+    csrfToken: req.csrfToken(),
+    values: req.body,
+    errors: req.session.errors
+  });
+}
+
+router.get("/:id/edit", async (req, res) => {
+  req.body = await KehuService.getKehu(req.user.id, req.params.id);
+  renderEditForm(req, res);
+});
+
+router.put("/:id", checkSchema(kehuSchema), async (req, res, next) => {
+  try {
+    const validations = validationResult(req);
+    if (validations.isEmpty()) {
+      await KehuService.updateKehu(req.user.id, req.params.id, req.body);
+      res.redirect(`/kehu/${req.params.id}`);
+    } else {
+      req.session.errors = validations.array();
+      res.redirect(`/kehu/${req.params.id}/edit`);
+    }
+  } catch (err) {
+    logger.error(err.message);
+    next(createError(500, err.message));
+  }
+});
+
 router.get("/:id", async (req, res) => {
   const kehu = await KehuService.getKehu(req.user.id, req.params.id);
   res.render("kehus/show", {
