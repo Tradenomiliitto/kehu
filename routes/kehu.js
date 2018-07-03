@@ -6,6 +6,27 @@ const { kehuSchema } = require("../utils/ValidationSchemas");
 const KehuService = require("../services/KehuService");
 const logger = require("../logger");
 
+function resetErrors(req) {
+  req.session.errors = null;
+}
+
+function renderForm(form, req, res) {
+  res.render(`kehus/${form}`, {
+    user: req.user,
+    csrfToken: req.csrfToken(),
+    values: req.body,
+    errors: req.session.errors
+  });
+}
+
+function renderNewForm(req, res) {
+  renderForm("new", req, res);
+}
+
+function renderEditForm(req, res) {
+  renderForm("edit", req, res);
+}
+
 router.get("/", async (req, res, next) => {
   try {
     const kehus = await KehuService.getKehus(req.user.id);
@@ -24,14 +45,11 @@ router.post("/", checkSchema(kehuSchema), async (req, res, next) => {
     const validations = validationResult(req);
     if (validations.isEmpty()) {
       const kehu = await KehuService.createKehu(req.body);
+      resetErrors(req);
       res.redirect(`/kehu/${kehu.id}`);
     } else {
-      res.render("kehus/new", {
-        user: req.user,
-        csrfToken: req.csrfToken(),
-        errors: validations.array(),
-        values: req.body
-      });
+      req.session.errors = validations.array();
+      res.redirect("/kehus/new");
     }
   } catch (err) {
     logger.error(err.message);
@@ -39,21 +57,7 @@ router.post("/", checkSchema(kehuSchema), async (req, res, next) => {
   }
 });
 
-router.get("/new", (req, res) => {
-  res.render("kehus/new", {
-    user: req.user,
-    csrfToken: req.csrfToken()
-  });
-});
-
-function renderEditForm(req, res) {
-  res.render("kehus/edit", {
-    user: req.user,
-    csrfToken: req.csrfToken(),
-    values: req.body,
-    errors: req.session.errors
-  });
-}
+router.get("/new", renderNewForm);
 
 router.get("/:id/edit", async (req, res) => {
   req.body = await KehuService.getKehu(req.user.id, req.params.id);
@@ -65,6 +69,7 @@ router.put("/:id", checkSchema(kehuSchema), async (req, res, next) => {
     const validations = validationResult(req);
     if (validations.isEmpty()) {
       await KehuService.updateKehu(req.user.id, req.params.id, req.body);
+      resetErrors(req);
       res.redirect(`/kehu/${req.params.id}`);
     } else {
       req.session.errors = validations.array();
