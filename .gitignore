@@ -2,6 +2,11 @@
 *.sqlite
 /public/main*
 /public/*.bundle*
+/public/*.woff
+/public/*.ttf
+/public/*.otf
+/public/*.eot
+/public/*.svg
 dump.rdb
 
 # Logs
