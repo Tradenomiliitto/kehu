@@ -28,3 +28,13 @@ mixin form-group-textarea (name, label, errors, values)
                 span= errors.find((e) => e.param === name).msg
         else
             textarea.form-control(id=name, name=name, rows=7)= values ? values[name] : ''
+
+mixin form-group-tags (name, label, errors, values)
+    .form-group
+        label(for=name)= label
+        if errors && errors.find((e) => e.param === name)
+            input.tagsinput.form-control.is-invalid(id=name, name=name, type="text", value=values[name], data-role="tagsinput")
+            .invalid-feedback
+                span= errors.find((e) => e.param === name).msg
+        else
+            input.tagsinput.form-control(id=name, name=name, type="text", value=values ? values[name] : '', data-role="tagsinput")
