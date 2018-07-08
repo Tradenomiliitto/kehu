@@ -1,6 +1,7 @@
 import "../scss/style.scss";
 import $ from "jquery";
 import "bootstrap-datepicker";
+import "./tagsinput";
 
 $.fn.datepicker.dates.fi = {
   days: [
