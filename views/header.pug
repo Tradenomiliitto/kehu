@@ -1,18 +1,19 @@
 nav.navbar.navbar-expand-sm.navbar-dark.bg-dark.fixed-top
-    a.navbar-brand(href='/') Kehu
-    button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbar' aria-controls='navbarsExampleDefault' aria-expanded='false' aria-label='Toggle navigation')
-        span.navbar-toggler-icon
-    #navbar.collapse.navbar-collapse.justify-content-end
-        ul.navbar-nav
-            if user
-                li.nav-item
-                    a.nav-link(href='/kehut') Kehut
-                li.nav-item
-                    a.nav-link(href='/user') Profiili
-                li.nav-item
-                    a.nav-link(href='/user/logout') Kirjaudu ulos
-            else
-                li.nav-item
-                    a.nav-link(href='/user/register') Rekisteröidy
-                li.nav-item
-                    a.nav-link(href='/user/login') Kirjaudu
+    .container
+        a.navbar-brand(href='/') Kehu
+        button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbar' aria-controls='navbarsExampleDefault' aria-expanded='false' aria-label='Toggle navigation')
+            span.navbar-toggler-icon
+        #navbar.collapse.navbar-collapse.justify-content-end
+            ul.navbar-nav
+                if user
+                    li.nav-item
+                        a.nav-link(href='/kehut') Kehut
+                    li.nav-item
+                        a.nav-link(href='/user') Profiili
+                    li.nav-item
+                        a.nav-link(href='/user/logout') Kirjaudu ulos
+                else
+                    li.nav-item
+                        a.nav-link(href='/user/register') Rekisteröidy
+                    li.nav-item
+                        a.nav-link(href='/user/login') Kirjaudu
