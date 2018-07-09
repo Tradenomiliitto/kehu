@@ -9,3 +9,4 @@ block content
                         h4.card-title= kehu.title
                         p.card-text= kehu.text
                         p.card-text= kehu.giver_name + ', ' + kehu.location
+                        p.card-text= kehu.tags.map(t => `#${t.text}`).join(' ')

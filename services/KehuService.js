@@ -4,6 +4,7 @@ const moment = require("moment");
 async function getKehus(user_id) {
   return await Kehu.query()
     .where("owner_id", user_id)
+    .eager("tags")
     .orderBy("date_given", "desc");
 }
 
@@ -11,6 +12,7 @@ async function getKehu(user_id, kehu_id) {
   return await Kehu.query()
     .where("owner_id", user_id)
     .andWhere("id", kehu_id)
+    .eager("tags")
     .first();
 }
 
