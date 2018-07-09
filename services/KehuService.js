@@ -15,7 +15,15 @@ async function getKehu(user_id, kehu_id) {
 }
 
 async function createKehu(data) {
-  return await Kehu.query().insert(parseKehu(data));
+  const kehu = await Kehu.query().insert(parseKehu(data));
+  const tags = parseTags(data);
+  await Promise.all(
+    tags.map(tag => kehu.$relatedQuery("tags").insert({ text: tag }))
+  );
+  return await Kehu.query()
+    .findById(kehu.id)
+    .eager("tags")
+    .first();
 }
 
 async function updateKehu(user_id, kehu_id, data) {
@@ -44,6 +52,10 @@ function parseKehu(data) {
     text,
     title
   };
+}
+
+function parseTags(data) {
+  return data.tags.split(",");
 }
 
 module.exports = {
