@@ -35,12 +35,12 @@ const kehuSchema = {
     }
   },
   owner_id: {
-    errorMessage: "Kehun omistajan id puuttuu.",
+    errorMessage: "Kehun omistajan id puuttuu tai on virheellinen.",
     isInt: true,
     toInt: true,
     custom: {
-      options: value => {
-        return !!value;
+      options: (value, { req }) => {
+        return value === req.user.id;
       }
     }
   },
