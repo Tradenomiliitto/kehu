@@ -6,6 +6,12 @@ async function findTagWithText(text) {
     .first();
 }
 
+async function getTags() {
+  const tags = await Tag.query();
+  return tags.map(t => ({ text: t.text }));
+}
+
 module.exports = {
-  findTagWithText
+  findTagWithText,
+  getTags
 };

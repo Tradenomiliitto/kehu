@@ -1,7 +1,9 @@
 const user = require("./user");
 const kehu = require("./kehu");
+const tags = require("./api/tags");
 
 module.exports = function setupRoutes(app) {
+  app.use("/api/v1", tags);
   app.use("/user", user);
   app.use("/kehut", kehu);
 
