@@ -5,6 +5,7 @@ const { findTagWithText } = require("./TagService");
 const logger = require("../logger");
 
 async function getKehus(user_id) {
+  logger.info(`Fetching kehus for user ${user_id}`);
   return await Kehu.query()
     .where("owner_id", user_id)
     .eager("tags")
@@ -12,6 +13,7 @@ async function getKehus(user_id) {
 }
 
 async function getKehu(user_id, kehu_id) {
+  logger.info(`Fetching kehu ${kehu_id} for user ${user_id}`);
   return await Kehu.query()
     .where("owner_id", user_id)
     .andWhere("id", kehu_id)
@@ -69,6 +71,7 @@ async function createKehu(data) {
     const tags = parseTags(data);
     await createOrRelateTags(kehu, tags);
     await trx.commit();
+    logger.info(`Created kehu ${kehu.id} for user ${data.owner_id}`);
     return await Kehu.query()
       .findById(kehu.id)
       .eager("tags")
@@ -104,6 +107,7 @@ async function updateKehu(user_id, kehu_id, data) {
       .first();
     await unrelateTags(kehu, tagsFromData);
     await createOrRelateTags(kehu, tagsFromData);
+    logger.info(`Created kehu ${kehu_id} for user ${user_id}`);
     await trx.commit();
   } catch (error) {
     logger.error(`Updating Kehu with tags failed. Rolling back..`);
