@@ -19,12 +19,10 @@ async function getKehu(user_id, kehu_id) {
     .first();
 }
 
-async function unrelateTags(kehu, tagsFromData) {
+async function unrelateTags(kehu, tags) {
   const oldTags = kehu.tags;
   const tagsToUnrelate = oldTags.filter(
-    tag =>
-      -1 ===
-      tagsFromData.findIndex(tagFromData => tag.text === tagFromData.text)
+    tag => -1 === tags.findIndex(tagFromData => tag.text === tagFromData.text)
   );
   return await Promise.all(
     tagsToUnrelate.map(tag =>
@@ -114,6 +112,29 @@ async function updateKehu(user_id, kehu_id, data) {
   }
 }
 
+async function deleteKehu(user_id, kehu_id) {
+  const knex = Kehu.knex();
+  let trx;
+
+  try {
+    trx = await transaction.start(knex);
+
+    const kehu = await getKehu(user_id, kehu_id);
+    await unrelateTags(kehu, kehu.tags);
+    await Kehu.query()
+      .where("owner_id", user_id)
+      .andWhere("id", kehu_id)
+      .delete();
+    await trx.commit();
+  } catch (error) {
+    logger.error(
+      `Deleting Kehu ${kehu_id} for user ${user_id} failed. Rolling back..`
+    );
+    logger.error(error.message);
+    return await trx.rollback();
+  }
+}
+
 function parseKehu(data) {
   const {
     date_given,
@@ -146,5 +167,6 @@ module.exports = {
   getKehus,
   getKehu,
   createKehu,
-  updateKehu
+  updateKehu,
+  deleteKehu
 };

@@ -85,4 +85,14 @@ router.get("/:id", async (req, res) => {
   });
 });
 
+router.delete("/:id", async (req, res) => {
+  try {
+    await KehuService.deleteKehu(req.user.id, req.params.id);
+    res.redirect("/kehut");
+  } catch (err) {
+    logger.error(err.message);
+    res.redirect(`/kehut/${req.params.id}`);
+  }
+});
+
 module.exports = router;

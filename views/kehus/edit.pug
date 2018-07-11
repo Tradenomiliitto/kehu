@@ -5,6 +5,10 @@ block content
     .container
         .row
             .col-12.col-lg-6.offset-lg-3
+                form(method="POST", action=`/kehut/${values.id}?_method=DELETE`)
+                    input(name="_csrf", type="hidden", value=csrfToken)
+                    button#delete-kehu.btn.btn-danger.btn-sm.float-right
+                        span.oi.oi-trash(title="Poista", aria-hidden="true")
                 h1 Muokkaa kehua
 
                 form(method="POST", action=`/kehut/${values.id}?_method=PUT`)
