@@ -12,7 +12,6 @@ html
   body
     include header
     .container.KehuContainer
-      .row
-        .col
-          block content
+      include _flash-messages
+      block content
     include footer

@@ -25,7 +25,16 @@ function renderEditForm(req, res) {
   renderForm("edit", req, res);
 }
 
-router.get("/", async (req, res, next) => {
+function renderIndexWithErrorMessage(req, res, error, message) {
+  logger.error(error.stack);
+  req.flash("error", `${message}: ${error.message}`);
+  res.render("kehus/index", {
+    user: req.user,
+    kehus: []
+  });
+}
+
+router.get("/", async (req, res) => {
   try {
     const kehus = await KehuService.getKehus(req.user.id);
     res.render("kehus/index", {
@@ -33,8 +42,12 @@ router.get("/", async (req, res, next) => {
       kehus
     });
   } catch (err) {
-    logger.error(err.message);
-    next(createError(500, err.message));
+    renderIndexWithErrorMessage(
+      req,
+      res,
+      err,
+      "Lataamisen aikana tapahtui virhe"
+    );
   }
 });
 
@@ -43,14 +56,19 @@ router.post("/", checkSchema(kehuSchema), async (req, res, next) => {
     const validations = validationResult(req);
     if (validations.isEmpty()) {
       const kehu = await KehuService.createKehu(req.body);
+      req.flash("success", "Kehun lisääminen onnistui.");
       res.redirect(`/kehut/${kehu.id}`);
     } else {
       req.session.errors = validations.array();
       res.redirect("/kehut/uusi");
     }
   } catch (err) {
-    logger.error(err.message);
-    next(createError(500, err.message));
+    renderIndexWithErrorMessage(
+      req,
+      res,
+      err,
+      "Kehun lisäämisessä tapahtui virhe"
+    );
   }
 });
 
@@ -66,31 +84,44 @@ router.put("/:id", checkSchema(kehuSchema), async (req, res, next) => {
     const validations = validationResult(req);
     if (validations.isEmpty()) {
       await KehuService.updateKehu(req.user.id, req.params.id, req.body);
+      req.flash("success", "Kehun tallennus onnistui.");
       res.redirect(`/kehut/${req.params.id}`);
     } else {
       req.session.errors = validations.array();
       res.redirect(`/kehut/${req.params.id}/muokkaa`);
     }
   } catch (err) {
-    logger.error(err.message);
-    next(createError(500, err.message));
+    logger.error(err.stack);
+    req.flash("error", `Kehun tallennus epäonnistui. Virhe: ${err.message}`);
+    res.redirect(`/kehut/${req.params.id}`);
   }
 });
 
 router.get("/:id", async (req, res) => {
-  const kehu = await KehuService.getKehu(req.user.id, req.params.id);
-  res.render("kehus/show", {
-    user: req.user,
-    kehu
-  });
+  try {
+    const kehu = await KehuService.getKehu(req.user.id, req.params.id);
+    res.render("kehus/show", {
+      user: req.user,
+      kehu
+    });
+  } catch (err) {
+    renderIndexWithErrorMessage(
+      req,
+      res,
+      err,
+      "Kehun lataamisessa tapahtui virhe"
+    );
+  }
 });
 
 router.delete("/:id", async (req, res) => {
   try {
     await KehuService.deleteKehu(req.user.id, req.params.id);
+    req.flash("success", "Kehun poistaminen onnistui.");
     res.redirect("/kehut");
   } catch (err) {
-    logger.error(err.message);
+    logger.error(err.stack);
+    req.flash("error", `Kehun poisto epäonnistui. Virhe: ${err.message}`);
     res.redirect(`/kehut/${req.params.id}`);
   }
 });
