@@ -1,4 +1,6 @@
 import $ from "jquery";
+import "./typeahead";
+
 /*
  * bootstrap-tagsinput v0.8.0
  *
@@ -781,14 +783,4 @@ import $ from "jquery";
 
     return found;
   }
-
-  /**
-   * Initialize tagsinput behaviour on inputs and selects which have
-   * data-role=tagsinput
-   */
-  $(function() {
-    $(
-      "input[data-role=tagsinput], select[multiple][data-role=tagsinput]"
-    ).tagsinput();
-  });
 })($);
