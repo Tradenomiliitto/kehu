@@ -4,7 +4,7 @@ const tags = require("./api/tags");
 
 module.exports = function setupRoutes(app) {
   app.use("/api/v1", tags);
-  app.use("/user", user);
+  app.use("/profiili", user);
   app.use("/kehut", kehu);
 
   app.get("/", (req, res) => {

@@ -8,15 +8,15 @@ router.get("/", (req, res) => {
   });
 });
 
-router.get("/login", (req, res) => {
+router.get("/kirjaudu", (req, res) => {
   res.render("user/login", { env: process.env });
 });
 
-router.get("/register", (req, res) => {
+router.get("/rekisteroidy", (req, res) => {
   res.render("user/login", { env: process.env, initialScreen: "signUp" });
 });
 
-router.get("/logout", (req, res) => {
+router.get("/kirjaudu-ulos", (req, res) => {
   req.logout();
   res.redirect("/");
 });
