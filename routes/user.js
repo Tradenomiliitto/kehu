@@ -9,11 +9,11 @@ router.get("/", (req, res) => {
 });
 
 router.get("/kirjaudu", (req, res) => {
-  res.render("user/login", { env: process.env });
+  res.render("user/auth", { env: process.env });
 });
 
 router.get("/rekisteroidy", (req, res) => {
-  res.render("user/login", { env: process.env, initialScreen: "signUp" });
+  res.render("user/auth", { env: process.env, initialScreen: "signUp" });
 });
 
 router.get("/kirjaudu-ulos", (req, res) => {
