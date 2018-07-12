@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
+const { ensureAuthenticated } = require("../utils/Middlewares");
 
-router.get("/", (req, res) => {
+router.get("/", ensureAuthenticated, (req, res) => {
   res.render("user/index", {
     user: req.user
   });
