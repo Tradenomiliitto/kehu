@@ -4,9 +4,9 @@
 @import "minty";
 @import "../../node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.css";
 @import "../../node_modules/open-iconic/font/css/open-iconic-bootstrap.css";
-@import "tagsinput.css";
-@import "typeahead.css";
 
 @import "layout";
 @import "home";
 @import "kehus";
+@import "_tagsinput";
+@import "_typeahead";

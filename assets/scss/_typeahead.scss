@@ -19,8 +19,8 @@
   margin: 2px 0 0;
   list-style: none;
   font-size: 14px;
-  background-color: #ffffff;
-  border: 1px solid #cccccc;
+  background-color: $white;
+  border: 1px solid $body-color;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 4px;
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
@@ -35,14 +35,14 @@
   clear: both;
   font-weight: normal;
   line-height: 1.428571429;
-  color: #333333;
+  color: $dark;
   white-space: nowrap;
 }
 
 .tt-suggestion:hover,
 .tt-suggestion:focus {
-  color: #ffffff;
+  color: $white;
   text-decoration: none;
   outline: 0;
-  background-color: #428bca;
+  background-color: $primary;
 }
