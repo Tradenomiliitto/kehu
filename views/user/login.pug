@@ -1,6 +1,8 @@
-extends layout
+extends ../layout
 
 block content
+    include ../_index-no-auth
+
     div.login
         script.
           var lock = new Auth0Lock('#{env.AUTH0_CLIENT_ID}', '#{env.AUTH0_DOMAIN}', {
