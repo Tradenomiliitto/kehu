@@ -1,36 +1,39 @@
 extends ../layout
 
 block content
-    include ../_index-no-auth
+    main.container(role='main')
+        .row
+            .col
+                include ../_index-no-auth
 
-    div.login
-        script.
-          var lock = new Auth0Lock('#{env.AUTH0_CLIENT_ID}', '#{env.AUTH0_DOMAIN}', {
-            auth: {
-              redirectUrl: '#{env.AUTH0_CALLBACK_URL}',
-              responseType: 'code',
-              params: {
-                scope: 'openid name email picture'
-              }
-            },
-            theme: {
-              primaryColor: '#78c2ad'
-            },
-            mustAcceptTerms: true,
-            initialScreen: '#{initialScreen}',
-            additionalSignUpFields: [
-              {
-                name: "first_name",
-                placeholder: "Etunimi"
-              },
-              {
-                name: "last_name",
-                placeholder: "Sukunimi"
-              }
-            ],
-            language: 'fi',
-            languageDictionary: {
-              signUpTerms: 'Hyväksyn Kehu-sovelluksen rekisteriselosteen: https://kehu.com/rekisteriseloste'
-            }
-          });
-          lock.show();
+                div.login
+                    script.
+                      var lock = new Auth0Lock('#{env.AUTH0_CLIENT_ID}', '#{env.AUTH0_DOMAIN}', {
+                        auth: {
+                          redirectUrl: '#{env.AUTH0_CALLBACK_URL}',
+                          responseType: 'code',
+                          params: {
+                            scope: 'openid name email picture'
+                          }
+                        },
+                        theme: {
+                          primaryColor: '#78c2ad'
+                        },
+                        mustAcceptTerms: true,
+                        initialScreen: '#{initialScreen}',
+                        additionalSignUpFields: [
+                          {
+                            name: "first_name",
+                            placeholder: "Etunimi"
+                          },
+                          {
+                            name: "last_name",
+                            placeholder: "Sukunimi"
+                          }
+                        ],
+                        language: 'fi',
+                        languageDictionary: {
+                          signUpTerms: 'Hyväksyn Kehu-sovelluksen rekisteriselosteen: https://kehu.com/rekisteriseloste'
+                        }
+                      });
+                      lock.show();
