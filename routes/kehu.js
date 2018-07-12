@@ -6,12 +6,13 @@ const KehuService = require("../services/KehuService");
 const logger = require("../logger");
 
 function renderForm(form, req, res) {
-  const errors = req.session.errors;
+  const { values, errors } = req.session;
   req.session.errors = null;
+  req.session.values = null;
   res.render(`kehus/${form}`, {
     user: req.user,
     csrfToken: req.csrfToken(),
-    values: req.body,
+    values,
     errors
   });
 }
@@ -59,6 +60,7 @@ router.post("/", checkSchema(kehuSchema), async (req, res) => {
       res.redirect(`/kehut/${kehu.id}`);
     } else {
       req.session.errors = validations.array();
+      req.session.values = req.body;
       res.redirect("/kehut/uusi");
     }
   } catch (err) {
@@ -74,7 +76,9 @@ router.post("/", checkSchema(kehuSchema), async (req, res) => {
 router.get("/uusi", renderNewForm);
 
 router.get("/:id/muokkaa", async (req, res) => {
-  req.body = await KehuService.getKehu(req.user.id, req.params.id);
+  if (!req.session.values) {
+    req.session.values = await KehuService.getKehu(req.user.id, req.params.id);
+  }
   renderEditForm(req, res);
 });
 
@@ -87,6 +91,7 @@ router.put("/:id", checkSchema(kehuSchema), async (req, res) => {
       res.redirect(`/kehut/${req.params.id}`);
     } else {
       req.session.errors = validations.array();
+      req.session.values = req.body;
       res.redirect(`/kehut/${req.params.id}/muokkaa`);
     }
   } catch (err) {

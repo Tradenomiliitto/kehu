@@ -12,11 +12,21 @@ mixin form-group-timestamp (name, label, errors, values)
     .form-group
         label(for=name)= label
         if errors && errors.find((e) => e.param === name)
-            input.form-control.is-invalid(id=name, name=name, type="text", value=moment(values[name]).format('D.M.YYYY'))
+            if moment(values[name], "D.M.YYYY").isValid()
+                input.form-control.is-invalid(id=name, name=name, type="text", value=moment(values[name], "D.M.YYYY").format('D.M.YYYY'))
+            else if moment(values[name]).isValid()
+                input.form-control.is-invalid(id=name, name=name, type="text", value=moment(values[name]).format('D.M.YYYY'))
+            else
+                input.form-control.is-invalid(id=name, name=name, type="text", value=moment().format('D.M.YYYY'))
             .invalid-feedback
                 span= errors.find((e) => e.param === name).msg
         else
-            input.form-control(id=name, name=name, type="text", value=values ? moment(values[name]).format('D.M.YYYY') : '')
+            if values && moment(values[name], "D.M.YYYY").isValid()
+                input.form-control(id=name, name=name, type="text", value=moment(values[name], "D.M.YYYY").format('D.M.YYYY'))
+            else if values && moment(values[name]).isValid()
+                input.form-control(id=name, name=name, type="text", value=moment(values[name]).format('D.M.YYYY'))
+            else
+                input.form-control(id=name, name=name, type="text", value=moment().format('D.M.YYYY'))
 
 
 mixin form-group-textarea (name, label, errors, values)
@@ -33,8 +43,16 @@ mixin form-group-tags (name, label, errors, values)
     .form-group
         label(for=name)= label
         if errors && errors.find((e) => e.param === name)
-            input.tagsinput.form-control.is-invalid(id=name, name=name, type="text", value=values[name].map(t => t.text).join(','), data-role="tagsinput")
+            if Array.isArray(values[name])
+                input.tagsinput.form-control.is-invalid(id=name, name=name, type="text", value=values[name].map(t => t.text).join(','), data-role="tagsinput")
+            else
+                input.tagsinput.form-control.is-invalid(id=name, name=name, type="text", value=values[name], data-role="tagsinput")
             .invalid-feedback
                 span= errors.find((e) => e.param === name).msg
         else
-            input.tagsinput.form-control(id=name, name=name, type="text", value=values && values[name] ? values[name].map(t => t.text).join(',') : '', data-role="tagsinput")
+            if values && values[name] && Array.isArray(values[name])
+                input.tagsinput.form-control(id=name, name=name, type="text", value=values[name].map(t => t.text).join(','), data-role="tagsinput")
+            else if values && values[name]
+                input.tagsinput.form-control(id=name, name=name, type="text", value=values[name], data-role="tagsinput")
+            else
+                input.tagsinput.form-control(id=name, name=name, type="text", value='', data-role="tagsinput")
