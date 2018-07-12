@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const createError = require("http-errors");
 const { checkSchema, validationResult } = require("express-validator/check");
 const { kehuSchema } = require("../utils/ValidationSchemas");
 const KehuService = require("../services/KehuService");
@@ -51,7 +50,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/", checkSchema(kehuSchema), async (req, res, next) => {
+router.post("/", checkSchema(kehuSchema), async (req, res) => {
   try {
     const validations = validationResult(req);
     if (validations.isEmpty()) {
@@ -79,7 +78,7 @@ router.get("/:id/muokkaa", async (req, res) => {
   renderEditForm(req, res);
 });
 
-router.put("/:id", checkSchema(kehuSchema), async (req, res, next) => {
+router.put("/:id", checkSchema(kehuSchema), async (req, res) => {
   try {
     const validations = validationResult(req);
     if (validations.isEmpty()) {
