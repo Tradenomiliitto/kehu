@@ -14,6 +14,7 @@ const csrf = require("csurf");
 const moment = require("moment");
 const methodOverride = require("method-override");
 const flash = require("express-flash");
+const httpsRedirect = require("express-https-redirect");
 
 const RedisStore = Redis(session);
 const csrfProtection = csrf({ cookie: true });
@@ -53,6 +54,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+app.use("/", httpsRedirect());
 app.use(flash());
 app.use(express.static(path.join(__dirname, "public")));
 app.locals.moment = moment;
