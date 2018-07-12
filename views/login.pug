@@ -11,6 +11,10 @@ block content
                 scope: 'openid name email picture'
               }
             },
+            theme: {
+              primaryColor: '#78c2ad'
+            },
+            mustAcceptTerms: true,
             initialScreen: '#{initialScreen}',
             additionalSignUpFields: [
               {
@@ -20,19 +24,10 @@ block content
               {
                 name: "last_name",
                 placeholder: "Enter your last name"
-              },
-              {
-                type: "checkbox",
-                name: "privacy_policy_consent",
-                prefill: "false",
-                placeholder: "I hereby agree to Kehu privacy policy: https://kehu.com/privacy-policy",
-                validator: function (consent) {
-                  return {
-                    valid: consent === true,
-                    hint: "You must accept privacy policy to continue"
-                  };
-                }
               }
-            ]
+            ],
+            languageDictionary: {
+              signUpTerms: 'I hereby agree to Kehu privacy policy: https://kehu.com/privacy-policy'
+            }
           });
           lock.show();
