@@ -2,18 +2,13 @@ extends layout
 
 block content
   main.container(role='main')
-    if user
-      .jumbotron.Jumbotron
-        .container
-          h1.display-4 Päivän kehu:
-          p= kehu.text
-          p= kehu.giver_name
-    else
-      .jumbotron
-        .container
-          h1.display-3 Kehu
-          p Kehu on lorem ipsum dolor sid amend jne.
-          p
-            a.btn.btn-primary(href="/user/login") Kirjaudu sisään
-            span tai
-            a.btn.btn-outline-primary(href="/user/register") rekisteröidy
+    .row
+        .col
+          if user
+            .jumbotron.Jumbotron
+              .container
+                h1.display-4 Päivän kehu:
+                p= kehu.text
+                p= kehu.giver_name
+          else
+            include _index-no-auth
