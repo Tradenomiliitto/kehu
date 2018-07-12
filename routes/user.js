@@ -9,10 +9,16 @@ router.get("/", (req, res) => {
 });
 
 router.get("/kirjaudu", (req, res) => {
+  if (req.user) {
+    return res.redirect("/profiili");
+  }
   res.render("user/auth", { env: process.env });
 });
 
 router.get("/rekisteroidy", (req, res) => {
+  if (req.user) {
+    return res.redirect("/profiili");
+  }
   res.render("user/auth", { env: process.env, initialScreen: "signUp" });
 });
 
