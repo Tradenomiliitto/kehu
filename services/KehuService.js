@@ -1,5 +1,5 @@
 const moment = require("moment");
-const { transaction } = require("objection");
+const { raw, transaction } = require("objection");
 const Kehu = require("../models/Kehu");
 const { findTagWithText } = require("./TagService");
 const logger = require("../logger");
@@ -18,6 +18,15 @@ async function getKehu(user_id, kehu_id) {
     .where("owner_id", user_id)
     .andWhere("id", kehu_id)
     .eager("tags")
+    .first();
+}
+
+async function getRandomKehu(user_id) {
+  logger.info(`Fetching random kehu for user ${user_id}`);
+  return await Kehu.query()
+    .where("owner_id", user_id)
+    .eager("tags")
+    .orderBy(raw("random()"))
     .first();
 }
 
@@ -170,6 +179,7 @@ function parseTags(data) {
 module.exports = {
   getKehus,
   getKehu,
+  getRandomKehu,
   createKehu,
   updateKehu,
   deleteKehu
