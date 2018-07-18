@@ -11,6 +11,7 @@
     "start:dev": "nodemon ./bin/www & npm run build:dev"
   },
   "dependencies": {
+    "auth0": "2.10.0",
     "bootstrap": "4.1.1",
     "bootstrap-datepicker": "1.8.0",
     "connect-redis": "3.3.3",
