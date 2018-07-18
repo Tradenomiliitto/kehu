@@ -20,7 +20,9 @@ async function createUserFromAuth0(user) {
     return await User.query().insert({
       first_name: auth0User.user_metadata.first_name,
       last_name: auth0User.user_metadata.last_name,
-      auth0_id: user.id
+      auth0_id: user.id,
+      email: auth0User.email,
+      picture: auth0User.picture
     });
   } catch (error) {
     logger.error(error.stack);
