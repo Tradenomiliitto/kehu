@@ -1,0 +1,5 @@
+.jumbotron
+    h1.display-5 Päivän kehu:
+    hr.my-3
+    p.lead.font-italic= kehu.text
+    p.lead= `– ${kehu.giver_name}, ${moment(kehu.date_given).fromNow()}`

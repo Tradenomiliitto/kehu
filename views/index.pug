@@ -5,10 +5,6 @@ block content
     .row
         .col
           if user
-            .jumbotron.Jumbotron
-              .container
-                h1.display-4 Päivän kehu:
-                p= kehu.text
-                p= kehu.giver_name
+            include _index-auth
           else
             include _index-no-auth
