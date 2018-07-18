@@ -1,5 +1,10 @@
 .jumbotron
-    h1.display-5 Päivän kehu:
-    hr.my-3
-    p.lead.font-italic= kehu.text
-    p.lead= `– ${kehu.giver_name}, ${moment(kehu.date_given).fromNow()}`
+    if kehu
+        h1.display-5 Päivän kehu:
+        hr.my-3
+        p.lead.font-italic= kehu.text
+        p.lead= `– ${kehu.giver_name}, ${moment(kehu.date_given).fromNow()}`
+    else
+        h1.display-5 Sinulla ei ole vielä kehuja
+        hr.my-3
+        p.lead Aloita #[a(href="/kehut/uusi") luomalla uusi kehu]
