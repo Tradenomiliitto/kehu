@@ -57,6 +57,8 @@ app.use(passport.session());
 app.use("/", httpsRedirect());
 app.use(flash());
 app.use(express.static(path.join(__dirname, "public")));
+
+moment.locale("fi");
 app.locals.moment = moment;
 
 setupRoutes(app);
