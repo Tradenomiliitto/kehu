@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const logger = require("../logger");
+const Auth0 = require("../utils/Auth0Client");
 
 async function findUserByAuth0Id(auth0_id) {
   try {
@@ -12,20 +13,21 @@ async function findUserByAuth0Id(auth0_id) {
   }
 }
 
-async function createUser(user) {
+async function createUserFromAuth0(user) {
   try {
+    const auth0User = await Auth0.getUser({ id: user.id });
     logger.info("Creating new user");
     return await User.query().insert({
-      first_name: user.name.givenName,
-      last_name: user.name.familyName,
+      first_name: auth0User.user_metadata.first_name,
+      last_name: auth0User.user_metadata.last_name,
       auth0_id: user.id
     });
   } catch (error) {
-    logger.error(error.message);
+    logger.error(error.stack);
   }
 }
 
 module.exports = {
   findUserByAuth0Id,
-  createUser
+  createUserFromAuth0
 };

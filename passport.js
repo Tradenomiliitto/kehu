@@ -24,7 +24,7 @@ function setupPassport(passport) {
     if (kehuUser) {
       done(null, kehuUser);
     } else {
-      const createdUser = await UserService.createUser(user);
+      const createdUser = await UserService.createUserFromAuth0(user);
       done(null, createdUser);
     }
   });
