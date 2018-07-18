@@ -1,9 +1,10 @@
 mixin flash-message(type, classname)
     if (messages[type])
-        .row
-            .col
-                div(class=`alert alert-${classname}`, role="alert")
-                    span= messages[type]
+        .container
+            .row
+                .col
+                    div(class=`alert alert-${classname}`, role="alert")
+                        span= messages[type]
 
 +flash-message('info', 'info')
 +flash-message('success', 'success')
