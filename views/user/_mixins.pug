@@ -50,4 +50,5 @@ mixin user-profile (user)
                             td= user.email
 
                 p.UserInfo-text.small.font-italic= `Profiili luotu ${moment(user.created_at).format('D.M.YYYY')}`
-                    | #[a.UserInfo-resetPassword(href="/profiili/vaihda-salasana") Vaihda salasana]
+                    if isAuth0User(user)
+                        | #[a.UserInfo-resetPassword(href="/profiili/vaihda-salasana") Vaihda salasana]
