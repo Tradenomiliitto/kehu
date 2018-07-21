@@ -11,7 +11,6 @@ const pg = require("pg");
 const Model = require("objection").Model;
 const Redis = require("connect-redis");
 const csrf = require("csurf");
-const moment = require("moment");
 const methodOverride = require("method-override");
 const flash = require("express-flash");
 const httpsRedirect = require("express-https-redirect");
@@ -19,6 +18,7 @@ const httpsRedirect = require("express-https-redirect");
 const RedisStore = Redis(session);
 const csrfProtection = csrf({ cookie: true });
 
+const { setupLocals } = require("./utils/ServerUtils");
 const setupPassport = require("./passport");
 const setupRoutes = require("./routes");
 
@@ -58,9 +58,7 @@ app.use("/", httpsRedirect());
 app.use(flash());
 app.use(express.static(path.join(__dirname, "public")));
 
-moment.locale("fi");
-app.locals.moment = moment;
-
+setupLocals(app);
 setupRoutes(app);
 
 app.use(function(req, res, next) {
