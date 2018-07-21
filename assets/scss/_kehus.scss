@@ -2,10 +2,30 @@
   margin-bottom: 32px;
 }
 
+.KehuList {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .Kehu {
-  margin-bottom: 1rem;
+  color: initial;
+  flex-grow: 1;
 
   &:not(:last-child) {
     border-bottom: 1px solid #ddd;
+  }
+}
+
+.Kehu-quotemark {
+  font-weight: bold;
+  font-size: 60px;
+  font-family: "Times New Roman", Arial, sans-serif;
+  line-height: 40px;
+  margin: 0;
+}
+
+a.KehuLink {
+  &:hover {
+    text-decoration: none;
   }
 }

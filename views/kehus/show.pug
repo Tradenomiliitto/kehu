@@ -1,12 +1,8 @@
 extends ../layout
+include _mixins
 
 block content
     .container
         .row
             .col-12.col-lg-6.offset-lg-3
-                .card.bg-light.mb-3
-                    .card-body
-                        h4.card-title= kehu.title
-                        p.card-text= kehu.text
-                        p.card-text= kehu.giver_name + ', ' + kehu.location
-                        p.card-text= kehu.tags.map(t => `#${t.text}`).join(' ')
+                +kehu-card(kehu)

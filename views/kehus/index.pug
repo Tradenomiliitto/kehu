@@ -1,4 +1,5 @@
 extends ../layout
+include _mixins
 
 block content
     .container
@@ -6,10 +7,6 @@ block content
             .col-12
                 h1.d-inline-block.KehuTitle Kehut
                 a.btn.btn-success.float-right(href="/kehut/uusi") Lisää kehu
-            each kehu in kehus
-                .col-12.Kehu
-                    blockquote.blockquote
-                        a.btn.btn-info.btn-sm.float-right(href=`/kehut/${kehu.id}/muokkaa`)
-                            span.oi.oi-pencil(title="Muokkaa", aria-hidden="true")
-                        a.mb-0(href=`/kehut/${kehu.id}`)= kehu.text
-                        footer.blockquote-footer #{kehu.giver_name}, #{moment(kehu.date_given).format('D.M.YYYY')}
+            .col-12.KehuList
+                each kehu in kehus
+                    +kehu-link(kehu)

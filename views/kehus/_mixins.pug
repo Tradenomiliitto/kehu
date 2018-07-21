@@ -56,3 +56,16 @@ mixin form-group-tags (name, label, errors, values)
                 input.tagsinput.form-control(id=name, name=name, type="text", value=values[name], data-role="tagsinput")
             else
                 input.tagsinput.form-control(id=name, name=name, type="text", value='', data-role="tagsinput")
+
+mixin kehu-card (kehu)
+    .card.bg-light.mb-3.Kehu
+        .card-body
+            p.Kehu-quotemark “
+            p.lead.font-italic= kehu.text
+            hr.my-3
+            p= `– ${kehu.giver_name}, ${kehu.location}`
+            p= kehu.tags.map(t => `#${t.text}`).join(' ')
+
+mixin kehu-link (kehu)
+    a(href=`/kehut/${kehu.id}`).KehuLink
+        +kehu-card(kehu)
