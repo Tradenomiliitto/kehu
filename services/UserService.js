@@ -13,17 +13,30 @@ async function findUserByAuth0Id(auth0_id) {
   }
 }
 
+function isAuth0RegisteredUser(user) {
+  const prefix = user.user_id.split("|")[0];
+  return prefix === "auth0";
+}
+
+function parseUser(user) {
+  return {
+    first_name: isAuth0RegisteredUser(user)
+      ? user.user_metadata.first_name
+      : user.given_name,
+    last_name: isAuth0RegisteredUser(user)
+      ? user.user_metadata.last_name
+      : user.family_name,
+    auth0_id: user.user_id,
+    email: user.email || "",
+    picture: user.picture_large ? user.picture_large : user.picture
+  };
+}
+
 async function createUserFromAuth0(user) {
   try {
     const auth0User = await Auth0.getUser({ id: user.id });
     logger.info("Creating new user");
-    return await User.query().insert({
-      first_name: auth0User.user_metadata.first_name,
-      last_name: auth0User.user_metadata.last_name,
-      auth0_id: user.id,
-      email: auth0User.email,
-      picture: auth0User.picture
-    });
+    return await User.query().insert(parseUser(auth0User));
   } catch (error) {
     logger.error(error.stack);
   }
