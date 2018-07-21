@@ -1,4 +1,22 @@
 extends ../layout
 
 block content
-    p User!
+    .container
+        .row
+            .col-12.col-lg-6.offset-lg-3
+                img.UserInfo-picture(src=user.picture)
+
+                table.table.UserInfo-table
+                    tbody
+                        tr
+                            td Etunimi:
+                            td= user.first_name
+                        tr
+                            td Sukunimi:
+                            td= user.last_name
+                        tr
+                            td Sähköposti:
+                            td= user.email
+
+                p.UserInfo-text.small.font-italic= `Profiili luotu ${moment(user.created_at).format('D.M.YYYY')}`
+                    | #[a.UserInfo-resetPassword(href="/profiili/vaihda-salasana") Vaihda salasana]
