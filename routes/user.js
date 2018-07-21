@@ -9,6 +9,14 @@ router.get("/", ensureAuthenticated, (req, res) => {
   });
 });
 
+router.get("/vaihda-salasana", ensureAuthenticated, (req, res) => {
+  res.render("user/reset-password", {
+    env: process.env,
+    initialScreen: "forgotPassword",
+    user: req.user
+  });
+});
+
 router.get("/kirjaudu", (req, res) => {
   if (req.user) {
     return res.redirect("/profiili");
