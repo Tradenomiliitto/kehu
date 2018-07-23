@@ -31,7 +31,7 @@ mixin form-group-timestamp (name, label, errors, values)
 
 mixin form-group-textarea (name, label, errors, values)
     .form-group
-        label(for=name) label
+        label(for=name)= label
         if errors && errors.find((e) => e.param === name)
             textarea.form-control.is-invalid(id=name, name=name, rows=7)= values[name]
             .invalid-feedback
