@@ -63,6 +63,10 @@ mixin kehu-delete-button (csrfToken, kehu)
         button#delete-kehu.btn.btn-danger.btn-sm.float-right
             span.oi.oi-trash(title="Poista", aria-hidden="true")
 
+mixin kehu-edit-button (kehu, classNames)
+    a.btn.btn-info.btn-sm.float-right(href=`/kehut/${kehu.id}/muokkaa`, class=classNames)
+        span.oi.oi-pencil(title="Muokkaa", aria-hidden="true")
+
 mixin kehu-card (kehu)
     .card.bg-light.mb-3.Kehu
         .card-body
