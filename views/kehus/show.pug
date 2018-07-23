@@ -4,5 +4,8 @@ include _mixins
 block content
     .container
         .row
+            .col-12.col-lg-6.offset-lg-3.mb-4
+                +kehu-delete-button(csrfToken, kehu)
+        .row
             .col-12.col-lg-6.offset-lg-3
                 +kehu-card(kehu)

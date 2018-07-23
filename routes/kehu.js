@@ -106,7 +106,8 @@ router.get("/:id", async (req, res) => {
     const kehu = await KehuService.getKehu(req.user.id, req.params.id);
     res.render("kehus/show", {
       user: req.user,
-      kehu
+      kehu,
+      csrfToken: req.csrfToken()
     });
   } catch (err) {
     renderIndexWithErrorMessage(
