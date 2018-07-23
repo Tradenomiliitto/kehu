@@ -14,7 +14,10 @@ const engine = new Bloodhound({
 });
 
 function initListeners() {
-  $(".tagsinput").tagsinput({
+  const $tagsinput = $(".tagsinput");
+
+  $tagsinput.tagsinput({
+    trimValue: true,
     typeaheadjs: [
       {
         highlight: true
@@ -24,6 +27,15 @@ function initListeners() {
         source: engine
       }
     ]
+  });
+
+  $(".bootstrap-tagsinput").focusout(function() {
+    const currentValue = $(this)
+      .find(".tt-input")
+      .val();
+    if (currentValue) {
+      $tagsinput.tagsinput("add", currentValue);
+    }
   });
 }
 
