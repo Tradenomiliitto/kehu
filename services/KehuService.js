@@ -149,23 +149,14 @@ async function deleteKehu(user_id, kehu_id) {
 }
 
 function parseKehu(data) {
-  const {
-    date_given,
-    giver_id,
-    giver_name,
-    location,
-    owner_id,
-    text,
-    title
-  } = data;
+  const { date_given, giver_id, giver_name, location, owner_id, text } = data;
   return {
     date_given: moment(date_given, "D.M.YYYY").format(),
     giver_id,
     giver_name,
     location,
     owner_id,
-    text,
-    title
+    text
   };
 }
 

@@ -11,7 +11,6 @@ block content
                     input(name="_csrf", type="hidden", value=csrfToken)
                     input(name="giver_id", type="hidden", value=user.id)
                     input(name="owner_id", type="hidden", value=user.id)
-                    +form-group-input('title', 'Kehun otsikko', errors, values)
                     +form-group-textarea('text', 'Kehu', errors, values)
                     +form-group-input('giver_name', 'Kehun antaja', errors, values)
                     +form-group-input('location', 'Sijainti', errors, values)

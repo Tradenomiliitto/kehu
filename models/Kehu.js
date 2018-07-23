@@ -8,14 +8,7 @@ class Kehu extends Model {
   static get jsonSchema() {
     return {
       type: "object",
-      required: [
-        "date_given",
-        "giver_id",
-        "location",
-        "owner_id",
-        "text",
-        "title"
-      ],
+      required: ["date_given", "giver_id", "location", "owner_id", "text"],
       properties: {
         id: { type: "integer" },
         date_given: { type: "string" },
@@ -23,8 +16,7 @@ class Kehu extends Model {
         giver_name: { type: "string" },
         location: { type: "string" },
         owner_id: { type: "integer" },
-        text: { type: "string" },
-        title: { type: "string" }
+        text: { type: "string" }
       }
     };
   }

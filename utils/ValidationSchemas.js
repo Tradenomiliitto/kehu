@@ -51,14 +51,6 @@ const kehuSchema = {
         return !!value;
       }
     }
-  },
-  title: {
-    errorMessage: "Otsikko on pakollinen tieto.",
-    custom: {
-      options: value => {
-        return !!value;
-      }
-    }
   }
 };
 
