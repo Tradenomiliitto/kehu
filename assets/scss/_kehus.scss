@@ -29,3 +29,11 @@ a.KehuLink {
     text-decoration: none;
   }
 }
+
+.KehuTable td {
+  border-top: 0;
+
+  &:first-child {
+    width: 90px;
+  }
+}

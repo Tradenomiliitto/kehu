@@ -73,9 +73,25 @@ mixin kehu-card (kehu)
             p.Kehu-quotemark “
             p.lead.font-italic= kehu.text
             hr.my-3
-            p= `– ${kehu.giver_name}, ${kehu.location}`
+            table.table.table-sm.KehuTable
+                tbody
+                    tr
+                        td Kehuja:
+                        td= kehu.giver_name
+                    tr
+                        td Paikka:
+                        td= kehu.location
+                    tr
+                        td Aika:
+                        td= moment(kehu.date_given).format('D.M.YYYY')
             p= kehu.tags.map(t => `#${t.text}`).join(' ')
 
 mixin kehu-link (kehu)
     a(href=`/kehut/${kehu.id}`).KehuLink
-        +kehu-card(kehu)
+        .card.bg-light.mb-3.Kehu
+            .card-body
+                p.Kehu-quotemark “
+                p.lead.font-italic= kehu.text
+                hr.my-3
+                p= `– ${kehu.giver_name}`
+                p= kehu.tags.map(t => `#${t.text}`).join(' ')
