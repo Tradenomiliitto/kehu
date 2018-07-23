@@ -104,6 +104,13 @@ router.put("/:id", checkSchema(kehuSchema), async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const kehu = await KehuService.getKehu(req.user.id, req.params.id);
+
+    if (!kehu) {
+      return res.render("kehus/not-found", {
+        user: req.user
+      });
+    }
+
     res.render("kehus/show", {
       user: req.user,
       kehu,

@@ -1,0 +1,11 @@
+extends ../layout
+include _mixins
+
+block content
+    .container
+        .row
+            .col-12.col-lg-6.offset-lg-3
+                h1.d-inline-block.KehuTitle Kehut
+                a.btn.btn-success.float-right(href="/kehut/uusi") Lisää kehu
+            .col-12.col-lg-6.offset-lg-3
+                p Kehua ei löytynyt tai sen tunniste on väärä. #[a(href="/kehut") Takaisin listaukseen].
