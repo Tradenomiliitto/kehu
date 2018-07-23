@@ -57,6 +57,12 @@ mixin form-group-tags (name, label, errors, values)
             else
                 input.tagsinput.form-control(id=name, name=name, type="text", value='', data-role="tagsinput")
 
+mixin kehu-delete-button (csrfToken, kehu)
+    form(method="POST", action=`/kehut/${kehu.id}?_method=DELETE`)
+        input(name="_csrf", type="hidden", value=csrfToken)
+        button#delete-kehu.btn.btn-danger.btn-sm.float-right
+            span.oi.oi-trash(title="Poista", aria-hidden="true")
+
 mixin kehu-card (kehu)
     .card.bg-light.mb-3.Kehu
         .card-body
