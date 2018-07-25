@@ -9,6 +9,12 @@ module.exports = function setupRoutes(app) {
   app.use("/kehut", ensureAuthenticated, kehu);
   app.use("/profiili", user);
 
+  app.get("/rekisteriseloste", (req, res) => {
+    res.render("privacy-policy", {
+      user: req.user
+    });
+  });
+
   app.get("/", async (req, res) => {
     const kehu = req.isAuthenticated() ? await getRandomKehu(req.user.id) : {};
     res.render("index", {
