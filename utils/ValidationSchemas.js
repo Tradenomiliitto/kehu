@@ -35,7 +35,7 @@ const kehuSchema = {
     }
   },
   owner_id: {
-    errorMessage: "Kehun omistajan id puuttuu tai on virheellinen.",
+    errorMessage: "Kehun omistajan tunnus puuttuu tai on virheellinen.",
     isInt: true,
     toInt: true,
     custom: {
