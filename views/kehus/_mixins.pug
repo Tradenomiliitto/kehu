@@ -58,7 +58,12 @@ mixin form-group-tags (name, label, errors, values)
                 input.tagsinput.form-control(id=name, name=name, type="text", value='', data-role="tagsinput")
 
 mixin form-input-hidden(name, value)
-    input(name=name, type="hidden", value=value)
+    if errors && errors.find((e) => e.param === name)
+        .form-group
+            input.form-control.is-invalid(name=name, type="hidden", value=value)
+            +form-invalid-feedback(name, errors)
+    else
+        input.form-control(name=name, type="hidden", value=value)
 
 mixin kehu-form(action, csrfToken, user, values, errors)
     form(method="POST", action=action)
