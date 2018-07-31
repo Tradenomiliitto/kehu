@@ -9,14 +9,4 @@ block content
             .col-12.col-lg-6.offset-lg-3
                 h1 Lisää kehu
 
-                form(method="POST", action="/kehut")
-                    input(name="_csrf", type="hidden", value=csrfToken)
-                    input(name="giver_id", type="hidden", value=user.id)
-                    input(name="owner_id", type="hidden", value=user.id)
-                    +form-group-textarea('text', 'Kehu', errors, values)
-                    +form-group-input('giver_name', 'Kehun antaja', errors, values)
-                    +form-group-input('location', 'Sijainti', errors, values)
-                    +form-group-timestamp('date_given', 'Ajankohta', errors, values)
-                    +form-group-tags('tags', 'Aiheet', errors, values)
-
-                    button.btn.btn-primary(type="submit") Tallenna
+                +kehu-form("/kehut", csrfToken, user, values, errors)

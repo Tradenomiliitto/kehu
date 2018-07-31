@@ -57,6 +57,18 @@ mixin form-group-tags (name, label, errors, values)
             else
                 input.tagsinput.form-control(id=name, name=name, type="text", value='', data-role="tagsinput")
 
+mixin kehu-form(action, csrfToken, user, values, errors)
+    form(method="POST", action=action)
+        input(name="_csrf", type="hidden", value=csrfToken)
+        input(name="giver_id", type="hidden", value=user.id)
+        input(name="owner_id", type="hidden", value=user.id)
+        +form-group-textarea('text', 'Kehu', errors, values)
+        +form-group-input('giver_name', 'Kehun antaja', errors, values)
+        +form-group-input('location', 'Sijainti', errors, values)
+        +form-group-timestamp('date_given', 'Ajankohta', errors, values)
+        +form-group-tags('tags', 'Aiheet', errors, values)
+        button.btn.btn-primary(type="submit") Tallenna
+
 mixin kehu-delete-button (csrfToken, kehu)
     form(method="POST", action=`/kehut/${kehu.id}?_method=DELETE`)
         input(name="_csrf", type="hidden", value=csrfToken)
