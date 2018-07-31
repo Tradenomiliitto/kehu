@@ -1,8 +1,10 @@
 extends ../layout
+include ../_flash-messages
 include _mixins
 
 block content
     .container
+        +flash-messages('col-12 col-lg-6 offset-lg-3')
         .row
             .col-12.col-lg-6.offset-lg-3
                 +kehu-delete-button(csrfToken, values)
