@@ -1,11 +1,11 @@
-mixin flash-message(type, classname)
+mixin flash-message(type, classname, cols)
     if (messages && messages[type])
-        .container
-            .row
-                .col
-                    div(class=`alert alert-${classname}`, role="alert")
-                        span= messages[type]
+        .row
+            div(class=cols)
+                div(class=`alert alert-${classname}`, role="alert")
+                    span= messages[type]
 
-+flash-message('info', 'info')
-+flash-message('success', 'success')
-+flash-message('error', 'danger')
+mixin flash-messages(cols)
+    +flash-message('info', 'info', cols)
+    +flash-message('success', 'success', cols)
+    +flash-message('error', 'danger', cols)
