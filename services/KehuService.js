@@ -164,6 +164,7 @@ function parseTags(data) {
   return data.tags
     .split(",")
     .map(tag => tag.trim().toLowerCase())
+    .filter(tag => !!tag)
     .map(text => ({ text }));
 }
 
