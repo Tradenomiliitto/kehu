@@ -91,7 +91,7 @@ mixin kehu-card (kehu)
     .card.bg-light.mb-3.Kehu
         .card-body
             p.Kehu-quotemark “
-            p.lead.font-italic= kehu.text
+            p.lead.font-italic.Kehu-text= kehu.text
             hr.my-3
             table.table.table-sm.KehuTable
                 tbody
@@ -111,7 +111,7 @@ mixin kehu-link (kehu)
         .card.bg-light.mb-3.mr-3.Kehu
             .card-body
                 p.Kehu-quotemark “
-                p.lead.font-italic= kehu.text
+                p.lead.font-italic.Kehu-text= kehu.text
                 hr.my-3
                 p= `– ${kehu.giver_name}`
                 p= kehu.tags.map(t => `#${t.text}`).join(' ')
