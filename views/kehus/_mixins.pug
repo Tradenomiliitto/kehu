@@ -72,7 +72,7 @@ mixin kehu-form(action, csrfToken, user, values, errors)
         +form-input-hidden("owner_id", user.id)
         +form-group-textarea('text', 'Kehu', errors, values)
         +form-group-input('giver_name', 'Kehun antaja', errors, values)
-        +form-group-input('location', 'Sijainti', errors, values)
+        +form-group-input('situation', 'Tilanne', errors, values)
         +form-group-timestamp('date_given', 'Ajankohta', errors, values)
         +form-group-tags('tags', 'Aiheet', errors, values)
         button.btn.btn-primary(type="submit") Tallenna
@@ -100,7 +100,7 @@ mixin kehu-card (kehu)
                         td= kehu.giver_name
                     tr
                         td Paikka:
-                        td= kehu.location
+                        td= kehu.situation
                     tr
                         td Aika:
                         td= moment(kehu.date_given).format('D.M.YYYY')

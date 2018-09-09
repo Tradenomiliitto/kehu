@@ -26,8 +26,8 @@ const kehuSchema = {
       }
     }
   },
-  location: {
-    errorMessage: "Sijainti on pakollinen tieto.",
+  situation: {
+    errorMessage: "Tilanne on pakollinen tieto.",
     custom: {
       options: value => {
         return !!value;
