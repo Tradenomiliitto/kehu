@@ -8,7 +8,8 @@
     "migrate:latest": "npx knex migrate:latest",
     "postinstall": "npm run build && npm run migrate:latest",
     "start": "node ./bin/www",
-    "start:dev": "nodemon ./bin/www & npm run build:dev"
+    "start:dev": "nodemon ./bin/www & npm run build:dev",
+    "test": "npx nightwatch"
   },
   "dependencies": {
     "auth0": "2.13.0",
