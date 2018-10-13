@@ -8,6 +8,7 @@
 /public/*.eot
 /public/*.svg
 dump.rdb
+reports
 
 # Logs
 logs
