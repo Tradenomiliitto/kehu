@@ -18,5 +18,21 @@ module.exports = {
       .text.to.equal("Sinulla ei ole vielä kehuja");
 
     browser.click(".logout-nw").expect.element(".login-nw").to.be.present;
+  },
+
+  Login: function(browser) {
+    const { USER_EMAIL, PASSWORD } = browser.globals;
+    browser
+      .url(browser.launchUrl)
+      .click(".login-nw")
+      .waitForElementVisible(".auth0-lock-submit")
+      .setValue('.auth0-lock-input[name="email"]', USER_EMAIL)
+      .setValue('.auth0-lock-input[name="password"]', PASSWORD)
+      .click(".auth0-lock-submit")
+      .waitForElementVisible(".jumbotron")
+      .expect.element(".auth-title-nw")
+      .text.to.equal("Sinulla ei ole vielä kehuja");
+
+    browser.click(".logout-nw").expect.element(".login-nw").to.be.present;
   }
 };
