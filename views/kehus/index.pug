@@ -8,7 +8,7 @@ block content
         .row
             .col-12
                 h1.d-inline-block.KehuTitle Kehut
-                a.btn.btn-success.float-right(href="/kehut/uusi") Lisää kehu
+                a.btn.btn-success.float-right.add-kehu-nw(href="/kehut/uusi") Lisää kehu
             .col-12.KehuList
                 each kehu in kehus
                     +kehu-link(kehu)

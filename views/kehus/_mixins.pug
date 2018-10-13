@@ -81,39 +81,39 @@ mixin kehu-form(action, csrfToken, user, values, errors)
         +form-group-input('situation', 'Tilanne', errors, values)
         +form-group-timestamp('date_given', 'Ajankohta', errors, values)
         +form-group-tags('tags', 'Asiasanat', errors, values, 'Erottele asiasanat pilkulla. Esimerkiksi: luento, koulutus')
-        button.btn.btn-primary(type="submit") Tallenna
+        button.btn.btn-primary.submit-kehu-nw(type="submit") Tallenna
 
 mixin kehu-delete-button (csrfToken, kehu)
     form(method="POST", action=`/kehut/${kehu.id}?_method=DELETE`)
         input(name="_csrf", type="hidden", value=csrfToken)
-        button#delete-kehu.btn.btn-danger.btn-sm.float-right
+        button#delete-kehu.btn.btn-danger.btn-sm.float-right.delete-kehu-nw
             span.oi.oi-trash(title="Poista", aria-hidden="true")
 
 mixin kehu-edit-button (kehu, classNames)
-    a.btn.btn-info.btn-sm.float-right(href=`/kehut/${kehu.id}/muokkaa`, class=classNames)
+    a.btn.btn-info.btn-sm.float-right.edit-kehu-nw(href=`/kehut/${kehu.id}/muokkaa`, class=classNames)
         span.oi.oi-pencil(title="Muokkaa", aria-hidden="true")
 
 mixin kehu-card (kehu)
     .card.bg-light.mb-3.Kehu
         .card-body
             p.Kehu-quotemark “
-            p.lead.font-italic.Kehu-text= kehu.text
+            p.lead.font-italic.Kehu-text.kehu-text-nw= kehu.text
             hr.my-3
             table.table.table-sm.KehuTable
                 tbody
                     tr
                         td Kehuja:
-                        td= kehu.giver_name
+                        td.kehu-giver-name-nw= kehu.giver_name
                     tr
                         td Tilanne:
-                        td= kehu.situation
+                        td.kehu-situation-nw= kehu.situation
                     tr
                         td Aika:
-                        td= moment(kehu.date_given).format('D.M.YYYY')
-            p= kehu.tags.map(t => `#${t.text}`).join(' ')
+                        td.kehu-date-given-nw= moment(kehu.date_given).format('D.M.YYYY')
+            p.kehu-tags-nw= kehu.tags.map(t => `#${t.text}`).join(' ')
 
 mixin kehu-link (kehu)
-    a(href=`/kehut/${kehu.id}`).KehuLink
+    a(href=`/kehut/${kehu.id}`).KehuLink.kehu-link-nw
         .card.bg-light.mb-3.mr-3.Kehu
             .card-body
                 p.Kehu-quotemark “
