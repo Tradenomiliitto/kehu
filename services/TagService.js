@@ -1,4 +1,5 @@
 const Tag = require("../models/Tag");
+const Kehu = require("../models/Kehu");
 
 async function findTagWithText(text) {
   return await Tag.query()
@@ -6,12 +7,15 @@ async function findTagWithText(text) {
     .first();
 }
 
-async function getTags() {
-  const tags = await Tag.query();
+async function getUserTags(user_id) {
+  const kehus = Kehu.query()
+    .where("owner_id", user_id)
+    .eager("tags");
+  const tags = kehus.map(k => k.tags).reduce((acc, val) => acc.concat(val), []);
   return tags.map(t => ({ text: t.text }));
 }
 
 module.exports = {
   findTagWithText,
-  getTags
+  getUserTags
 };
