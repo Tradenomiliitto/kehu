@@ -1,0 +1,19 @@
+@each $size, $length in $spacers {
+  .#{$size} {
+    margin-bottom: to-rem($length) !important;
+  }
+
+  @include loop-breakpoints($inclusive: false) {
+    .#{$size}-#{$breakpoint} {
+      margin-bottom: to-rem($length) !important;
+    }
+  }
+
+  @include loop-breakpoints {
+    @if not $is-last-breakpoint {
+      .#{$size}-#{$breakpoint}-up {
+        margin-bottom: to-rem($length) !important;
+      }
+    }
+  }
+}

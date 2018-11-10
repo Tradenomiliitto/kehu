@@ -1,0 +1,270 @@
+// button
+@mixin button-unstyled {
+  appearance: none;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  color: inherit;
+}
+
+@mixin button-base(
+  $padding-vertical: $button-padding-vertical,
+  $padding-horizontal: $button-padding-horizontal,
+  $transition: $button-transition
+) {
+  display: inline-block;
+  vertical-align: middle;
+  padding: $padding-vertical $padding-horizontal;
+  transition: $transition;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+@mixin button-style(
+  $bg: $button-bg,
+  $color: $button-color,
+  $hover-bg: $button-hover-bg,
+  $hover-color: $button-hover-color,
+  $hover-border-color: $button-hover-border-color,
+  $active-bg: $button-active-bg,
+  $active-color: $button-active-color,
+  $border-width: $button-border-width,
+  $border-color: $button-border-color,
+  $border-radius: $button-border-radius
+) {
+  border: $border-width solid $border-color;
+  border-radius: $border-radius;
+  background-color: $bg;
+  color: $color;
+
+  &:hover,
+  &:focus {
+    outline: 0;
+    text-decoration: none;
+    border-color: $hover-border-color;
+    background-color: $hover-bg;
+    color: $hover-color;
+  }
+
+  &:active {
+    background-color: $active-bg;
+    color: $active-color;
+  }
+}
+
+@mixin button-disabled($disabled-opacity: $button-disabled-opacity) {
+  &.disabled,
+  &:disabled {
+    opacity: $disabled-opacity;
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+@mixin button {
+  @include button-base;
+  @include button-style;
+  @include button-disabled;
+}
+
+// list
+@mixin list-unstyled {
+  padding-left: 0;
+  list-style: none;
+}
+
+@mixin list-inline($spacing: 1rem, $center: false, $child-selector: "li") {
+  @include list-unstyled;
+
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: $spacing * -1;
+
+  @if $center {
+    justify-content: center;
+  }
+
+  > #{$child-selector} {
+    margin-left: $spacing;
+  }
+}
+
+// clearfix
+@mixin clearfix {
+  &::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+}
+
+// text
+@mixin text-hide {
+  text-indent: 110%;
+  white-space: nowrap;
+  overflow: hidden;
+  color: transparent;
+  text-shadow: none;
+}
+
+@mixin text-truncate {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@mixin text-hyphenate {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+// visibility
+@mixin sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+@mixin sr-only-focusable {
+  &:active,
+  &:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+    white-space: inherit;
+  }
+}
+
+// beautiful underline
+@mixin underline($color: currentColor, $distance: 100%, $size: 1px) {
+  text-decoration: none;
+  background-image: linear-gradient($color, $color);
+  background-position: 0 $distance;
+  background-size: 1px $size;
+  background-repeat: repeat-x;
+}
+
+// target HiDPI screens
+@mixin hidpi($ratio: 1.5) {
+  @media (min-resolution: round($ratio * 96dpi)),
+    (min-resolution: $ratio * 1dppx) {
+    @content;
+  }
+}
+
+// scale headings using modular scale
+@mixin scale-headings($max-scale: 5, $base: $type-scale-base) {
+  @each $heading in $headings {
+    #{$heading} {
+      font-size: modular-scale($max-scale, $base);
+    }
+
+    $max-scale: $max-scale - 1;
+  }
+}
+
+// triangle mixin adapted from bourbon
+@mixin triangle($direction, $width, $height, $color: currentColor) {
+  border-style: solid;
+  height: 0;
+  width: 0;
+
+  @if $direction == "up" {
+    border-color: transparent transparent $color;
+    border-width: 0 ($width / 2) $height;
+  } @else if $direction == "up-right" {
+    border-color: transparent $color transparent transparent;
+    border-width: 0 $width $width 0;
+  } @else if $direction == "right" {
+    border-color: transparent transparent transparent $color;
+    border-width: ($height / 2) 0 ($height / 2) $width;
+  } @else if $direction == "down-right" {
+    border-color: transparent transparent $color;
+    border-width: 0 0 $width $width;
+  } @else if $direction == "down" {
+    border-color: $color transparent transparent;
+    border-width: $height ($width / 2) 0;
+  } @else if $direction == "down-left" {
+    border-color: transparent transparent transparent $color;
+    border-width: $width 0 0 $width;
+  } @else if $direction == "left" {
+    border-color: transparent $color transparent transparent;
+    border-width: ($height / 2) $width ($height / 2) 0;
+  } @else if $direction == "up-left" {
+    border-color: $color transparent transparent;
+    border-width: $width $width 0 0;
+  }
+}
+
+// loop all breakpoints and output content
+@mixin loop-breakpoints(
+  $breakpoints: $mq-breakpoints,
+  $inclusive: true,
+  $mq: true
+) {
+  $breakpoint-keys: map-keys($breakpoints);
+
+  @for $i from 1 through length($breakpoint-keys) {
+    $breakpoint: nth($breakpoint-keys, $i) !global;
+    $is-first-breakpoint: $breakpoint == nth($breakpoint-keys, 1) !global;
+    $is-last-breakpoint: $breakpoint ==
+      nth($breakpoint-keys, length($breakpoint-keys)) !global;
+
+    @if $mq {
+      @if $inclusive {
+        // first breakpoint
+        @if $is-first-breakpoint {
+          @content;
+        }
+        // remaining breakpoints
+        @else {
+          @include mq($breakpoint, $breakpoints: $breakpoints) {
+            @content;
+          }
+        }
+      } @else {
+        // first breakpoint
+        @if $is-first-breakpoint {
+          @if length($breakpoint-keys) > 1 {
+            @include mq(
+              $until: nth($breakpoint-keys, $i + 1),
+              $breakpoints: $breakpoints
+            ) {
+              @content;
+            }
+          } @else {
+            @content;
+          }
+        }
+        // last breakpoint
+        @else if $is-last-breakpoint {
+          @include mq($breakpoint, $breakpoints: $breakpoints) {
+            @content;
+          }
+        }
+        // remaining breakpoints
+        @else {
+          @include mq(
+            $breakpoint,
+            nth($breakpoint-keys, $i + 1),
+            $breakpoints: $breakpoints
+          ) {
+            @content;
+          }
+        }
+      }
+    } @else {
+      @content;
+    }
+  }
+}
