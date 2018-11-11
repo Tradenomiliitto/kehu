@@ -2,13 +2,12 @@
   background-color: $lighter-grey;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.14);
   height: 66px;
-  padding: 0.5rem;
   position: static;
 }
 
 .Header-logo {
   height: 30px;
-  margin-top: 10px;
+  margin: 16px 0 20px;
 }
 
 .Header-menuButton {
@@ -16,21 +15,31 @@
   border: none;
   cursor: pointer;
   float: right;
-  margin-top: 10px;
+  margin-top: 16px;
 
   > img {
     height: 16px;
   }
+
+  @include mq(lg) {
+    display: none;
+  }
 }
 
 .Header-menuContainer {
-  margin: 0 -0.5rem;
+  background-color: $lighter-grey;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.14);
+  margin: 0 -0.9375rem;
+
+  @include mq(lg) {
+    box-shadow: none;
+    float: right;
+  }
 }
 
 .Header-menu {
-  background-color: $lighter-grey;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.14);
   list-style-type: none;
+  margin: 0;
   max-height: 0;
   overflow: hidden;
   padding: 0;
@@ -38,10 +47,21 @@
   &--open {
     max-height: 100%;
   }
+
+  @include mq(lg) {
+    box-shadow: none;
+    max-height: 100%;
+  }
 }
 
 .Header-menuItem {
-  padding: 0.5rem 2rem;
+  padding: 0.5rem 1rem;
+
+  @include mq(lg) {
+    display: inline;
+    line-height: 66px;
+    padding: 0 1rem;
+  }
 
   > a {
     color: $secondary;
