@@ -1,6 +1,6 @@
 $header-height: 100px;
 
-.Header {
+.LandingHeader {
   height: $header-height;
   padding: 1rem 1rem;
 
@@ -9,11 +9,11 @@ $header-height: 100px;
   }
 }
 
-.Header-logo {
+.LandingHeader-logo {
   width: 100px;
 }
 
-.Header-login {
+.LandingHeader-login {
   @extend .pull-right;
   width: 177px;
 }
