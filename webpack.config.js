@@ -2,19 +2,26 @@ const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-  mode: "production",
+  mode: process.env.NODE_ENV || "production",
   entry: {
     main: path.resolve(__dirname, "assets", "js", "index.js")
   },
   devtool: "source-map",
   output: {
     libraryTarget: "umd",
-    filename: "[name].bundle.js",
+    filename: "[name].js",
     path: path.resolve(__dirname, "public"),
     globalObject: "this"
   },
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader"
+        }
+      },
       {
         test: /\.scss$/,
         use: [

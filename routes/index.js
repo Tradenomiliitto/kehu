@@ -15,9 +15,12 @@ module.exports = function setupRoutes(app) {
   });
 
   app.get("/", async (req, res) => {
-    res.render("index", {
-      user: req.user,
-      env: process.env
-    });
+    if (req.user) {
+      res.render("app");
+    } else {
+      res.render("index", {
+        env: process.env
+      });
+    }
   });
 };
