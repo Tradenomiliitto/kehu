@@ -1,6 +1,6 @@
 import "./scss/style.scss";
-import TempComponent from "./TempComponent";
+import App from "./App";
 import React from "react";
 import ReactDOM from "react-dom";
 
-ReactDOM.render(<TempComponent />, document.getElementById("app"));
+ReactDOM.render(<App />, document.getElementById("app"));
