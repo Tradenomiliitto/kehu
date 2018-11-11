@@ -1,0 +1,19 @@
+.Button--inverse {
+  @extend .Button;
+  border: 1px solid $button-bg;
+  border-radius: 1.5em;
+  background-color: transparent;
+  color: $button-bg;
+
+  &:hover,
+  &:focus,
+  &:active {
+    border-color: $button-hover-bg;
+    background-color: transparent;
+    color: $button-hover-bg;
+  }
+}
+
+.Button--wide {
+  padding: $button-padding-vertical 6em;
+}

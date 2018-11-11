@@ -1,0 +1,46 @@
+// Baseguide setting overrides
+
+// Global
+$font-antialiased: false !default;
+$font-size-base: 1rem !default;
+$font-family-base: "Work Sans", sans-serif;
+$font-weight-base: 400 !default;
+$line-height-base: 1.5 !default;
+$global-bg: #fff !default;
+$text-color: $black;
+
+// Headings
+$headings: (
+  "h1, .h1",
+  "h2, .h2",
+  "h3, .h3",
+  "h4, .h4",
+  "h5, .h5",
+  "h6, .h6"
+) !default;
+
+$headings-spacing: 0.4em !default;
+$headings-font-family: inherit !default;
+$headings-font-weight: 700 !default;
+$headings-line-height: 1.2 !default;
+$headings-color: inherit !default;
+
+$type-scale-base: $font-size-base !default;
+$type-scale: 1.25 !default;
+
+// Button
+$button-selector: ".Button";
+$button-padding-vertical: 0.375em !default;
+$button-padding-horizontal: 1em !default;
+$button-bg: $primary;
+$button-color: $white;
+$button-border-width: 1px !default;
+$button-border-color: transparent !default;
+$button-border-radius: 1.5em;
+$button-hover-bg: $light-primary;
+$button-hover-color: #fff !default;
+$button-hover-border-color: $button-border-color !default;
+$button-active-bg: $button-hover-bg !default;
+$button-active-color: $button-hover-color !default;
+$button-disabled-opacity: 0.65 !default;
+$button-transition: background-color 0.15s ease-out, color 0.15s ease-out !default;

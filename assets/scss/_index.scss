@@ -1,0 +1,145 @@
+$header-height: 100px;
+
+.Header {
+  height: $header-height;
+  padding: 1rem 1rem;
+
+  @include mq(sm) {
+    padding: 1rem 2rem;
+  }
+}
+
+.Header-logo {
+  width: 100px;
+}
+
+.Header-login {
+  @extend .pull-right;
+  width: 177px;
+}
+
+.LandingSection1 {
+  background-image: url("/images/landing-hero-background.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 80vh;
+}
+
+.LandingSectionContent {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.HeroSectionContent {
+  height: calc(100% - #{$header-height});
+  padding: 15% 1rem;
+
+  @include mq(sm) {
+    padding: 15% 2rem;
+  }
+
+  @include mq(lg) {
+    background-image: url("/images/landing-hero-image.svg");
+    background-repeat: no-repeat;
+    background-position: right bottom;
+  }
+}
+
+.HeroSectionContent-title {
+  color: $white;
+  font-weight: 500;
+}
+
+.HeroSectionContent-button {
+  margin: 2rem 0;
+}
+
+.HeroSectionContent-text {
+  font-size: 0.875rem;
+}
+
+.LandingSectionContent--padding {
+  padding: 1rem;
+
+  @include mq(sm) {
+    padding: 2rem;
+  }
+
+  @include mq(md) {
+    padding: 4rem;
+  }
+
+  @include mq(lg) {
+    padding: 6rem;
+  }
+}
+
+.LandingSection2-image {
+  height: 400px;
+  margin: 6rem 0 4rem;
+}
+
+.LandingSection3 {
+  background-color: $light-pink;
+}
+
+.LandingSection3-image {
+  padding: 6rem 0 0;
+}
+
+.LandingSection4-image {
+  @include mq(lg) {
+    max-width: initial;
+    min-height: 594px;
+    width: auto;
+  }
+}
+
+.LandingSection5 {
+  background-color: $lighter-grey;
+}
+
+.LandingSection6-image {
+  @include mq(xl) {
+    max-width: initial;
+    min-height: 512px;
+    width: auto;
+  }
+}
+
+.LandingSection7 {
+  background-color: $secondary;
+  padding: 4rem 0 2rem;
+  text-align: center;
+}
+
+.Footer-logo {
+  width: 190px;
+}
+
+.Footer-copyright {
+  color: $white;
+  font-weight: 300;
+  padding-top: 1rem;
+}
+
+.Footer-links {
+  list-style-type: none;
+  padding: 0;
+}
+
+.Footer-link {
+  color: $white;
+  font-weight: 300;
+  padding: 0 1rem;
+  transition: $button-transition;
+
+  &:hover {
+    text-decoration: none;
+    color: darken($white, 10%);
+  }
+}

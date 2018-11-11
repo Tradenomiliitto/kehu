@@ -1,10 +1,120 @@
 extends layout
 
 block content
-  main.container(role='main')
-    .row
+  .LandingSection1
+    .Header
+      img(src="/images/kehu-logo.png").Header-logo
+      button.Button.Header-login.login-js Kirjaudu
+
+    .HeroSectionContent
+        h1.HeroSectionContent-title Opi tuntemaan vahvuutesi.
+        button.Button.Button--wide.HeroSectionContent-button.register-js Luo tili
+        p.HeroSectionContent-text Kehu on täysin ilmainen ja kaikille avoin palvelu.
+
+
+  .LandingSection2
+    .container
+      .row
+        .col-xs-12.col-md-6.LandingSectionContent
+          img(src="/images/landing-section-2-image.svg").LandingSection2-image
+        .col-xs-12.col-md-6.LandingSectionContent.LandingSectionContent--padding
+          h2.Heading--secondary Kerää dataa kehuista joita saat
+          p Opi tuntemaan vahvuutesi kirjaamalla ylös kehut joita saat suullisesti ja kirjallisesti eri tilanteissa
+
+  .LandingSection3
+    .container
+      .row
+        .col-xs-12.col-md-6.LandingSectionContent.LandingSectionContent--padding
+          h2.Heading--secondary Kehu kollegaa, alaista tai ystävää
+          p Työelämän ei pitäisi olla ryppyotsaista. Kehu, kannusta ja luo hyvää ilmapiiriä työyhteisössäsi. Emme voi kehua toisiamme liikaa!
+        .col-xs-12.col-md-6.LandingSectionContent
+          img(src="/images/landing-section-3-image.png").LandingSection3-image
+
+  .LandingSection4
+    .container
+      .row
+        .col-xs-12.col-md-6.LandingSectionContent
+          img(src="/images/landing-section-4-image.png").LandingSection4-image
+        .col-xs-12.col-md-6.LandingSectionContent.LandingSectionContent--padding
+          h2.Heading--secondary Tarkastele kehujasi raporteista
+          p Kun tunnet vahvuutesi, voit hyödyntää niitä työnhaussa ja kehityskeskusteluissa
+
+  .LandingSection5
+    .container
+      .row
+        .col-xs-12.col-md-6.LandingSectionContent.LandingSectionContent--padding
+          h2.Heading--secondary Ala kerryttämään dataa kehuistasi jo tänään
+          p Kun tunnet vahvuutesi, voit hyödyntää niitä työnhaussa ja kehityskeskusteluissa
+        .col-xs-12.col-md-6.LandingSectionContent.LandingSectionContent--padding
+          button.Button.Button--wide.register-js Luo tili
+
+  .LandingSection6
+    .container
+      .row
+        .col-xs-12.col-md-6.LandingSectionContent.LandingSectionContent--padding
+          h2.Heading--secondary Mitä hyötyä kehudatan keräämisestä on?
+          p Työelämän asiantuntija xxx xxx kertoo blogissaan miten omaa itsetuntemusta voi kehittää kehujen dokumentoinnin avulla, ja miten sitä voi hyödyntää työelämässä.
+          a(href="https://www.tral.fi/ajankohtaista/").Button.Button--inverse.Button--wide Lue blogia
+        .col-xs-12.col-md-6.LandingSectionContent
+          img(src="/images/landing-section-6-image.png").LandingSection6-image
+
+  .LandingSection7
+    .container
+      .row
         .col
-          if user
-            include _index-auth
-          else
-            include _index-no-auth
+          .Footer
+            img(src="/images/kehu-logo.png").Footer-logo
+            p.Footer-copyright © Tradenomiliitto 2018
+
+            ul.Footer-links
+              li
+                a.Footer-link(href="/rekisteriseloste") Rekisteriseloste
+                a.Footer-link(href="https://www.tral.fi/yhteystiedot/") Yhteystiedot
+
+  script.
+      var settings = {
+          auth: {
+              redirectUrl: '#{env.AUTH0_CALLBACK_URL}',
+              responseType: 'code',
+              params: {
+                  scope: 'openid name email picture'
+              }
+          },
+          theme: {
+              primaryColor: '#FF96AC'
+          },
+          mustAcceptTerms: true,
+          initialScreen: 'login',
+          additionalSignUpFields: [
+              {
+                  name: "first_name",
+                  placeholder: "Etunimi"
+              },
+              {
+                  name: "last_name",
+                  placeholder: "Sukunimi"
+              }
+          ],
+          language: 'fi',
+          languageDictionary: {
+              signUpTerms: 'Hyväksyn Kehu-sovelluksen <a href="https://kehu.herokuapp.com/rekisteriseloste" target="_blank" rel="noopener noreferrer">rekisteriselosteen</a>'
+          }
+      };
+
+      var registerSettings = Object.assign({}, settings, {initialScreen: 'signUp'});
+      var loginLock = new Auth0Lock('#{env.AUTH0_CLIENT_ID}', '#{env.AUTH0_DOMAIN}', settings);
+      var registerLock = new Auth0Lock('#{env.AUTH0_CLIENT_ID}', '#{env.AUTH0_DOMAIN}', registerSettings);
+
+      var loginButtons = document.querySelectorAll('.login-js');
+      var registerButtons = document.querySelectorAll('.register-js');
+
+      function eventBinder (lock) {
+          return function (button) {
+              button.addEventListener('click', function () {
+                  lock.show();
+              });
+          }
+      }
+
+      loginButtons.forEach(eventBinder(loginLock));
+      registerButtons.forEach(eventBinder(registerLock));

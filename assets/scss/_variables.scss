@@ -1,0 +1,19 @@
+$pink: #ff96ac;
+$light-pink: #ffbbc5;
+$green: #3b5f5f;
+$white: #fff;
+$lighter-grey: #edf1f1;
+$light-grey: #f1f1f1;
+$medium-grey: #cfcfcf;
+$medium-dark-grey: #999;
+$dark-grey: #979797;
+$black: #000;
+
+$primary: $pink;
+$secondary: $green;
+
+$main-text: #333;
+
+$light-primary: lighten($primary, 9%);
+$lighter-primary: lighten($primary, 15%);
+$light-secondary: lighten($secondary, 9%);

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1400px" height="880px" viewBox="0 0 1400 880" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.3 (67297) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 5</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="47.1269097%" y1="-31.1596684%" x2="42.1329218%" y2="324.754281%" id="linearGradient-1">
+            <stop stop-color="#3B5F5F" offset="0%"></stop>
+            <stop stop-color="#3FC0C0" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-2" x="0" y="0" width="1452" height="894"></rect>
+        <filter x="-0.5%" y="-0.6%" width="101.0%" height="101.6%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.135048687 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <linearGradient x1="100%" y1="50%" x2="0%" y2="50%" id="linearGradient-4">
+            <stop stop-color="#000000" stop-opacity="0.16015625" offset="0%"></stop>
+            <stop stop-color="#000000" stop-opacity="0.0203238225" offset="61.5087608%"></stop>
+            <stop stop-color="#000000" stop-opacity="0.163581295" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="136.837765%" y1="50%" x2="-65.5080396%" y2="100%" id="linearGradient-5">
+            <stop stop-color="#000000" stop-opacity="0.16015625" offset="0%"></stop>
+            <stop stop-color="#000000" stop-opacity="0.0203238225" offset="61.5087608%"></stop>
+            <stop stop-color="#000000" stop-opacity="0.163581295" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="etusivu-ei_kirjautunut-desktop">
+            <g id="Group-5">
+                <g id="Rectangle-3">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use>
+                    <use fill="url(#linearGradient-1)" fill-rule="evenodd" xlink:href="#path-2"></use>
+                </g>
+                <path d="M-1.13686838e-13,840.85788 C89.038289,847.126057 164.815328,809.856544 227.331116,729.049342 C321.104798,607.838539 144.788083,426.577514 227.331116,339.990877 C309.874148,253.40424 511.710871,375.779703 598.220513,339.990877 C684.730156,304.20205 580.888359,225.373092 675.330668,154.654562 C769.772976,83.9360319 903.770118,114.466695 943.472213,81.4659309 C969.940276,59.4654213 957.301243,32.310111 905.555113,-5.68434189e-14 L-1.13686838e-13,-5.68434189e-14 L-1.13686838e-13,840.85788 Z" id="Path-5" fill="url(#linearGradient-4)"></path>
+                <path d="M467.868692,928.857657 C563.471374,935.624935 644.835113,895.387858 711.95991,808.146426 C812.647105,677.284279 623.33135,481.590444 711.95991,388.109394 C800.58847,294.628344 1017.30571,426.747887 1110.19332,388.109394 C1203.08093,349.470902 1091.58334,264.365231 1192.98846,188.015777 C1294.39357,111.666323 1438.26972,144.627974 1480.89887,108.999541 C1421.24564,104.828181 1083.97651,81.2440257 469.091471,38.2470754 L467.868692,928.857657 Z" id="Path-5" fill="url(#linearGradient-4)" transform="translate(974.383783, 483.917727) rotate(176.000000) translate(-974.383783, -483.917727) "></path>
+                <ellipse id="Oval" fill="url(#linearGradient-5)" cx="799.5" cy="186" rx="39.5" ry="26"></ellipse>
+            </g>
+        </g>
+    </g>
+</svg>
