@@ -1,4 +1,4 @@
-import "../scss/style.scss";
+import "./scss/style.scss";
 import TempComponent from "./TempComponent";
 import React from "react";
 import ReactDOM from "react-dom";

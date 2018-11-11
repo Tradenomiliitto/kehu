@@ -11,7 +11,7 @@ to run the application. NodeJS backend is build with Express and accesses databa
 
 User management and authentication are handled using Auth0 with Passport library.
 
-You can find JavaScript and SCSS assets under /assets directory, from where they are build and bundled with webpack.
+You can find JavaScript and SCSS under /client directory, from where they are build and bundled with webpack.
 
 Following npm scripts are available:
 
