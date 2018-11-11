@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "auth0": "2.13.0",
+    "classnames": "2.2.6",
     "connect-redis": "3.4.0",
     "cookie-parser": "1.4.3",
     "csurf": "1.9.0",
@@ -40,6 +41,7 @@
   },
   "devDependencies": {
     "@babel/core": "7.1.5",
+    "@babel/plugin-proposal-class-properties": "7.1.0",
     "@babel/preset-env": "7.1.5",
     "@babel/preset-react": "7.0.0",
     "babel-cli": "6.26.0",

@@ -1,0 +1,56 @@
+.Header {
+  background-color: $lighter-grey;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.14);
+  height: 66px;
+  padding: 0.5rem;
+  position: static;
+}
+
+.Header-logo {
+  height: 30px;
+  margin-top: 10px;
+}
+
+.Header-menuButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  float: right;
+  margin-top: 10px;
+
+  > img {
+    height: 16px;
+  }
+}
+
+.Header-menuContainer {
+  margin: 0 -0.5rem;
+}
+
+.Header-menu {
+  background-color: $lighter-grey;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.14);
+  list-style-type: none;
+  max-height: 0;
+  overflow: hidden;
+  padding: 0;
+
+  &--open {
+    max-height: 100%;
+  }
+}
+
+.Header-menuItem {
+  padding: 0.5rem 2rem;
+
+  > a {
+    color: $secondary;
+    font-weight: 500;
+    transition: $button-transition;
+
+    &:hover {
+      color: $light-secondary;
+      text-decoration: none;
+    }
+  }
+}
