@@ -17,7 +17,7 @@ class Home extends Component {
               className="Button Button--wide"
               onClick={this.props.toggleModal}
             >
-              Lisää kehu
+              Lisää Kehu
             </button>
           </div>
         </div>

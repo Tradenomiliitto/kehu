@@ -29,7 +29,7 @@ class App extends Component {
     if (this.props.isPortalVisible) {
       return (
         <Portal>
-          <KehuFormModal title="Lisää kehu" />
+          <KehuFormModal title="Lisää Kehu" />
         </Portal>
       );
     }
