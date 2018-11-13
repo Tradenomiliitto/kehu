@@ -3,9 +3,9 @@ import { Provider } from "react-redux";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import store from "./redux";
-import Header from "./Header";
 import Home from "./Home";
-import Portal from "./Portal";
+import Header from "./components/Header";
+import Portal from "./components/Portal";
 
 class App extends Component {
   static propTypes = {
