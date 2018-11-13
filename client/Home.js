@@ -15,7 +15,7 @@ class Home extends Component {
           <div className="col col-xs-12 HomeButtons">
             <button
               className="Button Button--wide"
-              onClick={this.showAddKehuModal}
+              onClick={this.props.toggleModal}
             >
               Lisää kehu
             </button>
@@ -24,10 +24,6 @@ class Home extends Component {
       </div>
     );
   }
-
-  showAddKehuModal = () => {
-    this.props.toggleModal();
-  };
 }
 
 export default connect(
