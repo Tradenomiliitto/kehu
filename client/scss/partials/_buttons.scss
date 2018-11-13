@@ -1,19 +1,32 @@
-.Button--inverse {
-  @extend .Button;
-  border: 1px solid $button-bg;
-  border-radius: 1.5em;
-  background-color: transparent;
-  color: $button-bg;
+.Button {
+  background-color: $pink;
+  background-color: -moz-linear-gradient(45deg, #d36f86 0%, $pink 100%);
+  background-color: -webkit-linear-gradient(45deg, #d36f86 0%, $pink 100%);
+  background-color: linear-gradient(45deg, #d36f86 0%, $pink 100%);
+  box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.1);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d36f86', endColorstr='$pink',GradientType=1 );
 
-  &:hover,
-  &:focus,
-  &:active {
-    border-color: $button-hover-bg;
-    background-color: transparent;
-    color: $button-hover-bg;
+  &--rounded {
+    border-radius: 1.5em;
   }
-}
 
-.Button--wide {
-  padding: $button-padding-vertical 6em;
+  &--inverse {
+    @extend .Button;
+    border: 1px solid $button-bg;
+    border-radius: 1.5em;
+    background-color: transparent;
+    color: $button-bg;
+
+    &:hover,
+    &:focus,
+    &:active {
+      border-color: $button-hover-bg;
+      background-color: transparent;
+      color: $button-hover-bg;
+    }
+  }
+
+  &--wide {
+    padding: $button-padding-vertical 6em;
+  }
 }
