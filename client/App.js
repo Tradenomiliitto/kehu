@@ -6,6 +6,7 @@ import store from "./redux";
 import Home from "./Home";
 import Header from "./components/Header";
 import Portal from "./components/Portal";
+import KehuFormModal from "./components/KehuFormModal";
 
 class App extends Component {
   static propTypes = {
@@ -26,7 +27,11 @@ class App extends Component {
 
   renderPortal() {
     if (this.props.isPortalVisible) {
-      return <Portal>HELLO!</Portal>;
+      return (
+        <Portal>
+          <KehuFormModal title="Lisää kehu" />
+        </Portal>
+      );
     }
   }
 }
