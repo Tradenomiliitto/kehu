@@ -1,0 +1,65 @@
+.Form-group {
+  padding: 1rem 0;
+
+  > label {
+    color: $secondary;
+  }
+}
+
+.KehuTextFieldContainer {
+  background-image: url("/images/quote-bubble.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 220px;
+  position: relative;
+
+  &:before,
+  &:after {
+    background-image: url("/images/quote-marks.svg");
+    background-repeat: no-repeat;
+    content: "";
+    display: block;
+    position: absolute;
+    height: 12px;
+    width: 12px;
+  }
+
+  &:before {
+    top: 1rem;
+    left: 1rem;
+  }
+
+  &:after {
+    bottom: 3rem;
+    right: 1rem;
+  }
+}
+
+.KehuTextField {
+  background: transparent;
+  border: 0;
+  margin: 0 1rem;
+  padding: 0 1rem;
+  width: calc(100% - 2rem);
+}
+
+.DateGivenFieldContainer {
+  > label {
+    padding-right: 1.5rem;
+  }
+}
+
+.DateGivenField {
+  background-image: url("/images/icon-calendar.svg");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+}
+
+.SituationContainer,
+.TagsContainer {
+  > label {
+    display: block;
+    padding-bottom: 2rem;
+    text-align: center;
+  }
+}

@@ -23,11 +23,13 @@ function GiverNameField({ value, handleChange }) {
 
 function TextField({ value, handleChange }) {
   return (
-    <div className="Form-group">
+    <div className="Form-group KehuTextFieldContainer">
       <textarea
         id="text"
         className="KehuTextField"
         name="text"
+        rows={7}
+        placeholder="Hyvää työtä! Olet..."
         value={value}
         onChange={handleChange}
       />
@@ -37,9 +39,12 @@ function TextField({ value, handleChange }) {
 
 function DateGivenField({ value, handleChange }) {
   return (
-    <div className="Form-group">
-      <label htmlFor="giver_name">Päivämäärä:</label>
+    <div className="Form-group DateGivenFieldContainer">
+      <label htmlFor="date_given">Päivämäärä:</label>
       <DatePicker
+        id="date_given"
+        className="DateGivenField"
+        dateFormat="D. MMMM YYYY"
         dropdownMode="scroll"
         locale="fi-FI"
         selected={value}
@@ -51,7 +56,7 @@ function DateGivenField({ value, handleChange }) {
 
 function SituationField({ value, handleChange }) {
   return (
-    <div className="Form-group">
+    <div className="Form-group SituationContainer">
       <label htmlFor="situation">Kehu koskee tilannetta</label>
       <input
         id="situation"
@@ -67,7 +72,7 @@ function SituationField({ value, handleChange }) {
 
 function TagsField({ value, handleChange }) {
   return (
-    <div className="Form-group">
+    <div className="Form-group TagsContainer">
       <label htmlFor="giver_name">
         Kehun asiasanat
         <br />
@@ -126,7 +131,7 @@ export class AddKehuForm extends Component {
         />
         <input
           type="submit"
-          className="Button Button--wide"
+          className="Button Button--fullWidth"
           value="Tallenna Kehu"
         />
       </form>

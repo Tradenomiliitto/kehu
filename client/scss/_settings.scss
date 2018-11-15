@@ -28,6 +28,22 @@ $headings-color: inherit !default;
 $type-scale-base: $font-size-base !default;
 $type-scale: 1.25 !default;
 
+// Inputs
+$input-height: 3em;
+$input-padding-vertical: 0.375em !default;
+$input-padding-horizontal: 0.75em !default;
+$input-bg: #fff !default;
+$input-color: $text-color !default;
+$input-border-color: #dadaed;
+$input-focus-border-color: darken($input-border-color, 20%) !default;
+$input-border-radius: 4px;
+$input-transition: border-color 0.15s ease-out !default;
+$input-disabled-bg: #eee !default;
+$input-disabled-color: #555 !default;
+$input-disabled-border-color: #ccc !default;
+
+$placeholder-color: lighten($input-color, 50%) !default;
+
 // Button
 $button-selector: ".Button";
 $button-padding-vertical: 0.375em !default;

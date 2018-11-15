@@ -29,4 +29,8 @@
   &--wide {
     padding: $button-padding-vertical 6em;
   }
+
+  &--fullWidth {
+    width: 100%;
+  }
 }
