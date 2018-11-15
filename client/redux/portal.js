@@ -1,6 +1,6 @@
-const TOGGLE_MODAL = "portal/TOGGLE_MODAL";
+export const TOGGLE_MODAL = "portal/TOGGLE_MODAL";
 
-const initialState = {
+export const initialState = {
   isVisible: false
 };
 
