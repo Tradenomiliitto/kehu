@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import moment from "moment";
 import PropTypes from "prop-types";
 import { addKehu } from "../redux/kehu";
+import WordCloudField from "./kehuform/WordCloudField";
 
 function GiverNameField({ value, handleChange }) {
   return (
@@ -54,42 +55,6 @@ function DateGivenField({ value, handleChange }) {
   );
 }
 
-function SituationField({ value, handleChange }) {
-  return (
-    <div className="Form-group SituationContainer">
-      <label htmlFor="situation">Kehu koskee tilannetta</label>
-      <input
-        id="situation"
-        name="situation"
-        type="text"
-        placeholder="Uusi tilanne"
-        value={value}
-        onChange={handleChange}
-      />
-    </div>
-  );
-}
-
-function TagsField({ value, handleChange }) {
-  return (
-    <div className="Form-group TagsContainer">
-      <label htmlFor="giver_name">
-        Kehun asiasanat
-        <br />
-        (taidot ja ominaisuudet)
-      </label>
-      <input
-        id="tags"
-        name="tags"
-        type="text"
-        placeholder="Uusi asiasana"
-        value={value}
-        onChange={handleChange}
-      />
-    </div>
-  );
-}
-
 export class AddKehuForm extends Component {
   static propTypes = {
     handleSubmit: PropTypes.func.isRequired,
@@ -106,8 +71,8 @@ export class AddKehuForm extends Component {
       giver_name: null,
       text: null,
       date_given: moment(),
-      tags: null,
-      situation: null
+      tags: [],
+      situation: []
     };
   }
 
@@ -117,17 +82,31 @@ export class AddKehuForm extends Component {
       <form className="Form" onSubmit={this.handleSubmit}>
         <GiverNameField
           value={giver_name}
-          handleChange={this.handleChange("giver_name")}
+          handleChange={this.handleChangeWithEvent("giver_name")}
         />
-        <TextField value={text} handleChange={this.handleChange("text")} />
+        <TextField
+          value={text}
+          handleChange={this.handleChangeWithEvent("text")}
+        />
         <DateGivenField
           value={date_given}
-          handleChange={this.handleDateGivenChange}
+          handleChange={this.handleChangeWithValue("date_given")}
         />
-        <TagsField value={tags} handleChange={this.handleChange("tags")} />
-        <SituationField
-          value={situation}
-          handleChange={this.handleChange("situation")}
+        <WordCloudField
+          id="tags"
+          className="Tags"
+          label={["Kehun asiasanat", [<br />], "(taidot ja ominaisuudet"]}
+          placeholder="Uusi asiasana"
+          values={tags}
+          handleChange={this.handleChangeWithValue("tags")}
+        />
+        <WordCloudField
+          id="situation"
+          className="Situation"
+          label="Kehu koskee tilannetta"
+          placeholder="Uusi tilanne"
+          values={situation}
+          handleChange={this.handleChangeWithValue("situation")}
         />
         <input
           type="submit"
@@ -138,14 +117,16 @@ export class AddKehuForm extends Component {
     );
   }
 
-  handleChange = field => {
+  handleChangeWithEvent = field => {
     return ({ target: { value } }) => {
       this.setState({ [field]: value });
     };
   };
 
-  handleDateGivenChange = date => {
-    this.setState({ date_given: date });
+  handleChangeWithValue = field => {
+    return value => {
+      this.setState({ [field]: value });
+    };
   };
 
   handleSubmit = ev => {
