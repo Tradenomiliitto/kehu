@@ -6,6 +6,7 @@ import reducer, {
   PROFILE_ERROR,
   getProfile
 } from "./user";
+import * as ApiUtil from "../util/ApiUtil";
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -38,13 +39,13 @@ describe("client:redux:user", () => {
       describe("when call succeeds", () => {
         it("dispatches user profile", () => {
           const response = { user: 1 };
-          fetch.mockResponse(JSON.stringify(response));
+          ApiUtil.get = jest.fn(() => new Promise(res => res(response)));
 
           const store = mockStore(initialState);
           const expectedActions = [{ type: PROFILE_LOADED, payload: response }];
 
           store.dispatch(getProfile()).then(() => {
-            expect(fetch.mock.calls[0][0]).toEqual("/api/v1/user");
+            expect(ApiUtil.get).toBeCalledWith("/user");
             expect(store.getActions()).toEqual(expectedActions);
           });
         });
@@ -53,7 +54,7 @@ describe("client:redux:user", () => {
       describe("when call fails", () => {
         it("dispatches error", () => {
           const error = new Error("network error");
-          fetch.mockReject(error);
+          ApiUtil.get = jest.fn(() => new Promise((res, rej) => rej(error)));
 
           const store = mockStore(initialState);
           const expectedActions = [
@@ -61,7 +62,7 @@ describe("client:redux:user", () => {
           ];
 
           store.dispatch(getProfile()).then(() => {
-            expect(fetch.mock.calls[0][0]).toEqual("/api/v1/user");
+            expect(ApiUtil.get).toBeCalledWith("/user");
             expect(store.getActions()).toEqual(expectedActions);
           });
         });

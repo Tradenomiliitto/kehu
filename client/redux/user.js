@@ -1,3 +1,5 @@
+import { get } from "../util/ApiUtil";
+
 export const PROFILE_LOADED = "profile/PROFILE_LOADED";
 export const PROFILE_ERROR = "profile/PROFILE_ERROR";
 
@@ -9,8 +11,7 @@ export const initialState = {
 export function getProfile() {
   return async dispatch => {
     try {
-      const response = await fetch("/api/v1/user");
-      const user = await response.json();
+      const user = await get("/user");
       dispatch({ type: PROFILE_LOADED, payload: user });
     } catch (e) {
       dispatch({ type: PROFILE_ERROR, payload: e.message });
