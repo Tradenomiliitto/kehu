@@ -1,4 +1,4 @@
-import { post } from "./ApiUtil";
+import { get, post } from "./ApiUtil";
 
 describe("client:util:ApiUtil", () => {
   const token = "asd123";
@@ -12,6 +12,32 @@ describe("client:util:ApiUtil", () => {
     global.document.querySelector = jest.fn(() => ({
       getAttribute: getAttributeStub
     }));
+  });
+
+  describe("get", () => {
+    it("calls api with given url", async () => {
+      const jsonResponse = { response: 1 };
+      const response = {
+        status: 200,
+        json: () => new Promise(resolve => resolve(jsonResponse))
+      };
+      fetch = jest.fn(() => {
+        return new Promise(resolve => resolve(response));
+      });
+
+      const res = await get(url, body);
+
+      expect(getAttributeStub).toBeCalledWith("content");
+      expect(fetch).toBeCalledWith(apiUrl, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "content-type": "application/json",
+          "CSRF-Token": token
+        }
+      });
+      expect(res).toEqual(jsonResponse);
+    });
   });
 
   describe("post", () => {

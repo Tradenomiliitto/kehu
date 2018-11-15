@@ -1,3 +1,15 @@
+export function get(url) {
+  return kehuFetch(url, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "content-type": "application/json"
+    }
+  })
+    .then(checkResponseStatus)
+    .then(res => res.json());
+}
+
 export function post(url, body) {
   return kehuFetch(url, {
     method: "POST",
