@@ -7,11 +7,18 @@ import Home from "./Home";
 import Header from "./components/Header";
 import Portal from "./components/Portal";
 import KehuFormModal from "./components/KehuFormModal";
+import AddKehuForm from "./components/AddKehuForm";
+import { getProfile } from "./redux/user";
 
 class App extends Component {
   static propTypes = {
-    isPortalVisible: PropTypes.bool.isRequired
+    isPortalVisible: PropTypes.bool.isRequired,
+    getProfile: PropTypes.func.isRequired
   };
+
+  componentDidMount() {
+    this.props.getProfile();
+  }
 
   render() {
     return (
@@ -29,7 +36,9 @@ class App extends Component {
     if (this.props.isPortalVisible) {
       return (
         <Portal>
-          <KehuFormModal title="Lisää Kehu" />
+          <KehuFormModal title="Lisää Kehu">
+            <AddKehuForm />
+          </KehuFormModal>
         </Portal>
       );
     }
@@ -40,9 +49,13 @@ const mapStateToProps = state => ({
   isPortalVisible: state.portal.isVisible
 });
 
+const mapDispatchToProps = {
+  getProfile
+};
+
 const AppContainer = connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(App);
 
 export default () => (
