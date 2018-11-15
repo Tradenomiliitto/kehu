@@ -7,6 +7,7 @@ import reducer, {
 } from "./kehu";
 import thunk from "redux-thunk";
 import configureMockStore from "redux-mock-store";
+import * as ApiUtil from "../util/ApiUtil";
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -51,7 +52,8 @@ describe("client:redux:kehu", () => {
       it("when adding succeeds", () => {
         const data = { form: 1 };
         const response = { response: 1 };
-        fetch.mockResponse(JSON.stringify(response), 200);
+
+        ApiUtil.post = jest.fn(() => new Promise(res => res(response)));
 
         const store = mockStore(initialState);
         const expectedActions = [
@@ -60,13 +62,7 @@ describe("client:redux:kehu", () => {
         ];
 
         store.dispatch(addKehu(data)).then(() => {
-          expect(fetch.mock.calls[0]).toEqual([
-            "/api/v1/kehu",
-            {
-              method: "POST",
-              body: data
-            }
-          ]);
+          expect(ApiUtil.post).toBeCalledWith("/kehu", data);
           expect(store.getActions()).toEqual(expectedActions);
         });
       });
@@ -74,7 +70,7 @@ describe("client:redux:kehu", () => {
       it("when adding fails", () => {
         const data = { form: 1 };
         const error = new Error("network error");
-        fetch.mockReject(error);
+        ApiUtil.post = jest.fn(() => new Promise((res, rej) => rej(error)));
 
         const store = mockStore(initialState);
         const expectedActions = [
@@ -83,13 +79,7 @@ describe("client:redux:kehu", () => {
         ];
 
         store.dispatch(addKehu(data)).then(() => {
-          expect(fetch.mock.calls[0]).toEqual([
-            "/api/v1/kehu",
-            {
-              method: "POST",
-              body: data
-            }
-          ]);
+          expect(ApiUtil.post).toBeCalledWith("/kehu", data);
           expect(store.getActions()).toEqual(expectedActions);
         });
       });
