@@ -20,7 +20,9 @@ module.exports = function setupRoutes(app) {
 
   app.get("/", async (req, res) => {
     if (req.user) {
-      res.render("app");
+      res.render("app", {
+        csrfToken: req.csrfToken()
+      });
     } else {
       res.render("index", {
         env: process.env
