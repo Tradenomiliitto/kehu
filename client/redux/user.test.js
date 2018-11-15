@@ -1,6 +1,5 @@
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
-import fetchMock from "fetch-mock";
 import reducer, {
   initialState,
   PROFILE_LOADED,
@@ -39,21 +38,22 @@ describe("client:redux:user", () => {
       describe("when call succeeds", () => {
         it("dispatches user profile", () => {
           const response = { user: 1 };
-          fetchMock.getOnce("/api/v1/user", response);
+          fetch.mockResponse(JSON.stringify(response));
 
           const store = mockStore(initialState);
           const expectedActions = [{ type: PROFILE_LOADED, payload: response }];
 
           store.dispatch(getProfile()).then(() => {
+            expect(fetch.mock.calls[0][0]).toEqual("/api/v1/user");
             expect(store.getActions()).toEqual(expectedActions);
           });
         });
       });
 
       describe("when call fails", () => {
-        it("dispatches user profile", () => {
+        it("dispatches error", () => {
           const error = new Error("network error");
-          fetchMock.getOnce("/api/v1/user", { throws: error });
+          fetch.mockReject(error);
 
           const store = mockStore(initialState);
           const expectedActions = [
@@ -61,6 +61,7 @@ describe("client:redux:user", () => {
           ];
 
           store.dispatch(getProfile()).then(() => {
+            expect(fetch.mock.calls[0][0]).toEqual("/api/v1/user");
             expect(store.getActions()).toEqual(expectedActions);
           });
         });
@@ -69,6 +70,6 @@ describe("client:redux:user", () => {
   });
 
   afterEach(() => {
-    fetchMock.restore();
+    fetch.resetMocks();
   });
 });
