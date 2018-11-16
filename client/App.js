@@ -9,11 +9,13 @@ import Header from "./components/Header";
 import Portal from "./components/Portal";
 import KehuFormModal from "./components/KehuFormModal";
 import AddKehuForm from "./components/AddKehuForm";
+import AddKehuSuccessPanel from "./components/kehuform/AddKehuSuccessPanel";
 import { getProfile } from "./redux/user";
 
 class App extends Component {
   static propTypes = {
     isPortalVisible: PropTypes.bool.isRequired,
+    successfullyAddedKehu: PropTypes.object,
     getProfile: PropTypes.func.isRequired
   };
 
@@ -35,19 +37,29 @@ class App extends Component {
 
   renderPortal() {
     if (this.props.isPortalVisible) {
+      return <Portal>{this.renderAddKehuForm()}</Portal>;
+    }
+  }
+
+  renderAddKehuForm() {
+    if (this.props.successfullyAddedKehu) {
       return (
-        <Portal>
-          <KehuFormModal title="Lisää Kehu">
-            <AddKehuForm />
-          </KehuFormModal>
-        </Portal>
+        <KehuFormModal title="Kehu lisätty!">
+          <AddKehuSuccessPanel kehu={this.props.successfullyAddedKehu} />
+        </KehuFormModal>
       );
     }
+    return (
+      <KehuFormModal title="Lisää Kehu">
+        <AddKehuForm />
+      </KehuFormModal>
+    );
   }
 }
 
 const mapStateToProps = state => ({
-  isPortalVisible: state.portal.isVisible
+  isPortalVisible: state.portal.isVisible,
+  successfullyAddedKehu: state.kehu.addedKehu
 });
 
 const mapDispatchToProps = {
