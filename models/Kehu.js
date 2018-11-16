@@ -8,13 +8,12 @@ class Kehu extends Model {
   static get jsonSchema() {
     return {
       type: "object",
-      required: ["date_given", "giver_id", "situation", "owner_id", "text"],
+      required: ["date_given", "giver_id", "owner_id", "text"],
       properties: {
         id: { type: "integer" },
         date_given: { type: "string" },
         giver_id: { type: "integer" },
         giver_name: { type: "string" },
-        situation: { type: "string" },
         owner_id: { type: "integer" },
         text: { type: "string" }
       }
@@ -33,6 +32,18 @@ class Kehu extends Model {
             to: "Kehus_Tags.tag_id"
           },
           to: "Tags.id"
+        }
+      },
+      situations: {
+        relation: Model.ManyToManyRelation,
+        modelClass: `${__dirname}/Situation`,
+        join: {
+          from: "Kehus.id",
+          through: {
+            from: "Kehus_Situations.kehu_id",
+            to: "Kehus_Situations.situation_id"
+          },
+          to: "Situations.id"
         }
       },
       giver: {
