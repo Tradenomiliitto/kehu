@@ -36,6 +36,7 @@
   @include mq(lg) {
     box-shadow: none;
     float: right;
+    z-index: initial;
   }
 }
 
