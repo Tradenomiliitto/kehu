@@ -72,12 +72,12 @@ export class AddKehuForm extends Component {
       text: "",
       date_given: moment(),
       tags: [],
-      situation: []
+      situations: []
     };
   }
 
   render() {
-    const { giver_name, text, date_given, tags, situation } = this.state;
+    const { giver_name, text, date_given, tags, situations } = this.state;
     return (
       <form className="Form" onSubmit={this.handleSubmit}>
         <GiverNameField
@@ -107,12 +107,12 @@ export class AddKehuForm extends Component {
           handleChange={this.handleChangeWithValue("tags")}
         />
         <WordCloudField
-          id="situation"
+          id="situations"
           className="Situation"
           label="Kehu koskee tilannetta"
           placeholder="Uusi tilanne"
-          values={situation}
-          handleChange={this.handleChangeWithValue("situation")}
+          values={situations}
+          handleChange={this.handleChangeWithValue("situations")}
         />
         <input
           type="submit"

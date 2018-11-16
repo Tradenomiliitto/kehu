@@ -2,6 +2,7 @@ const moment = require("moment");
 const { raw, transaction } = require("objection");
 const Kehu = require("../models/Kehu");
 const { findTagWithText } = require("./TagService");
+const { findSituationWithText } = require("./SituationService");
 const logger = require("../logger");
 
 async function getKehus(user_id) {
@@ -69,6 +70,36 @@ async function createOrRelateTags(kehu, tagsFromData) {
   );
 }
 
+async function createOrRelateSituations(kehu, situationsFromData) {
+  const oldSituations = kehu.situations;
+  let situationsToRelate;
+
+  if (!oldSituations) {
+    situationsToRelate = situationsFromData;
+  } else {
+    situationsToRelate = situationsFromData.filter(
+      situation =>
+        -1 ===
+        oldSituations.findIndex(
+          oldSituation => situation.text === oldSituation.text
+        )
+    );
+  }
+
+  return await Promise.all(
+    situationsToRelate.map(async situation => {
+      const existingSituation = await findSituationWithText(situation.text);
+      if (existingSituation) {
+        return await kehu
+          .$relatedQuery("situations")
+          .relate(existingSituation.id);
+      } else {
+        return await kehu.$relatedQuery("situations").insert(situation);
+      }
+    })
+  );
+}
+
 async function createKehu(data) {
   const knex = Kehu.knex();
   let trx;
@@ -78,17 +109,21 @@ async function createKehu(data) {
 
     const kehu = await Kehu.query().insert(parseKehu(data));
     const tags = parseTags(data);
+    const situations = parseSituations(data);
     await createOrRelateTags(kehu, tags);
+    await createOrRelateSituations(kehu, situations);
     await trx.commit();
     logger.info(`Created kehu ${kehu.id} for user ${data.owner_id}`);
     return await Kehu.query()
       .findById(kehu.id)
       .eager("tags")
+      .eager("situations")
       .first();
   } catch (error) {
     logger.error(`Creating Kehu failed. Rolling back..`);
     logger.error(error.message);
-    return await trx.rollback();
+    await trx.rollback();
+    throw error;
   }
 }
 
@@ -161,10 +196,17 @@ function parseKehu(data) {
 }
 
 function parseTags(data) {
-  return data.tags
-    .split(",")
-    .map(tag => tag.trim().toLowerCase())
-    .filter(tag => !!tag)
+  return parseArray(data.tags);
+}
+
+function parseSituations(data) {
+  return parseArray(data.situations);
+}
+
+function parseArray(array) {
+  return array
+    .map(item => item.trim().toLowerCase())
+    .filter(item => !!item)
     .map(text => ({ text }));
 }
 
