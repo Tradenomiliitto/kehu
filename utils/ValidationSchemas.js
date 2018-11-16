@@ -1,12 +1,4 @@
 const kehuSchema = {
-  date_given: {
-    errorMessage: "Ajankohta on pakollinen tieto.",
-    custom: {
-      options: value => {
-        return !!value;
-      }
-    }
-  },
   giver_id: {
     errorMessage: "Kehun antajan tunnus puuttuu tai on virheellinen.",
     exists: true,
@@ -20,14 +12,6 @@ const kehuSchema = {
   },
   giver_name: {
     errorMessage: "Kehun antaja on pakollinen tieto.",
-    custom: {
-      options: value => {
-        return !!value;
-      }
-    }
-  },
-  situation: {
-    errorMessage: "Tilanne on pakollinen tieto.",
     custom: {
       options: value => {
         return !!value;
