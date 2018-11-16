@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import PropTypes from "prop-types";
-import { addKehu } from "../redux/kehu";
-import WordCloudField from "./kehuform/WordCloudField";
+import { addKehu } from "../../redux/kehu";
+import WordCloudField from "./WordCloudField";
 
 function GiverNameField({ value, handleChange }) {
   return (
