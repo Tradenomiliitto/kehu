@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "npx webpack",
-    "build:dev": "npx webpack --watch",
+    "build": "npx webpack --env prod",
+    "build:dev": "npx webpack --env dev --watch",
     "migrate:latest": "npx knex migrate:latest",
     "postinstall": "npm run build && npm run migrate:latest",
     "start": "node ./bin/www",
