@@ -3,13 +3,19 @@ import { KehuFormModal } from "./KehuFormModal";
 describe("client:components:KehuFormModal", () => {
   let component;
   let toggleModalStub;
+  let resetAddKehuStateStub;
   const title = "Form Title";
   const childComponent = "<div>children</div>";
 
   beforeEach(() => {
     toggleModalStub = jest.fn();
+    resetAddKehuStateStub = jest.fn();
     component = shallow(
-      <KehuFormModal title={title} toggleModal={toggleModalStub}>
+      <KehuFormModal
+        title={title}
+        toggleModal={toggleModalStub}
+        resetAddKehuState={resetAddKehuStateStub}
+      >
         {childComponent}
       </KehuFormModal>
     );
@@ -30,6 +36,10 @@ describe("client:components:KehuFormModal", () => {
 
     it("toggles modal", () => {
       expect(toggleModalStub).toBeCalled();
+    });
+
+    it("resets add kehu state", () => {
+      expect(resetAddKehuStateStub).toBeCalled();
     });
   });
 });
