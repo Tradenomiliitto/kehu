@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import cn from "classnames";
+import { Link } from "react-router-dom";
 
 export default class Header extends Component {
   constructor() {
@@ -20,7 +21,9 @@ export default class Header extends Component {
         <div className="container">
           <div className="row">
             <div className="col col-md-12 col-lg-4">
-              <img src="/images/kehu-logo.png" className="Header-logo" />
+              <Link to="/">
+                <img src="/images/kehu-logo.png" className="Header-logo" />
+              </Link>
               <button className="Header-menuButton" onClick={this.toggleMenu}>
                 <img src="/images/icon-menu.png" />
               </button>
@@ -29,13 +32,13 @@ export default class Header extends Component {
               <div className="Header-menuContainer">
                 <menu className={menuClass}>
                   <li className="Header-menuItem">
-                    <a href="/kehut">Kehut</a>
+                    <Link to="/kehut">Kehut</Link>
                   </li>
                   <li className="Header-menuItem">
-                    <a href="/raportit">Raportit</a>
+                    <Link to="/raportit">Raportit</Link>
                   </li>
                   <li className="Header-menuItem">
-                    <a href="/profiili">Profiili</a>
+                    <Link to="/profiili">Profiili</Link>
                   </li>
                 </menu>
               </div>

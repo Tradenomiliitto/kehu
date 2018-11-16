@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import { connect } from "react-redux";
 import { hot } from "react-hot-loader";
 import PropTypes from "prop-types";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import store from "./redux";
 import Home from "./Home";
 import Header from "./components/Header";
@@ -11,6 +12,7 @@ import KehuFormModal from "./components/KehuFormModal";
 import AddKehuForm from "./components/kehuform/AddKehuForm";
 import AddKehuSuccessPanel from "./components/kehuform/AddKehuSuccessPanel";
 import { getProfile } from "./redux/user";
+import KehusPanel from "./KehusPanel";
 
 class App extends Component {
   static propTypes = {
@@ -26,11 +28,16 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <div className="App">
-          <Header />
-          <Home />
-          {this.renderPortal()}
-        </div>
+        <Router>
+          <div className="App">
+            <Header />
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/kehut" component={KehusPanel} />
+            </Switch>
+            {this.renderPortal()}
+          </div>
+        </Router>
       </Provider>
     );
   }
