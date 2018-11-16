@@ -3,11 +3,12 @@ import { post } from "../util/ApiUtil";
 export const ADD_KEHU = "kehu/ADD_KEHU";
 export const ADD_KEHU_SUCCESS = "kehu/ADD_KEHU_SUCCESS";
 export const ADD_KEHU_ERROR = "kehu/ADD_KEHU_ERROR";
+export const ADD_KEHU_RESET = "kehu/ADD_KEHU_RESET";
 
 export const initialState = {
+  addedKehu: null,
   error: null,
-  loading: false,
-  kehus: []
+  loading: false
 };
 
 export function addKehu(data) {
@@ -20,6 +21,10 @@ export function addKehu(data) {
       dispatch({ type: ADD_KEHU_ERROR, payload: e });
     }
   };
+}
+
+export function resetAddKehuState() {
+  return { type: ADD_KEHU_RESET };
 }
 
 export default function reducer(state = initialState, action = {}) {
@@ -35,13 +40,20 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         loading: false,
         error: null,
-        kehus: [action.payload]
+        addedKehu: action.payload.kehu
       };
     case ADD_KEHU_ERROR:
       return {
         ...state,
         loading: false,
         error: action.payload
+      };
+    case ADD_KEHU_RESET:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        addedKehu: null
       };
 
     default:

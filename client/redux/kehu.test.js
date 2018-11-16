@@ -3,7 +3,9 @@ import reducer, {
   ADD_KEHU,
   ADD_KEHU_ERROR,
   ADD_KEHU_SUCCESS,
-  addKehu
+  addKehu,
+  resetAddKehuState,
+  ADD_KEHU_RESET
 } from "./kehu";
 import thunk from "redux-thunk";
 import configureMockStore from "redux-mock-store";
@@ -28,12 +30,12 @@ describe("client:redux:kehu", () => {
     it("on ADD_KEHU_SUCCESS", () => {
       const state = { ...initialState, loading: true, error: new Error() };
       const kehu = { kehu: 1 };
-      const action = { type: ADD_KEHU_SUCCESS, payload: kehu };
+      const action = { type: ADD_KEHU_SUCCESS, payload: { kehu } };
       const expectedState = {
         ...state,
         loading: false,
-        error: null,
-        kehus: [kehu]
+        addedKehu: kehu,
+        error: null
       };
       expect(reducer(state, action)).toEqual(expectedState);
     });
@@ -43,6 +45,23 @@ describe("client:redux:kehu", () => {
       const error = new Error("kehu error");
       const action = { type: ADD_KEHU_ERROR, payload: error };
       const expectedState = { ...state, loading: false, error };
+      expect(reducer(state, action)).toEqual(expectedState);
+    });
+
+    it("on ADD_KEHU_RESET", () => {
+      const state = {
+        ...initialState,
+        loading: true,
+        error: true,
+        addedKehu: {}
+      };
+      const action = { type: ADD_KEHU_RESET };
+      const expectedState = {
+        ...state,
+        loading: false,
+        error: null,
+        addedKehu: null
+      };
       expect(reducer(state, action)).toEqual(expectedState);
     });
   });
@@ -82,6 +101,12 @@ describe("client:redux:kehu", () => {
           expect(ApiUtil.post).toBeCalledWith("/kehu", data);
           expect(store.getActions()).toEqual(expectedActions);
         });
+      });
+    });
+
+    describe("resetAddKehuState", () => {
+      it("returns correct action", () => {
+        expect(resetAddKehuState()).toEqual({ type: ADD_KEHU_RESET });
       });
     });
   });
