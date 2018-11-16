@@ -2,11 +2,9 @@ const user = require("./user");
 const kehu = require("./kehu");
 const userApi = require("./api/user");
 const kehuApi = require("./api/kehu");
-const tags = require("./api/tags");
 const { ensureAuthenticated } = require("../utils/Middlewares");
 
 module.exports = function setupRoutes(app) {
-  app.use("/api/v1", ensureAuthenticated, tags);
   app.use("/api/v1", ensureAuthenticated, userApi);
   app.use("/api/v1", ensureAuthenticated, kehuApi);
   app.use("/kehut", ensureAuthenticated, kehu);
