@@ -9,7 +9,7 @@ async function getKehus(user_id) {
   logger.info(`Fetching kehus for user ${user_id}`);
   return await Kehu.query()
     .where("owner_id", user_id)
-    .eager("tags")
+    .eager("[situations, tags]")
     .orderBy("date_given", "desc");
 }
 
@@ -18,7 +18,7 @@ async function getKehu(user_id, kehu_id) {
   return await Kehu.query()
     .where("owner_id", user_id)
     .andWhere("id", kehu_id)
-    .eager("tags")
+    .eager("[situations, tags]")
     .first();
 }
 
@@ -33,6 +33,25 @@ async function unrelateTags(kehu, tags) {
         .$relatedQuery("tags")
         .unrelate()
         .where("id", tag.id)
+    )
+  );
+}
+
+async function unrelateSituations(kehu, situations) {
+  const oldSituations = kehu.situations;
+  const situationsToUnrelate = oldSituations.filter(
+    situation =>
+      -1 ===
+      situations.findIndex(
+        situationFromData => situation.text === situationFromData.text
+      )
+  );
+  return await Promise.all(
+    situationsToUnrelate.map(situation =>
+      kehu
+        .$relatedQuery("situations")
+        .unrelate()
+        .where("id", situation.id)
     )
   );
 }
@@ -107,8 +126,7 @@ async function createKehu(data) {
     logger.info(`Created kehu ${kehu.id} for user ${data.owner_id}`);
     return await Kehu.query()
       .findById(kehu.id)
-      .eager("tags")
-      .eager("situations")
+      .eager("[situations, tags]")
       .first();
   } catch (error) {
     logger.error(`Creating Kehu failed. Rolling back..`);
@@ -136,18 +154,22 @@ async function updateKehu(user_id, kehu_id, data) {
     }
 
     const tagsFromData = parseTags(data);
+    const situationsFromData = parseSituations(data);
     const kehu = await Kehu.query()
-      .eager("tags")
+      .eager("[situations, tags]")
       .where("id", kehu_id)
       .first();
     await unrelateTags(kehu, tagsFromData);
+    await unrelateSituations(kehu, situationsFromData);
     await createOrRelateTags(kehu, tagsFromData);
+    await createOrRelateSituations(kehu, situationsFromData);
     logger.info(`Created kehu ${kehu_id} for user ${user_id}`);
     await trx.commit();
   } catch (error) {
     logger.error(`Updating Kehu with tags failed. Rolling back..`);
     logger.error(error.message);
-    return await trx.rollback();
+    await trx.rollback();
+    throw error;
   }
 }
 
@@ -160,6 +182,7 @@ async function deleteKehu(user_id, kehu_id) {
 
     const kehu = await getKehu(user_id, kehu_id);
     await unrelateTags(kehu, kehu.tags);
+    await unrelateSituations(kehu, kehu.situations);
     await Kehu.query()
       .where("owner_id", user_id)
       .andWhere("id", kehu_id)
@@ -170,7 +193,8 @@ async function deleteKehu(user_id, kehu_id) {
       `Deleting Kehu ${kehu_id} for user ${user_id} failed. Rolling back..`
     );
     logger.error(error.message);
-    return await trx.rollback();
+    await trx.rollback();
+    throw error;
   }
 }
 
