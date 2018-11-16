@@ -14,9 +14,12 @@ const csrf = require("csurf");
 const methodOverride = require("method-override");
 const flash = require("express-flash");
 const httpsRedirect = require("express-https-redirect");
+const webpack = require("webpack");
+const webpackConfig = require("./webpack.dev.config");
 
 const RedisStore = Redis(session);
 const csrfProtection = csrf({ cookie: true });
+const compiler = webpack(webpackConfig);
 
 const { setupLocals } = require("./utils/ServerUtils");
 const setupPassport = require("./passport");
@@ -34,6 +37,16 @@ setupPassport(passport);
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
+
+if (process.env.NODE_ENV !== "production") {
+  app.use(
+    require("webpack-dev-middleware")(compiler, {
+      noInfo: true,
+      publicPath: webpackConfig.output.publicPath
+    })
+  );
+  app.use(require("webpack-hot-middleware")(compiler));
+}
 
 app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 app.use(logger("dev"));

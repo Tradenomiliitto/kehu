@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
 import { connect } from "react-redux";
+import { hot } from "react-hot-loader";
 import PropTypes from "prop-types";
 import store from "./redux";
 import Home from "./Home";
@@ -58,8 +59,10 @@ const AppContainer = connect(
   mapDispatchToProps
 )(App);
 
+const HotApp = hot(module)(AppContainer);
+
 export default () => (
   <Provider store={store}>
-    <AppContainer />
+    <HotApp />
   </Provider>
 );

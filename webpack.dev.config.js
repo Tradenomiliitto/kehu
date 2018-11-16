@@ -1,17 +1,23 @@
 const path = require("path");
+const webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   mode: "development",
   entry: {
-    main: path.resolve(__dirname, "client", "index.js")
+    main: [
+      "webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000",
+      path.resolve(__dirname, "client", "index.js")
+    ]
   },
   devtool: "source-map",
   output: {
     libraryTarget: "umd",
     filename: "[name].js",
     path: path.resolve(__dirname, "public"),
-    globalObject: "this"
+    globalObject: "this",
+    hotUpdateChunkFilename: ".hot/[id].[hash].hot-update.js",
+    hotUpdateMainFilename: ".hot/[hash].hot-update.json"
   },
   module: {
     rules: [
@@ -45,6 +51,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "[name].css",
       chunkFilename: "[id].css"
-    })
+    }),
+    new webpack.HotModuleReplacementPlugin()
   ]
 };
