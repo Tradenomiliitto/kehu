@@ -227,7 +227,6 @@ function parseArray(array) {
 
 module.exports = {
   getKehus,
-  getKehu,
   createKehu,
   updateKehu,
   deleteKehu
