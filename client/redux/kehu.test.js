@@ -4,8 +4,12 @@ import reducer, {
   ADD_KEHU_ERROR,
   ADD_KEHU_SUCCESS,
   addKehu,
+  getKehus,
   resetAddKehuState,
-  ADD_KEHU_RESET
+  ADD_KEHU_RESET,
+  GET_KEHUS,
+  GET_KEHUS_SUCCESS,
+  GET_KEHUS_ERROR
 } from "./kehu";
 import thunk from "redux-thunk";
 import configureMockStore from "redux-mock-store";
@@ -64,6 +68,39 @@ describe("client:redux:kehu", () => {
       };
       expect(reducer(state, action)).toEqual(expectedState);
     });
+
+    it("on GET_KEHUS", () => {
+      const state = { ...initialState };
+      const action = { type: GET_KEHUS };
+      const expectedState = { ...state, loading: true };
+      expect(reducer(state, action)).toEqual(expectedState);
+    });
+
+    it("on GET_KEHUS_SUCCESS", () => {
+      const state = { ...state, loading: true };
+      const kehus = [{ id: 1 }, { id: 2 }];
+      const action = { type: GET_KEHUS_SUCCESS, payload: kehus };
+      const expectedState = {
+        ...state,
+        loading: false,
+        kehus,
+        kehusLoaded: true
+      };
+      expect(reducer(state, action)).toEqual(expectedState);
+    });
+
+    it("on GET_KEHUS_ERROR", () => {
+      const state = { ...state, loading: true };
+      const error = new Error("error");
+      const action = { type: GET_KEHUS_ERROR, payload: error };
+      const expectedState = {
+        ...state,
+        loading: false,
+        error,
+        kehusLoaded: true
+      };
+      expect(reducer(state, action)).toEqual(expectedState);
+    });
   });
 
   describe("actions", () => {
@@ -107,6 +144,40 @@ describe("client:redux:kehu", () => {
     describe("resetAddKehuState", () => {
       it("returns correct action", () => {
         expect(resetAddKehuState()).toEqual({ type: ADD_KEHU_RESET });
+      });
+    });
+
+    describe("getKehus", () => {
+      it("when fetching succeeds", () => {
+        const response = [{ id: 1 }, { id: 2 }];
+        ApiUtil.get = jest.fn(() => new Promise(res => res(response)));
+
+        const store = mockStore(initialState);
+        const expectedActions = [
+          { type: GET_KEHUS },
+          { type: GET_KEHUS_SUCCESS, payload: response }
+        ];
+
+        store.dispatch(getKehus()).then(() => {
+          expect(ApiUtil.get).toBeCalledWith("/kehut");
+          expect(store.getActions()).toEqual(expectedActions);
+        });
+      });
+
+      it("when fetching fails", () => {
+        const error = new Error("network error");
+        ApiUtil.get = jest.fn(() => new Promise((res, rej) => rej(error)));
+
+        const store = mockStore(initialState);
+        const expectedActions = [
+          { type: GET_KEHUS },
+          { type: GET_KEHUS_ERROR, payload: error }
+        ];
+
+        store.dispatch(getKehus()).then(() => {
+          expect(ApiUtil.get).toBeCalledWith("/kehut");
+          expect(store.getActions()).toEqual(expectedActions);
+        });
       });
     });
   });
