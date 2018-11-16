@@ -11,7 +11,7 @@ export const initialState = {
 export function getProfile() {
   return async dispatch => {
     try {
-      const user = await get("/user");
+      const user = await get("/profiili");
       dispatch({ type: PROFILE_LOADED, payload: user });
     } catch (e) {
       dispatch({ type: PROFILE_ERROR, payload: e.message });

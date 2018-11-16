@@ -45,7 +45,7 @@ describe("client:redux:user", () => {
           const expectedActions = [{ type: PROFILE_LOADED, payload: response }];
 
           store.dispatch(getProfile()).then(() => {
-            expect(ApiUtil.get).toBeCalledWith("/user");
+            expect(ApiUtil.get).toBeCalledWith("/profiili");
             expect(store.getActions()).toEqual(expectedActions);
           });
         });
@@ -62,7 +62,7 @@ describe("client:redux:user", () => {
           ];
 
           store.dispatch(getProfile()).then(() => {
-            expect(ApiUtil.get).toBeCalledWith("/user");
+            expect(ApiUtil.get).toBeCalledWith("/profiili");
             expect(store.getActions()).toEqual(expectedActions);
           });
         });
