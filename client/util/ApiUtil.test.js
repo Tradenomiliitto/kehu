@@ -3,7 +3,7 @@ import { get, post } from "./ApiUtil";
 describe("client:util:ApiUtil", () => {
   const token = "asd123";
   const url = "/url";
-  const apiUrl = `/api/v1/${url}`;
+  const apiUrl = `/api/v1${url}`;
   const body = { body: 1 };
   let getAttributeStub;
 

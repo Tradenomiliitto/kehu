@@ -27,7 +27,7 @@ function kehuFetch(endpoint, opts = { headers: {} }) {
   opts.headers["CSRF-Token"] = document
     .querySelector('meta[name="csrf-token"]')
     .getAttribute("content");
-  return fetch(`/api/v1/${endpoint}`, opts);
+  return fetch(`/api/v1${endpoint}`, opts);
 }
 
 function checkResponseStatus(response) {
