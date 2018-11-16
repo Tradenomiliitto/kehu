@@ -21,7 +21,7 @@ export default class Header extends Component {
         <div className="container">
           <div className="row">
             <div className="col col-md-12 col-lg-4">
-              <Link to="/">
+              <Link to="/" onClick={this.closeMenu}>
                 <img src="/images/kehu-logo.png" className="Header-logo" />
               </Link>
               <button className="Header-menuButton" onClick={this.toggleMenu}>
@@ -31,15 +31,9 @@ export default class Header extends Component {
             <div className="col col-md-12 col-lg-8">
               <div className="Header-menuContainer">
                 <menu className={menuClass}>
-                  <li className="Header-menuItem">
-                    <Link to="/kehut">Kehut</Link>
-                  </li>
-                  <li className="Header-menuItem">
-                    <Link to="/raportit">Raportit</Link>
-                  </li>
-                  <li className="Header-menuItem">
-                    <Link to="/profiili">Profiili</Link>
-                  </li>
+                  {this.renderMenuItem("/kehut", "Kehut")}
+                  {this.renderMenuItem("/raportit", "Raportit")}
+                  {this.renderMenuItem("/profiili", "Profiili")}
                 </menu>
               </div>
             </div>
@@ -49,7 +43,21 @@ export default class Header extends Component {
     );
   }
 
+  renderMenuItem(route, text) {
+    return (
+      <li className="Header-menuItem">
+        <Link to={route} onClick={this.closeMenu}>
+          {text}
+        </Link>
+      </li>
+    );
+  }
+
   toggleMenu = () => {
     this.setState({ menuOpen: !this.state.menuOpen });
+  };
+
+  closeMenu = () => {
+    this.setState({ menuOpen: false });
   };
 }
