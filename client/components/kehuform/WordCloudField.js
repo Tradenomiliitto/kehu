@@ -6,7 +6,8 @@ export default class WordCloudField extends Component {
     className: PropTypes.string,
     handleChange: PropTypes.func.isRequired,
     id: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
+    label: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
+      .isRequired,
     placeholder: PropTypes.string.isRequired,
     values: PropTypes.array.isRequired
   };
@@ -14,7 +15,7 @@ export default class WordCloudField extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputValue: null
+      inputValue: ""
     };
   }
 

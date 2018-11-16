@@ -57,7 +57,7 @@ function DateGivenField({ value, handleChange }) {
 
 export class AddKehuForm extends Component {
   static propTypes = {
-    handleSubmit: PropTypes.func.isRequired,
+    addKehu: PropTypes.func.isRequired,
     user: PropTypes.shape({
       id: PropTypes.number.isRequired
     }).isRequired
@@ -68,8 +68,8 @@ export class AddKehuForm extends Component {
     this.state = {
       giver_id: props.user.id,
       owner_id: props.user.id,
-      giver_name: null,
-      text: null,
+      giver_name: "",
+      text: "",
       date_given: moment(),
       tags: [],
       situation: []
@@ -95,7 +95,13 @@ export class AddKehuForm extends Component {
         <WordCloudField
           id="tags"
           className="Tags"
-          label={["Kehun asiasanat", [<br />], "(taidot ja ominaisuudet"]}
+          label={
+            <span>
+              Kehun asiasanat
+              <br />
+              (taidot ja ominaisuudet)
+            </span>
+          }
           placeholder="Uusi asiasana"
           values={tags}
           handleChange={this.handleChangeWithValue("tags")}

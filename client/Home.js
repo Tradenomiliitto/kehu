@@ -5,7 +5,7 @@ import { toggleModal } from "./redux/portal";
 
 class Home extends Component {
   static propTypes = {
-    toggleModal: PropTypes.func.required
+    toggleModal: PropTypes.func.isRequired
   };
 
   render() {
