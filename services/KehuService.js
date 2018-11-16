@@ -22,15 +22,6 @@ async function getKehu(user_id, kehu_id) {
     .first();
 }
 
-async function getRandomKehu(user_id) {
-  logger.info(`Fetching random kehu for user ${user_id}`);
-  return await Kehu.query()
-    .where("owner_id", user_id)
-    .eager("tags")
-    .orderBy(raw("random()"))
-    .first();
-}
-
 async function unrelateTags(kehu, tags) {
   const oldTags = kehu.tags;
   const tagsToUnrelate = oldTags.filter(
@@ -213,7 +204,6 @@ function parseArray(array) {
 module.exports = {
   getKehus,
   getKehu,
-  getRandomKehu,
   createKehu,
   updateKehu,
   deleteKehu
