@@ -81,7 +81,7 @@ describe("client:redux:kehu", () => {
         ];
 
         store.dispatch(addKehu(data)).then(() => {
-          expect(ApiUtil.post).toBeCalledWith("/kehu", data);
+          expect(ApiUtil.post).toBeCalledWith("/kehut", data);
           expect(store.getActions()).toEqual(expectedActions);
         });
       });
@@ -98,7 +98,7 @@ describe("client:redux:kehu", () => {
         ];
 
         store.dispatch(addKehu(data)).then(() => {
-          expect(ApiUtil.post).toBeCalledWith("/kehu", data);
+          expect(ApiUtil.post).toBeCalledWith("/kehut", data);
           expect(store.getActions()).toEqual(expectedActions);
         });
       });

@@ -5,8 +5,8 @@ const kehuApi = require("./api/kehu");
 const { ensureAuthenticated } = require("../utils/Middlewares");
 
 module.exports = function setupRoutes(app) {
-  app.use("/api/v1", ensureAuthenticated, userApi);
-  app.use("/api/v1", ensureAuthenticated, kehuApi);
+  app.use("/api/v1/profiili", ensureAuthenticated, userApi);
+  app.use("/api/v1/kehut", ensureAuthenticated, kehuApi);
   app.use("/kehut", ensureAuthenticated, kehu);
   app.use("/profiili", user);
 

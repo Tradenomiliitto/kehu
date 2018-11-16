@@ -4,7 +4,7 @@ const { checkSchema, validationResult } = require("express-validator/check");
 const { kehuSchema } = require("../../utils/ValidationSchemas");
 const KehuService = require("../../services/KehuService");
 
-router.post("/kehu", checkSchema(kehuSchema), async (req, res) => {
+router.post("/", checkSchema(kehuSchema), async (req, res) => {
   try {
     const validations = validationResult(req);
     if (validations.isEmpty()) {

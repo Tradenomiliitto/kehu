@@ -15,7 +15,7 @@ export function addKehu(data) {
   return async dispatch => {
     try {
       dispatch({ type: ADD_KEHU });
-      const kehu = await post("/kehu", data);
+      const kehu = await post("/kehut", data);
       dispatch({ type: ADD_KEHU_SUCCESS, payload: kehu });
     } catch (e) {
       dispatch({ type: ADD_KEHU_ERROR, payload: e });
