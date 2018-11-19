@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { toggleAddKehuModal } from "./redux/portal";
+import { toggleKehuFormModal } from "./redux/portal";
 
 class Home extends Component {
   static propTypes = {
-    toggleAddKehuModal: PropTypes.func.isRequired
+    toggleKehuFormModal: PropTypes.func.isRequired
   };
 
   render() {
@@ -15,7 +15,7 @@ class Home extends Component {
           <div className="col col-xs-12 HomeButtons">
             <button
               className="Button Button--wide"
-              onClick={this.props.toggleAddKehuModal}
+              onClick={this.props.toggleKehuFormModal}
             >
               Lisää Kehu
             </button>
@@ -29,6 +29,6 @@ class Home extends Component {
 export default connect(
   null,
   {
-    toggleAddKehuModal
+    toggleKehuFormModal
   }
 )(Home);
