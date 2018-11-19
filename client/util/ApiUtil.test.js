@@ -1,4 +1,4 @@
-import { get, post } from "./ApiUtil";
+import { get, del, post } from "./ApiUtil";
 
 describe("client:util:ApiUtil", () => {
   const token = "asd123";
@@ -37,6 +37,29 @@ describe("client:util:ApiUtil", () => {
         }
       });
       expect(res).toEqual(jsonResponse);
+    });
+  });
+
+  describe("del", () => {
+    it("calls api with given url", async () => {
+      const response = {
+        status: 203
+      };
+      fetch = jest.fn(() => {
+        return new Promise(resolve => resolve(response));
+      });
+
+      await del(url);
+
+      expect(getAttributeStub).toBeCalledWith("content");
+      expect(fetch).toBeCalledWith(apiUrl, {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          "content-type": "application/json",
+          "CSRF-Token": token
+        }
+      });
     });
   });
 

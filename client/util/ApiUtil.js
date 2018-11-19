@@ -10,6 +10,16 @@ export function get(url) {
     .then(res => res.json());
 }
 
+export function del(url) {
+  return kehuFetch(url, {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      "content-type": "application/json"
+    }
+  }).then(checkResponseStatus);
+}
+
 export function post(url, body) {
   return kehuFetch(url, {
     method: "POST",
