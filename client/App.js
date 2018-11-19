@@ -13,32 +13,44 @@ import AddKehuForm from "./components/kehuform/AddKehuForm";
 import AddKehuSuccessPanel from "./components/kehuform/AddKehuSuccessPanel";
 import { getProfile } from "./redux/profile";
 import KehusPanel from "./KehusPanel";
+import Spinner from "./components/Spinner";
 
-class App extends Component {
+export class App extends Component {
   static propTypes = {
     isPortalVisible: PropTypes.bool.isRequired,
+    profileLoaded: PropTypes.bool.isRequired,
     successfullyAddedKehu: PropTypes.object,
     getProfile: PropTypes.func.isRequired
   };
 
   componentDidMount() {
-    this.props.getProfile();
+    if (!this.props.profileLoaded) {
+      this.props.getProfile();
+    }
   }
 
   render() {
     return (
       <Provider store={store}>
-        <Router>
-          <div className="App">
-            <Header />
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <Route exact path="/kehut" component={KehusPanel} />
-            </Switch>
-            {this.renderPortal()}
-          </div>
-        </Router>
+        <Router>{this.defineContent()}</Router>
       </Provider>
+    );
+  }
+
+  defineContent() {
+    if (!this.props.profileLoaded) {
+      return <Spinner />;
+    }
+
+    return (
+      <div className="App">
+        <Header />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/kehut" component={KehusPanel} />
+        </Switch>
+        {this.renderPortal()}
+      </div>
     );
   }
 
@@ -66,7 +78,8 @@ class App extends Component {
 
 const mapStateToProps = state => ({
   isPortalVisible: state.portal.portalVisible,
-  successfullyAddedKehu: state.kehu.addedKehu
+  successfullyAddedKehu: state.kehu.addedKehu,
+  profileLoaded: state.profile.profileLoaded
 });
 
 const mapDispatchToProps = {

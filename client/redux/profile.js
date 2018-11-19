@@ -5,7 +5,8 @@ export const PROFILE_ERROR = "profile/PROFILE_ERROR";
 
 export const initialState = {
   error: null,
-  profile: undefined
+  profile: undefined,
+  profileLoaded: false
 };
 
 export function getProfile() {
@@ -24,12 +25,14 @@ export default function reducer(state = initialState, action = {}) {
     case PROFILE_LOADED:
       return {
         ...state,
-        profile: action.payload
+        profile: action.payload,
+        profileLoaded: true
       };
     case PROFILE_ERROR:
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
+        profileLoaded: true
       };
     default:
       return state;

@@ -21,7 +21,7 @@ describe("client:redux:profile", () => {
       const state = initialState;
       const profile = { user: 1 };
       const action = { type: PROFILE_LOADED, payload: profile };
-      const expectedState = { ...state, profile };
+      const expectedState = { ...state, profile, profileLoaded: true };
       expect(reducer(state, action)).toEqual(expectedState);
     });
 
@@ -29,7 +29,7 @@ describe("client:redux:profile", () => {
       const state = initialState;
       const error = "error message";
       const action = { type: PROFILE_ERROR, payload: error };
-      const expectedState = { ...state, error };
+      const expectedState = { ...state, error, profileLoaded: true };
       expect(reducer(state, action)).toEqual(expectedState);
     });
   });
