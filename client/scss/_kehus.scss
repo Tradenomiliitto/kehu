@@ -1,0 +1,64 @@
+.KehusPanel {
+  @extend .table-responsive;
+}
+
+.KehusPanelHeader {
+  padding-top: 1rem;
+}
+
+.KehusPanelHeader-title {
+  color: $secondary;
+  font-size: 2.625rem;
+  font-weight: normal;
+}
+
+.KehusTable {
+  background-color: $table-stripe-bg;
+
+  > thead th {
+    border-bottom-width: 1px; // Baseguide override
+  }
+
+  td,
+  th {
+    border: 1px solid $medium-grey;
+  }
+}
+
+.KehusTable-head {
+  color: $secondary;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.KehusTable-row {
+  font-size: 0.75rem;
+}
+
+.KehusTable-cell {
+  &--light {
+    font-weight: 300;
+  }
+}
+
+.KehusTable-item {
+  background-color: $light-pink;
+  border: 1px solid $pink;
+  border-radius: 2px;
+  font-weight: 300;
+  margin-right: 2px;
+  padding: 2px 4px;
+  text-transform: capitalize;
+}
+
+.KehusTableActionButton {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  padding: 0;
+}
+
+.KehusTableActionButton-image {
+  max-height: 18px;
+  max-width: 18px;
+}
