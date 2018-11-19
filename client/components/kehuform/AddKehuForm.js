@@ -58,7 +58,7 @@ function DateGivenField({ value, handleChange }) {
 export class AddKehuForm extends Component {
   static propTypes = {
     addKehu: PropTypes.func.isRequired,
-    user: PropTypes.shape({
+    profile: PropTypes.shape({
       id: PropTypes.number.isRequired
     }).isRequired
   };
@@ -66,8 +66,8 @@ export class AddKehuForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      giver_id: props.user.id,
-      owner_id: props.user.id,
+      giver_id: props.profile.id,
+      owner_id: props.profile.id,
       giver_name: "",
       text: "",
       date_given: moment(),
@@ -146,7 +146,7 @@ export class AddKehuForm extends Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.user.user
+  profile: state.profile.profile
 });
 
 const mapDispatchToProps = {

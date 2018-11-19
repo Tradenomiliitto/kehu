@@ -5,13 +5,13 @@ import reducer, {
   PROFILE_LOADED,
   PROFILE_ERROR,
   getProfile
-} from "./user";
+} from "./profile";
 import * as ApiUtil from "../util/ApiUtil";
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe("client:redux:user", () => {
+describe("client:redux:profile", () => {
   describe("reducer", () => {
     it("has initial state", () => {
       expect(reducer()).toEqual(initialState);
@@ -19,9 +19,9 @@ describe("client:redux:user", () => {
 
     it("on PROFILE_LOADED", () => {
       const state = initialState;
-      const user = { user: 1 };
-      const action = { type: PROFILE_LOADED, payload: user };
-      const expectedState = { ...state, user };
+      const profile = { user: 1 };
+      const action = { type: PROFILE_LOADED, payload: profile };
+      const expectedState = { ...state, profile };
       expect(reducer(state, action)).toEqual(expectedState);
     });
 
@@ -68,9 +68,5 @@ describe("client:redux:user", () => {
         });
       });
     });
-  });
-
-  afterEach(() => {
-    fetch.resetMocks();
   });
 });

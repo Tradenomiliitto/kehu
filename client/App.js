@@ -11,7 +11,7 @@ import Portal from "./components/Portal";
 import KehuFormModal from "./components/KehuFormModal";
 import AddKehuForm from "./components/kehuform/AddKehuForm";
 import AddKehuSuccessPanel from "./components/kehuform/AddKehuSuccessPanel";
-import { getProfile } from "./redux/user";
+import { getProfile } from "./redux/profile";
 import KehusPanel from "./KehusPanel";
 
 class App extends Component {
