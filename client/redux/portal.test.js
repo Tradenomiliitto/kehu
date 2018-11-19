@@ -5,6 +5,7 @@ import reducer, {
   OPEN_EDIT_KEHU_MODAL,
   openEditKehuModal
 } from "./portal";
+import { RESET_KEHU_FORM } from "./kehu";
 
 describe("client:redux:portal", () => {
   describe("reducer", () => {
@@ -24,6 +25,13 @@ describe("client:redux:portal", () => {
       const state = initialState;
       const action = { type: OPEN_EDIT_KEHU_MODAL, payload: kehu };
       const expectedState = { ...initialState, portalVisible: true, kehu };
+      expect(reducer(state, action)).toEqual(expectedState);
+    });
+
+    it("on RESET_KEHU_FORM", () => {
+      const state = { ...initialState, kehu: { id: 1 } };
+      const action = { type: RESET_KEHU_FORM };
+      const expectedState = { ...state, kehu: null };
       expect(reducer(state, action)).toEqual(expectedState);
     });
   });
