@@ -1,4 +1,4 @@
-import { get, del, post } from "../util/ApiUtil";
+import { get, del, post, put } from "../util/ApiUtil";
 import { TOGGLE_ADD_KEHU_MODAL } from "./portal";
 
 export const ADD_KEHU = "kehu/ADD_KEHU";
@@ -35,6 +35,18 @@ export function addKehu(data) {
       dispatch({ type: ADD_KEHU_SUCCESS, payload: kehu });
     } catch (e) {
       dispatch({ type: ADD_KEHU_ERROR, payload: e });
+    }
+  };
+}
+
+export function updateKehu(id, data) {
+  return async dispatch => {
+    try {
+      dispatch({ type: UPDATE_KEHU });
+      const kehu = await put(`/kehut/${id}`, data);
+      dispatch({ type: UPDATE_KEHU_SUCCESS, payload: kehu });
+    } catch (e) {
+      dispatch({ type: UPDATE_KEHU_ERROR, payload: e });
     }
   };
 }
