@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import moment from "moment";
 import KehusTableActionButton from "./KehusTableActionButton";
+import { removeKehu } from "../../redux/kehu";
 
-export default class KehuRow extends Component {
+export class KehuRow extends Component {
   static propTypes = {
     kehu: PropTypes.object.isRequired
   };
@@ -42,6 +44,17 @@ export default class KehuRow extends Component {
   };
 
   handleRemoveClick = () => {
-    console.log("remove");
+    const {
+      kehu: { id },
+      removeKehu
+    } = this.props;
+    if (confirm("Haluatko varmasti poistaa Kehun?")) {
+      removeKehu(id);
+    }
   };
 }
+
+export default connect(
+  null,
+  { removeKehu }
+)(KehuRow);
