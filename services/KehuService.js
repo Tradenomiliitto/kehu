@@ -163,8 +163,12 @@ async function updateKehu(user_id, kehu_id, data) {
     await unrelateSituations(kehu, situationsFromData);
     await createOrRelateTags(kehu, tagsFromData);
     await createOrRelateSituations(kehu, situationsFromData);
-    logger.info(`Created kehu ${kehu_id} for user ${user_id}`);
     await trx.commit();
+    logger.info(`Updated kehu ${kehu_id} for user ${user_id}`);
+    return await Kehu.query()
+      .findById(kehu.id)
+      .eager("[situations, tags]")
+      .first();
   } catch (error) {
     logger.error(`Updating Kehu with tags failed. Rolling back..`);
     logger.error(error.message);
