@@ -4,12 +4,16 @@ import reducer, {
   ADD_KEHU_ERROR,
   ADD_KEHU_SUCCESS,
   addKehu,
+  removeKehu,
   getKehus,
   resetAddKehuState,
   ADD_KEHU_RESET,
   GET_KEHUS,
   GET_KEHUS_SUCCESS,
-  GET_KEHUS_ERROR
+  GET_KEHUS_ERROR,
+  REMOVE_KEHU,
+  REMOVE_KEHU_SUCCESS,
+  REMOVE_KEHU_ERROR
 } from "./kehu";
 import thunk from "redux-thunk";
 import configureMockStore from "redux-mock-store";
@@ -66,6 +70,42 @@ describe("client:redux:kehu", () => {
         error: null,
         addedKehu: null
       };
+      expect(reducer(state, action)).toEqual(expectedState);
+    });
+
+    it("on REMOVE_KEHU", () => {
+      const state = { ...initialState, error: new Error() };
+      const action = { type: REMOVE_KEHU };
+      const expectedState = { ...state, loading: true, error: null };
+      expect(reducer(state, action)).toEqual(expectedState);
+    });
+
+    it("on REMOVE_KEHU_SUCCESS", () => {
+      const kehuId = 2;
+      const kehus = [{ id: 1 }, { id: 2 }, { id: 3 }];
+      const expectedKehus = [{ id: 1 }, { id: 3 }];
+      const state = {
+        ...initialState,
+        loading: true,
+        error: new Error(),
+        kehus
+      };
+      const action = { type: REMOVE_KEHU_SUCCESS, payload: kehuId };
+      const expectedState = {
+        ...state,
+        loading: false,
+        kehus: expectedKehus,
+        error: null
+      };
+      expect(reducer(state, action)).toEqual(expectedState);
+    });
+
+    it("on REMOVE_KEHU_ERROR", () => {
+      const kehus = [{ id: 1 }, { id: 2 }, { id: 3 }];
+      const state = { ...initialState, loading: true, error: null, kehus };
+      const error = new Error("kehu error");
+      const action = { type: REMOVE_KEHU_ERROR, payload: error };
+      const expectedState = { ...state, loading: false, error };
       expect(reducer(state, action)).toEqual(expectedState);
     });
 
@@ -136,6 +176,43 @@ describe("client:redux:kehu", () => {
 
         store.dispatch(addKehu(data)).then(() => {
           expect(ApiUtil.post).toBeCalledWith("/kehut", data);
+          expect(store.getActions()).toEqual(expectedActions);
+        });
+      });
+    });
+
+    describe("removeKehu", () => {
+      it("when adding succeeds", () => {
+        const kehuId = 1;
+        const response = { response: 1 };
+
+        ApiUtil.del = jest.fn(() => new Promise(res => res(response)));
+
+        const store = mockStore(initialState);
+        const expectedActions = [
+          { type: REMOVE_KEHU },
+          { type: REMOVE_KEHU_SUCCESS, payload: kehuId }
+        ];
+
+        store.dispatch(removeKehu(kehuId)).then(() => {
+          expect(ApiUtil.del).toBeCalledWith(`/kehut/${kehuId}`);
+          expect(store.getActions()).toEqual(expectedActions);
+        });
+      });
+
+      it("when adding fails", () => {
+        const kehuId = 1;
+        const error = new Error("network error");
+        ApiUtil.del = jest.fn(() => new Promise((res, rej) => rej(error)));
+
+        const store = mockStore(initialState);
+        const expectedActions = [
+          { type: REMOVE_KEHU },
+          { type: REMOVE_KEHU_ERROR, payload: error }
+        ];
+
+        store.dispatch(removeKehu(kehuId)).then(() => {
+          expect(ApiUtil.del).toBeCalledWith(`/kehut/${kehuId}`);
           expect(store.getActions()).toEqual(expectedActions);
         });
       });

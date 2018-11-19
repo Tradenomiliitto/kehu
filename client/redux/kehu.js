@@ -1,9 +1,13 @@
-import { get, post } from "../util/ApiUtil";
+import { get, del, post } from "../util/ApiUtil";
 
 export const ADD_KEHU = "kehu/ADD_KEHU";
 export const ADD_KEHU_SUCCESS = "kehu/ADD_KEHU_SUCCESS";
 export const ADD_KEHU_ERROR = "kehu/ADD_KEHU_ERROR";
 export const ADD_KEHU_RESET = "kehu/ADD_KEHU_RESET";
+
+export const REMOVE_KEHU = "kehu/REMOVE_KEHU";
+export const REMOVE_KEHU_SUCCESS = "kehu/REMOVE_KEHU_SUCCESS";
+export const REMOVE_KEHU_ERROR = "kehu/REMOVE_KEHU_ERROR";
 
 export const GET_KEHUS = "kehu/GET_KEHUS";
 export const GET_KEHUS_SUCCESS = "kehu/GET_KEHUS_SUCCESS";
@@ -29,6 +33,18 @@ export function addKehu(data) {
   };
 }
 
+export function removeKehu(id) {
+  return async dispatch => {
+    try {
+      dispatch({ type: REMOVE_KEHU });
+      await del(`/kehut/${id}`);
+      dispatch({ type: REMOVE_KEHU_SUCCESS, payload: id });
+    } catch (e) {
+      dispatch({ type: REMOVE_KEHU_ERROR, payload: e });
+    }
+  };
+}
+
 export function getKehus() {
   return async dispatch => {
     try {
@@ -45,14 +61,21 @@ export function resetAddKehuState() {
   return { type: ADD_KEHU_RESET };
 }
 
+function removeKehuFromState(kehus, removedId) {
+  return kehus.filter(k => k.id !== removedId);
+}
+
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case ADD_KEHU:
+    case REMOVE_KEHU:
+    case GET_KEHUS:
       return {
         ...state,
         loading: true,
         error: null
       };
+
     case ADD_KEHU_SUCCESS:
       return {
         ...state,
@@ -74,11 +97,20 @@ export default function reducer(state = initialState, action = {}) {
         addedKehu: null
       };
 
-    case GET_KEHUS:
+    case REMOVE_KEHU_SUCCESS:
       return {
         ...state,
-        loading: true
+        kehus: removeKehuFromState(state.kehus, action.payload),
+        loading: false,
+        error: null
       };
+    case REMOVE_KEHU_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      };
+
     case GET_KEHUS_SUCCESS:
       return {
         ...state,
