@@ -1,7 +1,9 @@
 import reducer, {
   TOGGLE_ADD_KEHU_MODAL,
   initialState,
-  toggleAddKehuModal
+  toggleAddKehuModal,
+  OPEN_EDIT_KEHU_MODAL,
+  openEditKehuModal
 } from "./portal";
 
 describe("client:redux:portal", () => {
@@ -16,6 +18,14 @@ describe("client:redux:portal", () => {
       const expectedState = { ...initialState, portalVisible: true };
       expect(reducer(state, action)).toEqual(expectedState);
     });
+
+    it("on OPEN_EDIT_KEHU_MODAL", () => {
+      const kehu = { id: 1 };
+      const state = initialState;
+      const action = { type: OPEN_EDIT_KEHU_MODAL, payload: kehu };
+      const expectedState = { ...initialState, portalVisible: true, kehu };
+      expect(reducer(state, action)).toEqual(expectedState);
+    });
   });
 
   describe("actions", () => {
@@ -23,6 +33,14 @@ describe("client:redux:portal", () => {
       it("returns correct action", () => {
         const expectedType = { type: TOGGLE_ADD_KEHU_MODAL };
         expect(toggleAddKehuModal()).toEqual(expectedType);
+      });
+    });
+
+    describe("openEditKehuModal", () => {
+      it("returns correct action", () => {
+        const kehu = { id: 1 };
+        const expectedType = { type: OPEN_EDIT_KEHU_MODAL, payload: kehu };
+        expect(openEditKehuModal(kehu)).toEqual(expectedType);
       });
     });
   });
