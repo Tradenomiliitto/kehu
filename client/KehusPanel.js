@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getKehus } from "./redux/kehu";
 import Spinner from "./components/Spinner";
+import KehusTable from "./components/kehus/KehusTable";
 
 export class KehusPanel extends Component {
   static propTypes = {
@@ -21,21 +22,27 @@ export class KehusPanel extends Component {
     return (
       <div className="container">
         <div className="row">
-          <div className="col col-xs-12">
-            {this.renderContent()}
-            TODO
-          </div>
+          <div className="col col-xs-12">{this.renderContent()}</div>
         </div>
       </div>
     );
   }
 
   renderContent() {
-    if (!this.props.kehusLoaded) {
+    const { kehusLoaded, kehus } = this.props;
+
+    if (!kehusLoaded) {
       return <Spinner />;
     }
 
-    return <div className="KehusPanel">TODO</div>;
+    return (
+      <div className="KehusPanel">
+        <div className="KehusPanelHeader">
+          <h1 className="KehusPanelHeader-title">Saadut Kehut</h1>
+        </div>
+        <KehusTable kehus={kehus} />
+      </div>
+    );
   }
 }
 
