@@ -13,7 +13,11 @@ import reducer, {
   GET_KEHUS_ERROR,
   REMOVE_KEHU,
   REMOVE_KEHU_SUCCESS,
-  REMOVE_KEHU_ERROR
+  REMOVE_KEHU_ERROR,
+  UPDATE_KEHU_ERROR,
+  UPDATE_KEHU_SUCCESS,
+  UPDATE_KEHU_RESET,
+  UPDATE_KEHU
 } from "./kehu";
 import thunk from "redux-thunk";
 import configureMockStore from "redux-mock-store";
@@ -37,14 +41,21 @@ describe("client:redux:kehu", () => {
     });
 
     it("on ADD_KEHU_SUCCESS", () => {
-      const state = { ...initialState, loading: true, error: new Error() };
-      const kehu = { kehu: 1 };
+      const kehus = [{ id: 1 }, { id: 2 }, { id: 3 }];
+      const state = {
+        ...initialState,
+        loading: true,
+        error: new Error(),
+        kehus
+      };
+      const kehu = { id: 4 };
       const action = { type: ADD_KEHU_SUCCESS, payload: { kehu } };
       const expectedState = {
         ...state,
         loading: false,
-        addedKehu: kehu,
-        error: null
+        savedKehu: kehu,
+        error: null,
+        kehus: kehus.concat(kehu)
       };
       expect(reducer(state, action)).toEqual(expectedState);
     });
@@ -62,14 +73,69 @@ describe("client:redux:kehu", () => {
         ...initialState,
         loading: true,
         error: true,
-        addedKehu: {}
+        savedKehu: {}
       };
       const action = { type: ADD_KEHU_RESET };
       const expectedState = {
         ...state,
         loading: false,
         error: null,
-        addedKehu: null
+        savedKehu: null
+      };
+      expect(reducer(state, action)).toEqual(expectedState);
+    });
+
+    it("on UPDATE_KEHU", () => {
+      const state = { ...initialState, error: new Error() };
+      const action = { type: UPDATE_KEHU };
+      const expectedState = { ...state, loading: true, error: null };
+      expect(reducer(state, action)).toEqual(expectedState);
+    });
+
+    it("on UPDATE_KEHU_SUCCESS", () => {
+      const updatedKehu = { id: 2, name: "jooh" };
+      const kehus = [{ id: 1 }, { id: 2 }, { id: 3 }];
+      const state = {
+        ...initialState,
+        loading: true,
+        error: new Error(),
+        kehus
+      };
+      const action = {
+        type: UPDATE_KEHU_SUCCESS,
+        payload: { kehu: updatedKehu }
+      };
+      const expectedState = {
+        ...state,
+        loading: false,
+        savedKehu: updatedKehu,
+        error: null,
+        kehus: [{ id: 1 }, updatedKehu, { id: 3 }]
+      };
+      expect(reducer(state, action)).toEqual(expectedState);
+    });
+
+    it("on UPDATE_KEHU_ERROR", () => {
+      const state = { ...initialState, loading: true, error: null };
+      const error = new Error("kehu error");
+      const action = { type: UPDATE_KEHU_ERROR, payload: error };
+      const expectedState = { ...state, loading: false, error };
+      expect(reducer(state, action)).toEqual(expectedState);
+    });
+
+    it("on UPDATE_KEHU_RESET", () => {
+      const state = {
+        ...initialState,
+        loading: true,
+        error: true,
+        savedKehu: {}
+      };
+      const action = { type: UPDATE_KEHU_RESET };
+      const expectedState = {
+        ...state,
+        loading: false,
+        error: null,
+        savedKehu: null
       };
       expect(reducer(state, action)).toEqual(expectedState);
     });
