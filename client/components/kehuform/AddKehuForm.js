@@ -1,29 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import DatePicker from "react-datepicker";
 import moment from "moment";
 import PropTypes from "prop-types";
 import { addKehu } from "../../redux/kehu";
 import WordCloudField from "./WordCloudField";
 import GiverNameField from "./GiverNameField";
 import TextField from "./TextField";
-
-function DateGivenField({ value, handleChange }) {
-  return (
-    <div className="Form-group DateGivenFieldContainer">
-      <label htmlFor="date_given">Päivämäärä:</label>
-      <DatePicker
-        id="date_given"
-        className="DateGivenField"
-        dateFormat="D. MMMM YYYY"
-        dropdownMode="scroll"
-        locale="fi-FI"
-        selected={value}
-        onChange={handleChange}
-      />
-    </div>
-  );
-}
+import DateGivenField from "./DateGivenField";
 
 export class AddKehuForm extends Component {
   static propTypes = {
