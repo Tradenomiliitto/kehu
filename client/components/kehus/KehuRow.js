@@ -36,7 +36,11 @@ export class KehuRow extends Component {
   }
 
   renderItem(tag) {
-    return <span className="KehusTable-item">{tag.text}</span>;
+    return (
+      <span key={tag.text} className="KehusTable-item">
+        {tag.text}
+      </span>
+    );
   }
 
   handleEditClick = () => {
