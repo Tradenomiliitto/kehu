@@ -8,7 +8,7 @@ import GiverNameField from "./GiverNameField";
 import TextField from "./TextField";
 import DateGivenField from "./DateGivenField";
 
-export class AddKehuForm extends Component {
+export class KehuForm extends Component {
   static propTypes = {
     addKehu: PropTypes.func.isRequired,
     profile: PropTypes.shape({
@@ -109,4 +109,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AddKehuForm);
+)(KehuForm);

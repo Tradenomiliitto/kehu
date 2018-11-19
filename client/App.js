@@ -9,7 +9,7 @@ import Home from "./Home";
 import Header from "./components/Header";
 import Portal from "./components/Portal";
 import KehuFormModal from "./components/KehuFormModal";
-import AddKehuForm from "./components/kehuform/AddKehuForm";
+import AddKehuForm from "./components/kehuform/KehuForm";
 import AddKehuSuccessPanel from "./components/kehuform/AddKehuSuccessPanel";
 import { getProfile } from "./redux/profile";
 import KehusPanel from "./KehusPanel";
