@@ -34,10 +34,6 @@ describe("client:components:KehuFormModal", () => {
       component.find(".close-button-js").simulate("click");
     });
 
-    it("toggles modal", () => {
-      expect(toggleModalStub).toBeCalled();
-    });
-
     it("resets add kehu state", () => {
       expect(resetAddKehuStateStub).toBeCalled();
     });

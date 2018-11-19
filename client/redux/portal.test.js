@@ -1,4 +1,8 @@
-import reducer, { TOGGLE_MODAL, initialState, toggleModal } from "./portal";
+import reducer, {
+  TOGGLE_ADD_KEHU_MODAL,
+  initialState,
+  toggleAddKehuModal
+} from "./portal";
 
 describe("client:redux:portal", () => {
   describe("reducer", () => {
@@ -6,19 +10,19 @@ describe("client:redux:portal", () => {
       expect(reducer()).toEqual(initialState);
     });
 
-    it("on TOGGLE_MODAL", () => {
+    it("on TOGGLE_ADD_KEHU_MODAL", () => {
       const state = initialState;
-      const action = { type: TOGGLE_MODAL };
-      const expectedState = { ...initialState, isVisible: true };
+      const action = { type: TOGGLE_ADD_KEHU_MODAL };
+      const expectedState = { ...initialState, portalVisible: true };
       expect(reducer(state, action)).toEqual(expectedState);
     });
   });
 
   describe("actions", () => {
-    describe("toggleModal", () => {
+    describe("toggleAddKehuModal", () => {
       it("returns correct action", () => {
-        const expectedType = { type: TOGGLE_MODAL };
-        expect(toggleModal()).toEqual(expectedType);
+        const expectedType = { type: TOGGLE_ADD_KEHU_MODAL };
+        expect(toggleAddKehuModal()).toEqual(expectedType);
       });
     });
   });

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import moment from "moment";
-import { toggleModal } from "../../redux/portal";
 import { resetAddKehuState } from "../../redux/kehu";
 
 export class AddKehuSuccessPanel extends Component {
@@ -50,12 +49,10 @@ export class AddKehuSuccessPanel extends Component {
 
   handleClick = () => {
     this.props.resetAddKehuState();
-    this.props.toggleModal();
   };
 }
 
 const mapDispatchToProps = {
-  toggleModal,
   resetAddKehuState
 };
 

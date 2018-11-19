@@ -65,7 +65,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  isPortalVisible: state.portal.isVisible,
+  isPortalVisible: state.portal.portalVisible,
   successfullyAddedKehu: state.kehu.addedKehu
 });
 

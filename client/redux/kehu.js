@@ -1,4 +1,5 @@
 import { get, del, post } from "../util/ApiUtil";
+import { TOGGLE_ADD_KEHU_MODAL } from "./portal";
 
 export const ADD_KEHU = "kehu/ADD_KEHU";
 export const ADD_KEHU_SUCCESS = "kehu/ADD_KEHU_SUCCESS";
@@ -58,7 +59,10 @@ export function getKehus() {
 }
 
 export function resetAddKehuState() {
-  return { type: ADD_KEHU_RESET };
+  return dispatch => {
+    dispatch({ type: ADD_KEHU_RESET });
+    dispatch({ type: TOGGLE_ADD_KEHU_MODAL });
+  };
 }
 
 function removeKehuFromState(kehus, removedId) {

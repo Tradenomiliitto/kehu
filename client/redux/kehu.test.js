@@ -18,6 +18,7 @@ import reducer, {
 import thunk from "redux-thunk";
 import configureMockStore from "redux-mock-store";
 import * as ApiUtil from "../util/ApiUtil";
+import { TOGGLE_ADD_KEHU_MODAL } from "./portal";
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -220,7 +221,13 @@ describe("client:redux:kehu", () => {
 
     describe("resetAddKehuState", () => {
       it("returns correct action", () => {
-        expect(resetAddKehuState()).toEqual({ type: ADD_KEHU_RESET });
+        const store = mockStore(initialState);
+        const expectedActions = [
+          { type: ADD_KEHU_RESET },
+          { type: TOGGLE_ADD_KEHU_MODAL }
+        ];
+        store.dispatch(resetAddKehuState());
+        expect(store.getActions()).toEqual(expectedActions);
       });
     });
 
