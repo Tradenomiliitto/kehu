@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import moment from "moment";
-import { resetAddKehuState } from "../../redux/kehu";
+import { resetKehuFormState } from "../../redux/kehu";
 
 export class KehuSuccessPanel extends Component {
   static propTypes = {
     kehu: PropTypes.object.isRequired,
     toggleModal: PropTypes.func.isRequired,
-    resetAddKehuState: PropTypes.func.isRequired
+    resetKehuFormState: PropTypes.func.isRequired
   };
 
   render() {
@@ -48,12 +48,12 @@ export class KehuSuccessPanel extends Component {
   }
 
   handleClick = () => {
-    this.props.resetAddKehuState();
+    this.props.resetKehuFormState();
   };
 }
 
 const mapDispatchToProps = {
-  resetAddKehuState
+  resetKehuFormState
 };
 
 export default connect(

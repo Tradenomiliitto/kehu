@@ -6,8 +6,7 @@ import reducer, {
   addKehu,
   removeKehu,
   getKehus,
-  resetAddKehuState,
-  ADD_KEHU_RESET,
+  resetKehuFormState,
   GET_KEHUS,
   GET_KEHUS_SUCCESS,
   GET_KEHUS_ERROR,
@@ -16,8 +15,8 @@ import reducer, {
   REMOVE_KEHU_ERROR,
   UPDATE_KEHU_ERROR,
   UPDATE_KEHU_SUCCESS,
-  UPDATE_KEHU_RESET,
-  UPDATE_KEHU
+  UPDATE_KEHU,
+  RESET_KEHU_FORM
 } from "./kehu";
 import thunk from "redux-thunk";
 import configureMockStore from "redux-mock-store";
@@ -68,23 +67,6 @@ describe("client:redux:kehu", () => {
       expect(reducer(state, action)).toEqual(expectedState);
     });
 
-    it("on ADD_KEHU_RESET", () => {
-      const state = {
-        ...initialState,
-        loading: true,
-        error: true,
-        savedKehu: {}
-      };
-      const action = { type: ADD_KEHU_RESET };
-      const expectedState = {
-        ...state,
-        loading: false,
-        error: null,
-        savedKehu: null
-      };
-      expect(reducer(state, action)).toEqual(expectedState);
-    });
-
     it("on UPDATE_KEHU", () => {
       const state = { ...initialState, error: new Error() };
       const action = { type: UPDATE_KEHU };
@@ -123,14 +105,14 @@ describe("client:redux:kehu", () => {
       expect(reducer(state, action)).toEqual(expectedState);
     });
 
-    it("on UPDATE_KEHU_RESET", () => {
+    it("on RESET_KEHU_FORM", () => {
       const state = {
         ...initialState,
         loading: true,
         error: true,
         savedKehu: {}
       };
-      const action = { type: UPDATE_KEHU_RESET };
+      const action = { type: RESET_KEHU_FORM };
       const expectedState = {
         ...state,
         loading: false,
@@ -285,14 +267,14 @@ describe("client:redux:kehu", () => {
       });
     });
 
-    describe("resetAddKehuState", () => {
+    describe("resetKehuFormState", () => {
       it("returns correct action", () => {
         const store = mockStore(initialState);
         const expectedActions = [
-          { type: ADD_KEHU_RESET },
+          { type: RESET_KEHU_FORM },
           { type: TOGGLE_ADD_KEHU_MODAL }
         ];
-        store.dispatch(resetAddKehuState());
+        store.dispatch(resetKehuFormState());
         expect(store.getActions()).toEqual(expectedActions);
       });
     });

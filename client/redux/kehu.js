@@ -4,12 +4,12 @@ import { TOGGLE_ADD_KEHU_MODAL } from "./portal";
 export const ADD_KEHU = "kehu/ADD_KEHU";
 export const ADD_KEHU_SUCCESS = "kehu/ADD_KEHU_SUCCESS";
 export const ADD_KEHU_ERROR = "kehu/ADD_KEHU_ERROR";
-export const ADD_KEHU_RESET = "kehu/ADD_KEHU_RESET";
 
 export const UPDATE_KEHU = "kehu/UPDATE_KEHU";
 export const UPDATE_KEHU_SUCCESS = "kehu/UPDATE_KEHU_SUCCESS";
 export const UPDATE_KEHU_ERROR = "kehu/UPDATE_KEHU_ERROR";
-export const UPDATE_KEHU_RESET = "kehu/UPDATE_KEHU_RESET";
+
+export const RESET_KEHU_FORM = "kehu/RESET_KEHU_FORM";
 
 export const REMOVE_KEHU = "kehu/REMOVE_KEHU";
 export const REMOVE_KEHU_SUCCESS = "kehu/REMOVE_KEHU_SUCCESS";
@@ -63,9 +63,9 @@ export function getKehus() {
   };
 }
 
-export function resetAddKehuState() {
+export function resetKehuFormState() {
   return dispatch => {
-    dispatch({ type: ADD_KEHU_RESET });
+    dispatch({ type: RESET_KEHU_FORM });
     dispatch({ type: TOGGLE_ADD_KEHU_MODAL });
   };
 }
@@ -119,8 +119,7 @@ export default function reducer(state = initialState, action = {}) {
         error: action.payload
       };
 
-    case ADD_KEHU_RESET:
-    case UPDATE_KEHU_RESET:
+    case RESET_KEHU_FORM:
       return {
         ...state,
         loading: false,

@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { resetAddKehuState } from "../redux/kehu";
+import { resetKehuFormState } from "../redux/kehu";
 
 export class KehuFormModal extends Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
-    resetAddKehuState: PropTypes.func.isRequired
+    resetKehuFormState: PropTypes.func.isRequired
   };
 
   render() {
@@ -31,11 +31,11 @@ export class KehuFormModal extends Component {
   }
 
   handleClick = () => {
-    this.props.resetAddKehuState();
+    this.props.resetKehuFormState();
   };
 }
 
 export default connect(
   null,
-  { resetAddKehuState }
+  { resetKehuFormState }
 )(KehuFormModal);
