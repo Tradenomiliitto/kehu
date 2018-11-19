@@ -33,6 +33,19 @@ export function post(url, body) {
     .then(res => res.json());
 }
 
+export function put(url, body) {
+  return kehuFetch(url, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "content-type": "application/json"
+    },
+    body: JSON.stringify(body)
+  })
+    .then(checkResponseStatus)
+    .then(res => res.json());
+}
+
 function kehuFetch(endpoint, opts = { headers: {} }) {
   opts.headers["CSRF-Token"] = document
     .querySelector('meta[name="csrf-token"]')

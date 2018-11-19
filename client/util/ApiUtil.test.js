@@ -1,4 +1,4 @@
-import { get, del, post } from "./ApiUtil";
+import { get, del, post, put } from "./ApiUtil";
 
 describe("client:util:ApiUtil", () => {
   const token = "asd123";
@@ -79,6 +79,33 @@ describe("client:util:ApiUtil", () => {
       expect(getAttributeStub).toBeCalledWith("content");
       expect(fetch).toBeCalledWith(apiUrl, {
         method: "POST",
+        headers: {
+          Accept: "application/json",
+          "content-type": "application/json",
+          "CSRF-Token": token
+        },
+        body: JSON.stringify(body)
+      });
+      expect(res).toEqual(jsonResponse);
+    });
+  });
+
+  describe("put", () => {
+    it("calls api with given parameters", async () => {
+      const jsonResponse = { response: 1 };
+      const response = {
+        status: 200,
+        json: () => new Promise(resolve => resolve(jsonResponse))
+      };
+      fetch = jest.fn(() => {
+        return new Promise(resolve => resolve(response));
+      });
+
+      const res = await put(url, body);
+
+      expect(getAttributeStub).toBeCalledWith("content");
+      expect(fetch).toBeCalledWith(apiUrl, {
+        method: "PUT",
         headers: {
           Accept: "application/json",
           "content-type": "application/json",
