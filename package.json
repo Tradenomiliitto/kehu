@@ -67,6 +67,7 @@
     "jest": "23.6.0",
     "jest-fetch-mock": "^1.7.4",
     "mini-css-extract-plugin": "0.4.4",
+    "mockdate": "2.0.2",
     "nightwatch": "0.9.21",
     "node-sass": "4.10.0",
     "password-generator": "2.2.0",

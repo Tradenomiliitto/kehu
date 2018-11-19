@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import moment from "moment";
 import PropTypes from "prop-types";
-import { addKehu } from "../../redux/kehu";
+import { addKehu, updateKehu } from "../../redux/kehu";
 import WordCloudField from "./WordCloudField";
 import GiverNameField from "./GiverNameField";
 import TextField from "./TextField";
@@ -11,21 +11,24 @@ import DateGivenField from "./DateGivenField";
 export class KehuForm extends Component {
   static propTypes = {
     addKehu: PropTypes.func.isRequired,
+    updateKehu: PropTypes.func.isRequired,
     profile: PropTypes.shape({
       id: PropTypes.number.isRequired
-    }).isRequired
+    }).isRequired,
+    kehu: PropTypes.object
   };
 
   constructor(props) {
     super(props);
+    const kehu = props.kehu || {};
     this.state = {
       giver_id: props.profile.id,
       owner_id: props.profile.id,
-      giver_name: "",
-      text: "",
-      date_given: moment(),
-      tags: [],
-      situations: []
+      giver_name: kehu.giver_name || "",
+      text: kehu.text || "",
+      date_given: kehu.date_given ? moment(kehu.date_given) : moment(),
+      tags: kehu.tags ? kehu.tags.map(t => t.text) : [],
+      situations: kehu.situations ? kehu.situations.map(s => s.text) : []
     };
   }
 
@@ -90,11 +93,16 @@ export class KehuForm extends Component {
 
   handleSubmit = ev => {
     ev.preventDefault();
+    const { kehu, updateKehu, addKehu } = this.props;
     const formData = {
       ...this.state,
       date_given: moment(this.state.date_given).format("D.M.YYYY")
     };
-    this.props.addKehu(formData);
+    if (kehu) {
+      updateKehu(kehu.id, formData);
+    } else {
+      addKehu(formData);
+    }
   };
 }
 
@@ -103,7 +111,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  addKehu
+  addKehu,
+  updateKehu
 };
 
 export default connect(
