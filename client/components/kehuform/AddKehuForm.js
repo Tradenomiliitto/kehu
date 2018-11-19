@@ -5,22 +5,7 @@ import moment from "moment";
 import PropTypes from "prop-types";
 import { addKehu } from "../../redux/kehu";
 import WordCloudField from "./WordCloudField";
-
-function GiverNameField({ value, handleChange }) {
-  return (
-    <div className="Form-group">
-      <label htmlFor="giver_name">Minua kehui:</label>
-      <input
-        id="giver_name"
-        name="giver_name"
-        type="text"
-        placeholder="Nimi"
-        value={value}
-        onChange={handleChange}
-      />
-    </div>
-  );
-}
+import GiverNameField from "./GiverNameField";
 
 function TextField({ value, handleChange }) {
   return (
