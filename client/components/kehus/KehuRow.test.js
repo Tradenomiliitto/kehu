@@ -3,11 +3,32 @@ import { KehuRow } from "./KehuRow";
 describe("client:components:kehus:KehuRow", () => {
   let component;
   let removeKehuStub;
+  let openEditKehuModalStub;
   const kehu = { id: 1, tags: [], situations: [] };
 
   beforeEach(() => {
     removeKehuStub = jest.fn();
-    component = shallow(<KehuRow kehu={kehu} removeKehu={removeKehuStub} />);
+    openEditKehuModalStub = jest.fn();
+    component = shallow(
+      <KehuRow
+        kehu={kehu}
+        removeKehu={removeKehuStub}
+        openEditKehuModal={openEditKehuModalStub}
+      />
+    );
+  });
+
+  describe("when edit button is clicked", () => {
+    beforeEach(() => {
+      component
+        .find("KehusTableActionButton")
+        .first()
+        .simulate("click");
+    });
+
+    it("edits kehu", () => {
+      expect(openEditKehuModalStub).toHaveBeenCalledWith(kehu);
+    });
   });
 
   describe("when remove button is clicked", () => {

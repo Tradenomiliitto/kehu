@@ -4,11 +4,13 @@ import { connect } from "react-redux";
 import moment from "moment";
 import KehusTableActionButton from "./KehusTableActionButton";
 import { removeKehu } from "../../redux/kehu";
+import { openEditKehuModal } from "../../redux/portal";
 
 export class KehuRow extends Component {
   static propTypes = {
     kehu: PropTypes.object.isRequired,
-    removeKehu: PropTypes.func.isRequired
+    removeKehu: PropTypes.func.isRequired,
+    openEditKehuModal: PropTypes.func.isRequired
   };
 
   render() {
@@ -45,7 +47,7 @@ export class KehuRow extends Component {
   }
 
   handleEditClick = () => {
-    console.log("edit");
+    this.props.openEditKehuModal(this.props.kehu);
   };
 
   handleRemoveClick = () => {
@@ -61,5 +63,8 @@ export class KehuRow extends Component {
 
 export default connect(
   null,
-  { removeKehu }
+  {
+    removeKehu,
+    openEditKehuModal
+  }
 )(KehuRow);
