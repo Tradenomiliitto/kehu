@@ -7,7 +7,7 @@
 }
 
 .KehuTextFieldContainer,
-.AddKehuQuoteContainer {
+.KehuQuoteContainer {
   background-image: url("/images/quote-bubble.png");
   background-repeat: no-repeat;
   background-size: contain;
@@ -92,24 +92,24 @@
   top: 2px;
 }
 
-.AddKehuSuccessPanel {
+.KehuSuccessPanel {
   padding: 2rem 1rem 1rem;
 }
 
-.AddKehuQuote {
+.KehuQuote {
   font-weight: 300;
   height: 200px;
   overflow: scroll;
   padding: 1rem 2rem 2rem;
 }
 
-.AddKehuDetails {
+.KehuDetails {
   font-weight: 300;
   color: $secondary;
   font-size: 0.875rem;
 }
 
-.AddKehuItem {
+.KehuItem {
   background-color: $light-pink;
   border: 1px solid $pink;
   border-radius: 2px;
@@ -119,6 +119,6 @@
   padding: 0.25rem 0.5rem;
 }
 
-.AddKehuCloseButton {
+.KehuCloseButton {
   margin-top: 1rem;
 }

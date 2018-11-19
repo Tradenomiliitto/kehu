@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import moment from "moment";
 import { resetAddKehuState } from "../../redux/kehu";
 
-export class AddKehuSuccessPanel extends Component {
+export class KehuSuccessPanel extends Component {
   static propTypes = {
     kehu: PropTypes.object.isRequired,
     toggleModal: PropTypes.func.isRequired,
@@ -14,18 +14,18 @@ export class AddKehuSuccessPanel extends Component {
   render() {
     const { kehu } = this.props;
     return (
-      <div className="AddKehuSuccessPanel">
-        <div className="AddKehuQuoteContainer">
-          <p className="AddKehuQuote">{kehu.text}</p>
+      <div className="KehuSuccessPanel">
+        <div className="KehuQuoteContainer">
+          <p className="KehuQuote">{kehu.text}</p>
         </div>
-        <p className="AddKehuDetails">
+        <p className="KehuDetails">
           {kehu.giver_name}
           <br />
           {moment(kehu.date_given).format("D.M.YYYY")}
         </p>
-        <div className="AddKehuTags">{this.renderTagsAndSituations()}</div>
+        <div className="KehuTags">{this.renderTagsAndSituations()}</div>
         <button
-          className="Button Button--fullWidth AddKehuCloseButton"
+          className="Button Button--fullWidth KehuCloseButton"
           onClick={this.handleClick}
         >
           Sulje
@@ -40,7 +40,7 @@ export class AddKehuSuccessPanel extends Component {
     } = this.props;
     return [...tags, ...situations].map((it, i) => {
       return (
-        <span className="AddKehuItem" key={i}>
+        <span className="KehuItem" key={i}>
           {it.text}
         </span>
       );
@@ -59,4 +59,4 @@ const mapDispatchToProps = {
 export default connect(
   null,
   mapDispatchToProps
-)(AddKehuSuccessPanel);
+)(KehuSuccessPanel);
