@@ -7,7 +7,8 @@ import { removeKehu } from "../../redux/kehu";
 
 export class KehuRow extends Component {
   static propTypes = {
-    kehu: PropTypes.object.isRequired
+    kehu: PropTypes.object.isRequired,
+    removeKehu: PropTypes.func.isRequired
   };
 
   render() {
