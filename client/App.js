@@ -20,7 +20,8 @@ export class App extends Component {
     isPortalVisible: PropTypes.bool.isRequired,
     profileLoaded: PropTypes.bool.isRequired,
     successfullySavedKehu: PropTypes.object,
-    getProfile: PropTypes.func.isRequired
+    getProfile: PropTypes.func.isRequired,
+    kehuToEdit: PropTypes.object
   };
 
   componentDidMount() {
@@ -68,6 +69,13 @@ export class App extends Component {
         </KehuFormModal>
       );
     }
+    if (this.props.kehuToEdit) {
+      return (
+        <KehuFormModal title="Muokkaa Kehua">
+          <KehuForm kehu={this.props.kehuToEdit} />
+        </KehuFormModal>
+      );
+    }
     return (
       <KehuFormModal title="Lisää Kehu">
         <KehuForm />
@@ -79,7 +87,8 @@ export class App extends Component {
 const mapStateToProps = state => ({
   isPortalVisible: state.portal.portalVisible,
   successfullySavedKehu: state.kehu.savedKehu,
-  profileLoaded: state.profile.profileLoaded
+  profileLoaded: state.profile.profileLoaded,
+  kehuToEdit: state.portal.kehu
 });
 
 const mapDispatchToProps = {
