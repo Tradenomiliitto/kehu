@@ -6,7 +6,6 @@ const GIVER_NAME = "Giver Name";
 const SITUATION1 = "situation1";
 const SITUATION2 = "situation2";
 const SITUATION3 = "situation3";
-const DATE_GIVEN = moment(new Date()).format("D.M.YYYY");
 const TAG1 = "tag1";
 const TAG2 = "tag2";
 const TAG3 = "tag3";
@@ -56,27 +55,34 @@ module.exports = {
   EditKehu: function(browser) {
     const newKehuText = TEXT + " and something else.";
     browser
-      .waitForElementVisible(".kehus-nw")
-      .click(".kehus-nw")
-      .waitForElementVisible(".kehu-link-nw")
-      .click(".kehu-link-nw")
-      .waitForElementVisible(".edit-kehu-nw")
-      .click(".edit-kehu-nw")
-      .click('.badge-info:nth-child(2) > span[data-role="remove"]')
-      .setValue(".tt-input", TAG3)
-      .keys(browser.Keys.ENTER)
+      .waitForElementVisible('a[href="/kehut"]')
+      .click('a[href="/kehut"]')
+      .waitForElementVisible(".edit-black-nw")
+      .click(".edit-black-nw")
+      .click(".tags-remove-nw")
+      .setValue("#tags", TAG3)
+      .pause(100)
+      .click(".tags-add-nw")
+      .pause(100)
+      .click(".situations-remove-nw")
+      .setValue("#situations", SITUATION3)
+      .pause(100)
+      .click(".situations-add-nw")
+      .pause(100)
       .clearValue("#text")
       .setValue("#text", newKehuText)
       .click(".submit-kehu-nw");
 
     browser.expect
-      .element(".alert-success")
-      .text.to.equal("Kehun tallennus onnistui.");
+      .element(".modal-title-nw")
+      .text.to.equal("Kehu tallennettu!");
     browser.expect.element(".kehu-text-nw").text.to.equal(newKehuText);
     browser.expect.element(".kehu-giver-name-nw").text.to.equal(GIVER_NAME);
-    browser.expect.element(".kehu-situation-nw").text.to.equal(SITUATION1);
-    browser.expect.element(".kehu-date-given-nw").text.to.equal(DATE_GIVEN);
-    browser.expect.element(".kehu-tags-nw").text.to.equal(`#${TAG1} #${TAG3}`);
+    browser.expect
+      .element(".kehu-tags-nw")
+      .text.to.equal(`${TAG2}${TAG3}${SITUATION2}${SITUATION3}`);
+    browser.click(".close-button-nw");
+    browser.expect.element(".modal-title-nw").to.be.not.present;
   },
   RemoveKehu: function(browser) {
     browser

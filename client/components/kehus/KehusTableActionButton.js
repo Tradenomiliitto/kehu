@@ -8,10 +8,11 @@ export default class KehusTableActionButton extends Component {
   };
 
   render() {
+    const { icon, onClick } = this.props;
     return (
-      <button className="KehusTableActionButton" onClick={this.props.onClick}>
+      <button className={`KehusTableActionButton ${icon}-nw`} onClick={onClick}>
         <img
-          src={`/images/icon-${this.props.icon}.png`}
+          src={`/images/icon-${icon}.png`}
           className="KehusTableActionButton-image"
         />
       </button>

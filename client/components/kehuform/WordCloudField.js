@@ -49,12 +49,13 @@ export default class WordCloudField extends Component {
   }
 
   renderItems() {
+    const { id } = this.props;
     return this.props.values.map(item => {
       return (
         <div className="WordCloudValue item-js" key={item}>
           {item}
           <button
-            className="WordCloudValue-removeButton"
+            className={`WordCloudValue-removeButton ${id}-remove-nw`}
             onClick={this.handleRemoveClick(item)}
           >
             &#10005;
