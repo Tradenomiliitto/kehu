@@ -21,7 +21,9 @@ export class KehuFormModal extends Component {
               >
                 &#10005;
               </button>
-              <h3 className="Modal-title modal-title-js">{this.props.title}</h3>
+              <h3 className="Modal-title modal-title-js modal-title-nw">
+                {this.props.title}
+              </h3>
             </div>
             {this.props.children}
           </div>

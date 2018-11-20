@@ -72,7 +72,7 @@ export class KehuForm extends Component {
         />
         <input
           type="submit"
-          className="Button Button--fullWidth"
+          className="Button Button--fullWidth submit-kehu-nw"
           value="Tallenna Kehu"
         />
       </form>

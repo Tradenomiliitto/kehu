@@ -3,7 +3,9 @@ const { loginWithGenericUser } = require("./lib/utils");
 
 const TEXT = "This is kehu text";
 const GIVER_NAME = "Giver Name";
-const SITUATION = "Situation";
+const SITUATION1 = "situation1";
+const SITUATION2 = "situation2";
+const SITUATION3 = "situation3";
 const DATE_GIVEN = moment(new Date()).format("D.M.YYYY");
 const TAG1 = "tag1";
 const TAG2 = "tag2";
@@ -15,28 +17,41 @@ module.exports = {
   },
   AddKehu: function(browser) {
     browser
-      .waitForElementVisible(".kehus-nw")
-      .click(".kehus-nw")
       .waitForElementVisible(".add-kehu-nw")
       .click(".add-kehu-nw")
-      .setValue("#text", TEXT)
       .setValue("#giver_name", GIVER_NAME)
-      .setValue("#situation", SITUATION)
-      .setValue("#date_given", DATE_GIVEN)
-      .setValue(".tt-input", TAG1)
-      .keys(browser.Keys.ENTER)
-      .setValue(".tt-input", TAG2)
-      .keys(browser.Keys.ENTER)
+      .setValue("#text", TEXT)
+      .click("#date_given")
+      .click(".react-datepicker__day.react-datepicker__day--thu")
+      .pause(100)
+      .setValue("#tags", TAG1)
+      .pause(100)
+      .click(".tags-add-nw")
+      .pause(100)
+      .setValue("#tags", TAG2)
+      .pause(100)
+      .click(".tags-add-nw")
+      .pause(100)
+      .setValue("#situations", SITUATION1)
+      .pause(100)
+      .click(".situations-add-nw")
+      .pause(100)
+      .setValue("#situations", SITUATION2)
+      .pause(100)
+      .click(".situations-add-nw")
+      .pause(100)
       .click(".submit-kehu-nw");
 
     browser.expect
-      .element(".alert-success")
-      .text.to.equal("Kehun lisääminen onnistui.");
+      .element(".modal-title-nw")
+      .text.to.equal("Kehu tallennettu!");
     browser.expect.element(".kehu-text-nw").text.to.equal(TEXT);
     browser.expect.element(".kehu-giver-name-nw").text.to.equal(GIVER_NAME);
-    browser.expect.element(".kehu-situation-nw").text.to.equal(SITUATION);
-    browser.expect.element(".kehu-date-given-nw").text.to.equal(DATE_GIVEN);
-    browser.expect.element(".kehu-tags-nw").text.to.equal(`#${TAG1} #${TAG2}`);
+    browser.expect
+      .element(".kehu-tags-nw")
+      .text.to.equal(`${TAG1}${TAG2}${SITUATION1}${SITUATION2}`);
+    browser.click(".close-button-nw");
+    browser.expect.element(".modal-title-nw").to.be.not.present;
   },
   EditKehu: function(browser) {
     const newKehuText = TEXT + " and something else.";
@@ -59,7 +74,7 @@ module.exports = {
       .text.to.equal("Kehun tallennus onnistui.");
     browser.expect.element(".kehu-text-nw").text.to.equal(newKehuText);
     browser.expect.element(".kehu-giver-name-nw").text.to.equal(GIVER_NAME);
-    browser.expect.element(".kehu-situation-nw").text.to.equal(SITUATION);
+    browser.expect.element(".kehu-situation-nw").text.to.equal(SITUATION1);
     browser.expect.element(".kehu-date-given-nw").text.to.equal(DATE_GIVEN);
     browser.expect.element(".kehu-tags-nw").text.to.equal(`#${TAG1} #${TAG3}`);
   },

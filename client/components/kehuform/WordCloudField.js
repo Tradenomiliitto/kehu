@@ -37,7 +37,10 @@ export default class WordCloudField extends Component {
           onChange={this.handleInputChange}
           onKeyPress={this.handleKeyPress}
         />
-        <button className="Button add-js" onClick={this.handleAddClick}>
+        <button
+          className={`Button add-js ${id}-add-nw`}
+          onClick={this.handleAddClick}
+        >
           Lisää
         </button>
         {this.renderItems()}

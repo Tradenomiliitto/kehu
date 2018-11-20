@@ -16,16 +16,20 @@ export class KehuSuccessPanel extends Component {
     return (
       <div className="KehuSuccessPanel">
         <div className="KehuQuoteContainer">
-          <p className="KehuQuote">{kehu.text}</p>
+          <p className="KehuQuote kehu-text-nw">{kehu.text}</p>
         </div>
         <p className="KehuDetails">
-          {kehu.giver_name}
+          <span className="kehu-giver-name-nw">{kehu.giver_name}</span>
           <br />
-          {moment(kehu.date_given).format("D.M.YYYY")}
+          <span className="kehu-date-given-nw">
+            {moment(kehu.date_given).format("D.M.YYYY")}
+          </span>
         </p>
-        <div className="KehuTags">{this.renderTagsAndSituations()}</div>
+        <div className="KehuTags kehu-tags-nw">
+          {this.renderTagsAndSituations()}
+        </div>
         <button
-          className="Button Button--fullWidth KehuCloseButton"
+          className="Button Button--fullWidth KehuCloseButton close-button-nw"
           onClick={this.handleClick}
         >
           Sulje
