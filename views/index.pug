@@ -70,3 +70,53 @@ block content
               li
                 a.Footer-link(href="/rekisteriseloste") Rekisteriseloste
                 a.Footer-link(href="https://www.tral.fi/yhteystiedot/") Yhteystiedot
+
+  script(src='//cdn.auth0.com/js/lock/11.7.2/lock.min.js')
+  script.
+    var settings = {
+      auth: {
+        redirectUrl: '#{env.AUTH0_CALLBACK_URL}',
+        responseType: 'code',
+        params: {
+          scope: 'openid name email picture'
+        }
+      },
+      theme: {
+        logo: '/images/kehu-logo-auth0.png',
+        primaryColor: '#FF96AC'
+      },
+      mustAcceptTerms: true,
+      initialScreen: 'login',
+      additionalSignUpFields: [
+        {
+          name: "first_name",
+          placeholder: "Etunimi"
+        },
+        {
+          name: "last_name",
+          placeholder: "Sukunimi"
+        }
+      ],
+      language: 'fi',
+      languageDictionary: {
+        signUpTerms: 'Hyväksyn Kehu-sovelluksen <a href="https://kehu.herokuapp.com/rekisteriseloste" target="_blank" rel="noopener noreferrer">rekisteriselosteen</a>'
+      }
+    };
+
+    var registerSettings = Object.assign({}, settings, {initialScreen: 'signUp'});
+    var loginLock = new Auth0Lock('#{env.AUTH0_CLIENT_ID}', '#{env.AUTH0_DOMAIN}', settings);
+    var registerLock = new Auth0Lock('#{env.AUTH0_CLIENT_ID}', '#{env.AUTH0_DOMAIN}', registerSettings);
+
+    var loginButtons = document.querySelectorAll('.login-js');
+    var registerButtons = document.querySelectorAll('.register-js');
+
+    function eventBinder(lock) {
+      return function (button) {
+        button.addEventListener('click', function () {
+          lock.show();
+        });
+      }
+    }
+
+    loginButtons.forEach(eventBinder(loginLock));
+    registerButtons.forEach(eventBinder(registerLock));
