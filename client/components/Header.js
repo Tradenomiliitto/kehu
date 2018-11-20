@@ -1,8 +1,15 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import cn from "classnames";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { toggleKehuFormModal } from "../redux/portal";
 
-export default class Header extends Component {
+export class Header extends Component {
+  static propTypes = {
+    toggleKehuFormModal: PropTypes.func.isRequired
+  };
+
   constructor() {
     super();
     this.state = {
@@ -31,8 +38,13 @@ export default class Header extends Component {
             <div className="col col-md-12 col-lg-8">
               <div className="Header-menuContainer">
                 <menu className={menuClass}>
-                  {this.renderMenuItem("/kehut", "Kehut")}
+                  <li className="Header-menuItem">
+                    <a href="#" onClick={this.openKehuFormModal}>
+                      Lisää Kehu
+                    </a>
+                  </li>
                   {this.renderMenuItem("/raportit", "Raportit")}
+                  {this.renderMenuItem("/kehut", "Kehut")}
                   {this.renderMenuItem("/profiili", "Profiili")}
                 </menu>
               </div>
@@ -53,6 +65,12 @@ export default class Header extends Component {
     );
   }
 
+  openKehuFormModal = ev => {
+    ev.preventDefault();
+    this.props.toggleKehuFormModal();
+    this.closeMenu();
+  };
+
   toggleMenu = () => {
     this.setState({ menuOpen: !this.state.menuOpen });
   };
@@ -61,3 +79,8 @@ export default class Header extends Component {
     this.setState({ menuOpen: false });
   };
 }
+
+export default connect(
+  null,
+  { toggleKehuFormModal }
+)(Header);
