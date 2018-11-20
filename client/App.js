@@ -5,7 +5,7 @@ import { hot } from "react-hot-loader";
 import PropTypes from "prop-types";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import store from "./redux";
-import Home from "./Home";
+import HomePanel from "./HomePanel";
 import Header from "./components/Header";
 import Portal from "./components/Portal";
 import KehuFormModal from "./components/KehuFormModal";
@@ -47,7 +47,7 @@ export class App extends Component {
       <div className="App">
         <Header />
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" component={HomePanel} />
           <Route exact path="/kehut" component={KehusPanel} />
         </Switch>
         {this.renderPortal()}

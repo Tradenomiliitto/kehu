@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { toggleKehuFormModal } from "./redux/portal";
 
-class Home extends Component {
+class HomePanel extends Component {
   static propTypes = {
     toggleKehuFormModal: PropTypes.func.isRequired
   };
@@ -31,4 +31,4 @@ export default connect(
   {
     toggleKehuFormModal
   }
-)(Home);
+)(HomePanel);
