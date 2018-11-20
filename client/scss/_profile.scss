@@ -39,3 +39,23 @@
   margin: 0.25rem 0 1rem;
   padding: $input-padding-horizontal $input-padding-vertical;
 }
+
+.ResetPasswordLink {
+  color: $secondary;
+  display: inline-block;
+  font-weight: 500;
+  margin: 3rem 0 1rem;
+  transition: $button-transition;
+
+  &:hover,
+  &:active,
+  &:visited,
+  &:focus {
+    color: $light-secondary;
+    text-decoration: none;
+  }
+}
+
+.auth0-lock.auth0-lock .auth0-lock-back-button {
+  display: none;
+}

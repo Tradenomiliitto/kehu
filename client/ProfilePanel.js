@@ -44,6 +44,13 @@ export class ProfilePanel extends Component {
                           <p className="ProfileInfo-label">Sähköposti</p>
                           <p className="ProfileInfo-text">{profile.email}</p>
                         </div>
+                        <a
+                          href="#"
+                          onClick={this.resetPassword}
+                          className="ResetPasswordLink"
+                        >
+                          Vaihda salasana
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -55,6 +62,11 @@ export class ProfilePanel extends Component {
       </div>
     );
   }
+
+  resetPassword = ev => {
+    ev.preventDefault();
+    window.PASSWORD_RESET_LOCK.show();
+  };
 }
 
 const mapStateToProps = state => ({

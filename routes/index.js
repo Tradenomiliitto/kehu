@@ -12,7 +12,8 @@ module.exports = function setupRoutes(app) {
   app.get(CLIENT_ROUTES, (req, res) => {
     if (req.user) {
       res.render("app", {
-        csrfToken: req.csrfToken()
+        csrfToken: req.csrfToken(),
+        env: process.env
       });
     } else {
       res.redirect("/");
@@ -30,7 +31,8 @@ module.exports = function setupRoutes(app) {
   app.get("/", async (req, res) => {
     if (req.user) {
       res.render("app", {
-        csrfToken: req.csrfToken()
+        csrfToken: req.csrfToken(),
+        env: process.env
       });
     } else {
       res.render("index", {
