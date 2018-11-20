@@ -35,6 +35,7 @@ export default class WordCloudField extends Component {
           placeholder={placeholder}
           value={inputValue}
           onChange={this.handleInputChange}
+          onKeyPress={this.handleKeyPress}
         />
         <button className="Button add-js" onClick={this.handleAddClick}>
           Lisää
@@ -62,6 +63,12 @@ export default class WordCloudField extends Component {
 
   handleInputChange = ({ target: { value } }) => {
     this.setState({ inputValue: value });
+  };
+
+  handleKeyPress = ev => {
+    if (ev.key === "Enter") {
+      this.handleAddClick(ev);
+    }
   };
 
   handleAddClick = ev => {
