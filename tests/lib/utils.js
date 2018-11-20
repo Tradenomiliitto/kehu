@@ -16,10 +16,15 @@ function login(browser, user, password) {
     .setValue('.auth0-lock-input[name="email"]', user)
     .setValue('.auth0-lock-input[name="password"]', password)
     .click(".auth0-lock-submit")
-    .waitForElementVisible(".jumbotron");
+    .waitForElementVisible(".home-nw");
+}
+
+function logout(browser) {
+  browser.url(`${browser.launch_url}/profiili/kirjaudu-ulos`);
 }
 
 module.exports = {
   loginWithNewUser,
-  loginWithGenericUser
+  loginWithGenericUser,
+  logout
 };

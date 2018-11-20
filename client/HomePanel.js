@@ -12,9 +12,9 @@ class HomePanel extends Component {
     return (
       <div className="container">
         <div className="row">
-          <div className="col col-xs-12 HomeButtons">
+          <div className="col col-xs-12 HomeButtons home-nw">
             <button
-              className="Button Button--wide"
+              className="Button Button--wide add-kehu-nw"
               onClick={this.props.toggleKehuFormModal}
             >
               Lisää Kehu

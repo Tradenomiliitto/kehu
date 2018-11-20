@@ -1,4 +1,4 @@
-const { loginWithNewUser } = require("./lib/utils");
+const { loginWithNewUser, logout } = require("./lib/utils");
 
 module.exports = {
   Registration: function(browser) {
@@ -15,21 +15,19 @@ module.exports = {
       .click(".auth0-lock-submit")
       .waitForElementVisible("#authorize-modal")
       .click("#allow")
-      .waitForElementVisible(".jumbotron")
-      .expect.element(".auth-title-nw")
-      .text.to.equal("Sinulla ei ole vielä kehuja");
+      .waitForElementVisible(".home-nw")
+      .expect.element(".add-kehu-nw")
+      .text.to.equal("Lisää Kehu");
 
-    browser.click(".logout-nw").expect.element(".login-nw").to.be.present;
+    logout(browser);
   },
 
   Login: function(browser) {
     loginWithNewUser(browser);
 
-    browser.expect
-      .element(".auth-title-nw")
-      .text.to.equal("Sinulla ei ole vielä kehuja");
+    browser.expect.element(".add-kehu-nw").text.to.equal("Lisää Kehu");
 
-    browser.click(".logout-nw").expect.element(".login-nw").to.be.present;
+    logout(browser);
   },
 
   after: function(browser) {
