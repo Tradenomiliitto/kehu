@@ -16,7 +16,7 @@ export class KehuRow extends Component {
   render() {
     const { kehu } = this.props;
     return (
-      <tr className="KehusTable-row">
+      <tr className="KehusTable-row kehu-rown-nw">
         <td>{moment(kehu.date_given).format("D.M.YYYY")}</td>
         <td>{kehu.giver_name}</td>
         <td className="KehusTable-cell--light">{kehu.text}</td>

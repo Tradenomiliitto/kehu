@@ -38,7 +38,9 @@ export class KehusPanel extends Component {
     return (
       <div className="KehusPanel">
         <div className="KehusPanelHeader">
-          <h1 className="KehusPanelHeader-title">Saadut Kehut</h1>
+          <h1 className="KehusPanelHeader-title kehus-title-nw">
+            Saadut Kehut
+          </h1>
         </div>
         <KehusTable kehus={kehus} />
       </div>

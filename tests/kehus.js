@@ -10,6 +10,38 @@ const TAG1 = "tag1";
 const TAG2 = "tag2";
 const TAG3 = "tag3";
 
+function addTag(browser, id, text) {
+  browser
+    .pause(100)
+    .setValue(`#${id}`, text)
+    .pause(100)
+    .click(`.${id}-add-nw`);
+}
+
+function navigateToKehuPage(browser) {
+  browser
+    .waitForElementVisible('a[href="/kehut"]')
+    .click('a[href="/kehut"]')
+    .waitForElementVisible(".kehus-title-nw")
+    .expect.element(".kehus-title-nw")
+    .text.to.equal("Saadut Kehut");
+}
+
+function expectText(browser, selector, text) {
+  browser.expect.element(selector).text.to.equal(text);
+}
+
+function expectTags(browser, tags) {
+  tags.forEach(tag => {
+    browser.expect.element(".kehu-tags-nw").text.to.contain(tag);
+  });
+}
+
+function expectCloseButton(browser) {
+  browser.click(".close-button-nw");
+  browser.expect.element(".modal-title-nw").to.be.not.present;
+}
+
 module.exports = {
   before: function(browser) {
     loginWithGenericUser(browser);
@@ -21,68 +53,39 @@ module.exports = {
       .setValue("#giver_name", GIVER_NAME)
       .setValue("#text", TEXT)
       .click("#date_given")
-      .click(".react-datepicker__day.react-datepicker__day--thu")
-      .pause(100)
-      .setValue("#tags", TAG1)
-      .pause(100)
-      .click(".tags-add-nw")
-      .pause(100)
-      .setValue("#tags", TAG2)
-      .pause(100)
-      .click(".tags-add-nw")
-      .pause(100)
-      .setValue("#situations", SITUATION1)
-      .pause(100)
-      .click(".situations-add-nw")
-      .pause(100)
-      .setValue("#situations", SITUATION2)
-      .pause(100)
-      .click(".situations-add-nw")
-      .pause(100)
-      .click(".submit-kehu-nw");
+      .click(".react-datepicker__day.react-datepicker__day--thu");
 
-    browser.expect
-      .element(".modal-title-nw")
-      .text.to.equal("Kehu tallennettu!");
-    browser.expect.element(".kehu-text-nw").text.to.equal(TEXT);
-    browser.expect.element(".kehu-giver-name-nw").text.to.equal(GIVER_NAME);
-    browser.expect
-      .element(".kehu-tags-nw")
-      .text.to.equal(`${TAG1}${TAG2}${SITUATION1}${SITUATION2}`);
-    browser.click(".close-button-nw");
-    browser.expect.element(".modal-title-nw").to.be.not.present;
+    addTag(browser, "tags", TAG1);
+    addTag(browser, "tags", TAG2);
+    addTag(browser, "situations", SITUATION1);
+    addTag(browser, "situations", SITUATION2);
+    browser.click(".submit-kehu-nw");
+    expectText(browser, ".modal-title-nw", "Kehu tallennettu!");
+    expectText(browser, ".kehu-text-nw", TEXT);
+    expectText(browser, ".kehu-giver-name-nw", GIVER_NAME);
+    expectTags(browser, [TAG1, TAG2, SITUATION1, SITUATION2]);
+    expectCloseButton(browser);
   },
   EditKehu: function(browser) {
     const newKehuText = TEXT + " and something else.";
+    navigateToKehuPage(browser);
     browser
-      .waitForElementVisible('a[href="/kehut"]')
-      .click('a[href="/kehut"]')
-      .waitForElementVisible(".edit-black-nw")
       .click(".edit-black-nw")
-      .click(".tags-remove-nw")
-      .setValue("#tags", TAG3)
-      .pause(100)
-      .click(".tags-add-nw")
-      .pause(100)
-      .click(".situations-remove-nw")
-      .setValue("#situations", SITUATION3)
-      .pause(100)
-      .click(".situations-add-nw")
-      .pause(100)
       .clearValue("#text")
       .setValue("#text", newKehuText)
-      .click(".submit-kehu-nw");
+      .click(".tags-remove-nw")
+      .click(".situations-remove-nw");
 
-    browser.expect
-      .element(".modal-title-nw")
-      .text.to.equal("Kehu tallennettu!");
-    browser.expect.element(".kehu-text-nw").text.to.equal(newKehuText);
-    browser.expect.element(".kehu-giver-name-nw").text.to.equal(GIVER_NAME);
-    browser.expect
-      .element(".kehu-tags-nw")
-      .text.to.equal(`${TAG2}${TAG3}${SITUATION2}${SITUATION3}`);
-    browser.click(".close-button-nw");
-    browser.expect.element(".modal-title-nw").to.be.not.present;
+    addTag(browser, "tags", TAG3);
+    addTag(browser, "situations", SITUATION3);
+
+    browser.click(".submit-kehu-nw");
+
+    expectText(browser, ".modal-title-nw", "Kehu tallennettu!");
+    expectText(browser, ".kehu-text-nw", newKehuText);
+    expectText(browser, ".kehu-giver-name-nw", GIVER_NAME);
+    expectTags(browser, [TAG3, TAG2, SITUATION3, SITUATION2]);
+    expectCloseButton(browser);
   },
   RemoveKehu: function(browser) {
     browser
