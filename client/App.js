@@ -13,6 +13,7 @@ import KehuForm from "./components/kehuform/KehuForm";
 import KehuSuccessPanel from "./components/kehuform/KehuSuccessPanel";
 import { getProfile } from "./redux/profile";
 import KehusPanel from "./KehusPanel";
+import ProfilePanel from "./ProfilePanel";
 import Spinner from "./components/Spinner";
 
 export class App extends Component {
@@ -49,6 +50,7 @@ export class App extends Component {
         <Switch>
           <Route exact path="/" component={HomePanel} />
           <Route exact path="/kehut" component={KehusPanel} />
+          <Route exact path="/profiili" component={ProfilePanel} />
         </Switch>
         {this.renderPortal()}
       </div>

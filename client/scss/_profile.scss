@@ -1,0 +1,41 @@
+.ProfilePanel {
+  margin-top: 1rem;
+  padding: 1rem 0;
+
+  @include mq(md) {
+    background-color: $white;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16);
+    margin-top: 2rem;
+  }
+}
+
+.ProfilePanel-title {
+  font-size: 42px;
+  font-weight: 400;
+  color: $secondary;
+}
+
+.ProfilePicture {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.ProfilePicture-image {
+  border-radius: 60px;
+  max-height: 120px;
+  max-width: 120px;
+}
+
+.ProfileInfo-label {
+  color: $secondary;
+  font-weight: 500;
+  margin: 0;
+}
+
+.ProfileInfo-text {
+  border: 1px solid $input-border-color;
+  border-radius: $input-border-radius;
+  display: block;
+  margin: 0.25rem 0 1rem;
+  padding: $input-padding-horizontal $input-padding-vertical;
+}
