@@ -7,6 +7,7 @@ import WordCloudField from "./WordCloudField";
 import GiverNameField from "./GiverNameField";
 import TextField from "./TextField";
 import DateGivenField from "./DateGivenField";
+import ErrorPanel from "../ErrorPanel";
 
 export class KehuForm extends Component {
   static propTypes = {
@@ -15,7 +16,8 @@ export class KehuForm extends Component {
     profile: PropTypes.shape({
       id: PropTypes.number.isRequired
     }).isRequired,
-    kehu: PropTypes.object
+    kehu: PropTypes.object,
+    error: PropTypes.object
   };
 
   constructor(props) {
@@ -36,6 +38,7 @@ export class KehuForm extends Component {
     const { giver_name, text, date_given, tags, situations } = this.state;
     return (
       <form className="Form" onSubmit={this.handleSubmit}>
+        {this.renderErrors()}
         <GiverNameField
           value={giver_name}
           handleChange={this.handleChangeWithEvent("giver_name")}
@@ -79,6 +82,15 @@ export class KehuForm extends Component {
     );
   }
 
+  renderErrors() {
+    const { error } = this.props;
+    if (error && error.responseJson && error.responseJson.errors) {
+      return error.responseJson.errors.map((e, i) => (
+        <ErrorPanel key={i} message={e.msg} />
+      ));
+    }
+  }
+
   handleChangeWithEvent = field => {
     return ({ target: { value } }) => {
       this.setState({ [field]: value });
@@ -107,7 +119,8 @@ export class KehuForm extends Component {
 }
 
 const mapStateToProps = state => ({
-  profile: state.profile.profile
+  profile: state.profile.profile,
+  error: state.kehu.error
 });
 
 const mapDispatchToProps = {

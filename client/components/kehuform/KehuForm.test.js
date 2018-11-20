@@ -15,6 +15,13 @@ describe("client:components:kehuform:KehuForm", () => {
     tags: [{ text: "tag1" }],
     situations: [{ text: "situation1" }]
   };
+  const error1 = { msg: "error 1" };
+  const error2 = { msg: "error 2" };
+  const error = {
+    responseJson: {
+      errors: [error1, error2]
+    }
+  };
 
   beforeEach(() => {
     MockDate.set("2018-11-17");
@@ -43,6 +50,10 @@ describe("client:components:kehuform:KehuForm", () => {
         tags: [],
         situations: []
       });
+    });
+
+    it("does not render ErrorPanel", () => {
+      expect(component.find("ErrorPanel").exists()).toBeFalsy();
     });
 
     describe("when form is submitted", () => {
@@ -100,6 +111,34 @@ describe("client:components:kehuform:KehuForm", () => {
         });
         expect(addKehuStub).not.toHaveBeenCalled();
       });
+    });
+  });
+
+  describe("when errors are given", () => {
+    beforeEach(() => {
+      component = shallow(
+        <KehuForm
+          addKehu={addKehuStub}
+          updateKehu={updateKehuStub}
+          profile={profile}
+          error={error}
+        />
+      );
+    });
+
+    it("renders ErrorPanel for each error", () => {
+      expect(
+        component
+          .find("ErrorPanel")
+          .first()
+          .prop("message")
+      ).toEqual(error1.msg);
+      expect(
+        component
+          .find("ErrorPanel")
+          .last()
+          .prop("message")
+      ).toEqual(error2.msg);
     });
   });
 
