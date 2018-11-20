@@ -88,18 +88,13 @@ module.exports = {
     expectCloseButton(browser);
   },
   RemoveKehu: function(browser) {
+    navigateToKehuPage(browser);
+    browser.assert.elementPresent(".kehu-row-nw");
     browser
-      .waitForElementVisible(".kehus-nw")
-      .click(".kehus-nw")
-      .waitForElementVisible(".kehu-link-nw")
-      .click(".kehu-link-nw")
-      .waitForElementVisible(".edit-kehu-nw")
-      .click(".delete-kehu-nw")
-      .acceptAlert();
-
-    browser.expect
-      .element(".alert-success")
-      .text.to.equal("Kehun poistaminen onnistui.");
+      .click(".trash-red-nw")
+      .acceptAlert()
+      .pause(100);
+    browser.assert.elementNotPresent(".kehu-row-nw");
   },
   ValidateKehu: function(browser) {
     browser
