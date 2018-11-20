@@ -7,6 +7,7 @@ import { toggleKehuFormModal } from "../redux/portal";
 
 export class Header extends Component {
   static propTypes = {
+    profile: PropTypes.object.isRequired,
     toggleKehuFormModal: PropTypes.func.isRequired
   };
 
@@ -22,6 +23,7 @@ export class Header extends Component {
       "Header-menu": true,
       "Header-menu--open": this.state.menuOpen
     });
+    const { profile } = this.props;
 
     return (
       <header className="Header">
@@ -45,7 +47,15 @@ export class Header extends Component {
                   </li>
                   {this.renderMenuItem("/raportit", "Raportit")}
                   {this.renderMenuItem("/kehut", "Kehut")}
-                  {this.renderMenuItem("/profiili", "Profiili")}
+                  <li className="Header-menuItem">
+                    <Link to="/profiili" onClick={this.closeMenu}>
+                      {profile.first_name}
+                      <img
+                        src={profile.picture}
+                        className="Header-profileImage"
+                      />
+                    </Link>
+                  </li>
                 </menu>
               </div>
             </div>
@@ -80,7 +90,11 @@ export class Header extends Component {
   };
 }
 
+const mapStateToProps = state => ({
+  profile: state.profile.profile
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   { toggleKehuFormModal }
 )(Header);
