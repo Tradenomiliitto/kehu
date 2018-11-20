@@ -1,4 +1,3 @@
-const moment = require("moment");
 const { loginWithGenericUser } = require("./lib/utils");
 
 const TEXT = "This is kehu text";
@@ -98,37 +97,16 @@ module.exports = {
   },
   ValidateKehu: function(browser) {
     browser
-      .waitForElementVisible(".kehus-nw")
-      .click(".kehus-nw")
+      .url(browser.launch_url)
       .waitForElementVisible(".add-kehu-nw")
-      .click(".add-kehu-nw")
-      .clearValue("#date_given")
-      .click(".submit-kehu-nw");
-
-    browser
-      .useXpath()
-      .expect.element(
-        '//div[@class="form-group"][1]/div[@class="invalid-feedback"]'
-      )
-      .text.to.equal("Teksti on pakollinen tieto.");
-    browser
-      .useXpath()
-      .expect.element(
-        '//div[@class="form-group"][2]/div[@class="invalid-feedback"]'
-      )
+      .click(".add-kehu-nw");
+    browser.click(".submit-kehu-nw");
+    browser.expect
+      .element(".error-nw:nth-of-type(1)")
       .text.to.equal("Kehun antaja on pakollinen tieto.");
-    browser
-      .useXpath()
-      .expect.element(
-        '//div[@class="form-group"][3]/div[@class="invalid-feedback"]'
-      )
-      .text.to.equal("Tilanne on pakollinen tieto.");
-    browser
-      .useXpath()
-      .expect.element(
-        '//div[@class="form-group"][4]/div[@class="invalid-feedback"]'
-      )
-      .text.to.equal("Ajankohta on pakollinen tieto.");
+    browser.expect
+      .element(".error-nw:nth-of-type(2)")
+      .text.to.equal("Teksti on pakollinen tieto.");
   },
   after: function(browser) {
     browser.closeWindow();
