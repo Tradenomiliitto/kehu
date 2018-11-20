@@ -10,6 +10,7 @@
 /public/.hot/*
 dump.rdb
 reports
+.DS_Store
 
 # Logs
 logs
