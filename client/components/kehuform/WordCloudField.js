@@ -66,6 +66,11 @@ export default class WordCloudField extends Component {
 
   handleAddClick = ev => {
     ev.preventDefault();
+
+    if (!this.state.inputValue) {
+      return;
+    }
+
     const items = [...new Set([...this.props.values, this.state.inputValue])];
     this.setState({ inputValue: "" }, () => {
       this.props.handleChange(items);
