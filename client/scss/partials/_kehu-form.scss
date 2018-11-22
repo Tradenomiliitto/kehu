@@ -3,6 +3,7 @@
 
   > label {
     color: $secondary;
+    font-weight: 500;
   }
 }
 
@@ -83,7 +84,8 @@
 }
 
 .SituationContainer,
-.TagsContainer {
+.TagsContainer,
+.ImportanceSelectorContainer {
   > label {
     display: block;
     padding-bottom: 2rem;
@@ -116,6 +118,27 @@
   left: 2px;
   position: relative;
   top: 2px;
+}
+
+.ImportanceSelector {
+  text-align: center;
+}
+
+.ImportanceSelector-star {
+  background-image: url("/images/icon-star-gray.svg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  cursor: pointer;
+  display: inline-block;
+  height: 27px;
+  margin: 0 0.25rem;
+  transition: background-image 200ms ease-in;
+  width: 27px;
+
+  &--active {
+    background-image: url("/images/icon-star-primary.svg");
+  }
 }
 
 .KehuSuccessPanel {

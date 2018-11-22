@@ -13,6 +13,7 @@ describe("client:components:kehuform:KehuForm", () => {
     text: "kehu text",
     date_given: "2018-09-01",
     role_id: 4,
+    importance: 3,
     tags: [{ text: "tag1" }],
     situations: [{ text: "situation1" }]
   };
@@ -52,7 +53,8 @@ describe("client:components:kehuform:KehuForm", () => {
         text: "",
         date_given: moment(),
         tags: [],
-        situations: []
+        situations: [],
+        importance: 0
       });
     });
 
@@ -71,7 +73,8 @@ describe("client:components:kehuform:KehuForm", () => {
           text: "",
           date_given: moment().format("D.M.YYYY"),
           tags: [],
-          situations: []
+          situations: [],
+          importance: 0
         });
         expect(updateKehuStub).not.toHaveBeenCalled();
       });
@@ -100,7 +103,8 @@ describe("client:components:kehuform:KehuForm", () => {
         text: kehu.text,
         date_given: moment(kehu.date_given),
         tags: kehu.tags.map(t => t.text),
-        situations: kehu.situations.map(s => s.text)
+        situations: kehu.situations.map(s => s.text),
+        importance: kehu.importance
       });
     });
 
@@ -115,7 +119,8 @@ describe("client:components:kehuform:KehuForm", () => {
           text: kehu.text,
           date_given: moment(kehu.date_given).format("D.M.YYYY"),
           tags: kehu.tags.map(t => t.text),
-          situations: kehu.situations.map(s => s.text)
+          situations: kehu.situations.map(s => s.text),
+          importance: kehu.importance
         });
         expect(addKehuStub).not.toHaveBeenCalled();
       });
