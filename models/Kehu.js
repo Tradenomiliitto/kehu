@@ -15,6 +15,7 @@ class Kehu extends Model {
         giver_id: { type: "integer" },
         giver_name: { type: "string" },
         owner_id: { type: "integer" },
+        role_id: { type: "integer" },
         text: { type: "string" }
       }
     };
@@ -60,6 +61,14 @@ class Kehu extends Model {
         join: {
           from: "Users.id",
           to: "Kehus.owner_id"
+        }
+      },
+      role: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: `${__dirname}/Role`,
+        join: {
+          from: "Roles.id",
+          to: "Kehus.role_id"
         }
       }
     };
