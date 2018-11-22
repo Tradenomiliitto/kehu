@@ -13,6 +13,7 @@ export default class KehusTable extends Component {
         <thead className="KehusTable-head">
           <tr>
             <th>Aika</th>
+            <th>Kehuja</th>
             <th>Nimi</th>
             <th>Kehu</th>
             <th>Tilanne</th>
