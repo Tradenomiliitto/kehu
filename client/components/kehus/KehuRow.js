@@ -23,6 +23,7 @@ export class KehuRow extends Component {
         <td className="KehusTable-cell--light">{kehu.text}</td>
         <td>{kehu.situations.map(this.renderItem)}</td>
         <td>{kehu.tags.map(this.renderItem)}</td>
+        <td>{this.renderStars()}</td>
         <td>
           <KehusTableActionButton
             icon="edit-black"
@@ -45,6 +46,26 @@ export class KehuRow extends Component {
         {tag.text}
       </span>
     );
+  }
+
+  renderStars() {
+    const {
+      kehu: { importance }
+    } = this.props;
+    const stars = [];
+
+    for (let i = 1; i <= 5; i++) {
+      const icon = i <= importance ? "primary" : "secondary";
+      stars.push(
+        <img
+          key={i}
+          src={`/images/icon-star-${icon}.svg`}
+          className="KehusTable-star"
+        />
+      );
+    }
+
+    return stars;
   }
 
   handleEditClick = () => {

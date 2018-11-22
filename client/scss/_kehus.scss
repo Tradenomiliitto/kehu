@@ -41,6 +41,16 @@
   }
 }
 
+.KehusTable-starColumn {
+  width: 128px;
+}
+
+.KehusTable-star {
+  height: 18px;
+  margin: 0 2px;
+  width: 18px;
+}
+
 .KehusTable-item {
   background-color: $light-pink;
   border: 1px solid $pink;

@@ -18,6 +18,7 @@ export default class KehusTable extends Component {
             <th>Kehu</th>
             <th>Tilanne</th>
             <th>Taidot</th>
+            <th className="KehusTable-starColumn">{this.renderStars()}</th>
             <th>
               <img
                 src="/images/icon-edit-secondary.png"
@@ -35,6 +36,16 @@ export default class KehusTable extends Component {
         <tbody>{this.renderRows()}</tbody>
       </table>
     );
+  }
+
+  renderStars() {
+    return Array.from(Array(5).keys()).map(i => (
+      <img
+        key={i}
+        src="/images/icon-star-secondary.svg"
+        className="KehusTable-star"
+      />
+    ));
   }
 
   renderRows() {
