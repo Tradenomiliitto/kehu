@@ -9,7 +9,7 @@ async function getKehus(user_id) {
   logger.info(`Fetching kehus for user ${user_id}`);
   return await Kehu.query()
     .where("owner_id", user_id)
-    .eager("[situations, tags]")
+    .eager("[role, situations, tags]")
     .orderBy("date_given", "desc");
 }
 
@@ -18,7 +18,7 @@ async function getKehu(user_id, kehu_id) {
   return await Kehu.query()
     .where("owner_id", user_id)
     .andWhere("id", kehu_id)
-    .eager("[situations, tags]")
+    .eager("[role, situations, tags]")
     .first();
 }
 
@@ -126,7 +126,7 @@ async function createKehu(data) {
     logger.info(`Created kehu ${kehu.id} for user ${data.owner_id}`);
     return await Kehu.query()
       .findById(kehu.id)
-      .eager("[situations, tags]")
+      .eager("[role, situations, tags]")
       .first();
   } catch (error) {
     logger.error(`Creating Kehu failed. Rolling back..`);
@@ -167,7 +167,7 @@ async function updateKehu(user_id, kehu_id, data) {
     logger.info(`Updated kehu ${kehu_id} for user ${user_id}`);
     return await Kehu.query()
       .findById(kehu.id)
-      .eager("[situations, tags]")
+      .eager("[role, situations, tags]")
       .first();
   } catch (error) {
     logger.error(`Updating Kehu with tags failed. Rolling back..`);
@@ -203,13 +203,22 @@ async function deleteKehu(user_id, kehu_id) {
 }
 
 function parseKehu(data) {
-  const { date_given, giver_id, giver_name, situation, owner_id, text } = data;
+  const {
+    date_given,
+    giver_id,
+    giver_name,
+    situation,
+    owner_id,
+    role_id,
+    text
+  } = data;
   return {
     date_given: moment(date_given, "D.M.YYYY").format(),
     giver_id,
     giver_name,
     situation,
     owner_id,
+    role_id,
     text
   };
 }
