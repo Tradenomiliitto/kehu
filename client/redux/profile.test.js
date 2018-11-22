@@ -19,9 +19,14 @@ describe("client:redux:profile", () => {
 
     it("on PROFILE_LOADED", () => {
       const state = initialState;
-      const profile = { user: 1 };
-      const action = { type: PROFILE_LOADED, payload: profile };
-      const expectedState = { ...state, profile, profileLoaded: true };
+      const payload = { profile: { user: 1 }, roles: [{ id: 1 }] };
+      const action = { type: PROFILE_LOADED, payload };
+      const expectedState = {
+        ...state,
+        profile: payload.profile,
+        profileLoaded: true,
+        roles: payload.roles
+      };
       expect(reducer(state, action)).toEqual(expectedState);
     });
 
@@ -38,7 +43,7 @@ describe("client:redux:profile", () => {
     describe("getProfile", () => {
       describe("when call succeeds", () => {
         it("dispatches user profile", () => {
-          const response = { user: 1 };
+          const response = { profile: { user: 1 }, roles: [{ id: 1 }] };
           ApiUtil.get = jest.fn(() => new Promise(res => res(response)));
 
           const store = mockStore(initialState);
