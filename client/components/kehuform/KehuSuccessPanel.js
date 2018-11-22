@@ -32,6 +32,7 @@ export class KehuSuccessPanel extends Component {
         <div className="KehuTags kehu-tags-nw">
           {this.renderTagsAndSituations()}
         </div>
+        <div className="KehuStars">{this.renderStars()}</div>
         <button
           className="Button Button--fullWidth KehuCloseButton close-button-nw"
           onClick={this.handleClick}
@@ -53,6 +54,26 @@ export class KehuSuccessPanel extends Component {
         </span>
       );
     });
+  }
+
+  renderStars() {
+    const {
+      kehu: { importance }
+    } = this.props;
+    const stars = [];
+
+    for (let i = 1; i <= 5; i++) {
+      const icon = i <= importance ? "primary" : "secondary";
+      stars.push(
+        <img
+          key={i}
+          src={`/images/icon-star-${icon}.svg`}
+          className="KehuStars-star"
+        />
+      );
+    }
+
+    return stars;
   }
 
   handleClick = () => {
