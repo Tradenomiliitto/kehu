@@ -29,7 +29,7 @@ export class KehuForm extends Component {
       giver_id: props.profile.id,
       owner_id: props.profile.id,
       giver_name: kehu.giver_name || "",
-      role_id: null,
+      role_id: kehu.role_id || null,
       text: kehu.text || "",
       date_given: kehu.date_given ? moment(kehu.date_given) : moment(),
       tags: kehu.tags ? kehu.tags.map(t => t.text) : [],

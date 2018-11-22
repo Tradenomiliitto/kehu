@@ -12,6 +12,7 @@ describe("client:components:kehuform:KehuForm", () => {
     giver_name: "Hermanni",
     text: "kehu text",
     date_given: "2018-09-01",
+    role_id: 4,
     tags: [{ text: "tag1" }],
     situations: [{ text: "situation1" }]
   };
@@ -95,7 +96,7 @@ describe("client:components:kehuform:KehuForm", () => {
         giver_id: profile.id,
         owner_id: profile.id,
         giver_name: kehu.giver_name,
-        role_id: null,
+        role_id: kehu.role_id,
         text: kehu.text,
         date_given: moment(kehu.date_given),
         tags: kehu.tags.map(t => t.text),
@@ -110,7 +111,7 @@ describe("client:components:kehuform:KehuForm", () => {
           giver_id: profile.id,
           owner_id: profile.id,
           giver_name: kehu.giver_name,
-          role_id: null,
+          role_id: kehu.role_id,
           text: kehu.text,
           date_given: moment(kehu.date_given).format("D.M.YYYY"),
           tags: kehu.tags.map(t => t.text),
