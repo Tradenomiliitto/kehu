@@ -20,7 +20,9 @@
 .Modal-content {
   background: white;
   border-radius: 35px 35px 0 0;
+  height: 100%;
   margin: 0 auto;
+  overflow: scroll;
   padding: 1rem;
   position: relative;
   width: 375px;

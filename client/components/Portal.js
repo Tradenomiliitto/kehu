@@ -10,10 +10,14 @@ export default class Portal extends Component {
   }
 
   componentDidMount() {
+    document.body.style.height = "100%";
+    document.body.style.overflow = "hidden";
     modalRoot.appendChild(this.el);
   }
 
   componentWillUnmount() {
+    document.body.style.height = "initial";
+    document.body.style.overflow = "initial";
     modalRoot.removeChild(this.el);
   }
 
