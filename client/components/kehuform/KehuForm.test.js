@@ -22,6 +22,7 @@ describe("client:components:kehuform:KehuForm", () => {
       errors: [error1, error2]
     }
   };
+  const roles = [{ id: 1, role: "role1" }];
 
   beforeEach(() => {
     MockDate.set("2018-11-17");
@@ -36,6 +37,7 @@ describe("client:components:kehuform:KehuForm", () => {
           addKehu={addKehuStub}
           updateKehu={updateKehuStub}
           profile={profile}
+          roles={roles}
         />
       );
     });
@@ -45,6 +47,7 @@ describe("client:components:kehuform:KehuForm", () => {
         giver_id: profile.id,
         owner_id: profile.id,
         giver_name: "",
+        role_id: null,
         text: "",
         date_given: moment(),
         tags: [],
@@ -63,6 +66,7 @@ describe("client:components:kehuform:KehuForm", () => {
           giver_id: profile.id,
           owner_id: profile.id,
           giver_name: "",
+          role_id: null,
           text: "",
           date_given: moment().format("D.M.YYYY"),
           tags: [],
@@ -81,6 +85,7 @@ describe("client:components:kehuform:KehuForm", () => {
           updateKehu={updateKehuStub}
           profile={profile}
           kehu={kehu}
+          roles={roles}
         />
       );
     });
@@ -90,6 +95,7 @@ describe("client:components:kehuform:KehuForm", () => {
         giver_id: profile.id,
         owner_id: profile.id,
         giver_name: kehu.giver_name,
+        role_id: null,
         text: kehu.text,
         date_given: moment(kehu.date_given),
         tags: kehu.tags.map(t => t.text),
@@ -104,6 +110,7 @@ describe("client:components:kehuform:KehuForm", () => {
           giver_id: profile.id,
           owner_id: profile.id,
           giver_name: kehu.giver_name,
+          role_id: null,
           text: kehu.text,
           date_given: moment(kehu.date_given).format("D.M.YYYY"),
           tags: kehu.tags.map(t => t.text),
@@ -122,6 +129,7 @@ describe("client:components:kehuform:KehuForm", () => {
           updateKehu={updateKehuStub}
           profile={profile}
           error={error}
+          roles={roles}
         />
       );
     });

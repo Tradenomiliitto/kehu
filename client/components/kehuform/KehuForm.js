@@ -7,17 +7,19 @@ import WordCloudField from "./WordCloudField";
 import GiverNameField from "./GiverNameField";
 import TextField from "./TextField";
 import DateGivenField from "./DateGivenField";
+import RoleSelectPanel from "./RoleSelectPanel";
 import ErrorPanel from "../ErrorPanel";
 
 export class KehuForm extends Component {
   static propTypes = {
     addKehu: PropTypes.func.isRequired,
-    updateKehu: PropTypes.func.isRequired,
+    error: PropTypes.object,
+    kehu: PropTypes.object,
     profile: PropTypes.shape({
       id: PropTypes.number.isRequired
     }).isRequired,
-    kehu: PropTypes.object,
-    error: PropTypes.object
+    roles: PropTypes.array.isRequired,
+    updateKehu: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -27,6 +29,7 @@ export class KehuForm extends Component {
       giver_id: props.profile.id,
       owner_id: props.profile.id,
       giver_name: kehu.giver_name || "",
+      role_id: null,
       text: kehu.text || "",
       date_given: kehu.date_given ? moment(kehu.date_given) : moment(),
       tags: kehu.tags ? kehu.tags.map(t => t.text) : [],
@@ -35,13 +38,26 @@ export class KehuForm extends Component {
   }
 
   render() {
-    const { giver_name, text, date_given, tags, situations } = this.state;
+    const {
+      giver_name,
+      text,
+      date_given,
+      tags,
+      situations,
+      role_id
+    } = this.state;
+    const { roles } = this.props;
     return (
       <form className="Form" onSubmit={this.handleSubmit}>
         {this.renderErrors()}
         <GiverNameField
           value={giver_name}
           handleChange={this.handleChangeWithEvent("giver_name")}
+        />
+        <RoleSelectPanel
+          selected={role_id}
+          roles={roles}
+          handleClick={this.handleRoleChange}
         />
         <TextField
           value={text}
@@ -103,6 +119,10 @@ export class KehuForm extends Component {
     };
   };
 
+  handleRoleChange = role_id => {
+    this.setState({ role_id });
+  };
+
   handleSubmit = ev => {
     ev.preventDefault();
     const { kehu, updateKehu, addKehu } = this.props;
@@ -119,8 +139,9 @@ export class KehuForm extends Component {
 }
 
 const mapStateToProps = state => ({
+  error: state.kehu.error,
   profile: state.profile.profile,
-  error: state.kehu.error
+  roles: state.profile.roles
 });
 
 const mapDispatchToProps = {

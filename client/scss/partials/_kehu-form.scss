@@ -6,6 +6,32 @@
   }
 }
 
+.RoleSelector {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  margin: -0.25rem -0.25rem 1.75rem;
+}
+
+.RoleSelector-button {
+  margin: 0.25rem;
+  background-color: $lighter-grey;
+  border: 1px solid $dark-grey;
+  border-radius: 3px;
+  color: $dark-grey;
+  cursor: pointer;
+  font-size: 0.75rem;
+  padding: 4px;
+  transition: $button-transition;
+
+  &:hover,
+  &--active {
+    background-color: $light-pink;
+    border-color: $pink;
+    color: $dark-pink;
+  }
+}
+
 .KehuTextFieldContainer,
 .KehuQuoteContainer {
   background-image: url("/images/quote-bubble.png");
