@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import cn from "classnames";
+import RoleImage from "./RoleImage";
 
 export default class RoleSelectPanel extends Component {
   static propTypes = {
@@ -32,10 +33,7 @@ export default class RoleSelectPanel extends Component {
           onClick={this.handleClick(role.id)}
         >
           <p className="RoleSelector-role">{role.role}</p>
-          <img
-            src={`/images/role-${role.role.toLowerCase()}.svg`}
-            className="RoleSelector-image"
-          />
+          <RoleImage className="RoleSelector-image" id={role.id} />
         </button>
       );
     });

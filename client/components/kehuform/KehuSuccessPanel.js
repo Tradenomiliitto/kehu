@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import moment from "moment";
 import { resetKehuFormState } from "../../redux/kehu";
+import RoleImage from "./RoleImage";
 
 export class KehuSuccessPanel extends Component {
   static propTypes = {
@@ -19,7 +20,10 @@ export class KehuSuccessPanel extends Component {
           <p className="KehuQuote kehu-text-nw">{kehu.text}</p>
         </div>
         <p className="KehuDetails">
-          <span className="kehu-giver-name-nw">{kehu.giver_name}</span>
+          <RoleImage className="KehuDetails-image" id={kehu.role.id} />
+          <span className="kehu-giver-name-nw">
+            {kehu.giver_name}, {kehu.role.role.toLowerCase()}
+          </span>
           <br />
           <span className="kehu-date-given-nw">
             {moment(kehu.date_given).format("D.M.YYYY")}
