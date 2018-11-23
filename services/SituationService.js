@@ -11,7 +11,9 @@ async function getUserSituations(user_id) {
   const kehus = Kehu.query()
     .where("owner_id", user_id)
     .eager("situations");
-  const tags = kehus.map(k => k.tags).reduce((acc, val) => acc.concat(val), []);
+  const tags = kehus
+    .map(k => k.situations)
+    .reduce((acc, val) => acc.concat(val), []);
   return tags.map(t => ({ text: t.text }));
 }
 
