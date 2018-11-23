@@ -10,6 +10,7 @@ import DateGivenField from "./DateGivenField";
 import RoleSelectPanel from "./RoleSelectPanel";
 import ErrorPanel from "../ErrorPanel";
 import ImportanceSelecPanel from "./ImportanceSelectPanel";
+import CommentField from "./CommentField";
 
 export class KehuForm extends Component {
   static propTypes = {
@@ -35,7 +36,8 @@ export class KehuForm extends Component {
       date_given: kehu.date_given ? moment(kehu.date_given) : moment(),
       tags: kehu.tags ? kehu.tags.map(t => t.text) : [],
       situations: kehu.situations ? kehu.situations.map(s => s.text) : [],
-      importance: kehu.importance || 0
+      importance: kehu.importance || 0,
+      comment: kehu.comment || ""
     };
   }
 
@@ -47,7 +49,8 @@ export class KehuForm extends Component {
       tags,
       situations,
       role_id,
-      importance
+      importance,
+      comment
     } = this.state;
     const { roles } = this.props;
     return (
@@ -95,6 +98,10 @@ export class KehuForm extends Component {
         <ImportanceSelecPanel
           value={importance}
           handleClick={this.handleChangeWithValue("importance")}
+        />
+        <CommentField
+          value={comment}
+          handleChange={this.handleChangeWithEvent("comment")}
         />
         <input
           type="submit"

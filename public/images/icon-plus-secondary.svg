@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="22px" viewBox="0 0 22 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.4 (67378) - http://www.bohemiancoding.com/sketch -->
+    <title>Ring Subtract</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="lisää-kehu-täytetty" transform="translate(-44.000000, -1930.000000)" fill="#3B5F5F">
+            <path d="M55,1952 C48.9248678,1952 44,1947.07513 44,1941 C44,1934.92487 48.9248678,1930 55,1930 C61.0751322,1930 66,1934.92487 66,1941 C66,1947.07513 61.0751322,1952 55,1952 Z M55,1951 C60.5228475,1951 65,1946.52285 65,1941 C65,1935.47715 60.5228475,1931 55,1931 C51.858452,1931 49.0552542,1932.44865 47.221975,1934.71438 C45.8323459,1936.43181 45,1938.6187 45,1941 C45,1946.52285 49.4771525,1951 55,1951 Z M54.5,1940.5 L54.5,1935.5 L55.5,1935.5 L55.5,1940.5 L60.5,1940.5 L60.5,1941.5 L55.5,1941.5 L55.5,1946.5 L54.5,1946.5 L54.5,1941.5 L49.5,1941.5 L49.5,1940.5 L54.5,1940.5 Z" id="Contact-Add"></path>
+        </g>
+    </g>
+</svg>

@@ -141,6 +141,60 @@
   }
 }
 
+.CommentField {
+  height: 22px;
+  margin: 2rem 0;
+  position: relative;
+
+  &--open {
+    height: 122px;
+
+    .CommentField-buttonText {
+      display: none;
+    }
+
+    .CommentField-textarea {
+      background: transparent;
+      border: 1px solid $secondary;
+      color: $secondary;
+      max-height: 140px;
+      padding: 0.5rem 1rem 1rem 2.3rem;
+      position: absolute;
+      top: -0.5rem;
+    }
+  }
+}
+
+.CommentField-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: $darkish-grey;
+  font-weight: 300;
+  position: absolute;
+  top: 0;
+
+  &:active {
+    outline: none;
+  }
+}
+
+.CommentField-plusSign {
+  bottom: 2px;
+  display: inline-block;
+  height: 22px;
+  margin-right: 0.5rem;
+  position: relative;
+  width: 22px;
+}
+
+.CommentField-textarea {
+  border-color: transparent;
+  font-size: 0.875rem;
+  max-height: 0;
+  padding: 0;
+}
+
 .KehuSuccessPanel {
   padding: 2rem 1rem 1rem;
 }
