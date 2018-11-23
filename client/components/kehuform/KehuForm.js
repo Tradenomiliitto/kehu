@@ -135,7 +135,7 @@ export class KehuForm extends Component {
     const { kehu, updateKehu, addKehu } = this.props;
     const formData = {
       ...this.state,
-      date_given: moment(this.state.date_given).format("D.M.YYYY")
+      date_given: moment(this.state.date_given).format()
     };
     if (kehu) {
       updateKehu(kehu.id, formData);

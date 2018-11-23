@@ -11,7 +11,7 @@ describe("client:components:kehuform:KehuForm", () => {
     id: 2,
     giver_name: "Hermanni",
     text: "kehu text",
-    date_given: "2018-09-01",
+    date_given: "2018-11-23T17:45:36+02:00",
     role_id: 4,
     importance: 3,
     tags: [{ text: "tag1" }],
@@ -71,7 +71,7 @@ describe("client:components:kehuform:KehuForm", () => {
           giver_name: "",
           role_id: null,
           text: "",
-          date_given: moment().format("D.M.YYYY"),
+          date_given: moment().format(),
           tags: [],
           situations: [],
           importance: 0
@@ -117,7 +117,7 @@ describe("client:components:kehuform:KehuForm", () => {
           giver_name: kehu.giver_name,
           role_id: kehu.role_id,
           text: kehu.text,
-          date_given: moment(kehu.date_given).format("D.M.YYYY"),
+          date_given: moment(kehu.date_given).format(),
           tags: kehu.tags.map(t => t.text),
           situations: kehu.situations.map(s => s.text),
           importance: kehu.importance

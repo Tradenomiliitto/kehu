@@ -215,7 +215,7 @@ function parseKehu(data) {
   } = data;
   return {
     comment,
-    date_given: moment(date_given, "D.M.YYYY").format(),
+    date_given,
     giver_id,
     giver_name,
     importance,
