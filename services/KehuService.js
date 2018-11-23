@@ -1,5 +1,5 @@
 const moment = require("moment");
-const { raw, transaction } = require("objection");
+const { transaction } = require("objection");
 const Kehu = require("../models/Kehu");
 const { findTagWithText } = require("./TagService");
 const { findSituationWithText } = require("./SituationService");
