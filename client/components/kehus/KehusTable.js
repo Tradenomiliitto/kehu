@@ -21,6 +21,12 @@ export default class KehusTable extends Component {
             <th className="KehusTable-starColumn">{this.renderStars()}</th>
             <th>
               <img
+                src="/images/icon-comment-secondary.png"
+                className="KehusTableActionButton-image"
+              />
+            </th>
+            <th>
+              <img
                 src="/images/icon-edit-secondary.png"
                 className="KehusTableActionButton-image"
               />

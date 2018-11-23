@@ -24,6 +24,7 @@ export class KehuRow extends Component {
         <td>{kehu.situations.map(this.renderItem)}</td>
         <td>{kehu.tags.map(this.renderItem)}</td>
         <td>{this.renderStars()}</td>
+        <td>{this.renderComment()}</td>
         <td>
           <KehusTableActionButton
             icon="edit-black"
@@ -66,6 +67,15 @@ export class KehuRow extends Component {
     }
 
     return stars;
+  }
+
+  renderComment() {
+    const { kehu } = this.props;
+    if (kehu.comment) {
+      return <KehusTableActionButton icon="comment-black" onClick={() => {}} />;
+    } else {
+      return "\u00A0";
+    }
   }
 
   handleEditClick = () => {
