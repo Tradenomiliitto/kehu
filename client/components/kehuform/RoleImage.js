@@ -10,7 +10,12 @@ class RoleImage extends Component {
   };
 
   render() {
-    const { className } = this.props;
+    const { className, id } = this.props;
+
+    if (!id) {
+      return null;
+    }
+
     return (
       <img
         src={`/images/role-${this.sanitizeRole()}.svg`}

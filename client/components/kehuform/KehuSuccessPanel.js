@@ -20,10 +20,11 @@ export class KehuSuccessPanel extends Component {
           <p className="KehuQuote kehu-text-nw">{kehu.text}</p>
         </div>
         <p className="KehuDetails">
-          <RoleImage className="KehuDetails-image" id={kehu.role.id} />
-          <span className="kehu-giver-name-nw">
-            {kehu.giver_name}, {kehu.role.role.toLowerCase()}
-          </span>
+          <RoleImage
+            className="KehuDetails-image"
+            id={kehu.role && kehu.role.id}
+          />
+          <span className="kehu-giver-name-nw">{this.renderGiverName()}</span>
           <br />
           <span className="kehu-date-given-nw">
             {moment(kehu.date_given).format("D.M.YYYY")}
@@ -41,6 +42,14 @@ export class KehuSuccessPanel extends Component {
         </button>
       </div>
     );
+  }
+
+  renderGiverName() {
+    const { kehu } = this.props;
+    if (kehu.role) {
+      return `${kehu.giver_name}, ${kehu.role.role.toLowerCase()}`;
+    }
+    return kehu.giver_name;
   }
 
   renderTagsAndSituations() {

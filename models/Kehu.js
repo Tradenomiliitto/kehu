@@ -16,7 +16,7 @@ class Kehu extends Model {
         giver_name: { type: "string" },
         importance: { type: "integer", minimum: 0, maximum: 5 },
         owner_id: { type: "integer" },
-        role_id: { type: "integer" },
+        role_id: { type: ["integer", "null"] },
         text: { type: "string" }
       }
     };
