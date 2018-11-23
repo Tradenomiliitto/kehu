@@ -59,7 +59,7 @@ export class KehuRow extends Component {
       stars.push(
         <img
           key={i}
-          src={`/images/icon-star-${icon}.svg`}
+          src={`/images/icon-star-${icon}.png`}
           className="KehusTable-star"
         />
       );

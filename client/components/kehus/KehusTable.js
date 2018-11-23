@@ -42,7 +42,7 @@ export default class KehusTable extends Component {
     return Array.from(Array(5).keys()).map(i => (
       <img
         key={i}
-        src="/images/icon-star-secondary.svg"
+        src="/images/icon-star-secondary.png"
         className="KehusTable-star"
       />
     ));

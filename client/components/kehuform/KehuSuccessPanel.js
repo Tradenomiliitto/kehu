@@ -67,7 +67,7 @@ export class KehuSuccessPanel extends Component {
       stars.push(
         <img
           key={i}
-          src={`/images/icon-star-${icon}.svg`}
+          src={`/images/icon-star-${icon}.png`}
           className="KehuStars-star"
         />
       );
