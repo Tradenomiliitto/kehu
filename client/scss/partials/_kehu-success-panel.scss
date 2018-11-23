@@ -1,0 +1,45 @@
+.KehuSuccessPanel {
+  padding: 2rem 1rem 1rem;
+}
+
+.KehuQuote {
+  font-weight: 300;
+  height: 200px;
+  overflow: scroll;
+  padding: 1rem 2rem 2rem;
+}
+
+.KehuDetails {
+  font-weight: 300;
+  color: $secondary;
+  font-size: 0.875rem;
+}
+
+.KehuDetails-image {
+  float: left;
+  padding-right: 1.5rem;
+}
+
+.KehuItem {
+  background-color: $light-pink;
+  border: 1px solid $pink;
+  border-radius: 2px;
+  display: inline-block;
+  font-weight: 300;
+  margin: 0 0.25rem 0.25rem 0;
+  padding: 0.25rem 0.5rem;
+}
+
+.KehuStars {
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.KehuStars-star {
+  height: 22px;
+  margin: 0 2px;
+}
+
+.KehuCloseButton {
+  margin-top: 1rem;
+}
