@@ -34,6 +34,7 @@ export class KehuSuccessPanel extends Component {
           {this.renderTagsAndSituations()}
         </div>
         <div className="KehuStars">{this.renderStars()}</div>
+        {this.renderComment()}
         <button
           className="Button Button--fullWidth KehuCloseButton close-button-nw"
           onClick={this.handleClick}
@@ -83,6 +84,13 @@ export class KehuSuccessPanel extends Component {
     }
 
     return stars;
+  }
+
+  renderComment() {
+    const { kehu } = this.props;
+    if (kehu.comment) {
+      return <p className="KehuComment">{kehu.comment}</p>;
+    }
   }
 
   handleClick = () => {
