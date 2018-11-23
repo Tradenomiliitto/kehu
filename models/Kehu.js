@@ -11,6 +11,7 @@ class Kehu extends Model {
       required: ["giver_name", "giver_id", "owner_id", "text"],
       properties: {
         id: { type: "integer" },
+        comment: { type: "string" },
         date_given: { type: "string" },
         giver_id: { type: "integer" },
         giver_name: { type: "string" },
