@@ -1,9 +1,11 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
+import WordCloud from "./WordCloud";
 
-export default class WordCloudField extends Component {
+export default class WordCloudField extends PureComponent {
   static propTypes = {
     className: PropTypes.string,
+    cloudItems: PropTypes.array.isRequired,
     handleChange: PropTypes.func.isRequired,
     id: PropTypes.string.isRequired,
     label: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
@@ -21,12 +23,24 @@ export default class WordCloudField extends Component {
 
   render() {
     const { inputValue } = this.state;
-    const { className, id, label, placeholder } = this.props;
+    const {
+      className,
+      cloudItems,
+      id,
+      label,
+      placeholder,
+      values
+    } = this.props;
     return (
       <div className={`Form-group ${className}Container`}>
         <label htmlFor={id} className="label-js">
           {label}
         </label>
+        <WordCloud
+          cloudItems={cloudItems}
+          handleClick={this.handleWordCloudClick}
+          values={values}
+        />
         <input
           id={id}
           className={`WordCloudField ${className}Field input-js`}
@@ -73,6 +87,13 @@ export default class WordCloudField extends Component {
     if (ev.key === "Enter") {
       this.handleAddClick(ev);
     }
+  };
+
+  handleWordCloudClick = text => {
+    const items = [...new Set([...this.props.values, text])];
+    this.setState({ inputValue: "" }, () => {
+      this.props.handleChange(items);
+    });
   };
 
   handleAddClick = ev => {

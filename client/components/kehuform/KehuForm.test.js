@@ -26,6 +26,8 @@ describe("client:components:kehuform:KehuForm", () => {
     }
   };
   const roles = [{ id: 1, role: "role1" }];
+  const situations = [{ text: "situation" }];
+  const tags = [{ text: "tag" }];
 
   beforeEach(() => {
     MockDate.set("2018-11-17");
@@ -41,6 +43,8 @@ describe("client:components:kehuform:KehuForm", () => {
           updateKehu={updateKehuStub}
           profile={profile}
           roles={roles}
+          situations={situations}
+          tags={tags}
         />
       );
     });
@@ -93,6 +97,8 @@ describe("client:components:kehuform:KehuForm", () => {
           profile={profile}
           kehu={kehu}
           roles={roles}
+          situations={situations}
+          tags={tags}
         />
       );
     });
@@ -141,6 +147,8 @@ describe("client:components:kehuform:KehuForm", () => {
           profile={profile}
           error={error}
           roles={roles}
+          situations={situations}
+          tags={tags}
         />
       );
     });

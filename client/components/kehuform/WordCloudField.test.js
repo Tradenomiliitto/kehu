@@ -12,12 +12,14 @@ describe("client:components:kehuform:WordCloudField", () => {
   const value3 = "value3";
   const initValues = [];
   const fullValues = [value1, value2];
+  const cloudItems = [{ text: "text" }];
 
   beforeEach(() => {
     handleChangeStub = jest.fn();
     component = shallow(
       <WordCloudField
         className={className}
+        cloudItems={cloudItems}
         handleChange={handleChangeStub}
         id={id}
         label={label}

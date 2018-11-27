@@ -21,6 +21,8 @@ export class KehuForm extends Component {
       id: PropTypes.number.isRequired
     }).isRequired,
     roles: PropTypes.array.isRequired,
+    situations: PropTypes.array.isRequired,
+    tags: PropTypes.array.isRequired,
     updateKehu: PropTypes.func.isRequired
   };
 
@@ -76,6 +78,7 @@ export class KehuForm extends Component {
         <WordCloudField
           id="tags"
           className="Tags"
+          cloudItems={this.props.tags}
           label={
             <span>
               Kehun asiasanat
@@ -90,6 +93,7 @@ export class KehuForm extends Component {
         <WordCloudField
           id="situations"
           className="Situation"
+          cloudItems={this.props.situations}
           label="Kehu koskee tilannetta"
           placeholder="Uusi tilanne"
           values={situations}
@@ -155,7 +159,9 @@ export class KehuForm extends Component {
 const mapStateToProps = state => ({
   error: state.kehu.error,
   profile: state.profile.profile,
-  roles: state.profile.roles
+  roles: state.profile.roles,
+  situations: state.profile.situations,
+  tags: state.profile.tags
 });
 
 const mapDispatchToProps = {
