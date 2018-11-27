@@ -8,7 +8,6 @@ import RoleImage from "./RoleImage";
 export class KehuSuccessPanel extends Component {
   static propTypes = {
     kehu: PropTypes.object.isRequired,
-    toggleModal: PropTypes.func.isRequired,
     resetKehuFormState: PropTypes.func.isRequired
   };
 
