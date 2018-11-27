@@ -24,6 +24,12 @@ export function getProfile() {
   };
 }
 
+function getUniqueItems(defaultItems, userItems) {
+  return [...defaultItems, ...userItems].filter((item, index, arr) => {
+    return arr.map(i => i.text).indexOf(item.text) === index;
+  });
+}
+
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case PROFILE_LOADED:
@@ -32,10 +38,11 @@ export default function reducer(state = initialState, action = {}) {
         profile: action.payload.profile,
         profileLoaded: true,
         roles: action.payload.roles,
-        situations: config.defaults.situations.concat(
+        situations: getUniqueItems(
+          config.defaults.situations,
           action.payload.situations
         ),
-        tags: config.defaults.tags.concat(action.payload.tags)
+        tags: getUniqueItems(config.defaults.tags, action.payload.tags)
       };
     case PROFILE_ERROR:
       return {

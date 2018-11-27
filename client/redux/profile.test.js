@@ -20,11 +20,13 @@ describe("client:redux:profile", () => {
 
     it("on PROFILE_LOADED", () => {
       const state = initialState;
+      const newSituation = { text: "situation1" };
+      const newTag = { text: "tag1" };
       const payload = {
         profile: { user: 1 },
         roles: [{ id: 1 }],
-        situations: [{ text: "situation1" }],
-        tags: [{ text: "tag1" }]
+        situations: [config.defaults.situations[2], newSituation],
+        tags: [newTag, config.defaults.tags[1]]
       };
       const action = { type: PROFILE_LOADED, payload };
       const expectedState = {
@@ -32,8 +34,8 @@ describe("client:redux:profile", () => {
         profile: payload.profile,
         profileLoaded: true,
         roles: payload.roles,
-        situations: config.defaults.situations.concat(payload.situations),
-        tags: config.defaults.tags.concat(payload.tags)
+        situations: [...config.defaults.situations, newSituation],
+        tags: [...config.defaults.tags, newTag]
       };
       expect(reducer(state, action)).toEqual(expectedState);
     });
