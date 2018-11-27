@@ -84,12 +84,46 @@
 }
 
 .SituationContainer,
-.TagsContainer,
-.ImportanceSelectorContainer {
+.TagsContainer {
   > label {
     display: block;
-    padding-bottom: 2rem;
     text-align: center;
+  }
+}
+
+.WordCloudContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  justify-content: center;
+  padding: 1rem 0;
+  width: 100%;
+}
+
+.WordCloudWrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: 300px;
+  width: 100%;
+}
+
+.WordCloud {
+  flex: 1;
+}
+
+.WordCloud-item {
+  cursor: pointer;
+  text-transform: capitalize;
+
+  &--active {
+    background-color: $light-pink;
+    border: 1px solid $pink;
+    border-radius: 2px;
+    margin: 0;
+    padding: 0;
+    text-transform: capitalize;
   }
 }
 
@@ -107,8 +141,9 @@
   border: 1px solid $pink;
   border-radius: 2px;
   display: inline-block;
-  padding: 2px 4px;
   margin: 0.5rem 0.5rem 0 0;
+  padding: 2px 4px;
+  text-transform: capitalize;
 }
 
 .WordCloudValue-removeButton {
@@ -117,7 +152,15 @@
   color: #ae8991;
   left: 2px;
   position: relative;
-  top: 2px;
+  top: 1px;
+}
+
+.ImportanceSelectorContainer {
+  > label {
+    display: block;
+    padding-bottom: 2rem;
+    text-align: center;
+  }
 }
 
 .ImportanceSelector {
