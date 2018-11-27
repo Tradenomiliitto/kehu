@@ -95,7 +95,7 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  height: 300px;
+  height: 320px;
   justify-content: center;
   padding: 1rem 0;
   width: 100%;
@@ -105,7 +105,6 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  max-width: 300px;
   width: 100%;
 }
 
@@ -115,15 +114,24 @@
 
 .WordCloud-item {
   cursor: pointer;
+  font-size: 12px !important;
   text-transform: capitalize;
 
   &--active {
     background-color: $light-pink;
     border: 1px solid $pink;
     border-radius: 2px;
-    margin: 0;
+    margin: 0.25rem;
     padding: 0;
     text-transform: capitalize;
+  }
+
+  &--medium {
+    font-size: 14px !important;
+  }
+
+  &--large {
+    font-size: 18px !important;
   }
 }
 

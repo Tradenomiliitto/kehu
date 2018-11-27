@@ -17,9 +17,8 @@ export default class WordCloud extends PureComponent {
           <TagCloud
             style={{
               fontFamily: '"Work Sans", sans-serif',
-              fontSize: 10,
               fontWeight: 300,
-              padding: 4,
+              padding: 1,
               width: "100%",
               height: "100%"
             }}
@@ -37,7 +36,9 @@ export default class WordCloud extends PureComponent {
     return cloudItems.map((item, i) => {
       const classNames = cn({
         "WordCloud-item": true,
-        "WordCloud-item--active": values.includes(item.text.toLowerCase())
+        "WordCloud-item--active": values.includes(item.text.toLowerCase()),
+        "WordCloud-item--medium": !!(Math.random() < 0.33),
+        "WordCloud-item--large": !!(Math.random() < 0.1)
       });
       return (
         <div
