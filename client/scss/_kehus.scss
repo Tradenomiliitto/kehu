@@ -33,6 +33,12 @@
 
 .KehusTable-row {
   font-size: 0.75rem;
+
+  td:nth-child(5),
+  td:nth-child(6) {
+    max-width: 150px;
+    overflow: hidden;
+  }
 }
 
 .KehusTable-cell {
@@ -55,8 +61,9 @@
   background-color: $light-pink;
   border: 1px solid $pink;
   border-radius: 2px;
+  display: inline-block;
   font-weight: 300;
-  margin-right: 2px;
+  margin: 0 2px 2px 0;
   padding: 2px 4px;
   text-transform: capitalize;
 }
