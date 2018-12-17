@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   defaults: {
     tags: [
       { text: "agile" },

@@ -1,5 +1,4 @@
 import { get } from "../util/ApiUtil";
-import config from "../config";
 
 export const PROFILE_LOADED = "profile/PROFILE_LOADED";
 export const PROFILE_ERROR = "profile/PROFILE_ERROR";
@@ -24,8 +23,8 @@ export function getProfile() {
   };
 }
 
-function getUniqueItems(defaultItems, userItems) {
-  return [...defaultItems, ...userItems].filter((item, index, arr) => {
+function getUniqueItems(userItems) {
+  return userItems.filter((item, index, arr) => {
     return arr.map(i => i.text).indexOf(item.text) === index;
   });
 }
@@ -38,11 +37,8 @@ export default function reducer(state = initialState, action = {}) {
         profile: action.payload.profile,
         profileLoaded: true,
         roles: action.payload.roles,
-        situations: getUniqueItems(
-          config.defaults.situations,
-          action.payload.situations
-        ),
-        tags: getUniqueItems(config.defaults.tags, action.payload.tags)
+        situations: getUniqueItems(action.payload.situations),
+        tags: getUniqueItems(action.payload.tags)
       };
     case PROFILE_ERROR:
       return {

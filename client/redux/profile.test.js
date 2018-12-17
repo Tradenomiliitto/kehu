@@ -7,7 +7,6 @@ import reducer, {
   getProfile
 } from "./profile";
 import * as ApiUtil from "../util/ApiUtil";
-import config from "../config";
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -25,8 +24,8 @@ describe("client:redux:profile", () => {
       const payload = {
         profile: { user: 1 },
         roles: [{ id: 1 }],
-        situations: [config.defaults.situations[2], newSituation],
-        tags: [newTag, config.defaults.tags[1]]
+        situations: [newSituation],
+        tags: [newTag]
       };
       const action = { type: PROFILE_LOADED, payload };
       const expectedState = {
@@ -34,8 +33,8 @@ describe("client:redux:profile", () => {
         profile: payload.profile,
         profileLoaded: true,
         roles: payload.roles,
-        situations: [...config.defaults.situations, newSituation],
-        tags: [...config.defaults.tags, newTag]
+        situations: payload.situations,
+        tags: payload.tags
       };
       expect(reducer(state, action)).toEqual(expectedState);
     });
