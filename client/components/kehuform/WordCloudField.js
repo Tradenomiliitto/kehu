@@ -90,7 +90,10 @@ export default class WordCloudField extends PureComponent {
   };
 
   handleWordCloudClick = text => {
-    const items = [...new Set([...this.props.values, text])];
+    const { values } = this.props;
+    const items = values.includes(text)
+      ? values.filter(it => it !== text)
+      : [...new Set([...this.props.values, text])];
     this.setState({ inputValue: "" }, () => {
       this.props.handleChange(items);
     });
