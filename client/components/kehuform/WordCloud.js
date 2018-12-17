@@ -18,10 +18,11 @@ export default class WordCloud extends PureComponent {
             style={{
               fontFamily: '"Work Sans", sans-serif',
               fontWeight: 300,
-              padding: 1,
+              padding: 4,
               width: "100%",
               height: "100%"
             }}
+            random={() => {}}
             className="WordCloud"
           >
             {this.renderCloudItems()}
@@ -37,8 +38,8 @@ export default class WordCloud extends PureComponent {
       const classNames = cn({
         "WordCloud-item": true,
         "WordCloud-item--active": values.includes(item.text.toLowerCase()),
-        "WordCloud-item--medium": !!(Math.random() < 0.33),
-        "WordCloud-item--large": !!(Math.random() < 0.1)
+        "WordCloud-item--medium": i % 3 === 0 && i % 5 !== 0,
+        "WordCloud-item--large": i % 3 === 0 && i % 5 === 0
       });
       return (
         <div

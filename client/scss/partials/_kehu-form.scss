@@ -113,15 +113,16 @@
 }
 
 .WordCloud-item {
+  border: 1px solid transparent;
   cursor: pointer;
   font-size: 12px !important;
+  margin: 0.25rem;
   text-transform: capitalize;
 
   &--active {
     background-color: $light-pink;
     border: 1px solid $pink;
     border-radius: 2px;
-    margin: 0.25rem;
     padding: 0;
     text-transform: capitalize;
   }
