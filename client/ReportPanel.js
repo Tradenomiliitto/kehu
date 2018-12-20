@@ -41,7 +41,9 @@ export class ReportPanel extends Component {
       <div className="ReportPanel">
         <div className="container">
           <div className="row">
-            <KehuCountPanel number={report.numberOfKehus} />
+            <div className="col-xs-12 col-md-6 col-lg-4">
+              <KehuCountPanel number={report.numberOfKehus} />
+            </div>
           </div>
         </div>
       </div>
