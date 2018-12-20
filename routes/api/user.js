@@ -7,38 +7,44 @@ const { defaults } = require("../../config");
 
 const MAX_ITEMS = 15;
 
+function getUniqueItems(array) {
+  return array.reduce((acc, item) => {
+    if (acc.findIndex(it => it.text === item.text) === -1) {
+      acc.push(item);
+    }
+    return acc;
+  }, []);
+}
+
 function shuffleArray(array) {
   return array.sort(function() {
     return 0.5 - Math.random();
   });
 }
 
-function randomItemsFromArray(array, numberOfItems) {
-  const shuffledArray = shuffleArray(array);
-  return shuffledArray.slice(0, numberOfItems);
-}
-
-async function getItems(userId, serviceMethod) {
+async function getItems(userId, serviceMethod, defaults) {
   const items = await serviceMethod(userId);
 
   if (items.length > MAX_ITEMS) {
-    return shuffleArray(items).slice(0, MAX_ITEMS);
+    return getUniqueItems(shuffleArray(items)).slice(0, MAX_ITEMS);
   }
 
-  const additionalItems = randomItemsFromArray(
-    defaults.tags,
-    MAX_ITEMS - items.length
-  );
-  return [...items, ...additionalItems];
+  const itemsWithDefaults = getUniqueItems([...items, ...defaults]);
+  return itemsWithDefaults.slice(0, MAX_ITEMS);
 }
 
 router.get("/", async (req, res) => {
   const roles = await RoleService.getRoles();
   const situations = await getItems(
     req.user.id,
-    SituationService.getUserSituations
+    SituationService.getUserSituations,
+    defaults.situations
   );
-  const tags = await getItems(req.user.id, TagService.getUserTags);
+  const tags = await getItems(
+    req.user.id,
+    TagService.getUserTags,
+    defaults.tags
+  );
   const profile = req.user;
   res.json({ profile, roles, situations, tags });
 });
