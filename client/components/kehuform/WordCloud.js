@@ -18,7 +18,7 @@ export default class WordCloud extends PureComponent {
             style={{
               fontFamily: '"Work Sans", sans-serif',
               fontWeight: 300,
-              padding: 4,
+              padding: 1,
               width: "100%",
               height: "100%"
             }}
