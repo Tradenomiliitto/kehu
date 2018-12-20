@@ -8,13 +8,13 @@ async function findSituationWithText(text) {
 }
 
 async function getUserSituations(user_id) {
-  const kehus = Kehu.query()
+  const kehus = await Kehu.query()
     .where("owner_id", user_id)
     .eager("situations");
-  const tags = kehus
+  return kehus
     .map(k => k.situations)
-    .reduce((acc, val) => acc.concat(val), []);
-  return tags.map(t => ({ text: t.text }));
+    .reduce((acc, val) => acc.concat(val), [])
+    .map(t => ({ text: t.text }));
 }
 
 module.exports = {
