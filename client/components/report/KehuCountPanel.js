@@ -10,9 +10,13 @@ export default class KehuCountPanel extends Component {
   render() {
     return (
       <div className="ReportElement KehuCount">
-        <p>Sinulla on yhteensä</p>
-        <CountUp end={this.props.number} duration={4} delay={1} />
-        <p>KEHUA</p>
+        <p className="KehuCount-text">Sinulla on yhteensä</p>
+        <CountUp
+          end={this.props.number}
+          duration={2}
+          className="KehuCount-count"
+        />
+        <p className="KehuCount-bottom">KEHUA</p>
       </div>
     );
   }

@@ -1,0 +1,27 @@
+.ReportElement {
+  background: $white;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+}
+
+.KehuCount {
+  color: $secondary;
+  padding: 2rem;
+  text-align: center;
+}
+
+.KehuCount-text {
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+.KehuCount-count {
+  font-size: 170px;
+  font-weight: 400;
+  line-height: 170px;
+}
+
+.KehuCount-bottom {
+  font-size: 2.25rem;
+  font-weight: 300;
+  letter-spacing: 12px;
+}
