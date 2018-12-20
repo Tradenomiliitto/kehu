@@ -38,6 +38,7 @@
     "prop-types": "15.6.2",
     "pug": "2.0.3",
     "react": "16.6.1",
+    "react-countup": "^4.0.0",
     "react-datepicker": "1.8.0",
     "react-dom": "16.6.1",
     "react-md-spinner": "0.3.0",
