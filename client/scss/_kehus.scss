@@ -42,8 +42,13 @@
 }
 
 .KehusTable-cell {
-  &--light {
+  &--text {
     font-weight: 300;
+  }
+
+  &--tags {
+    max-height: 52px;
+    overflow: hidden;
   }
 }
 

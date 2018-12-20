@@ -5,6 +5,7 @@ import moment from "moment";
 import KehusTableActionButton from "./KehusTableActionButton";
 import { removeKehu } from "../../redux/kehu";
 import { openEditKehuModal } from "../../redux/portal";
+import { truncateText } from "../../util/TextUtil";
 
 export class KehuRow extends Component {
   static propTypes = {
@@ -20,9 +21,19 @@ export class KehuRow extends Component {
         <td>{moment(kehu.date_given).format("D.M.YYYY")}</td>
         <td>{kehu.role && kehu.role.role}</td>
         <td>{kehu.giver_name}</td>
-        <td className="KehusTable-cell--light">{kehu.text}</td>
-        <td>{kehu.situations.map(this.renderItem)}</td>
-        <td>{kehu.tags.map(this.renderItem)}</td>
+        <td className="KehusTable-cell--text">
+          {truncateText(kehu.text, 200)}
+        </td>
+        <td>
+          <div className="KehusTable-cell--tags">
+            {kehu.situations.map(this.renderItem)}
+          </div>
+        </td>
+        <td>
+          <div className="KehusTable-cell--tags">
+            {kehu.tags.map(this.renderItem)}
+          </div>
+        </td>
         <td>{this.renderStars()}</td>
         <td>{this.renderComment()}</td>
         <td>
