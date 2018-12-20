@@ -8,11 +8,13 @@ async function findTagWithText(text) {
 }
 
 async function getUserTags(user_id) {
-  const kehus = Kehu.query()
+  const kehus = await Kehu.query()
     .where("owner_id", user_id)
     .eager("tags");
-  const tags = kehus.map(k => k.tags).reduce((acc, val) => acc.concat(val), []);
-  return tags.map(t => ({ text: t.text }));
+  return kehus
+    .map(k => k.tags)
+    .reduce((acc, val) => acc.concat(val), [])
+    .map(t => ({ text: t.text }));
 }
 
 module.exports = {
