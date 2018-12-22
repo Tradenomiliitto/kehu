@@ -14,7 +14,7 @@ describe("client:components:ReportPanel", () => {
         <ReportPanel
           getKehus={getKehusStub}
           kehusLoaded={false}
-          report={{ numberOfKehus: 0, roles: [] }}
+          report={{ numberOfKehus: 0, roles: [], tags: [], situations: [] }}
         />
       );
     });
@@ -38,7 +38,7 @@ describe("client:components:ReportPanel", () => {
         <ReportPanel
           getKehus={getKehusStub}
           kehusLoaded={true}
-          report={{ numberOfKehus: 5, roles: [] }}
+          report={{ numberOfKehus: 5, roles: [], tags: [], situations: [] }}
         />
       );
     });

@@ -2,7 +2,7 @@
   background-image: url("/images/app-background-small.svg");
   background-position: center right;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
   min-height: 100vh;
 
   @include mq(lg) {

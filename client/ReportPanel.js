@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import KehuCountPanel from "./components/report/KehuCountPanel";
 import TopRolesPanel from "./components/report/TopRolesPanel";
+import TopItemsPanel from "./components/report/TopItemsPanel";
 import Spinner from "./components/Spinner";
 import { getKehus } from "./redux/kehu";
 
@@ -23,9 +24,7 @@ export class ReportPanel extends Component {
     return (
       <div className="container">
         <div className="row">
-          <div className="col-xs-12 col-md-10 col-md-offset-1">
-            {this.renderContent()}
-          </div>
+          <div className="col col-xs-12">{this.renderContent()}</div>
         </div>
       </div>
     );
@@ -40,14 +39,21 @@ export class ReportPanel extends Component {
 
     return (
       <div className="ReportPanel">
-        <div className="container">
-          <div className="row">
-            <div className="col-xs-12 col-md-6 col-lg-5">
-              <TopRolesPanel roles={report.roles} />
-            </div>
-            <div className="col-xs-12 col-md-6 col-lg-4">
-              <KehuCountPanel number={report.numberOfKehus} />
-            </div>
+        <div className="row">
+          <div className="col col-xs-12 col-md-6 col-xl-3">
+            <TopItemsPanel title="Kehutuimmat taidot" items={report.tags} />
+          </div>
+          <div className="col col-xs-12 col-md-6 col-xl-5">
+            <TopRolesPanel roles={report.roles} />
+          </div>
+          <div className="col col-xs-12 col-md-6 col-xl-4">
+            <KehuCountPanel number={report.numberOfKehus} />
+          </div>
+          <div className="col col-xs-12 col-md-6 col-xl-3">
+            <TopItemsPanel
+              title="Kehutuimmat tilanteet"
+              items={report.situations}
+            />
           </div>
         </div>
       </div>

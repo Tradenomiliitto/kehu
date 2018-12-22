@@ -5,6 +5,7 @@
 .ReportElement {
   background: $white;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  margin: 0.9375rem 0;
   padding: 2rem;
 }
 
@@ -37,6 +38,7 @@
 .TopRoles-title {
   color: $secondary;
   font-size: 1.875rem;
+  line-height: 2.125rem;
 }
 
 .TopRoles-notice {
@@ -114,4 +116,41 @@
   left: -8px;
   position: absolute;
   transform: rotate(-45deg);
+}
+
+.TopItems-title {
+  @extend .TopRoles-title;
+}
+
+.TopItems-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 320px;
+  justify-content: center;
+}
+
+.TopItems-wrapper {
+  height: 100%;
+  width: 100%;
+}
+
+.TopItemsCloud {
+  flex: 1;
+}
+
+.TopItemsCloud-item {
+  border: 1px solid transparent;
+  color: $secondary;
+  font-size: 16px !important;
+  margin: 0.25rem;
+  text-transform: capitalize;
+
+  &--medium {
+    font-size: 20px !important;
+  }
+
+  &--large {
+    font-size: 24px !important;
+  }
 }
