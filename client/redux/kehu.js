@@ -1,5 +1,6 @@
 import { get, del, post, put } from "../util/ApiUtil";
 import { TOGGLE_KEHU_FORM_MODAL } from "./portal";
+import { RESET_REPORTS } from "./report";
 
 export const ADD_KEHU = "kehu/ADD_KEHU";
 export const ADD_KEHU_SUCCESS = "kehu/ADD_KEHU_SUCCESS";
@@ -40,11 +41,12 @@ export function addKehu(data) {
 }
 
 export function updateKehu(id, data) {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     try {
       dispatch({ type: UPDATE_KEHU });
       const kehu = await put(`/kehut/${id}`, data);
       dispatch({ type: UPDATE_KEHU_SUCCESS, payload: kehu });
+      dispatch({ type: RESET_REPORTS, payload: getState().kehu.kehus });
     } catch (e) {
       dispatch({ type: UPDATE_KEHU_ERROR, payload: e });
     }
@@ -52,11 +54,12 @@ export function updateKehu(id, data) {
 }
 
 export function removeKehu(id) {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     try {
       dispatch({ type: REMOVE_KEHU });
       await del(`/kehut/${id}`);
       dispatch({ type: REMOVE_KEHU_SUCCESS, payload: id });
+      dispatch({ type: RESET_REPORTS, payload: getState().kehu.kehus });
     } catch (e) {
       dispatch({ type: REMOVE_KEHU_ERROR, payload: e });
     }

@@ -23,6 +23,7 @@ import thunk from "redux-thunk";
 import configureMockStore from "redux-mock-store";
 import * as ApiUtil from "../util/ApiUtil";
 import { TOGGLE_KEHU_FORM_MODAL } from "./portal";
+import { RESET_REPORTS } from "./report";
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -239,10 +240,11 @@ describe("client:redux:kehu", () => {
 
         ApiUtil.put = jest.fn(() => new Promise(res => res(response)));
 
-        const store = mockStore(initialState);
+        const store = mockStore({ kehu: initialState });
         const expectedActions = [
           { type: UPDATE_KEHU },
-          { type: UPDATE_KEHU_SUCCESS, payload: response }
+          { type: UPDATE_KEHU_SUCCESS, payload: response },
+          { type: RESET_REPORTS, payload: [] }
         ];
 
         store.dispatch(updateKehu(kehuId, data)).then(() => {
@@ -277,10 +279,11 @@ describe("client:redux:kehu", () => {
 
         ApiUtil.del = jest.fn(() => new Promise(res => res(response)));
 
-        const store = mockStore(initialState);
+        const store = mockStore({ kehu: initialState });
         const expectedActions = [
           { type: REMOVE_KEHU },
-          { type: REMOVE_KEHU_SUCCESS, payload: kehuId }
+          { type: REMOVE_KEHU_SUCCESS, payload: kehuId },
+          { type: RESET_REPORTS, payload: [] }
         ];
 
         store.dispatch(removeKehu(kehuId)).then(() => {
