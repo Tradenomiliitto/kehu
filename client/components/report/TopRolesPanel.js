@@ -36,16 +36,33 @@ export default class TopRolesPanel extends Component {
     return (
       <div className="ReportElement TopRoles">
         <p className="TopRoles-title">TOP Kehujat</p>
-        <div className="TopRoles-container">
-          <div className="TopRoles-counts">
-            <span className="TopRoles-count TopRoles-max">
-              {this.MAX_COUNT}
-            </span>
-            {this.renderMiddleRoleCounts()}
-            <span className="TopRoles-count TopRoles-min">0</span>
-          </div>
-          {this.renderRoles()}
+        {this.renderContent()}
+      </div>
+    );
+  }
+
+  renderContent() {
+    if (!this.props.roles.length) {
+      return (
+        <Fragment>
+          <p className="TopRoles-notice">
+            Ei tarpeeksi tietoa TOP Kehujien näyttämiseksi.
+          </p>
+          <p className="TopRoles-notice">
+            Lisää kehu tai merkitse roolit olemassa oleviin kehuihin.
+          </p>
+        </Fragment>
+      );
+    }
+
+    return (
+      <div className="TopRoles-container">
+        <div className="TopRoles-counts">
+          <span className="TopRoles-count TopRoles-max">{this.MAX_COUNT}</span>
+          {this.renderMiddleRoleCounts()}
+          <span className="TopRoles-count TopRoles-min">0</span>
         </div>
+        {this.renderRoles()}
       </div>
     );
   }
