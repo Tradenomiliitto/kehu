@@ -4,8 +4,32 @@ export const RESET_REPORTS = "report/RESET_REPORTS";
 
 export const initialState = {
   numberOfKehus: 0,
-  roles: []
+  roles: [],
+  situations: [],
+  tags: []
 };
+
+function sortItems(a, b) {
+  if (a.count < b.count) {
+    return 1;
+  } else if (a.count > b.count) {
+    return -1;
+  } else {
+    return 0;
+  }
+}
+
+function reduceItems(property, acc, kehu) {
+  kehu[property].forEach(item => {
+    const index = acc.findIndex(it => it.text === item.text);
+    if (index === -1) {
+      acc.push({ text: item.text, count: 1 });
+    } else {
+      acc[index].count = acc[index].count + 1;
+    }
+  });
+  return acc;
+}
 
 function countRoles(kehus) {
   return kehus
@@ -18,15 +42,15 @@ function countRoles(kehus) {
       }
       return acc;
     }, [])
-    .sort((a, b) => {
-      if (a.count < b.count) {
-        return 1;
-      } else if (a.count > b.count) {
-        return -1;
-      } else {
-        return 0;
-      }
-    });
+    .sort(sortItems);
+}
+
+function countTags(kehus) {
+  return kehus.reduce(reduceItems.bind(null, "tags"), []).sort(sortItems);
+}
+
+function countSituations(kehus) {
+  return kehus.reduce(reduceItems.bind(null, "situations"), []).sort(sortItems);
 }
 
 function addToRoles(roles, kehu) {
@@ -46,7 +70,9 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         numberOfKehus: action.payload.length,
-        roles: countRoles(action.payload)
+        roles: countRoles(action.payload),
+        tags: countTags(action.payload),
+        situations: countSituations(action.payload)
       };
 
     case ADD_KEHU_SUCCESS:

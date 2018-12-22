@@ -3,10 +3,26 @@ import reducer, { initialState, RESET_REPORTS } from "./report";
 
 describe("client:redux:report", () => {
   const kehus = [
-    { role: { role: "Esimies" } },
-    { role: { role: "Asiakas" } },
-    { role: { role: "Asiakas" } },
-    { role: { role: "Kollega" } }
+    {
+      role: { role: "Esimies" },
+      tags: [{ text: "neuvottelu" }],
+      situations: [{ text: "neukkari" }]
+    },
+    {
+      role: { role: "Asiakas" },
+      tags: [{ text: "neuvottelu" }, { text: "matkustelu" }],
+      situations: [{ text: "neukkari" }, { text: "koulu" }]
+    },
+    {
+      role: { role: "Asiakas" },
+      tags: [{ text: "neuvottelu" }, { text: "matkustelu" }],
+      situations: [{ text: "neukkari" }, { text: "koulu" }]
+    },
+    {
+      role: { role: "Kollega" },
+      tags: [{ text: "neuvottelu" }, { text: "pakkaus" }],
+      situations: [{ text: "neukkari" }, { text: "työpaikka" }]
+    }
   ];
 
   describe("reducer", () => {
@@ -20,6 +36,16 @@ describe("client:redux:report", () => {
           { role: "Asiakas", count: 2 },
           { role: "Esimies", count: 1 },
           { role: "Kollega", count: 1 }
+        ],
+        situations: [
+          { text: "neukkari", count: 4 },
+          { text: "koulu", count: 2 },
+          { text: "työpaikka", count: 1 }
+        ],
+        tags: [
+          { text: "neuvottelu", count: 4 },
+          { text: "matkustelu", count: 2 },
+          { text: "pakkaus", count: 1 }
         ]
       };
       expect(reducer(state, action)).toEqual(expectedState);
@@ -45,7 +71,9 @@ describe("client:redux:report", () => {
           { role: "Asiakas", count: 3 },
           { role: "Esimies", count: 1 },
           { role: "Kollega", count: 1 }
-        ]
+        ],
+        situations: [],
+        tags: []
       };
       expect(reducer(state, action)).toEqual(expectedState);
     });
@@ -68,6 +96,16 @@ describe("client:redux:report", () => {
           { role: "Asiakas", count: 2 },
           { role: "Esimies", count: 1 },
           { role: "Kollega", count: 1 }
+        ],
+        situations: [
+          { text: "neukkari", count: 4 },
+          { text: "koulu", count: 2 },
+          { text: "työpaikka", count: 1 }
+        ],
+        tags: [
+          { text: "neuvottelu", count: 4 },
+          { text: "matkustelu", count: 2 },
+          { text: "pakkaus", count: 1 }
         ]
       };
       expect(reducer(state, action)).toEqual(expectedState);
