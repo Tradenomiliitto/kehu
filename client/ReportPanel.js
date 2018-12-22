@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import KehuCountPanel from "./components/report/KehuCountPanel";
+import TopRolesPanel from "./components/report/TopRolesPanel";
 import Spinner from "./components/Spinner";
 import { getKehus } from "./redux/kehu";
 
@@ -41,6 +42,9 @@ export class ReportPanel extends Component {
       <div className="ReportPanel">
         <div className="container">
           <div className="row">
+            <div className="col-xs-12 col-md-6 col-lg-5">
+              <TopRolesPanel roles={report.roles} />
+            </div>
             <div className="col-xs-12 col-md-6 col-lg-4">
               <KehuCountPanel number={report.numberOfKehus} />
             </div>

@@ -5,11 +5,11 @@
 .ReportElement {
   background: $white;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  padding: 2rem;
 }
 
 .KehuCount {
   color: $secondary;
-  padding: 2rem;
   text-align: center;
 }
 
@@ -28,4 +28,86 @@
   font-size: 2.25rem;
   font-weight: 300;
   letter-spacing: 12px;
+}
+
+.TopRoles {
+  padding: 2rem 2rem 4rem 3rem;
+}
+
+.TopRoles-title {
+  color: $secondary;
+  font-size: 1.875rem;
+}
+
+.TopRoles-container {
+  border-bottom: 1px solid $darkish-grey;
+  border-left: 1px solid $darkish-grey;
+  position: relative;
+}
+
+.TopRoles-counts {
+  height: 100%;
+  left: -1.5rem;
+  position: absolute;
+}
+
+.TopRoles-count {
+  color: $secondary;
+  font-size: 1.125rem;
+  font-weight: 400;
+  position: absolute;
+}
+
+.TopRoles-max {
+  top: -0.5rem;
+}
+
+.TopRoles-twothirds {
+  top: 25%;
+}
+
+.TopRoles-half {
+  top: calc(50% - 1rem);
+}
+
+.TopRoles-onethird {
+  top: calc(75% - 2rem);
+}
+
+.TopRoles-min {
+  bottom: -0.5rem;
+}
+
+.TopRole {
+  display: inline-block;
+  height: 200px;
+  position: relative;
+}
+
+.TopRole-column {
+  bottom: 0;
+  background: $pink;
+  background: -moz-linear-gradient(top, $pink 1%, $bg-pink 100%);
+  background: -webkit-linear-gradient(top, $pink 1%, $bg-pink 100%);
+  background: linear-gradient(to bottom, $pink 1%, $bg-pink 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$pink', endColorstr='$bg-pink',GradientType=0 );
+  left: 1rem;
+  max-height: 0;
+  position: absolute;
+  transition: max-height 1s ease-out;
+  width: 2rem;
+
+  &--animate {
+    max-height: 100%;
+  }
+}
+
+.TopRole-name {
+  bottom: -46px;
+  color: $secondary;
+  font-size: 0.875rem;
+  font-weight: 400;
+  left: -8px;
+  position: absolute;
+  transform: rotate(-45deg);
 }
