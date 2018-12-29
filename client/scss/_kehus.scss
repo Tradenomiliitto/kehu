@@ -32,6 +32,7 @@
 }
 
 .KehusTable-row {
+  cursor: pointer;
   font-size: 0.75rem;
 
   td:nth-child(5),
@@ -49,6 +50,11 @@
   &--tags {
     max-height: 52px;
     overflow: hidden;
+  }
+
+  &--tagsOpen {
+    max-height: initial;
+    overflow: initial;
   }
 }
 

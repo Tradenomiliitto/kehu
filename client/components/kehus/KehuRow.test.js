@@ -1,14 +1,23 @@
 import { KehuRow } from "./KehuRow";
+import { truncateText } from "../../util/TextUtil";
 
 describe("client:components:kehus:KehuRow", () => {
   let component;
   let removeKehuStub;
   let openEditKehuModalStub;
-  const kehu = { id: 1, tags: [], situations: [] };
+  let stopPropagationStub;
+  const kehu = {
+    id: 1,
+    tags: [],
+    situations: [],
+    text:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+  };
 
   beforeEach(() => {
     removeKehuStub = jest.fn();
     openEditKehuModalStub = jest.fn();
+    stopPropagationStub = jest.fn();
     component = shallow(
       <KehuRow
         kehu={kehu}
@@ -18,12 +27,38 @@ describe("client:components:kehus:KehuRow", () => {
     );
   });
 
+  it("is closed by default", () => {
+    expect(component.state().open).toBeFalsy();
+    expect(component.find(".KehusTable-cell--tagsOpen").exists()).toBeFalsy();
+    expect(component.find(".text-js").text()).toEqual(
+      truncateText(kehu.text, 200)
+    );
+  });
+
+  describe("when row is clicked", () => {
+    beforeEach(() => {
+      component.simulate("click");
+    });
+
+    it("opens the row", () => {
+      expect(component.state().open).toBeTruthy();
+      expect(
+        component.find(".KehusTable-cell--tagsOpen").exists()
+      ).toBeTruthy();
+      expect(component.find(".text-js").text()).toEqual(kehu.text);
+    });
+  });
+
   describe("when edit button is clicked", () => {
     beforeEach(() => {
       component
         .find("KehusTableActionButton")
         .first()
-        .simulate("click");
+        .simulate("click", { stopPropagation: stopPropagationStub });
+    });
+
+    it("stops event propagation", () => {
+      expect(stopPropagationStub).toHaveBeenCalled();
     });
 
     it("edits kehu", () => {
@@ -38,7 +73,11 @@ describe("client:components:kehus:KehuRow", () => {
         component
           .find("KehusTableActionButton")
           .at(1)
-          .simulate("click");
+          .simulate("click", { stopPropagation: stopPropagationStub });
+      });
+
+      it("stops event propagation", () => {
+        expect(stopPropagationStub).toHaveBeenCalled();
       });
 
       it("confirms action", () => {
@@ -56,7 +95,11 @@ describe("client:components:kehus:KehuRow", () => {
         component
           .find("KehusTableActionButton")
           .at(1)
-          .simulate("click");
+          .simulate("click", { stopPropagation: stopPropagationStub });
+      });
+
+      it("stops event propagation", () => {
+        expect(stopPropagationStub).toHaveBeenCalled();
       });
 
       it("confirms action", () => {
