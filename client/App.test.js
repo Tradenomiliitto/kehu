@@ -10,6 +10,7 @@ describe("client:App", () => {
       component = shallow(
         <App
           isAddKehuPortalVisible={false}
+          isSendKehuPortalVisible={false}
           profileLoaded={false}
           getProfile={getProfileStub}
         />
@@ -31,6 +32,7 @@ describe("client:App", () => {
       component = shallow(
         <App
           isAddKehuPortalVisible={false}
+          isSendKehuPortalVisible={false}
           profileLoaded={true}
           getProfile={getProfileStub}
         />
@@ -50,9 +52,19 @@ describe("client:App", () => {
       expect(component.find("Portal").exists()).toBeFalsy();
     });
 
-    describe("when Portal is visible", () => {
+    describe("when adding kehu", () => {
       beforeEach(() => {
         component.setProps({ isAddKehuPortalVisible: true });
+      });
+
+      it("renders Portal", () => {
+        expect(component.find("Portal").exists()).toBeTruthy();
+      });
+    });
+
+    describe("when sending kehu", () => {
+      beforeEach(() => {
+        component.setProps({ isSendKehuPortalVisible: true });
       });
 
       it("renders Portal", () => {
