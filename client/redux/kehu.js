@@ -19,6 +19,10 @@ export const GET_KEHUS = "kehu/GET_KEHUS";
 export const GET_KEHUS_SUCCESS = "kehu/GET_KEHUS_SUCCESS";
 export const GET_KEHUS_ERROR = "kehu/GET_KEHUS_ERROR";
 
+export const SEND_KEHU = "kehu/SEND_KEHU";
+export const SEND_KEHU_SUCCESS = "kehu/SEND_KEHU_SUCCESS";
+export const SEND_KEHU_ERROR = "kehu/SEND_KEHU_ERROR";
+
 export const initialState = {
   savedKehu: null,
   error: null,
@@ -77,6 +81,18 @@ export function getKehus() {
   };
 }
 
+export function sendKehu(data) {
+  return async dispatch => {
+    try {
+      dispatch({ type: SEND_KEHU });
+      await post("/kehut/laheta", data);
+      dispatch({ type: SEND_KEHU_SUCCESS });
+    } catch (e) {
+      dispatch({ type: SEND_KEHU_ERROR, payload: e });
+    }
+  };
+}
+
 export function resetKehuFormState() {
   return { type: RESET_KEHU_FORM };
 }
@@ -99,6 +115,7 @@ export default function reducer(state = initialState, action = {}) {
     case GET_KEHUS:
     case REMOVE_KEHU:
     case UPDATE_KEHU:
+    case SEND_KEHU:
       return {
         ...state,
         loading: true,
@@ -122,8 +139,10 @@ export default function reducer(state = initialState, action = {}) {
         kehus: updateKehuInState(state.kehus, action.payload.kehu)
       };
 
-    case UPDATE_KEHU_ERROR:
     case ADD_KEHU_ERROR:
+    case REMOVE_KEHU_ERROR:
+    case UPDATE_KEHU_ERROR:
+    case SEND_KEHU_ERROR:
       return {
         ...state,
         loading: false,
@@ -145,11 +164,12 @@ export default function reducer(state = initialState, action = {}) {
         loading: false,
         error: null
       };
-    case REMOVE_KEHU_ERROR:
+
+    case SEND_KEHU_SUCCESS:
       return {
         ...state,
         loading: false,
-        error: action.payload
+        error: null
       };
 
     case GET_KEHUS_SUCCESS:

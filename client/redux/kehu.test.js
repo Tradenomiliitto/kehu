@@ -17,7 +17,11 @@ import reducer, {
   UPDATE_KEHU_SUCCESS,
   UPDATE_KEHU,
   RESET_KEHU_FORM,
-  updateKehu
+  updateKehu,
+  SEND_KEHU,
+  SEND_KEHU_SUCCESS,
+  SEND_KEHU_ERROR,
+  sendKehu
 } from "./kehu";
 import thunk from "redux-thunk";
 import configureMockStore from "redux-mock-store";
@@ -191,6 +195,36 @@ describe("client:redux:kehu", () => {
       };
       expect(reducer(state, action)).toEqual(expectedState);
     });
+
+    it("on SEND_KEHU", () => {
+      const state = { ...initialState, error: new Error() };
+      const action = { type: SEND_KEHU };
+      const expectedState = { ...state, loading: true, error: null };
+      expect(reducer(state, action)).toEqual(expectedState);
+    });
+
+    it("on SEND_KEHU_SUCCESS", () => {
+      const state = {
+        ...initialState,
+        loading: true,
+        error: new Error()
+      };
+      const action = { type: SEND_KEHU_SUCCESS };
+      const expectedState = {
+        ...state,
+        loading: false,
+        error: null
+      };
+      expect(reducer(state, action)).toEqual(expectedState);
+    });
+
+    it("on SEND_KEHU_ERROR", () => {
+      const state = { ...initialState, loading: true, error: null };
+      const error = new Error("kehu error");
+      const action = { type: SEND_KEHU_ERROR, payload: error };
+      const expectedState = { ...state, loading: false, error };
+      expect(reducer(state, action)).toEqual(expectedState);
+    });
   });
 
   describe("actions", () => {
@@ -304,6 +338,43 @@ describe("client:redux:kehu", () => {
 
         store.dispatch(removeKehu(kehuId)).then(() => {
           expect(ApiUtil.del).toBeCalledWith(`/kehut/${kehuId}`);
+          expect(store.getActions()).toEqual(expectedActions);
+        });
+      });
+    });
+
+    describe("sendKehu", () => {
+      it("when sending succeeds", () => {
+        const data = { form: 1 };
+        const response = { response: 1 };
+
+        ApiUtil.post = jest.fn(() => new Promise(res => res(response)));
+
+        const store = mockStore(initialState);
+        const expectedActions = [
+          { type: SEND_KEHU },
+          { type: SEND_KEHU_SUCCESS }
+        ];
+
+        store.dispatch(sendKehu(data)).then(() => {
+          expect(ApiUtil.post).toBeCalledWith("/kehut/laheta", data);
+          expect(store.getActions()).toEqual(expectedActions);
+        });
+      });
+
+      it("when adding fails", () => {
+        const data = { form: 1 };
+        const error = new Error("network error");
+        ApiUtil.post = jest.fn(() => new Promise((res, rej) => rej(error)));
+
+        const store = mockStore(initialState);
+        const expectedActions = [
+          { type: SEND_KEHU },
+          { type: SEND_KEHU_ERROR, payload: error }
+        ];
+
+        store.dispatch(sendKehu(data)).then(() => {
+          expect(ApiUtil.post).toBeCalledWith("/kehut/laheta", data);
           expect(store.getActions()).toEqual(expectedActions);
         });
       });
