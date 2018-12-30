@@ -28,6 +28,7 @@
 
   &--wide {
     padding: $button-padding-vertical 6em;
+    white-space: nowrap;
   }
 
   &--fullWidth {
