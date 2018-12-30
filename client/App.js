@@ -9,7 +9,7 @@ import HomePanel from "./HomePanel";
 import Header from "./components/Header";
 import Portal from "./components/Portal";
 import KehuFormModal from "./components/KehuFormModal";
-import KehuForm from "./components/kehuform/KehuForm";
+import AddKehuForm from "./components/kehuform/AddKehuForm";
 import KehuSuccessPanel from "./components/kehuform/KehuSuccessPanel";
 import { getProfile } from "./redux/profile";
 import KehusPanel from "./KehusPanel";
@@ -19,7 +19,7 @@ import Spinner from "./components/Spinner";
 
 export class App extends Component {
   static propTypes = {
-    isPortalVisible: PropTypes.bool.isRequired,
+    isAddKehuPortalVisible: PropTypes.bool.isRequired,
     profileLoaded: PropTypes.bool.isRequired,
     successfullySavedKehu: PropTypes.object,
     getProfile: PropTypes.func.isRequired,
@@ -60,7 +60,7 @@ export class App extends Component {
   }
 
   renderPortal() {
-    if (this.props.isPortalVisible) {
+    if (this.props.isAddKehuPortalVisible) {
       return <Portal>{this.renderPortalContent()}</Portal>;
     }
   }
@@ -76,20 +76,20 @@ export class App extends Component {
     if (this.props.kehuToEdit) {
       return (
         <KehuFormModal title="Muokkaa Kehua">
-          <KehuForm kehu={this.props.kehuToEdit} />
+          <AddKehuForm kehu={this.props.kehuToEdit} />
         </KehuFormModal>
       );
     }
     return (
       <KehuFormModal title="Lisää Kehu">
-        <KehuForm />
+        <AddKehuForm />
       </KehuFormModal>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  isPortalVisible: state.portal.portalVisible,
+  isAddKehuPortalVisible: state.portal.addKehuPortalVisible,
   successfullySavedKehu: state.kehu.savedKehu,
   profileLoaded: state.profile.profileLoaded,
   kehuToEdit: state.portal.kehu

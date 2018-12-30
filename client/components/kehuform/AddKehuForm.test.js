@@ -1,8 +1,8 @@
-import { KehuForm } from "./KehuForm";
+import { AddKehuForm } from "./AddKehuForm";
 import moment from "moment";
 import MockDate from "mockdate";
 
-describe("client:components:kehuform:KehuForm", () => {
+describe("client:components:kehuform:AddKehuForm", () => {
   let component;
   let addKehuStub;
   let updateKehuStub;
@@ -38,7 +38,7 @@ describe("client:components:kehuform:KehuForm", () => {
   describe("when editable kehu is not given", () => {
     beforeEach(() => {
       component = shallow(
-        <KehuForm
+        <AddKehuForm
           addKehu={addKehuStub}
           updateKehu={updateKehuStub}
           profile={profile}
@@ -91,7 +91,7 @@ describe("client:components:kehuform:KehuForm", () => {
   describe("when editable kehu is given", () => {
     beforeEach(() => {
       component = shallow(
-        <KehuForm
+        <AddKehuForm
           addKehu={addKehuStub}
           updateKehu={updateKehuStub}
           profile={profile}
@@ -141,7 +141,7 @@ describe("client:components:kehuform:KehuForm", () => {
   describe("when errors are given", () => {
     beforeEach(() => {
       component = shallow(
-        <KehuForm
+        <AddKehuForm
           addKehu={addKehuStub}
           updateKehu={updateKehuStub}
           profile={profile}

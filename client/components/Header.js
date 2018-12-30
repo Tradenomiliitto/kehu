@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import cn from "classnames";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { toggleKehuFormModal } from "../redux/portal";
+import { toggleAddKehuFormModal } from "../redux/portal";
 
 export class Header extends Component {
   static propTypes = {
     profile: PropTypes.object.isRequired,
-    toggleKehuFormModal: PropTypes.func.isRequired
+    toggleAddKehuFormModal: PropTypes.func.isRequired
   };
 
   constructor() {
@@ -77,7 +77,7 @@ export class Header extends Component {
 
   openKehuFormModal = ev => {
     ev.preventDefault();
-    this.props.toggleKehuFormModal();
+    this.props.toggleAddKehuFormModal();
     this.closeMenu();
   };
 
@@ -96,5 +96,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { toggleKehuFormModal }
+  { toggleAddKehuFormModal }
 )(Header);

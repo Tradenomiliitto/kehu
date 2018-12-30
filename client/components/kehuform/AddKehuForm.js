@@ -12,7 +12,7 @@ import ErrorPanel from "../ErrorPanel";
 import ImportanceSelecPanel from "./ImportanceSelectPanel";
 import CommentField from "./CommentField";
 
-export class KehuForm extends Component {
+export class AddKehuForm extends Component {
   static propTypes = {
     addKehu: PropTypes.func.isRequired,
     error: PropTypes.object,
@@ -172,4 +172,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(KehuForm);
+)(AddKehuForm);

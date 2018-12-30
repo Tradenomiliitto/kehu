@@ -14,7 +14,7 @@ export class KehuSuccessPanel extends Component {
   render() {
     const { kehu } = this.props;
     return (
-      <div className="KehuSuccessPanel">
+      <div className="KehuSuccessPanel kehu-success-nw">
         <div className="KehuQuoteContainer">
           <p className="KehuQuote kehu-text-nw">{kehu.text}</p>
         </div>

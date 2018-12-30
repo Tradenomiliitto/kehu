@@ -1,15 +1,15 @@
 import { RESET_KEHU_FORM } from "./kehu";
 
-export const TOGGLE_KEHU_FORM_MODAL = "portal/TOGGLE_KEHU_FORM_MODAL";
+export const TOGGLE_ADD_KEHU_FORM_MODAL = "portal/TOGGLE_ADD_KEHU_FORM_MODAL";
 export const OPEN_EDIT_KEHU_MODAL = "portal/OPEN_EDIT_KEHU_MODAL";
 
 export const initialState = {
-  portalVisible: false,
+  addKehuPortalVisible: false,
   kehu: null
 };
 
-export function toggleKehuFormModal() {
-  return { type: TOGGLE_KEHU_FORM_MODAL };
+export function toggleAddKehuFormModal() {
+  return { type: TOGGLE_ADD_KEHU_FORM_MODAL };
 }
 
 export function openEditKehuModal(kehu) {
@@ -18,15 +18,15 @@ export function openEditKehuModal(kehu) {
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
-    case TOGGLE_KEHU_FORM_MODAL:
+    case TOGGLE_ADD_KEHU_FORM_MODAL:
       return {
         ...state,
-        portalVisible: !state.portalVisible
+        addKehuPortalVisible: !state.addKehuPortalVisible
       };
     case OPEN_EDIT_KEHU_MODAL:
       return {
         ...state,
-        portalVisible: true,
+        addKehuPortalVisible: true,
         kehu: action.payload
       };
     case RESET_KEHU_FORM:

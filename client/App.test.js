@@ -9,7 +9,7 @@ describe("client:App", () => {
       getProfileStub = jest.fn();
       component = shallow(
         <App
-          isPortalVisible={false}
+          isAddKehuPortalVisible={false}
           profileLoaded={false}
           getProfile={getProfileStub}
         />
@@ -30,7 +30,7 @@ describe("client:App", () => {
     beforeEach(() => {
       component = shallow(
         <App
-          isPortalVisible={false}
+          isAddKehuPortalVisible={false}
           profileLoaded={true}
           getProfile={getProfileStub}
         />
@@ -52,7 +52,7 @@ describe("client:App", () => {
 
     describe("when Portal is visible", () => {
       beforeEach(() => {
-        component.setProps({ isPortalVisible: true });
+        component.setProps({ isAddKehuPortalVisible: true });
       });
 
       it("renders Portal", () => {
