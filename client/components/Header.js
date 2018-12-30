@@ -3,12 +3,16 @@ import PropTypes from "prop-types";
 import cn from "classnames";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { toggleAddKehuFormModal } from "../redux/portal";
+import {
+  toggleAddKehuFormModal,
+  toggleSendKehuFormModal
+} from "../redux/portal";
 
 export class Header extends Component {
   static propTypes = {
     profile: PropTypes.object.isRequired,
-    toggleAddKehuFormModal: PropTypes.func.isRequired
+    toggleAddKehuFormModal: PropTypes.func.isRequired,
+    toggleSendKehuFormModal: PropTypes.func.isRequired
   };
 
   constructor() {
@@ -41,8 +45,13 @@ export class Header extends Component {
               <div className="Header-menuContainer">
                 <menu className={menuClass}>
                   <li className="Header-menuItem">
-                    <a href="#" onClick={this.openKehuFormModal}>
+                    <a href="#" onClick={this.openAddKehuFormModal}>
                       Lisää Kehu
+                    </a>
+                  </li>
+                  <li className="Header-menuItem">
+                    <a href="#" onClick={this.openSendKehuFormModal}>
+                      Lähetä Kehu
                     </a>
                   </li>
                   {this.renderMenuItem("/raportit", "Raportit")}
@@ -75,9 +84,15 @@ export class Header extends Component {
     );
   }
 
-  openKehuFormModal = ev => {
+  openAddKehuFormModal = ev => {
     ev.preventDefault();
     this.props.toggleAddKehuFormModal();
+    this.closeMenu();
+  };
+
+  openSendKehuFormModal = ev => {
+    ev.preventDefault();
+    this.props.toggleSendKehuFormModal();
     this.closeMenu();
   };
 
@@ -96,5 +111,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { toggleAddKehuFormModal }
+  { toggleAddKehuFormModal, toggleSendKehuFormModal }
 )(Header);
