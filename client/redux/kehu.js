@@ -1,5 +1,4 @@
 import { get, del, post, put } from "../util/ApiUtil";
-import { TOGGLE_ADD_KEHU_FORM_MODAL } from "./portal";
 import { RESET_REPORTS } from "./report";
 
 export const ADD_KEHU = "kehu/ADD_KEHU";
@@ -79,10 +78,7 @@ export function getKehus() {
 }
 
 export function resetKehuFormState() {
-  return dispatch => {
-    dispatch({ type: RESET_KEHU_FORM });
-    dispatch({ type: TOGGLE_ADD_KEHU_FORM_MODAL });
-  };
+  return { type: RESET_KEHU_FORM };
 }
 
 function addKehuToState(kehus, kehu) {

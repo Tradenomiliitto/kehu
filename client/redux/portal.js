@@ -42,8 +42,7 @@ export default function reducer(state = initialState, action = {}) {
       };
     case RESET_KEHU_FORM:
       return {
-        ...state,
-        kehu: null
+        ...initialState
       };
     default:
       return state;

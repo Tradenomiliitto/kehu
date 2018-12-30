@@ -41,9 +41,13 @@ describe("client:redux:portal", () => {
     });
 
     it("on RESET_KEHU_FORM", () => {
-      const state = { ...initialState, kehu: { id: 1 } };
+      const state = {
+        addKehuPortalVisible: true,
+        sendKehuPortalVisible: true,
+        kehu: { id: 1 }
+      };
       const action = { type: RESET_KEHU_FORM };
-      const expectedState = { ...state, kehu: null };
+      const expectedState = { ...initialState };
       expect(reducer(state, action)).toEqual(expectedState);
     });
   });
