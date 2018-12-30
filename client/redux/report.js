@@ -20,24 +20,28 @@ function sortItems(a, b) {
 }
 
 function reduceItems(property, acc, kehu) {
-  kehu[property].forEach(item => {
-    const index = acc.findIndex(it => it.text === item.text);
-    if (index === -1) {
-      acc.push({ text: item.text, count: 1 });
-    } else {
-      acc[index].count = acc[index].count + 1;
-    }
-  });
+  if (kehu[property]) {
+    kehu[property].forEach(item => {
+      const index = acc.findIndex(it => it.text === item.text);
+      if (index === -1) {
+        acc.push({ text: item.text, count: 1 });
+      } else {
+        acc[index].count = acc[index].count + 1;
+      }
+    });
+  }
   return acc;
 }
 
 function countRoles(kehus) {
   return kehus
     .reduce((acc, kehu) => {
-      const index = acc.findIndex(it => it.role === kehu.role.role);
-      if (index === -1) {
+      const index = kehu.role
+        ? acc.findIndex(it => it.role === kehu.role.role)
+        : -1;
+      if (index === -1 && kehu.role) {
         acc.push({ role: kehu.role.role, count: 1 });
-      } else {
+      } else if (kehu.role) {
         acc[index].count = acc[index].count + 1;
       }
       return acc;
@@ -54,10 +58,12 @@ function countSituations(kehus) {
 }
 
 function addToRoles(roles, kehu) {
-  const index = roles.findIndex(role => role.role === kehu.role.role);
-  if (index === -1) {
+  const index = kehu.role
+    ? roles.findIndex(role => role.role === kehu.role.role)
+    : -1;
+  if (index === -1 && kehu.role) {
     roles.push({ role: kehu.role.role, count: 1 });
-  } else {
+  } else if (kehu.role) {
     roles[index].count = roles[index].count + 1;
   }
   return roles;

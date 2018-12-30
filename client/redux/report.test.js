@@ -19,6 +19,9 @@ describe("client:redux:report", () => {
       situations: [{ text: "neukkari" }, { text: "koulu" }]
     },
     {
+      id: 1
+    },
+    {
       role: { role: "Kollega" },
       tags: [{ text: "neuvottelu" }, { text: "pakkaus" }],
       situations: [{ text: "neukkari" }, { text: "työpaikka" }]
@@ -69,6 +72,33 @@ describe("client:redux:report", () => {
         numberOfKehus: state.numberOfKehus + 1,
         roles: [
           { role: "Asiakas", count: 3 },
+          { role: "Esimies", count: 1 },
+          { role: "Kollega", count: 1 }
+        ],
+        situations: [],
+        tags: []
+      };
+      expect(reducer(state, action)).toEqual(expectedState);
+    });
+
+    it("does not crash on ADD_KEHU_SUCCESS", () => {
+      const state = {
+        ...initialState,
+        roles: [
+          { role: "Asiakas", count: 2 },
+          { role: "Esimies", count: 1 },
+          { role: "Kollega", count: 1 }
+        ]
+      };
+      const action = {
+        type: ADD_KEHU_SUCCESS,
+        payload: { kehu: {} }
+      };
+      const expectedState = {
+        ...state,
+        numberOfKehus: state.numberOfKehus + 1,
+        roles: [
+          { role: "Asiakas", count: 2 },
           { role: "Esimies", count: 1 },
           { role: "Kollega", count: 1 }
         ],
