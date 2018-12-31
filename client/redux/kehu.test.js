@@ -21,7 +21,11 @@ import reducer, {
   SEND_KEHU,
   SEND_KEHU_SUCCESS,
   SEND_KEHU_ERROR,
-  sendKehu
+  sendKehu,
+  CLAIM_KEHU,
+  CLAIM_KEHU_SUCCESS,
+  CLAIM_KEHU_ERROR,
+  claimKehu
 } from "./kehu";
 import thunk from "redux-thunk";
 import configureMockStore from "redux-mock-store";
@@ -226,6 +230,37 @@ describe("client:redux:kehu", () => {
       const expectedState = { ...state, loading: false, error };
       expect(reducer(state, action)).toEqual(expectedState);
     });
+
+    it("on CLAIM_KEHU", () => {
+      const state = { ...initialState, error: new Error() };
+      const action = { type: CLAIM_KEHU };
+      const expectedState = { ...state, loading: true, error: null };
+      expect(reducer(state, action)).toEqual(expectedState);
+    });
+
+    it("on CLAIM_KEHU_SUCCESS", () => {
+      const state = {
+        ...initialState,
+        loading: true,
+        error: new Error()
+      };
+      const action = { type: CLAIM_KEHU_SUCCESS };
+      const expectedState = {
+        ...state,
+        loading: false,
+        error: null,
+        claimKehuSuccess: true
+      };
+      expect(reducer(state, action)).toEqual(expectedState);
+    });
+
+    it("on CLAIM_KEHU_ERROR", () => {
+      const state = { ...initialState, loading: true, error: null };
+      const error = new Error("kehu error");
+      const action = { type: CLAIM_KEHU_ERROR, payload: error };
+      const expectedState = { ...state, loading: false, error };
+      expect(reducer(state, action)).toEqual(expectedState);
+    });
   });
 
   describe("actions", () => {
@@ -376,6 +411,43 @@ describe("client:redux:kehu", () => {
 
         store.dispatch(sendKehu(data)).then(() => {
           expect(ApiUtil.post).toBeCalledWith("/kehut/laheta", data);
+          expect(store.getActions()).toEqual(expectedActions);
+        });
+      });
+    });
+
+    describe("claimKehu", () => {
+      it("when claiming succeeds", () => {
+        const id = "132-405";
+        const response = { response: 1 };
+
+        ApiUtil.get = jest.fn(() => new Promise(res => res(response)));
+
+        const store = mockStore(initialState);
+        const expectedActions = [
+          { type: CLAIM_KEHU },
+          { type: CLAIM_KEHU_SUCCESS }
+        ];
+
+        store.dispatch(claimKehu(id)).then(() => {
+          expect(ApiUtil.get).toBeCalledWith(`/kehut/lisaa/${id}`);
+          expect(store.getActions()).toEqual(expectedActions);
+        });
+      });
+
+      it("when claiming fails", () => {
+        const id = "132-405";
+        const error = new Error("network error");
+        ApiUtil.get = jest.fn(() => new Promise((res, rej) => rej(error)));
+
+        const store = mockStore(initialState);
+        const expectedActions = [
+          { type: CLAIM_KEHU },
+          { type: CLAIM_KEHU_ERROR, payload: error }
+        ];
+
+        store.dispatch(claimKehu(id)).then(() => {
+          expect(ApiUtil.get).toBeCalledWith(`/kehut/lisaa/${id}`);
           expect(store.getActions()).toEqual(expectedActions);
         });
       });
