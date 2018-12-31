@@ -2,6 +2,7 @@ const { transaction } = require("objection");
 const Kehu = require("../models/Kehu");
 const { findTagWithText } = require("./TagService");
 const { findSituationWithText } = require("./SituationService");
+const { findUserByEmail } = require("./UserService");
 const logger = require("../logger");
 
 async function getKehus(user_id) {
@@ -135,6 +136,35 @@ async function createKehu(data) {
   }
 }
 
+async function sendKehu(data) {
+  const knex = Kehu.knex();
+  let trx;
+
+  try {
+    trx = await transaction.start(knex);
+
+    const user = await findUserByEmail(data.receiver_email);
+    if (user) {
+      const kehu = await Kehu.query().insert(
+        parseKehu({ ...data, owner_id: user.id })
+      );
+      const tags = parseTags(data);
+      const situations = parseSituations(data);
+      await createOrRelateTags(kehu, tags);
+      await createOrRelateSituations(kehu, situations);
+      await trx.commit();
+      logger.info(
+        `User ${data.giver_id} created kehu ${kehu.id} for user ${user.id}`
+      );
+    }
+  } catch (error) {
+    logger.error(`Sending Kehu failed. Rolling back..`);
+    logger.error(error.message);
+    await trx.rollback();
+    throw error;
+  }
+}
+
 async function updateKehu(user_id, kehu_id, data) {
   const knex = Kehu.knex();
   let trx;
@@ -209,6 +239,8 @@ function parseKehu(data) {
     giver_name,
     importance,
     owner_id,
+    receiver_name,
+    receiver_email,
     role_id,
     text
   } = data;
@@ -219,6 +251,8 @@ function parseKehu(data) {
     giver_name,
     importance,
     owner_id,
+    receiver_name,
+    receiver_email,
     role_id,
     text
   };
@@ -243,5 +277,6 @@ module.exports = {
   getKehus,
   createKehu,
   updateKehu,
-  deleteKehu
+  deleteKehu,
+  sendKehu
 };
