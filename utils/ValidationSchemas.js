@@ -1,4 +1,4 @@
-const kehuSchema = {
+const addKehuSchema = {
   giver_id: {
     errorMessage: "Kehun antajan tunnus puuttuu tai on virheellinen.",
     exists: true,
@@ -39,5 +39,5 @@ const kehuSchema = {
 };
 
 module.exports = {
-  kehuSchema
+  addKehuSchema
 };
