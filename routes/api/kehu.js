@@ -44,6 +44,15 @@ router.post("/laheta", checkSchema(sendKehuSchema), async (req, res) => {
   }
 });
 
+router.get("/lisaa/:claim_id", async (req, res) => {
+  try {
+    await KehuService.claimKehu(req.user.id, req.params.claim_id);
+    res.status(203).json({});
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 router.put("/:id", checkSchema(addKehuSchema), async (req, res) => {
   try {
     const validations = validationResult(req);
