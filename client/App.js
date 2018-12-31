@@ -12,6 +12,7 @@ import KehuFormModal from "./components/KehuFormModal";
 import AddKehuForm from "./components/kehuform/AddKehuForm";
 import SendKehuForm from "./components/kehuform/SendKehuForm";
 import KehuSuccessPanel from "./components/kehuform/KehuSuccessPanel";
+import SendKehuSuccessPanel from "./components/kehuform/SendKehuSuccessPanel";
 import { getProfile } from "./redux/profile";
 import KehusPanel from "./KehusPanel";
 import ProfilePanel from "./ProfilePanel";
@@ -24,6 +25,7 @@ export class App extends Component {
     isSendKehuPortalVisible: PropTypes.bool.isRequired,
     profileLoaded: PropTypes.bool.isRequired,
     successfullySavedKehu: PropTypes.object,
+    successfullySentKehu: PropTypes.bool,
     getProfile: PropTypes.func.isRequired,
     kehuToEdit: PropTypes.object
   };
@@ -92,6 +94,13 @@ export class App extends Component {
   }
 
   renderSendKehuContent() {
+    if (this.props.successfullySentKehu) {
+      return (
+        <KehuFormModal title="">
+          <SendKehuSuccessPanel />
+        </KehuFormModal>
+      );
+    }
     return (
       <KehuFormModal title="Lähetä Kehu">
         <SendKehuForm />
@@ -104,6 +113,7 @@ const mapStateToProps = state => ({
   isAddKehuPortalVisible: state.portal.addKehuPortalVisible,
   isSendKehuPortalVisible: state.portal.sendKehuPortalVisible,
   successfullySavedKehu: state.kehu.savedKehu,
+  successfullySentKehu: state.kehu.sendKehuSuccess,
   profileLoaded: state.profile.profileLoaded,
   kehuToEdit: state.portal.kehu
 });

@@ -213,7 +213,8 @@ describe("client:redux:kehu", () => {
       const expectedState = {
         ...state,
         loading: false,
-        error: null
+        error: null,
+        sendKehuSuccess: true
       };
       expect(reducer(state, action)).toEqual(expectedState);
     });

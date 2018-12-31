@@ -169,7 +169,8 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         loading: false,
-        error: null
+        error: null,
+        sendKehuSuccess: true
       };
 
     case GET_KEHUS_SUCCESS:
