@@ -1,4 +1,5 @@
 const { transaction } = require("objection");
+const uuidv4 = require("uuid/v4");
 const Kehu = require("../models/Kehu");
 const { findTagWithText } = require("./TagService");
 const { findSituationWithText } = require("./SituationService");
@@ -144,19 +145,21 @@ async function sendKehu(data) {
     trx = await transaction.start(knex);
 
     const user = await findUserByEmail(data.receiver_email);
+    let kehuData;
+
     if (user) {
-      const kehu = await Kehu.query().insert(
-        parseKehu({ ...data, owner_id: user.id })
-      );
-      const tags = parseTags(data);
-      const situations = parseSituations(data);
-      await createOrRelateTags(kehu, tags);
-      await createOrRelateSituations(kehu, situations);
-      await trx.commit();
-      logger.info(
-        `User ${data.giver_id} created kehu ${kehu.id} for user ${user.id}`
-      );
+      kehuData = parseKehu({ ...data, owner_id: user.id });
+    } else {
+      kehuData = parseKehu({ ...data, claim_id: uuidv4() });
     }
+
+    const kehu = await Kehu.query().insert(kehuData);
+    const tags = parseTags(data);
+    const situations = parseSituations(data);
+    await createOrRelateTags(kehu, tags);
+    await createOrRelateSituations(kehu, situations);
+    await trx.commit();
+    logger.info(`User ${data.giver_id} sent kehu ${kehu.id}`);
   } catch (error) {
     logger.error(`Sending Kehu failed. Rolling back..`);
     logger.error(error.message);
@@ -233,6 +236,7 @@ async function deleteKehu(user_id, kehu_id) {
 
 function parseKehu(data) {
   const {
+    claim_id,
     comment,
     date_given,
     giver_id,
@@ -245,6 +249,7 @@ function parseKehu(data) {
     text
   } = data;
   return {
+    claim_id,
     comment,
     date_given,
     giver_id,
