@@ -1,0 +1,12 @@
+.SendKehuPreview-receiver {
+  color: $secondary;
+  margin: 2rem 0;
+}
+
+.SendKehuPreview-buttons {
+  margin: 2rem 0 0;
+
+  > button:not(:first-child) {
+    margin-top: 1rem;
+  }
+}

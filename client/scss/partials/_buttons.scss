@@ -26,6 +26,13 @@
     }
   }
 
+  &--inverseNoBorders {
+    @extend .Button--inverse;
+    background: none;
+    border: 0;
+    box-shadow: none;
+  }
+
   &--wide {
     padding: $button-padding-vertical 6em;
     white-space: nowrap;

@@ -81,18 +81,20 @@ export class SendKehuForm extends Component {
         <div className="KehuTags kehu-tags-nw">
           {this.renderTagsAndSituations()}
         </div>
-        <button
-          className="Button Button--fullWidth Button--inverse"
-          onClick={this.togglePreview}
-        >
-          Muokkaa Kehua
-        </button>
-        <button
-          className="Button Button--fullWidth send-kehu-js"
-          onClick={this.sendKehu}
-        >
-          Lähetä Kehu
-        </button>
+        <div className="SendKehuPreview-buttons">
+          <button
+            className="Button Button--fullWidth Button--inverseNoBorders"
+            onClick={this.togglePreview}
+          >
+            Muokkaa Kehua
+          </button>
+          <button
+            className="Button Button--fullWidth send-kehu-js"
+            onClick={this.sendKehu}
+          >
+            Lähetä Kehu
+          </button>
+        </div>
       </div>
     );
   }
