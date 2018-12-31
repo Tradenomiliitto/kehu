@@ -3,7 +3,7 @@ const userApi = require("./api/user");
 const kehuApi = require("./api/kehu");
 const { ensureAuthenticated } = require("../utils/Middlewares");
 
-const CLIENT_ROUTES = ["/kehut", "/profiili", "/raportit"];
+const CLIENT_ROUTES = ["/kehut", "/kehut/lisaa/*", "/profiili", "/raportit"];
 
 module.exports = function setupRoutes(app) {
   app.use("/api/v1/profiili", ensureAuthenticated, userApi);

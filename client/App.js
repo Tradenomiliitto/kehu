@@ -14,6 +14,7 @@ import SendKehuForm from "./components/kehuform/SendKehuForm";
 import KehuSuccessPanel from "./components/kehuform/KehuSuccessPanel";
 import SendKehuSuccessPanel from "./components/kehuform/SendKehuSuccessPanel";
 import { getProfile } from "./redux/profile";
+import ClaimKehuPanel from "./ClaimKehuPanel";
 import KehusPanel from "./KehusPanel";
 import ProfilePanel from "./ProfilePanel";
 import ReportPanel from "./ReportPanel";
@@ -54,6 +55,11 @@ export class App extends Component {
         <Header />
         <Switch>
           <Route exact path="/" component={HomePanel} />
+          <Route
+            exact
+            path="/kehut/lisaa/:claim_id"
+            component={ClaimKehuPanel}
+          />
           <Route exact path="/kehut" component={KehusPanel} />
           <Route exact path="/profiili" component={ProfilePanel} />
           <Route exact path="/raportit" component={ReportPanel} />
