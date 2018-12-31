@@ -13,6 +13,17 @@ async function findUserByAuth0Id(auth0_id) {
   }
 }
 
+async function findUserByEmail(email) {
+  try {
+    logger.info("Finding user with email", email);
+    return await User.query()
+      .where("email", email)
+      .first();
+  } catch (error) {
+    logger.error(error.message);
+  }
+}
+
 function isAuth0RegisteredUser(user) {
   const prefix = user.user_id.split("|")[0];
   return prefix === "auth0";
@@ -44,5 +55,6 @@ async function createUserFromAuth0(user) {
 
 module.exports = {
   findUserByAuth0Id,
+  findUserByEmail,
   createUserFromAuth0
 };
