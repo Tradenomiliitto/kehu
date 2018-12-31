@@ -168,6 +168,18 @@ async function sendKehu(data) {
   }
 }
 
+async function claimKehu(user_id, claim_id) {
+  logger.info(`Claiming Kehu with claim_id ${claim_id} for user ${user_id}`);
+  const result = await Kehu.query()
+    .where("claim_id", claim_id)
+    .patch({ claim_id: null, owner_id: user_id });
+
+  if (!result) {
+    logger.error(`No Kehu with claim_id ${claim_id} found.`);
+    throw new Error(`No Kehu with claim_id ${claim_id} found.`);
+  }
+}
+
 async function updateKehu(user_id, kehu_id, data) {
   const knex = Kehu.knex();
   let trx;
@@ -283,5 +295,6 @@ module.exports = {
   createKehu,
   updateKehu,
   deleteKehu,
-  sendKehu
+  sendKehu,
+  claimKehu
 };
