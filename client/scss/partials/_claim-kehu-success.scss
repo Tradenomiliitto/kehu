@@ -1,0 +1,20 @@
+.ClaimKehuSuccess {
+  background: $white;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  color: $secondary;
+  margin: 0.9375rem 0;
+  padding: 2rem;
+  text-align: center;
+}
+
+.SuccessMark {
+  background-color: $secondary;
+  border-radius: 75px;
+  color: $white;
+  font-size: 50px;
+  height: 150px;
+  line-height: 150px;
+  margin: 0 auto 2rem;
+  text-align: center;
+  width: 150px;
+}

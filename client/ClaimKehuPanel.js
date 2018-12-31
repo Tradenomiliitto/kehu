@@ -46,9 +46,13 @@ export class ClaimKehuPanel extends Component {
     }
 
     return (
-      <div className="success-js">
+      <div className="ClaimKehuSuccess success-js">
+        <div className="SuccessMark">
+          <span>&#10004;</span>
+        </div>
+
         <p>Kehu lisätty onnistuneesti!</p>
-        <Link to="/profiili" className="Button Button--inverseNoBorders">
+        <Link to="/kehut" className="Button Button--inverseNoBorders">
           Näytä Kehut
         </Link>
       </div>
