@@ -1,6 +1,8 @@
+const Kehu = require("../models/Kehu");
 const User = require("../models/User");
 const logger = require("../logger");
 const Auth0 = require("../utils/Auth0Client");
+const { raw } = require("objection");
 
 async function findUserByAuth0Id(auth0_id) {
   try {
@@ -22,6 +24,18 @@ async function findUserByEmail(email) {
   } catch (error) {
     logger.error(error.message);
   }
+}
+
+async function getContacts(user_id) {
+  return await Kehu.query()
+    .select("receiver_name as name", "receiver_email as email")
+    .where(function() {
+      this.where("giver_id", user_id).andWhere("owner_id", "<>", user_id);
+    })
+    .orWhere(function() {
+      this.where("giver_id", user_id).andWhere(raw("claim_id IS NOT NULL"));
+    })
+    .groupBy("name", "email");
 }
 
 function isAuth0RegisteredUser(user) {
@@ -56,5 +70,6 @@ async function createUserFromAuth0(user) {
 module.exports = {
   findUserByAuth0Id,
   findUserByEmail,
-  createUserFromAuth0
+  createUserFromAuth0,
+  getContacts
 };
