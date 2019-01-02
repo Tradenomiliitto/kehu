@@ -47,9 +47,15 @@ export class ProfilePanel extends Component {
                         <a
                           href="#"
                           onClick={this.resetPassword}
-                          className="ResetPasswordLink"
+                          className="ProfileActionLink"
                         >
                           Vaihda salasana
+                        </a>
+                        <a
+                          href="/profiili/kirjaudu-ulos"
+                          className="ProfileActionLink"
+                        >
+                          Kirjaudu ulos
                         </a>
                       </div>
                     </div>
