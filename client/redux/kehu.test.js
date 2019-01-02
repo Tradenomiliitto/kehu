@@ -119,14 +119,18 @@ describe("client:redux:kehu", () => {
         ...initialState,
         loading: true,
         error: true,
-        savedKehu: {}
+        savedKehu: {},
+        sendKehuSuccess: true,
+        claimKehuSuccess: true
       };
       const action = { type: RESET_KEHU_FORM };
       const expectedState = {
         ...state,
         loading: false,
         error: null,
-        savedKehu: null
+        savedKehu: null,
+        sendKehuSuccess: false,
+        claimKehuSuccess: false
       };
       expect(reducer(state, action)).toEqual(expectedState);
     });

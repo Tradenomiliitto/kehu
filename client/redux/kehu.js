@@ -32,7 +32,9 @@ export const initialState = {
   error: null,
   loading: false,
   kehus: [],
-  kehusLoaded: false
+  kehusLoaded: false,
+  sendKehuSuccess: false,
+  claimKehuSuccess: false
 };
 
 export function addKehu(data) {
@@ -172,7 +174,9 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         loading: false,
         error: null,
-        savedKehu: null
+        savedKehu: null,
+        sendKehuSuccess: false,
+        claimKehuSuccess: false
       };
 
     case REMOVE_KEHU_SUCCESS:
