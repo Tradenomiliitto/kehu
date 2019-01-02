@@ -4,6 +4,7 @@ const Kehu = require("../models/Kehu");
 const { findTagWithText } = require("./TagService");
 const { findSituationWithText } = require("./SituationService");
 const { findUserByEmail } = require("./UserService");
+const { sendKehuToUnkownUser, sendKehuToKnownUser } = require("./EmailService");
 const logger = require("../logger");
 
 async function getKehus(user_id) {
@@ -149,8 +150,11 @@ async function sendKehu(data) {
 
     if (user) {
       kehuData = parseKehu({ ...data, owner_id: user.id });
+      sendKehuToKnownUser(user.email, user.first_name);
     } else {
-      kehuData = parseKehu({ ...data, claim_id: uuidv4() });
+      const claim_id = uuidv4();
+      kehuData = parseKehu({ ...data, claim_id });
+      sendKehuToUnkownUser(data.receiver_email, data.receiver_name, claim_id);
     }
 
     const kehu = await Kehu.query().insert(kehuData);
