@@ -18,9 +18,22 @@ async function findUserByAuth0Id(auth0_id) {
 async function findUserByEmail(email) {
   try {
     logger.info("Finding user with email", email);
-    return await User.query()
+    let user = await User.query()
       .where("email", email)
       .first();
+    if (user) {
+      return user;
+    }
+    const { owner_id } = await Kehu.query()
+      .select("owner_id")
+      .where("receiver_email", email)
+      .andWhere(raw("owner_id IS NOT NULL"))
+      .first();
+    if (owner_id) {
+      return await User.query()
+        .where("id", owner_id)
+        .first();
+    }
   } catch (error) {
     logger.error(error.message);
   }
