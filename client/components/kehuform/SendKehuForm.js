@@ -1,8 +1,7 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import moment from "moment";
-import cn from "classnames";
 import ErrorPanel from "../ErrorPanel";
 import { sendKehu } from "../../redux/kehu";
 import RoleSelectPanel from "./RoleSelectPanel";
@@ -12,67 +11,7 @@ import WordCloudField from "./WordCloudField";
 import ReceiverNameField from "./ReceiverNameField";
 import ReceiverEmailField from "./ReceiverEmailField";
 import RoleImage from "./RoleImage";
-
-class ContactsToggle extends Component {
-  static propTypes = {
-    contacts: PropTypes.array.isRequired,
-    handleSelect: PropTypes.func.isRequired
-  };
-
-  constructor() {
-    super();
-    this.state = {
-      open: false
-    };
-  }
-
-  render() {
-    const classNames = cn({
-      Contacts: true,
-      "Contacts--open": this.state.open
-    });
-
-    return (
-      <Fragment>
-        <button className="ContactsToggleButton" onClick={this.toggleContacts}>
-          <img src="/images/icon-down-arrow.svg" />
-        </button>
-        <ul className={classNames}>{this.renderContacts()}</ul>
-      </Fragment>
-    );
-  }
-
-  renderContacts() {
-    return this.props.contacts.map(contact => (
-      <li>
-        <a
-          href="#"
-          className="Contacts-link"
-          onClick={this.handleClick(contact.name, contact.email)}
-        >
-          {contact.name} - {contact.email}
-        </a>
-      </li>
-    ));
-  }
-
-  toggleContacts = ev => {
-    ev.preventDefault();
-    this.toggleState();
-  };
-
-  handleClick = (name, email) => {
-    return ev => {
-      ev.preventDefault();
-      this.props.handleSelect(name, email);
-      this.toggleState();
-    };
-  };
-
-  toggleState = () => {
-    this.setState({ open: !this.state.open });
-  };
-}
+import ContactsToggle from "./ContactsToggle";
 
 export class SendKehuForm extends Component {
   static propTypes = {
