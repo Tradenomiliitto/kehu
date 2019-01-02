@@ -23,6 +23,7 @@ describe("client:redux:profile", () => {
       const newTag = { text: "tag1" };
       const payload = {
         profile: { user: 1 },
+        contacts: [{ name: "name" }],
         roles: [{ id: 1 }],
         situations: [newSituation],
         tags: [newTag]
@@ -32,6 +33,7 @@ describe("client:redux:profile", () => {
         ...state,
         profile: payload.profile,
         profileLoaded: true,
+        contacts: payload.contacts,
         roles: payload.roles,
         situations: payload.situations,
         tags: payload.tags

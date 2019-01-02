@@ -3,6 +3,7 @@ const router = express.Router();
 const RoleService = require("../../services/RoleService");
 const SituationService = require("../../services/SituationService");
 const TagService = require("../../services/TagService");
+const { getContacts } = require("../../services/UserService");
 const { defaults } = require("../../config");
 
 const MAX_ITEMS = 15;
@@ -34,6 +35,7 @@ async function getItems(userId, serviceMethod, defaults) {
 }
 
 router.get("/", async (req, res) => {
+  const contacts = await getContacts(req.user.id);
   const roles = await RoleService.getRoles();
   const situations = await getItems(
     req.user.id,
@@ -46,7 +48,7 @@ router.get("/", async (req, res) => {
     defaults.tags
   );
   const profile = req.user;
-  res.json({ profile, roles, situations, tags });
+  res.json({ contacts, profile, roles, situations, tags });
 });
 
 module.exports = router;

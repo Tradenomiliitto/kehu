@@ -7,6 +7,7 @@ export const initialState = {
   error: null,
   profile: undefined,
   profileLoaded: false,
+  contacts: [],
   roles: [],
   situations: [],
   tags: []
@@ -30,6 +31,7 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         profile: action.payload.profile,
         profileLoaded: true,
+        contacts: action.payload.contacts,
         roles: action.payload.roles,
         situations: action.payload.situations,
         tags: action.payload.tags
