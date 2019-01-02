@@ -13,6 +13,7 @@
     "jest:watch": "jest --watch"
   },
   "dependencies": {
+    "@sendgrid/mail": "6.3.1",
     "auth0": "2.13.0",
     "classnames": "2.2.6",
     "connect-redis": "3.4.0",
