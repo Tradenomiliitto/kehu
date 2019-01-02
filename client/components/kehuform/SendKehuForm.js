@@ -60,6 +60,7 @@ export class SendKehuForm extends Component {
     } = this.state;
     return (
       <div className="SendKehuPreview preview-js">
+        {this.renderErrors()}
         <p className="SendKehuPreview-receiver">
           <b>Lähetetään kehun saajalle:</b>
           <br />
