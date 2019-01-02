@@ -1,7 +1,8 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import moment from "moment";
+import cn from "classnames";
 import ErrorPanel from "../ErrorPanel";
 import { sendKehu } from "../../redux/kehu";
 import RoleSelectPanel from "./RoleSelectPanel";
@@ -12,8 +13,70 @@ import ReceiverNameField from "./ReceiverNameField";
 import ReceiverEmailField from "./ReceiverEmailField";
 import RoleImage from "./RoleImage";
 
+class ContactsToggle extends Component {
+  static propTypes = {
+    contacts: PropTypes.array.isRequired,
+    handleSelect: PropTypes.func.isRequired
+  };
+
+  constructor() {
+    super();
+    this.state = {
+      open: false
+    };
+  }
+
+  render() {
+    const classNames = cn({
+      Contacts: true,
+      "Contacts--open": this.state.open
+    });
+
+    return (
+      <Fragment>
+        <button className="ContactsToggleButton" onClick={this.toggleContacts}>
+          <img src="/images/icon-down-arrow.svg" />
+        </button>
+        <ul className={classNames}>{this.renderContacts()}</ul>
+      </Fragment>
+    );
+  }
+
+  renderContacts() {
+    return this.props.contacts.map(contact => (
+      <li>
+        <a
+          href="#"
+          className="Contacts-link"
+          onClick={this.handleClick(contact.name, contact.email)}
+        >
+          {contact.name} - {contact.email}
+        </a>
+      </li>
+    ));
+  }
+
+  toggleContacts = ev => {
+    ev.preventDefault();
+    this.toggleState();
+  };
+
+  handleClick = (name, email) => {
+    return ev => {
+      ev.preventDefault();
+      this.props.handleSelect(name, email);
+      this.toggleState();
+    };
+  };
+
+  toggleState = () => {
+    this.setState({ open: !this.state.open });
+  };
+}
+
 export class SendKehuForm extends Component {
   static propTypes = {
+    contacts: PropTypes.array.isRequired,
     sendKehu: PropTypes.func.isRequired,
     error: PropTypes.object,
     profile: PropTypes.shape({
@@ -131,14 +194,19 @@ export class SendKehuForm extends Component {
       situations,
       role_id
     } = this.state;
-    const { roles, profile } = this.props;
+    const { contacts, roles, profile } = this.props;
     return (
       <form className="Form form-js" onSubmit={this.togglePreview}>
         {this.renderErrors()}
         <ReceiverNameField
           value={receiver_name}
           handleChange={this.handleChangeWithEvent("receiver_name")}
-        />
+        >
+          <ContactsToggle
+            contacts={contacts}
+            handleSelect={this.selectContact}
+          />
+        </ReceiverNameField>
         <ReceiverEmailField
           value={receiver_email}
           handleChange={this.handleChangeWithEvent("receiver_email")}
@@ -214,6 +282,10 @@ export class SendKehuForm extends Component {
     };
   };
 
+  selectContact = (receiver_name, receiver_email) => {
+    this.setState({ receiver_name, receiver_email });
+  };
+
   handleRoleChange = role_id => {
     this.setState({ role_id });
   };
@@ -234,6 +306,7 @@ export class SendKehuForm extends Component {
 }
 
 const mapStateToProps = state => ({
+  contacts: state.profile.contacts,
   error: state.kehu.error,
   profile: state.profile.profile,
   roles: state.profile.roles,

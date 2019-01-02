@@ -1,0 +1,34 @@
+.ContactsToggleButton {
+  background: transparent;
+  border: 0;
+  bottom: 1.5rem;
+  cursor: pointer;
+  position: absolute;
+  right: 0.5rem;
+}
+
+.Contacts {
+  background: white;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  display: none;
+  list-style-type: none;
+  padding: 1rem;
+  position: absolute;
+  width: 100%;
+  z-index: 5;
+
+  &--open {
+    display: block;
+  }
+}
+
+.Contacts-link {
+  color: $secondary;
+  font-size: 0.875rem;
+
+  &:hover,
+  &:visited,
+  &:focus {
+    color: $secondary;
+  }
+}

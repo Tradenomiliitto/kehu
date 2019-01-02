@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function ReceiverNameField({ value, handleChange }) {
+export default function ReceiverNameField({ value, handleChange, children }) {
   return (
     <div className="Form-group">
       <label htmlFor="receiver_name">Kehun saaja:</label>
@@ -12,6 +12,7 @@ export default function ReceiverNameField({ value, handleChange }) {
         value={value}
         onChange={handleChange}
       />
+      {children}
     </div>
   );
 }

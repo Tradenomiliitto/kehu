@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="13px" height="8px" viewBox="0 0 13 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>Disclosure Indicator</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="lähetä-kehu-desktop" transform="translate(-833.000000, -198.000000)" fill="#FF96AC">
+            <polygon id="Disclosure-Indicator" transform="translate(839.500000, 202.000000) rotate(90.000000) translate(-839.500000, -202.000000) " points="835.5 197 837 195.5 843.5 202 837 208.5 835.5 207 840.5 202"></polygon>
+        </g>
+    </g>
+</svg>
