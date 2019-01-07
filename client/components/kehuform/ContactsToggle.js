@@ -32,8 +32,8 @@ export default class ContactsToggle extends Component {
   }
 
   renderContacts() {
-    return this.props.contacts.map(contact => (
-      <li>
+    return this.props.contacts.map((contact, i) => (
+      <li key={i}>
         <a
           href="#"
           className="Contacts-link"
