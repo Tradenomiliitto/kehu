@@ -3,7 +3,8 @@ const router = express.Router();
 const { checkSchema, validationResult } = require("express-validator/check");
 const {
   addKehuSchema,
-  sendKehuSchema
+  sendKehuSchema,
+  updateReceivedKehuSchema
 } = require("../../utils/ValidationSchemas");
 const KehuService = require("../../services/KehuService");
 
@@ -53,7 +54,16 @@ router.get("/lisaa/:claim_id", async (req, res) => {
   }
 });
 
-router.put("/:id", checkSchema(addKehuSchema), async (req, res) => {
+function selectKehuSchema(req, res, next) {
+  if (req.user.id !== req.body.giver_id) {
+    checkSchema(updateReceivedKehuSchema);
+  } else {
+    checkSchema(addKehuSchema);
+  }
+  next();
+}
+
+router.put("/:id", selectKehuSchema, async (req, res) => {
   try {
     const validations = validationResult(req);
     if (validations.isEmpty()) {

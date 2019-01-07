@@ -84,7 +84,32 @@ const sendKehuSchema = {
   }
 };
 
+const updateReceivedKehuSchema = {
+  giver_id: {
+    errorMessage: "Kehun antajan tunnus puuttuu tai on virheellinen.",
+    exists: true,
+    isInt: true,
+    toInt: true,
+    custom: {
+      options: (value, { req }) => {
+        return value && value !== req.user.id;
+      }
+    }
+  },
+  owner_id: {
+    errorMessage: "Kehun omistajan tunnus puuttuu tai on virheellinen.",
+    isInt: true,
+    toInt: true,
+    custom: {
+      options: (value, { req }) => {
+        return value === req.user.id;
+      }
+    }
+  }
+};
+
 module.exports = {
   addKehuSchema,
-  sendKehuSchema
+  sendKehuSchema,
+  updateReceivedKehuSchema
 };
