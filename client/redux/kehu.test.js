@@ -136,9 +136,9 @@ describe("client:redux:kehu", () => {
     });
 
     it("on REMOVE_KEHU", () => {
-      const state = { ...initialState, error: new Error() };
+      const state = { ...initialState, removeKehuError: new Error() };
       const action = { type: REMOVE_KEHU };
-      const expectedState = { ...state, loading: true, error: null };
+      const expectedState = { ...state, loading: true, removeKehuError: null };
       expect(reducer(state, action)).toEqual(expectedState);
     });
 
@@ -149,7 +149,7 @@ describe("client:redux:kehu", () => {
       const state = {
         ...initialState,
         loading: true,
-        error: new Error(),
+        removeKehuError: new Error(),
         kehus
       };
       const action = { type: REMOVE_KEHU_SUCCESS, payload: kehuId };
@@ -157,17 +157,26 @@ describe("client:redux:kehu", () => {
         ...state,
         loading: false,
         kehus: expectedKehus,
-        error: null
+        removeKehuError: null
       };
       expect(reducer(state, action)).toEqual(expectedState);
     });
 
     it("on REMOVE_KEHU_ERROR", () => {
       const kehus = [{ id: 1 }, { id: 2 }, { id: 3 }];
-      const state = { ...initialState, loading: true, error: null, kehus };
+      const state = {
+        ...initialState,
+        loading: true,
+        removeKehuError: null,
+        kehus
+      };
       const error = new Error("kehu error");
       const action = { type: REMOVE_KEHU_ERROR, payload: error };
-      const expectedState = { ...state, loading: false, error };
+      const expectedState = {
+        ...state,
+        loading: false,
+        removeKehuError: error
+      };
       expect(reducer(state, action)).toEqual(expectedState);
     });
 

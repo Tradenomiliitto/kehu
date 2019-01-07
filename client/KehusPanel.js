@@ -63,7 +63,7 @@ export class KehusPanel extends Component {
 
 const mapStateToProps = state => ({
   kehus: state.kehu.kehus,
-  error: state.kehu.error,
+  error: state.kehu.removeKehuError,
   kehusLoaded: state.kehu.kehusLoaded
 });
 

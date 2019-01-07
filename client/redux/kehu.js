@@ -30,6 +30,7 @@ export const CLAIM_KEHU_ERROR = "kehu/CLAIM_KEHU_ERROR";
 export const initialState = {
   savedKehu: null,
   error: null,
+  removeKehuError: null,
   loading: false,
   kehus: [],
   kehusLoaded: false,
@@ -131,7 +132,6 @@ export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case ADD_KEHU:
     case GET_KEHUS:
-    case REMOVE_KEHU:
     case UPDATE_KEHU:
     case SEND_KEHU:
     case CLAIM_KEHU:
@@ -159,7 +159,6 @@ export default function reducer(state = initialState, action = {}) {
       };
 
     case ADD_KEHU_ERROR:
-    case REMOVE_KEHU_ERROR:
     case UPDATE_KEHU_ERROR:
     case SEND_KEHU_ERROR:
     case CLAIM_KEHU_ERROR:
@@ -179,12 +178,28 @@ export default function reducer(state = initialState, action = {}) {
         claimKehuSuccess: false
       };
 
+    case REMOVE_KEHU:
+      return {
+        ...state,
+        loading: true,
+        removeKehuError: null,
+        error: null
+      };
+
+    case REMOVE_KEHU_ERROR:
+      return {
+        ...state,
+        loading: false,
+        removeKehuError: action.payload
+      };
+
     case REMOVE_KEHU_SUCCESS:
       return {
         ...state,
         kehus: removeKehuFromState(state.kehus, action.payload),
         loading: false,
-        error: null
+        error: null,
+        removeKehuError: null
       };
 
     case SEND_KEHU_SUCCESS:
