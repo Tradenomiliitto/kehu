@@ -4,9 +4,11 @@ import { connect } from "react-redux";
 import { getKehus } from "./redux/kehu";
 import Spinner from "./components/Spinner";
 import KehusTable from "./components/kehus/KehusTable";
+import ErrorPanel from "./components/ErrorPanel";
 
 export class KehusPanel extends Component {
   static propTypes = {
+    error: PropTypes.object,
     kehus: PropTypes.array.isRequired,
     getKehus: PropTypes.func.isRequired,
     kehusLoaded: PropTypes.bool.isRequired
@@ -42,14 +44,26 @@ export class KehusPanel extends Component {
             Saadut Kehut
           </h1>
         </div>
+        {this.renderErrors()}
         <KehusTable kehus={kehus} />
       </div>
     );
+  }
+
+  renderErrors() {
+    const { error } = this.props;
+    if (error && error.message) {
+      const message = `Valitettavasti Kehun poistaminen epäonnistui. Seuraava virhe tapahtui: ${
+        error.message
+      }.`;
+      return <ErrorPanel message={message} />;
+    }
   }
 }
 
 const mapStateToProps = state => ({
   kehus: state.kehu.kehus,
+  error: state.kehu.error,
   kehusLoaded: state.kehu.kehusLoaded
 });
 

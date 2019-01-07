@@ -3,6 +3,9 @@ import { KehusPanel } from "./KehusPanel";
 describe("client:components:KehusPanel", () => {
   let component;
   let getKehusStub;
+  const error = {
+    message: "Random error"
+  };
 
   beforeEach(() => {
     getKehusStub = jest.fn();
@@ -45,6 +48,29 @@ describe("client:components:KehusPanel", () => {
 
     it("does not fetch kehus", () => {
       expect(getKehusStub).not.toHaveBeenCalled();
+    });
+
+    it("does not render ErrorPanel", () => {
+      expect(component.find("ErrorPanel").exists()).toBeFalsy();
+    });
+
+    describe("when error happens", () => {
+      beforeEach(() => {
+        component.setProps({ error });
+      });
+
+      it("renders error panel", () => {
+        expect(
+          component
+            .find("ErrorPanel")
+            .first()
+            .prop("message")
+        ).toEqual(
+          `Valitettavasti Kehun poistaminen epäonnistui. Seuraava virhe tapahtui: ${
+            error.message
+          }.`
+        );
+      });
     });
   });
 });
