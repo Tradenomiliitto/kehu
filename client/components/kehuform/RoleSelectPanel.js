@@ -5,6 +5,7 @@ import RoleImage from "./RoleImage";
 
 export default class RoleSelectPanel extends Component {
   static propTypes = {
+    disabled: PropTypes.bool.isRequired,
     roles: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number.isRequired,
@@ -42,7 +43,9 @@ export default class RoleSelectPanel extends Component {
   handleClick = id => {
     return ev => {
       ev.preventDefault();
-      this.props.handleClick(id);
+      if (!this.props.disabled) {
+        this.props.handleClick(id);
+      }
     };
   };
 }

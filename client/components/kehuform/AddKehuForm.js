@@ -30,8 +30,8 @@ export class AddKehuForm extends Component {
     super(props);
     const kehu = props.kehu || {};
     this.state = {
-      giver_id: props.profile.id,
-      owner_id: props.profile.id,
+      giver_id: kehu.giver_id || props.profile.id,
+      owner_id: kehu.owner_id || props.profile.id,
       giver_name: kehu.giver_name || "",
       role_id: kehu.role_id || null,
       text: kehu.text || "",
@@ -41,6 +41,12 @@ export class AddKehuForm extends Component {
       importance: kehu.importance || 0,
       comment: kehu.comment || ""
     };
+  }
+
+  isReceivedKehu() {
+    return !!(
+      this.props.kehu && this.props.kehu.giver_id !== this.props.kehu.owner_id
+    );
   }
 
   render() {
@@ -57,21 +63,26 @@ export class AddKehuForm extends Component {
     const { roles } = this.props;
     return (
       <form className="Form" onSubmit={this.handleSubmit}>
+        {this.renderReceivedKehuNotice()}
         {this.renderErrors()}
         <GiverNameField
+          disabled={this.isReceivedKehu()}
           value={giver_name}
           handleChange={this.handleChangeWithEvent("giver_name")}
         />
         <RoleSelectPanel
+          disabled={this.isReceivedKehu()}
           selected={role_id}
           roles={roles}
           handleClick={this.handleRoleChange}
         />
         <TextField
+          disabled={this.isReceivedKehu()}
           value={text}
           handleChange={this.handleChangeWithEvent("text")}
         />
         <DateGivenField
+          disabled={this.isReceivedKehu()}
           value={date_given}
           handleChange={this.handleChangeWithValue("date_given")}
         />
@@ -114,6 +125,17 @@ export class AddKehuForm extends Component {
         />
       </form>
     );
+  }
+
+  renderReceivedKehuNotice() {
+    if (this.isReceivedKehu()) {
+      return (
+        <p className="ReceivedKehuNotice">
+          Saatu Kehu on muokattavissa vain asiasanojen, tilanteen, tärkeyden ja
+          kommentin osalta. Nämä tiedot eivät näy Kehun antajalle.
+        </p>
+      );
+    }
   }
 
   renderErrors() {

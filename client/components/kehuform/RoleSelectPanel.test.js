@@ -8,7 +8,11 @@ describe("client:components:kehuform:RoleSelectPanel", () => {
   beforeEach(() => {
     handleClickStub = jest.fn();
     component = shallow(
-      <RoleSelectPanel roles={roles} handleClick={handleClickStub} />
+      <RoleSelectPanel
+        roles={roles}
+        disabled={false}
+        handleClick={handleClickStub}
+      />
     );
   });
 
@@ -41,6 +45,20 @@ describe("client:components:kehuform:RoleSelectPanel", () => {
             .hasClass("RoleSelector-button--active")
         ).toBeTruthy();
       });
+    });
+  });
+
+  describe("when element is disabled", () => {
+    beforeEach(() => {
+      component.setProps({ disabled: true });
+      component
+        .find(".RoleSelector-button")
+        .first()
+        .simulate("click", { preventDefault: () => {} });
+    });
+
+    it("does not call callback", () => {
+      expect(handleClickStub).not.toHaveBeenCalled();
     });
   });
 });

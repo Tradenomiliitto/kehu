@@ -9,6 +9,8 @@ describe("client:components:kehuform:AddKehuForm", () => {
   const profile = { id: 1 };
   const kehu = {
     id: 2,
+    giver_id: 3,
+    owner_id: 3,
     giver_name: "Hermanni",
     text: "kehu text",
     date_given: "2018-11-23T17:45:36+02:00",
@@ -108,8 +110,8 @@ describe("client:components:kehuform:AddKehuForm", () => {
 
     it("initialises state from kehu", () => {
       expect(component.state()).toEqual({
-        giver_id: profile.id,
-        owner_id: profile.id,
+        giver_id: kehu.giver_id,
+        owner_id: kehu.owner_id,
         giver_name: kehu.giver_name,
         role_id: kehu.role_id,
         text: kehu.text,
@@ -125,8 +127,8 @@ describe("client:components:kehuform:AddKehuForm", () => {
       it("edits given kehu", () => {
         component.simulate("submit", { preventDefault: () => {} });
         expect(updateKehuStub).toHaveBeenCalledWith(kehu.id, {
-          giver_id: profile.id,
-          owner_id: profile.id,
+          giver_id: kehu.giver_id,
+          owner_id: kehu.owner_id,
           giver_name: kehu.giver_name,
           role_id: kehu.role_id,
           text: kehu.text,

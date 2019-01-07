@@ -153,6 +153,7 @@ export class SendKehuForm extends Component {
         <div className="Form-group">
           <label>Olen Kehun saajan:</label>
           <RoleSelectPanel
+            disabled={false}
             selected={role_id}
             roles={roles}
             handleClick={this.handleRoleChange}

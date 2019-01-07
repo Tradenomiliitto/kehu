@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function TextField({ value, handleChange }) {
+export default function TextField({ value, handleChange, disabled }) {
   return (
     <div className="Form-group KehuTextFieldContainer">
       <textarea
@@ -9,6 +9,7 @@ export default function TextField({ value, handleChange }) {
         name="text"
         rows={7}
         placeholder="Hyvää työtä! Olet..."
+        disabled={disabled}
         value={value}
         onChange={handleChange}
       />

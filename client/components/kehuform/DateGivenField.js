@@ -1,7 +1,7 @@
 import React from "react";
 import DatePicker from "react-datepicker";
 
-export default function DateGivenField({ value, handleChange }) {
+export default function DateGivenField({ value, handleChange, disabled }) {
   return (
     <div className="Form-group DateGivenFieldContainer">
       <label htmlFor="date_given">Päivämäärä:</label>
@@ -11,6 +11,7 @@ export default function DateGivenField({ value, handleChange }) {
         dateFormat="D. MMMM YYYY"
         dropdownMode="scroll"
         locale="fi-FI"
+        disabled={disabled}
         selected={value}
         onChange={handleChange}
       />
