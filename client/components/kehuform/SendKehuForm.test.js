@@ -13,10 +13,13 @@ describe("client:components:kehuform:SendKehuForm", () => {
   };
   const error1 = { msg: "error 1" };
   const error2 = { msg: "error 2" };
-  const error = {
+  const validationErrors = {
     responseJson: {
       errors: [error1, error2]
     }
+  };
+  const otherError = {
+    message: "Random error"
   };
   const roles = [{ id: 1, role: "role1" }];
   const situations = [{ text: "situation" }];
@@ -29,6 +32,7 @@ describe("client:components:kehuform:SendKehuForm", () => {
       <SendKehuForm
         sendKehu={sendKehuStub}
         profile={profile}
+        contacts={[]}
         roles={roles}
         situations={situations}
         tags={tags}
@@ -93,13 +97,14 @@ describe("client:components:kehuform:SendKehuForm", () => {
     });
   });
 
-  describe("when errors are given", () => {
+  describe("when validation errors are given", () => {
     beforeEach(() => {
       component = shallow(
         <SendKehuForm
           sendKehu={sendKehuStub}
           profile={profile}
-          error={error}
+          error={validationErrors}
+          contacts={[]}
           roles={roles}
           situations={situations}
           tags={tags}
@@ -120,6 +125,35 @@ describe("client:components:kehuform:SendKehuForm", () => {
           .last()
           .prop("message")
       ).toEqual(error2.msg);
+    });
+  });
+
+  describe("when other errors are given", () => {
+    beforeEach(() => {
+      component = shallow(
+        <SendKehuForm
+          sendKehu={sendKehuStub}
+          profile={profile}
+          error={otherError}
+          contacts={[]}
+          roles={roles}
+          situations={situations}
+          tags={tags}
+        />
+      );
+    });
+
+    it("renders ErrorPanel", () => {
+      expect(
+        component
+          .find("ErrorPanel")
+          .first()
+          .prop("message")
+      ).toEqual(
+        `Valitettavasti Kehun lähettäminen epäonnistui. Seuraava virhe tapahtui: ${
+          otherError.message
+        }.`
+      );
     });
   });
 

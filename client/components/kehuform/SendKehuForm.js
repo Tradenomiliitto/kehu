@@ -207,6 +207,12 @@ export class SendKehuForm extends Component {
         <ErrorPanel key={i} message={e.msg} />
       ));
     }
+    if (error && error.message) {
+      const message = `Valitettavasti Kehun lähettäminen epäonnistui. Seuraava virhe tapahtui: ${
+        error.message
+      }.`;
+      return <ErrorPanel message={message} />;
+    }
   }
 
   handleChangeWithEvent = field => {
