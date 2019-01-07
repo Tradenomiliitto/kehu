@@ -123,6 +123,13 @@ export class AddKehuForm extends Component {
         <ErrorPanel key={i} message={e.msg} />
       ));
     }
+    if (error && error.message) {
+      const action = this.props.kehu ? "päivittäminen" : "lisääminen";
+      const message = `Valitettavasti Kehun ${action} epäonnistui. Seuraava virhe tapahtui: ${
+        error.message
+      }.`;
+      return <ErrorPanel message={message} />;
+    }
   }
 
   handleChangeWithEvent = field => {

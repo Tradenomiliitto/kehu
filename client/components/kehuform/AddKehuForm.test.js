@@ -20,10 +20,13 @@ describe("client:components:kehuform:AddKehuForm", () => {
   };
   const error1 = { msg: "error 1" };
   const error2 = { msg: "error 2" };
-  const error = {
+  const validationError = {
     responseJson: {
       errors: [error1, error2]
     }
+  };
+  const otherError = {
+    message: "Random error"
   };
   const roles = [{ id: 1, role: "role1" }];
   const situations = [{ text: "situation" }];
@@ -138,14 +141,14 @@ describe("client:components:kehuform:AddKehuForm", () => {
     });
   });
 
-  describe("when errors are given", () => {
+  describe("when validation errors are given", () => {
     beforeEach(() => {
       component = shallow(
         <AddKehuForm
           addKehu={addKehuStub}
           updateKehu={updateKehuStub}
           profile={profile}
-          error={error}
+          error={validationError}
           roles={roles}
           situations={situations}
           tags={tags}
@@ -166,6 +169,35 @@ describe("client:components:kehuform:AddKehuForm", () => {
           .last()
           .prop("message")
       ).toEqual(error2.msg);
+    });
+  });
+
+  describe("when other errors are given", () => {
+    beforeEach(() => {
+      component = shallow(
+        <AddKehuForm
+          addKehu={addKehuStub}
+          updateKehu={updateKehuStub}
+          profile={profile}
+          error={otherError}
+          roles={roles}
+          situations={situations}
+          tags={tags}
+        />
+      );
+    });
+
+    it("renders ErrorPanel", () => {
+      expect(
+        component
+          .find("ErrorPanel")
+          .first()
+          .prop("message")
+      ).toEqual(
+        `Valitettavasti Kehun lisääminen epäonnistui. Seuraava virhe tapahtui: ${
+          otherError.message
+        }.`
+      );
     });
   });
 
