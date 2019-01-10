@@ -59,10 +59,14 @@ export class ProfileEditForm extends Component {
   }
 
   renderErrors() {
-    if (this.props.error) {
-      const message = `Valitettavasti profiilin päivitys epäonnistui. Tapahtui seuraava virhe: ${
-        this.props.error
-      }`;
+    const { error } = this.props;
+    if (error && error.responseJson && error.responseJson.errors) {
+      return error.responseJson.errors.map((e, i) => (
+        <ErrorPanel key={i} message={e.msg} />
+      ));
+    }
+    if (error) {
+      const message = `Valitettavasti profiilin päivitys epäonnistui. Tapahtui seuraava virhe: ${error}`;
       return <ErrorPanel message={message} />;
     }
   }
