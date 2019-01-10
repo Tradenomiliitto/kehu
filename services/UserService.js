@@ -4,6 +4,49 @@ const logger = require("../logger");
 const Auth0 = require("../utils/Auth0Client");
 const { raw } = require("objection");
 
+function canAuth0EmailBeUpdated(user) {
+  const prefix = user.auth0_id.split("|")[0];
+  return prefix === "auth0";
+}
+
+async function updateProfile(user_id, data) {
+  logger.info(`Updating user ${user_id}.`);
+  const user = await User.query()
+    .where("id", user_id)
+    .first();
+  try {
+    if (canAuth0EmailBeUpdated(user)) {
+      await Auth0.updateUser(
+        { id: user.auth0_id },
+        {
+          email: data.email,
+          client_id: process.env.AUTH0_CLIENT_ID,
+          connection: "Username-Password-Authentication",
+          user_metadata: {
+            first_name: data.first_name,
+            last_name: data.last_name
+          }
+        }
+      );
+      await Auth0.sendEmailVerification({ user_id: user.auth0_id });
+    } else {
+      await Auth0.updateUser(
+        { id: user.auth0_id },
+        {
+          user_metadata: {
+            first_name: data.first_name,
+            last_name: data.last_name
+          }
+        }
+      );
+    }
+    return await User.query().patchAndFetchById(user_id, data);
+  } catch (e) {
+    logger.error(`Error occurred when updating user ${user_id}: ${e.message}`);
+    throw e;
+  }
+}
+
 async function findUserByAuth0Id(auth0_id) {
   try {
     logger.info("Finding user with auth0_id", auth0_id);
@@ -24,12 +67,12 @@ async function findUserByEmail(email) {
     if (user) {
       return user;
     }
-    const { owner_id } = await Kehu.query()
+    const kehu = await Kehu.query()
       .select("owner_id")
       .where("receiver_email", email)
       .andWhere(raw("owner_id IS NOT NULL"))
       .first();
-    if (owner_id) {
+    if (kehu && kehu.owner_id) {
       return await User.query()
         .where("id", owner_id)
         .first();
@@ -84,5 +127,6 @@ module.exports = {
   findUserByAuth0Id,
   findUserByEmail,
   createUserFromAuth0,
-  getContacts
+  getContacts,
+  updateProfile
 };
