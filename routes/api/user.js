@@ -60,9 +60,9 @@ router.get("/", async (req, res) => {
 router.put(
   "/",
   checkSchema(updateProfileSchema),
-  body("email").custom(async email => {
+  body("email").custom(async (email, { req }) => {
     const user = await UserService.findUserByEmail(email);
-    if (user) {
+    if (user && user.id !== req.user.id) {
       return Promise.reject("Sähköpostiosoite on jo käytössä.");
     }
   }),
