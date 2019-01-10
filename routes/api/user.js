@@ -1,10 +1,16 @@
 const express = require("express");
 const router = express.Router();
+const {
+  body,
+  checkSchema,
+  validationResult
+} = require("express-validator/check");
 const RoleService = require("../../services/RoleService");
 const SituationService = require("../../services/SituationService");
 const TagService = require("../../services/TagService");
-const { getContacts } = require("../../services/UserService");
+const UserService = require("../../services/UserService");
 const { defaults } = require("../../config");
+const { updateProfileSchema } = require("../../utils/ValidationSchemas");
 
 const MAX_ITEMS = 15;
 
@@ -35,7 +41,7 @@ async function getItems(userId, serviceMethod, defaults) {
 }
 
 router.get("/", async (req, res) => {
-  const contacts = await getContacts(req.user.id);
+  const contacts = await UserService.getContacts(req.user.id);
   const roles = await RoleService.getRoles();
   const situations = await getItems(
     req.user.id,
@@ -50,5 +56,29 @@ router.get("/", async (req, res) => {
   const profile = req.user;
   res.json({ contacts, profile, roles, situations, tags });
 });
+
+router.put(
+  "/",
+  checkSchema(updateProfileSchema),
+  body("email").custom(async email => {
+    const user = await UserService.findUserByEmail(email);
+    if (user) {
+      return Promise.reject("Sähköpostiosoite on jo käytössä.");
+    }
+  }),
+  async (req, res) => {
+    try {
+      const validations = validationResult(req);
+      if (validations.isEmpty()) {
+        const profile = await UserService.updateProfile(req.user.id, req.body);
+        res.json(profile);
+      } else {
+        res.status(422).json({ errors: validations.array() });
+      }
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  }
+);
 
 module.exports = router;

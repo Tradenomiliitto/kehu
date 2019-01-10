@@ -108,8 +108,40 @@ const updateReceivedKehuSchema = {
   }
 };
 
+const updateProfileSchema = {
+  first_name: {
+    errorMessage: "Etunimi on pakollinen tieto.",
+    trim: true,
+    custom: {
+      options: value => {
+        return !!value;
+      }
+    }
+  },
+  last_name: {
+    errorMessage: "Sukunimi on pakollinen tieto.",
+    trim: true,
+    custom: {
+      options: value => {
+        return !!value;
+      }
+    }
+  },
+  email: {
+    errorMessage: "Sähköpostiosoite on pakollinen tieto.",
+    isEmail: true,
+    trim: true,
+    custom: {
+      options: value => {
+        return !!value;
+      }
+    }
+  }
+};
+
 module.exports = {
   addKehuSchema,
   sendKehuSchema,
-  updateReceivedKehuSchema
+  updateReceivedKehuSchema,
+  updateProfileSchema
 };
