@@ -147,7 +147,7 @@ describe("client:redux:profile", () => {
         const store = mockStore(initialState);
         const expectedActions = [
           { type: UPDATE_PROFILE },
-          { type: UPDATE_PROFILE_ERROR, payload: error.message }
+          { type: UPDATE_PROFILE_ERROR, payload: error }
         ];
 
         store.dispatch(updateProfile(data)).then(() => {

@@ -37,7 +37,7 @@ export function updateProfile(data) {
       const payload = await put("/profiili", data);
       dispatch({ type: UPDATE_PROFILE_SUCCESS, payload });
     } catch (e) {
-      dispatch({ type: UPDATE_PROFILE_ERROR, payload: e.message });
+      dispatch({ type: UPDATE_PROFILE_ERROR, payload: e });
     }
   };
 }
