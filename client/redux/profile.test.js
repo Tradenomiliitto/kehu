@@ -4,7 +4,11 @@ import reducer, {
   initialState,
   PROFILE_LOADED,
   PROFILE_ERROR,
-  getProfile
+  UPDATE_PROFILE,
+  UPDATE_PROFILE_SUCCESS,
+  UPDATE_PROFILE_ERROR,
+  getProfile,
+  updateProfile
 } from "./profile";
 import * as ApiUtil from "../util/ApiUtil";
 
@@ -48,6 +52,37 @@ describe("client:redux:profile", () => {
       const expectedState = { ...state, error, profileLoaded: true };
       expect(reducer(state, action)).toEqual(expectedState);
     });
+
+    it("on UPDATE_PROFILE", () => {
+      const state = { ...initialState, updateProfileError: true };
+      const action = { type: UPDATE_PROFILE };
+      const expectedState = {
+        ...state,
+        loading: true,
+        updateProfileError: null
+      };
+      expect(reducer(state, action)).toEqual(expectedState);
+    });
+
+    it("on UPDATE_PROFILE_SUCCESS", () => {
+      const profile = { profile: "updated" };
+      const state = { ...initialState, loading: true };
+      const action = { type: UPDATE_PROFILE_SUCCESS, payload: profile };
+      const expectedState = { ...state, profile, loading: false };
+      expect(reducer(state, action)).toEqual(expectedState);
+    });
+
+    it("on UPDATE_PROFILE_ERROR", () => {
+      const error = new Error("random error");
+      const state = { ...initialState, loading: true };
+      const action = { type: UPDATE_PROFILE_ERROR, payload: error };
+      const expectedState = {
+        ...state,
+        loading: false,
+        updateProfileError: action.payload
+      };
+      expect(reducer(state, action)).toEqual(expectedState);
+    });
   });
 
   describe("actions", () => {
@@ -81,6 +116,43 @@ describe("client:redux:profile", () => {
             expect(ApiUtil.get).toBeCalledWith("/profiili");
             expect(store.getActions()).toEqual(expectedActions);
           });
+        });
+      });
+    });
+
+    describe("updateProfile", () => {
+      it("when updating succeeds", () => {
+        const data = { form: 1 };
+        const response = { response: 1 };
+
+        ApiUtil.put = jest.fn(() => new Promise(res => res(response)));
+
+        const store = mockStore({ profile: initialState });
+        const expectedActions = [
+          { type: UPDATE_PROFILE },
+          { type: UPDATE_PROFILE_SUCCESS, payload: response }
+        ];
+
+        store.dispatch(updateProfile(data)).then(() => {
+          expect(ApiUtil.put).toBeCalledWith(`/profiili`, data);
+          expect(store.getActions()).toEqual(expectedActions);
+        });
+      });
+
+      it("when updating fails", () => {
+        const data = { form: 1 };
+        const error = new Error("network error");
+        ApiUtil.put = jest.fn(() => new Promise((res, rej) => rej(error)));
+
+        const store = mockStore(initialState);
+        const expectedActions = [
+          { type: UPDATE_PROFILE },
+          { type: UPDATE_PROFILE_ERROR, payload: error.message }
+        ];
+
+        store.dispatch(updateProfile(data)).then(() => {
+          expect(ApiUtil.put).toBeCalledWith(`/profiili`, data);
+          expect(store.getActions()).toEqual(expectedActions);
         });
       });
     });
