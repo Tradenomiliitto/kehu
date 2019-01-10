@@ -60,6 +60,7 @@ const sendKehuSchema = {
   },
   receiver_name: {
     errorMessage: "Kehun saajan nimi on pakollinen tieto.",
+    trim: true,
     custom: {
       options: value => {
         return !!value;
@@ -68,6 +69,8 @@ const sendKehuSchema = {
   },
   receiver_email: {
     errorMessage: "Kehun saajan sähköpostiosoite on pakollinen tieto.",
+    isEmail: true,
+    trim: true,
     custom: {
       options: value => {
         return !!value;
