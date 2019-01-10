@@ -1,6 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import ProfileInfoPanel from "./components/profile/ProfileInfoPanel";
 
 export class ProfilePanel extends Component {
   static propTypes = {
@@ -32,18 +33,7 @@ export class ProfilePanel extends Component {
                   <div className="col col-xs-12 col-lg-8 col-lg-pull-4">
                     <div className="row">
                       <div className="col col-xs-8">
-                        <div className="ProfileInfo">
-                          <p className="ProfileInfo-label">Etunimi</p>
-                          <p className="ProfileInfo-text">
-                            {profile.first_name}
-                          </p>
-                          <p className="ProfileInfo-label">Sukunimi</p>
-                          <p className="ProfileInfo-text">
-                            {profile.last_name}
-                          </p>
-                          <p className="ProfileInfo-label">Sähköposti</p>
-                          <p className="ProfileInfo-text">{profile.email}</p>
-                        </div>
+                        <ProfileInfoPanel profile={this.props.profile} />
                         <a
                           href="#"
                           onClick={this.resetPassword}
