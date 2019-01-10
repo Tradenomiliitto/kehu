@@ -7,9 +7,11 @@ import ErrorPanel from "../ErrorPanel";
 
 export class ProfileEditForm extends Component {
   static propTypes = {
-    error: PropTypes.string.isRequired,
+    error: PropTypes.oneOf([PropTypes.string, PropTypes.object]),
+    loading: PropTypes.bool.isRequired,
     profile: PropTypes.object.isRequired,
-    updateProfile: PropTypes.func.isRequired
+    updateProfile: PropTypes.func.isRequired,
+    onSuccess: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -19,6 +21,12 @@ export class ProfileEditForm extends Component {
       last_name: props.profile.last_name,
       email: props.profile.email
     };
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!this.props.loading && prevProps.loading && !this.props.error) {
+      this.props.onSuccess();
+    }
   }
 
   render() {
@@ -84,7 +92,8 @@ export class ProfileEditForm extends Component {
 }
 
 const mapStateToProps = state => ({
-  error: state.profile.updateProfileError
+  error: state.profile.updateProfileError,
+  loading: state.profile.loading
 });
 
 const mapActionsToProps = {

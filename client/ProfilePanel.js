@@ -78,7 +78,12 @@ export class ProfilePanel extends Component {
 
   renderContent() {
     if (this.state.isEditing) {
-      return <ProfileEditForm profile={this.props.profile} />;
+      return (
+        <ProfileEditForm
+          profile={this.props.profile}
+          onSuccess={this.toggleEdit}
+        />
+      );
     }
     return <ProfileInfoPanel profile={this.props.profile} />;
   }
