@@ -63,3 +63,14 @@
 .auth0-lock.auth0-lock .auth0-lock-back-button {
   display: none;
 }
+
+.ProfileEditButton {
+  @extend .KehusTableActionButton;
+  right: 1rem;
+  position: absolute;
+  top: -0.5rem;
+}
+
+.ProfileEditButton-image {
+  @extend .KehusTableActionButton-image;
+}

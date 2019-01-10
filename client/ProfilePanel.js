@@ -1,12 +1,20 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import ProfileInfoPanel from "./components/profile/ProfileInfoPanel";
+import ProfileEditForm from "./components/profile/ProfileEditForm";
 
 export class ProfilePanel extends Component {
   static propTypes = {
     profile: PropTypes.object.isRequired
   };
+
+  constructor() {
+    super();
+    this.state = {
+      isEditing: false
+    };
+  }
 
   render() {
     const { profile } = this.props;
@@ -33,7 +41,16 @@ export class ProfilePanel extends Component {
                   <div className="col col-xs-12 col-lg-8 col-lg-pull-4">
                     <div className="row">
                       <div className="col col-xs-8">
-                        <ProfileInfoPanel profile={this.props.profile} />
+                        <button
+                          className="ProfileEditButton"
+                          onClick={this.toggleEdit}
+                        >
+                          <img
+                            src={`/images/icon-edit-secondary.png`}
+                            className="ProfileEditButton-image"
+                          />
+                        </button>
+                        {this.renderContent()}
                         <a
                           href="#"
                           onClick={this.resetPassword}
@@ -58,6 +75,17 @@ export class ProfilePanel extends Component {
       </div>
     );
   }
+
+  renderContent() {
+    if (this.state.isEditing) {
+      return <ProfileEditForm profile={this.props.profile} />;
+    }
+    return <ProfileInfoPanel profile={this.props.profile} />;
+  }
+
+  toggleEdit = () => {
+    this.setState({ isEditing: !this.state.isEditing });
+  };
 
   resetPassword = ev => {
     ev.preventDefault();
