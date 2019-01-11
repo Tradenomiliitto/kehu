@@ -33,6 +33,7 @@ export const initialState = {
   removeKehuError: null,
   loading: false,
   kehus: [],
+  sentKehus: [],
   kehusLoaded: false,
   sendKehuSuccess: false,
   claimKehuSuccess: false
@@ -56,7 +57,10 @@ export function updateKehu(id, data) {
       dispatch({ type: UPDATE_KEHU });
       const kehu = await put(`/kehut/${id}`, data);
       dispatch({ type: UPDATE_KEHU_SUCCESS, payload: kehu });
-      dispatch({ type: RESET_REPORTS, payload: getState().kehu.kehus });
+      dispatch({
+        type: RESET_REPORTS,
+        payload: { kehus: getState().kehu.kehus }
+      });
     } catch (e) {
       dispatch({ type: UPDATE_KEHU_ERROR, payload: e });
     }
@@ -69,7 +73,10 @@ export function removeKehu(id) {
       dispatch({ type: REMOVE_KEHU });
       await del(`/kehut/${id}`);
       dispatch({ type: REMOVE_KEHU_SUCCESS, payload: id });
-      dispatch({ type: RESET_REPORTS, payload: getState().kehu.kehus });
+      dispatch({
+        type: RESET_REPORTS,
+        payload: { kehus: getState().kehu.kehus }
+      });
     } catch (e) {
       dispatch({ type: REMOVE_KEHU_ERROR, payload: e });
     }
@@ -80,8 +87,8 @@ export function getKehus() {
   return async dispatch => {
     try {
       dispatch({ type: GET_KEHUS });
-      const kehus = await get("/kehut");
-      dispatch({ type: GET_KEHUS_SUCCESS, payload: kehus });
+      const payload = await get("/kehut");
+      dispatch({ type: GET_KEHUS_SUCCESS, payload });
     } catch (e) {
       dispatch({ type: GET_KEHUS_ERROR, payload: e });
     }
@@ -222,7 +229,8 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         loading: false,
-        kehus: action.payload,
+        kehus: action.payload.kehus,
+        sentKehus: action.payload.sent_kehus,
         kehusLoaded: true
       };
     case GET_KEHUS_ERROR:

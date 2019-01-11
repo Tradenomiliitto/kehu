@@ -75,10 +75,10 @@ export default function reducer(state = initialState, action = {}) {
     case GET_KEHUS_SUCCESS:
       return {
         ...state,
-        numberOfKehus: action.payload.length,
-        roles: countRoles(action.payload),
-        tags: countTags(action.payload),
-        situations: countSituations(action.payload)
+        numberOfKehus: action.payload.kehus.length,
+        roles: countRoles(action.payload.kehus),
+        tags: countTags(action.payload.kehus),
+        situations: countSituations(action.payload.kehus)
       };
 
     case ADD_KEHU_SUCCESS:

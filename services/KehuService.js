@@ -15,6 +15,15 @@ async function getKehus(user_id) {
     .orderBy("date_given", "desc");
 }
 
+async function getSentKehus(user_id) {
+  logger.info(`Fetching given Kehus for user ${user_id}`);
+  return await Kehu.query()
+    .select("date_given", "giver_name", "role_id", "text")
+    .where("giver_id", user_id)
+    .andWhere("owner_id", "<>", user_id)
+    .orderBy("date_given", "desc");
+}
+
 async function getKehu(user_id, kehu_id) {
   logger.info(`Fetching kehu ${kehu_id} for user ${user_id}`);
   return await Kehu.query()
@@ -296,6 +305,7 @@ function parseArray(array) {
 
 module.exports = {
   getKehus,
+  getSentKehus,
   createKehu,
   updateKehu,
   deleteKehu,

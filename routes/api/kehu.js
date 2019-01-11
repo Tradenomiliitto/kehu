@@ -11,7 +11,8 @@ const KehuService = require("../../services/KehuService");
 router.get("/", async (req, res) => {
   try {
     const kehus = await KehuService.getKehus(req.user.id);
-    res.json(kehus);
+    const sent_kehus = await KehuService.getSentKehus(req.user.id);
+    res.json({ kehus, sent_kehus });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

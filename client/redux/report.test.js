@@ -31,7 +31,7 @@ describe("client:redux:report", () => {
   describe("reducer", () => {
     it("on GET_KEHUS_SUCCESS", () => {
       const state = initialState;
-      const action = { type: GET_KEHUS_SUCCESS, payload: kehus };
+      const action = { type: GET_KEHUS_SUCCESS, payload: { kehus } };
       const expectedState = {
         ...state,
         numberOfKehus: kehus.length,
@@ -118,7 +118,7 @@ describe("client:redux:report", () => {
           { role: "Muu", count: 4 }
         ]
       };
-      const action = { type: RESET_REPORTS, payload: kehus };
+      const action = { type: RESET_REPORTS, payload: { kehus } };
       const expectedState = {
         ...state,
         numberOfKehus: kehus.length,
