@@ -88,7 +88,7 @@ describe("client:redux:profile", () => {
   describe("actions", () => {
     describe("getProfile", () => {
       describe("when call succeeds", () => {
-        it("dispatches user profile", () => {
+        it("dispatches user profile", done => {
           const response = { profile: { user: 1 }, roles: [{ id: 1 }] };
           ApiUtil.get = jest.fn(() => new Promise(res => res(response)));
 
@@ -98,12 +98,13 @@ describe("client:redux:profile", () => {
           store.dispatch(getProfile()).then(() => {
             expect(ApiUtil.get).toBeCalledWith("/profiili");
             expect(store.getActions()).toEqual(expectedActions);
+            done();
           });
         });
       });
 
       describe("when call fails", () => {
-        it("dispatches error", () => {
+        it("dispatches error", done => {
           const error = new Error("network error");
           ApiUtil.get = jest.fn(() => new Promise((res, rej) => rej(error)));
 
@@ -115,13 +116,14 @@ describe("client:redux:profile", () => {
           store.dispatch(getProfile()).then(() => {
             expect(ApiUtil.get).toBeCalledWith("/profiili");
             expect(store.getActions()).toEqual(expectedActions);
+            done();
           });
         });
       });
     });
 
     describe("updateProfile", () => {
-      it("when updating succeeds", () => {
+      it("when updating succeeds", done => {
         const data = { form: 1 };
         const response = { response: 1 };
 
@@ -136,10 +138,11 @@ describe("client:redux:profile", () => {
         store.dispatch(updateProfile(data)).then(() => {
           expect(ApiUtil.put).toBeCalledWith(`/profiili`, data);
           expect(store.getActions()).toEqual(expectedActions);
+          done();
         });
       });
 
-      it("when updating fails", () => {
+      it("when updating fails", done => {
         const data = { form: 1 };
         const error = new Error("network error");
         ApiUtil.put = jest.fn(() => new Promise((res, rej) => rej(error)));
@@ -153,6 +156,7 @@ describe("client:redux:profile", () => {
         store.dispatch(updateProfile(data)).then(() => {
           expect(ApiUtil.put).toBeCalledWith(`/profiili`, data);
           expect(store.getActions()).toEqual(expectedActions);
+          done();
         });
       });
     });

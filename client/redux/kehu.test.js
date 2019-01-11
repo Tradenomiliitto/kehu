@@ -282,7 +282,7 @@ describe("client:redux:kehu", () => {
 
   describe("actions", () => {
     describe("addKehu", () => {
-      it("when adding succeeds", () => {
+      it("when adding succeeds", done => {
         const data = { form: 1 };
         const response = { response: 1 };
 
@@ -297,10 +297,11 @@ describe("client:redux:kehu", () => {
         store.dispatch(addKehu(data)).then(() => {
           expect(ApiUtil.post).toBeCalledWith("/kehut", data);
           expect(store.getActions()).toEqual(expectedActions);
+          done();
         });
       });
 
-      it("when adding fails", () => {
+      it("when adding fails", done => {
         const data = { form: 1 };
         const error = new Error("network error");
         ApiUtil.post = jest.fn(() => new Promise((res, rej) => rej(error)));
@@ -314,12 +315,13 @@ describe("client:redux:kehu", () => {
         store.dispatch(addKehu(data)).then(() => {
           expect(ApiUtil.post).toBeCalledWith("/kehut", data);
           expect(store.getActions()).toEqual(expectedActions);
+          done();
         });
       });
     });
 
     describe("updateKehu", () => {
-      it("when updating succeeds", () => {
+      it("when updating succeeds", done => {
         const kehuId = 3;
         const data = { form: 1 };
         const response = { response: 1 };
@@ -337,10 +339,11 @@ describe("client:redux:kehu", () => {
         store.dispatch(updateKehu(kehuId, data)).then(() => {
           expect(ApiUtil.put).toBeCalledWith(`/kehut/${kehuId}`, data);
           expect(store.getActions()).toEqual(expectedActions);
+          done();
         });
       });
 
-      it("when adding fails", () => {
+      it("when updating fails", done => {
         const kehuId = 3;
         const data = { form: 1 };
         const error = new Error("network error");
@@ -355,12 +358,13 @@ describe("client:redux:kehu", () => {
         store.dispatch(updateKehu(kehuId, data)).then(() => {
           expect(ApiUtil.put).toBeCalledWith(`/kehut/${kehuId}`, data);
           expect(store.getActions()).toEqual(expectedActions);
+          done();
         });
       });
     });
 
     describe("removeKehu", () => {
-      it("when adding succeeds", () => {
+      it("when removing succeeds", done => {
         const kehuId = 1;
         const response = { response: 1 };
 
@@ -377,10 +381,11 @@ describe("client:redux:kehu", () => {
         store.dispatch(removeKehu(kehuId)).then(() => {
           expect(ApiUtil.del).toBeCalledWith(`/kehut/${kehuId}`);
           expect(store.getActions()).toEqual(expectedActions);
+          done();
         });
       });
 
-      it("when adding fails", () => {
+      it("when removing fails", done => {
         const kehuId = 1;
         const error = new Error("network error");
         ApiUtil.del = jest.fn(() => new Promise((res, rej) => rej(error)));
@@ -394,12 +399,13 @@ describe("client:redux:kehu", () => {
         store.dispatch(removeKehu(kehuId)).then(() => {
           expect(ApiUtil.del).toBeCalledWith(`/kehut/${kehuId}`);
           expect(store.getActions()).toEqual(expectedActions);
+          done();
         });
       });
     });
 
     describe("sendKehu", () => {
-      it("when sending succeeds", () => {
+      it("when sending succeeds", done => {
         const data = { form: 1 };
         const response = { response: 1 };
 
@@ -414,10 +420,11 @@ describe("client:redux:kehu", () => {
         store.dispatch(sendKehu(data)).then(() => {
           expect(ApiUtil.post).toBeCalledWith("/kehut/laheta", data);
           expect(store.getActions()).toEqual(expectedActions);
+          done();
         });
       });
 
-      it("when adding fails", () => {
+      it("when sending fails", done => {
         const data = { form: 1 };
         const error = new Error("network error");
         ApiUtil.post = jest.fn(() => new Promise((res, rej) => rej(error)));
@@ -431,12 +438,13 @@ describe("client:redux:kehu", () => {
         store.dispatch(sendKehu(data)).then(() => {
           expect(ApiUtil.post).toBeCalledWith("/kehut/laheta", data);
           expect(store.getActions()).toEqual(expectedActions);
+          done();
         });
       });
     });
 
     describe("claimKehu", () => {
-      it("when claiming succeeds", () => {
+      it("when claiming succeeds", done => {
         const id = "132-405";
         const response = { response: 1 };
 
@@ -451,10 +459,11 @@ describe("client:redux:kehu", () => {
         store.dispatch(claimKehu(id)).then(() => {
           expect(ApiUtil.get).toBeCalledWith(`/kehut/lisaa/${id}`);
           expect(store.getActions()).toEqual(expectedActions);
+          done();
         });
       });
 
-      it("when claiming fails", () => {
+      it("when claiming fails", done => {
         const id = "132-405";
         const error = new Error("network error");
         ApiUtil.get = jest.fn(() => new Promise((res, rej) => rej(error)));
@@ -468,6 +477,7 @@ describe("client:redux:kehu", () => {
         store.dispatch(claimKehu(id)).then(() => {
           expect(ApiUtil.get).toBeCalledWith(`/kehut/lisaa/${id}`);
           expect(store.getActions()).toEqual(expectedActions);
+          done();
         });
       });
     });
@@ -479,7 +489,7 @@ describe("client:redux:kehu", () => {
     });
 
     describe("getKehus", () => {
-      it("when fetching succeeds", () => {
+      it("when fetching succeeds", done => {
         const response = [{ id: 1 }, { id: 2 }];
         ApiUtil.get = jest.fn(() => new Promise(res => res(response)));
 
@@ -492,10 +502,11 @@ describe("client:redux:kehu", () => {
         store.dispatch(getKehus()).then(() => {
           expect(ApiUtil.get).toBeCalledWith("/kehut");
           expect(store.getActions()).toEqual(expectedActions);
+          done();
         });
       });
 
-      it("when fetching fails", () => {
+      it("when fetching fails", done => {
         const error = new Error("network error");
         ApiUtil.get = jest.fn(() => new Promise((res, rej) => rej(error)));
 
@@ -508,6 +519,7 @@ describe("client:redux:kehu", () => {
         store.dispatch(getKehus()).then(() => {
           expect(ApiUtil.get).toBeCalledWith("/kehut");
           expect(store.getActions()).toEqual(expectedActions);
+          done();
         });
       });
     });
