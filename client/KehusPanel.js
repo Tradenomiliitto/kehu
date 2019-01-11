@@ -4,15 +4,25 @@ import { connect } from "react-redux";
 import { getKehus } from "./redux/kehu";
 import Spinner from "./components/Spinner";
 import KehusTable from "./components/kehus/KehusTable";
+import SentKehusTable from "./components/kehus/SentKehusTable";
 import ErrorPanel from "./components/ErrorPanel";
 
 export class KehusPanel extends Component {
   static propTypes = {
+    getKehus: PropTypes.func.isRequired,
     error: PropTypes.object,
     kehus: PropTypes.array.isRequired,
-    getKehus: PropTypes.func.isRequired,
-    kehusLoaded: PropTypes.bool.isRequired
+    kehusLoaded: PropTypes.bool.isRequired,
+    roles: PropTypes.array.isRequired,
+    sentKehus: PropTypes.array
   };
+
+  constructor() {
+    super();
+    this.state = {
+      showSentKehus: false
+    };
+  }
 
   componentDidMount() {
     if (!this.props.kehusLoaded) {
@@ -31,7 +41,7 @@ export class KehusPanel extends Component {
   }
 
   renderContent() {
-    const { kehusLoaded, kehus } = this.props;
+    const { kehusLoaded } = this.props;
 
     if (!kehusLoaded) {
       return <Spinner />;
@@ -43,12 +53,32 @@ export class KehusPanel extends Component {
           <h1 className="KehusPanelHeader-title kehus-title-nw">
             Saadut Kehut
           </h1>
+          <span className="KehusPanelHeader-text">Vaihda näkymää</span>
+          {this.renderToggleButton()}
         </div>
         {this.renderErrors()}
-        <KehusTable kehus={kehus} />
+        {this.renderSelectedKehusTable()}
       </div>
     );
   }
+
+  renderToggleButton() {
+    const buttonText = this.state.showSentKehus
+      ? "Saadut Kehut"
+      : "Lähetetyt Kehut";
+    return (
+      <button
+        className="Button KehusPanelHeader-button"
+        onClick={this.toggleKehusView}
+      >
+        {buttonText}
+      </button>
+    );
+  }
+
+  toggleKehusView = () => {
+    this.setState({ showSentKehus: !this.state.showSentKehus });
+  };
 
   renderErrors() {
     const { error } = this.props;
@@ -59,12 +89,24 @@ export class KehusPanel extends Component {
       return <ErrorPanel message={message} />;
     }
   }
+
+  renderSelectedKehusTable() {
+    if (this.state.showSentKehus) {
+      return (
+        <SentKehusTable kehus={this.props.sentKehus} roles={this.props.roles} />
+      );
+    } else {
+      return <KehusTable kehus={this.props.kehus} />;
+    }
+  }
 }
 
 const mapStateToProps = state => ({
   kehus: state.kehu.kehus,
   error: state.kehu.removeKehuError,
-  kehusLoaded: state.kehu.kehusLoaded
+  kehusLoaded: state.kehu.kehusLoaded,
+  roles: state.profile.roles,
+  sentKehus: state.kehu.sentKehus
 });
 
 const mapDispatchToProps = {

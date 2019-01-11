@@ -10,6 +10,30 @@
   color: $secondary;
   font-size: 2.625rem;
   font-weight: normal;
+  display: block;
+
+  @include mq(md) {
+    display: inline-block;
+  }
+}
+
+.KehusPanelHeader-text {
+  margin: 0 0 1rem;
+  display: block;
+
+  @include mq(sm) {
+    display: inline;
+    margin: 0 1rem 0 0;
+  }
+
+  @include mq(md) {
+    margin: 0 1rem 0 2rem;
+  }
+}
+
+.KehusPanelHeader-button {
+  bottom: 0.75rem;
+  position: relative;
 }
 
 .KehusTable {

@@ -6,6 +6,7 @@ describe("client:components:KehusPanel", () => {
   const error = {
     message: "Random error"
   };
+  const roles = [];
 
   beforeEach(() => {
     getKehusStub = jest.fn();
@@ -14,7 +15,12 @@ describe("client:components:KehusPanel", () => {
   describe("when kehus are not loaded", () => {
     beforeEach(() => {
       component = shallow(
-        <KehusPanel kehus={[]} getKehus={getKehusStub} kehusLoaded={false} />
+        <KehusPanel
+          kehus={[]}
+          getKehus={getKehusStub}
+          kehusLoaded={false}
+          roles={roles}
+        />
       );
     });
 
@@ -34,7 +40,12 @@ describe("client:components:KehusPanel", () => {
   describe("when kehus are loaded", () => {
     beforeEach(() => {
       component = shallow(
-        <KehusPanel kehus={[]} getKehus={getKehusStub} kehusLoaded={true} />
+        <KehusPanel
+          kehus={[]}
+          getKehus={getKehusStub}
+          kehusLoaded={true}
+          roles={roles}
+        />
       );
     });
 
