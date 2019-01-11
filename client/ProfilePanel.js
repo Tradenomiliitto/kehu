@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import ProfileInfoPanel from "./components/profile/ProfileInfoPanel";
 import ProfileEditForm from "./components/profile/ProfileEditForm";
+import SuccessPanel from "./components/SuccessPanel";
 
 export class ProfilePanel extends Component {
   static propTypes = {
@@ -12,7 +13,8 @@ export class ProfilePanel extends Component {
   constructor() {
     super();
     this.state = {
-      isEditing: false
+      isEditing: false,
+      success: false
     };
   }
 
@@ -50,6 +52,7 @@ export class ProfilePanel extends Component {
                             className="ProfileEditButton-image"
                           />
                         </button>
+                        {this.renderSuccessPanel()}
                         {this.renderContent()}
                         <a
                           href="#"
@@ -76,17 +79,32 @@ export class ProfilePanel extends Component {
     );
   }
 
+  renderSuccessPanel() {
+    if (this.state.success) {
+      return (
+        <SuccessPanel message="Profiilin päivitys onnistui." hideAfter={5000} />
+      );
+    }
+  }
+
   renderContent() {
     if (this.state.isEditing) {
       return (
         <ProfileEditForm
           profile={this.props.profile}
-          onSuccess={this.toggleEdit}
+          onSuccess={this.handleSuccess}
         />
       );
     }
     return <ProfileInfoPanel profile={this.props.profile} />;
   }
+
+  handleSuccess = () => {
+    this.setState({
+      success: true,
+      isEditing: false
+    });
+  };
 
   toggleEdit = () => {
     this.setState({ isEditing: !this.state.isEditing });
