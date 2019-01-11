@@ -1,9 +1,10 @@
-import { ADD_KEHU_SUCCESS, GET_KEHUS_SUCCESS } from "./kehu";
+import { ADD_KEHU_SUCCESS, GET_KEHUS_SUCCESS, SEND_KEHU_SUCCESS } from "./kehu";
 
 export const RESET_REPORTS = "report/RESET_REPORTS";
 
 export const initialState = {
   numberOfKehus: 0,
+  numberOfSentKehus: 0,
   roles: [],
   situations: [],
   tags: []
@@ -76,9 +77,16 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         numberOfKehus: action.payload.kehus.length,
+        numberOfSentKehus: action.payload.sent_kehus.length,
         roles: countRoles(action.payload.kehus),
         tags: countTags(action.payload.kehus),
         situations: countSituations(action.payload.kehus)
+      };
+
+    case SEND_KEHU_SUCCESS:
+      return {
+        ...state,
+        numberOfSentKehus: state.numberOfSentKehus + 1
       };
 
     case ADD_KEHU_SUCCESS:

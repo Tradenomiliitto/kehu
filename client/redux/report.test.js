@@ -1,4 +1,4 @@
-import { ADD_KEHU_SUCCESS, GET_KEHUS_SUCCESS } from "./kehu";
+import { ADD_KEHU_SUCCESS, GET_KEHUS_SUCCESS, SEND_KEHU_SUCCESS } from "./kehu";
 import reducer, { initialState, RESET_REPORTS } from "./report";
 
 describe("client:redux:report", () => {
@@ -27,14 +27,19 @@ describe("client:redux:report", () => {
       situations: [{ text: "neukkari" }, { text: "työpaikka" }]
     }
   ];
+  const sent_kehus = [{ id: 3 }, { id: 5 }, { id: 6 }];
 
   describe("reducer", () => {
     it("on GET_KEHUS_SUCCESS", () => {
       const state = initialState;
-      const action = { type: GET_KEHUS_SUCCESS, payload: { kehus } };
+      const action = {
+        type: GET_KEHUS_SUCCESS,
+        payload: { kehus, sent_kehus }
+      };
       const expectedState = {
         ...state,
         numberOfKehus: kehus.length,
+        numberOfSentKehus: sent_kehus.length,
         roles: [
           { role: "Asiakas", count: 2 },
           { role: "Esimies", count: 1 },
@@ -81,6 +86,16 @@ describe("client:redux:report", () => {
       expect(reducer(state, action)).toEqual(expectedState);
     });
 
+    it("on SEND_KEHU_SUCCESS", () => {
+      const state = { ...initialState };
+      const action = { type: SEND_KEHU_SUCCESS };
+      const expectedState = {
+        ...state,
+        numberOfSentKehus: state.numberOfSentKehus + 1
+      };
+      expect(reducer(state, action)).toEqual(expectedState);
+    });
+
     it("does not crash on ADD_KEHU_SUCCESS", () => {
       const state = {
         ...initialState,
@@ -112,16 +127,18 @@ describe("client:redux:report", () => {
       const state = {
         ...initialState,
         numberOfKehus: 9,
+        numberOfSentKehus: 7,
         roles: [
           { role: "Alainen", count: 7 },
           { role: "Esimies", count: 1 },
           { role: "Muu", count: 4 }
         ]
       };
-      const action = { type: RESET_REPORTS, payload: { kehus } };
+      const action = { type: RESET_REPORTS, payload: { kehus, sent_kehus } };
       const expectedState = {
         ...state,
         numberOfKehus: kehus.length,
+        numberOfSentKehus: sent_kehus.length,
         roles: [
           { role: "Asiakas", count: 2 },
           { role: "Esimies", count: 1 },

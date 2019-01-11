@@ -10,8 +10,13 @@ import { getKehus } from "./redux/kehu";
 export class ReportPanel extends Component {
   static propTypes = {
     report: PropTypes.shape({
-      numberOfKehus: PropTypes.number.isRequired
-    }).isRequired
+      numberOfKehus: PropTypes.number.isRequired,
+      numberOfSentKehus: PropTypes.number.isRequired,
+      roles: PropTypes.array.isRequired,
+      situations: PropTypes.array.isRequired,
+      tags: PropTypes.array.isRequired
+    }).isRequired,
+    kehusLoaded: PropTypes.bool.isRequired
   };
 
   componentDidMount() {
@@ -47,12 +52,21 @@ export class ReportPanel extends Component {
             <TopRolesPanel roles={report.roles} />
           </div>
           <div className="col col-xs-12 col-md-6 col-xl-4">
-            <KehuCountPanel number={report.numberOfKehus} />
+            <KehuCountPanel
+              text="Sinulla on yhteensä"
+              number={report.numberOfKehus}
+            />
           </div>
           <div className="col col-xs-12 col-md-6 col-xl-3">
             <TopItemsPanel
               title="Kehutuimmat tilanteet"
               items={report.situations}
+            />
+          </div>
+          <div className="col col-xs-12 col-md-6 col-xl-4">
+            <KehuCountPanel
+              text="Olet lähettänyt"
+              number={report.numberOfSentKehus}
             />
           </div>
         </div>
