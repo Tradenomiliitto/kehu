@@ -99,8 +99,8 @@ export function sendKehu(data) {
   return async dispatch => {
     try {
       dispatch({ type: SEND_KEHU });
-      await post("/kehut/laheta", data);
-      dispatch({ type: SEND_KEHU_SUCCESS });
+      const kehu = await post("/kehut/laheta", data);
+      dispatch({ type: SEND_KEHU_SUCCESS, payload: kehu });
     } catch (e) {
       dispatch({ type: SEND_KEHU_ERROR, payload: e });
     }
@@ -214,7 +214,8 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         loading: false,
         error: null,
-        sendKehuSuccess: true
+        sendKehuSuccess: true,
+        sentKehus: addKehuToState(state.sentKehus, action.payload.kehu)
       };
 
     case CLAIM_KEHU_SUCCESS:

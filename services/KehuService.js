@@ -173,6 +173,10 @@ async function sendKehu(data) {
     await createOrRelateSituations(kehu, situations);
     await trx.commit();
     logger.info(`User ${data.giver_id} sent kehu ${kehu.id}`);
+    return await Kehu.query()
+      .findById(kehu.id)
+      .eager("[role]")
+      .first();
   } catch (error) {
     logger.error(`Sending Kehu failed. Rolling back..`);
     logger.error(error.message);

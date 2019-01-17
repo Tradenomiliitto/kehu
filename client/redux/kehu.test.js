@@ -225,17 +225,21 @@ describe("client:redux:kehu", () => {
     });
 
     it("on SEND_KEHU_SUCCESS", () => {
+      const sentKehus = [{ id: 1 }, { id: 2 }];
       const state = {
         ...initialState,
         loading: true,
-        error: new Error()
+        error: new Error(),
+        sentKehus
       };
-      const action = { type: SEND_KEHU_SUCCESS };
+      const kehu = { id: 3 };
+      const action = { type: SEND_KEHU_SUCCESS, payload: { kehu } };
       const expectedState = {
         ...state,
         loading: false,
         error: null,
-        sendKehuSuccess: true
+        sendKehuSuccess: true,
+        sentKehus: [...sentKehus, kehu]
       };
       expect(reducer(state, action)).toEqual(expectedState);
     });
@@ -414,7 +418,7 @@ describe("client:redux:kehu", () => {
         const store = mockStore(initialState);
         const expectedActions = [
           { type: SEND_KEHU },
-          { type: SEND_KEHU_SUCCESS }
+          { type: SEND_KEHU_SUCCESS, payload: response }
         ];
 
         store.dispatch(sendKehu(data)).then(() => {

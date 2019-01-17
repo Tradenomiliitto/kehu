@@ -36,8 +36,8 @@ router.post("/laheta", checkSchema(sendKehuSchema), async (req, res) => {
   try {
     const validations = validationResult(req);
     if (validations.isEmpty()) {
-      await KehuService.sendKehu(req.body);
-      res.status(203).json({});
+      const kehu = await KehuService.sendKehu(req.body);
+      res.json({ kehu });
     } else {
       res.status(422).json({ errors: validations.array() });
     }
