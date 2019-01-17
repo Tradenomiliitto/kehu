@@ -13,4 +13,4 @@ const rootReducer = combineReducers({
   report
 });
 
-export default createStore(rootReducer, applyMiddleware(logger, thunk));
+export default createStore(rootReducer, applyMiddleware(thunk, logger));
