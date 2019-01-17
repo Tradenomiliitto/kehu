@@ -5,6 +5,7 @@ const { findTagWithText } = require("./TagService");
 const { findSituationWithText } = require("./SituationService");
 const { findUserByEmail } = require("./UserService");
 const { sendKehuToUnkownUser, sendKehuToKnownUser } = require("./EmailService");
+const { raw } = require("objection");
 const logger = require("../logger");
 
 async function getKehus(user_id) {
@@ -19,8 +20,12 @@ async function getSentKehus(user_id) {
   logger.info(`Fetching given Kehus for user ${user_id}`);
   return await Kehu.query()
     .select("date_given", "giver_name", "role_id", "text")
-    .where("giver_id", user_id)
-    .andWhere("owner_id", "<>", user_id)
+    .where(function() {
+      this.where("giver_id", user_id).andWhere("owner_id", "<>", user_id);
+    })
+    .orWhere(function() {
+      this.where("giver_id", user_id).andWhere(raw("claim_id IS NOT NULL"));
+    })
     .orderBy("date_given", "desc");
 }
 
