@@ -1,38 +1,76 @@
 const sgMail = require("@sendgrid/mail");
+const moment = require("moment");
+const Kehu = require("../models/Kehu");
+
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 if (!process.env.SENDGRID_API_KEY || !process.env.HOME_URL) {
   throw new Error("Set SENDGRID_API_KEY and HOME_URL.");
 }
 
-function sendKehuToUnkownUser(receiverEmail, senderName, claimId) {
+async function sendEmailToUnkownUser(receiver, claim_id, kehu_id) {
+  const kehu = await getKehu(kehu_id);
   const msg = {
-    to: receiverEmail,
-    from: "Kehu <noreply@kehu.com>",
+    to: receiver.receiver_email,
+    from: "Kehu <noreply@mykehu.fi>",
     templateId: "d-82394d2e4522413ca8a8b566c0080cbe",
     dynamic_template_data: {
-      claim_url: `${process.env.HOME_URL}/kehut/lisaa/${claimId}`,
-      sender_name: senderName,
-      service_url: process.env.HOME_URL
+      claim_url: `${process.env.HOME_URL}/kehut/lisaa/${claim_id}`,
+      date_given: moment(kehu.date_given).format("D.M.YYYY"),
+      first_name: receiver.receiver_name,
+      kehu_url: `${process.env.HOME_URL}/kehut/`,
+      root_url: process.env.HOME_URL,
+      sender: await getSender(kehu),
+      situations: getItems(kehu.situations),
+      tags: getItems(kehu.tags),
+      text: kehu.text
     }
   };
   sgMail.send(msg);
 }
 
-function sendKehuToKnownUser(receiverEmail, receiverName) {
+async function sendEmailToKnownUser(user, kehu_id) {
+  const kehu = await getKehu(kehu_id);
   const msg = {
-    to: receiverEmail,
-    from: "Kehu <noreply@kehu.com>",
+    to: user.email,
+    from: "Kehu <noreply@mykehu.fi>",
     templateId: "d-e5d654bc8c22490b9ad7a78f52d2efb8",
     dynamic_template_data: {
-      first_name: receiverName,
-      service_url: process.env.HOME_URL
+      date_given: moment(kehu.date_given).format("D.M.YYYY"),
+      first_name: user.first_name,
+      kehu_url: `${process.env.HOME_URL}/kehut/`,
+      root_url: process.env.HOME_URL,
+      sender: await getSender(kehu),
+      situations: getItems(kehu.situations),
+      tags: getItems(kehu.tags),
+      text: kehu.text
     }
   };
   sgMail.send(msg);
+}
+
+async function getKehu(kehu_id) {
+  return await Kehu.query()
+    .findById(kehu_id)
+    .eager("[role, situations, tags]")
+    .first();
+}
+
+function getItems(items) {
+  if (items && items.length) {
+    return items.map(it => it.text).join(", ");
+  }
+  return "";
+}
+
+async function getSender(kehu) {
+  if (kehu.role && kehu.role.role) {
+    return `${kehu.giver_name}, ${kehu.role.role}`;
+  }
+  return kehu.giver_name;
 }
 
 module.exports = {
-  sendKehuToKnownUser,
-  sendKehuToUnkownUser
+  sendEmailToKnownUser,
+  sendEmailToUnkownUser
 };

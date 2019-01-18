@@ -4,7 +4,10 @@ const Kehu = require("../models/Kehu");
 const { findTagWithText } = require("./TagService");
 const { findSituationWithText } = require("./SituationService");
 const { findUserByEmail } = require("./UserService");
-const { sendKehuToUnkownUser, sendKehuToKnownUser } = require("./EmailService");
+const {
+  sendEmailToUnkownUser,
+  sendEmailToKnownUser
+} = require("./EmailService");
 const { raw } = require("objection");
 const logger = require("../logger");
 
@@ -161,14 +164,13 @@ async function sendKehu(data) {
 
     const user = await findUserByEmail(data.receiver_email);
     let kehuData;
+    let claim_id;
 
     if (user) {
       kehuData = parseKehu({ ...data, owner_id: user.id });
-      sendKehuToKnownUser(user.email, user.first_name);
     } else {
-      const claim_id = uuidv4();
+      claim_id = uuidv4();
       kehuData = parseKehu({ ...data, claim_id });
-      sendKehuToUnkownUser(data.receiver_email, data.receiver_name, claim_id);
     }
 
     const kehu = await Kehu.query().insert(kehuData);
@@ -178,6 +180,15 @@ async function sendKehu(data) {
     await createOrRelateSituations(kehu, situations);
     await trx.commit();
     logger.info(`User ${data.giver_id} sent kehu ${kehu.id}`);
+
+    if (user) {
+      await sendEmailToKnownUser(user, kehu.id);
+      logger.info(`Email sent to user ${user.id}`);
+    } else {
+      await sendEmailToUnkownUser(data, claim_id, kehu.id);
+      logger.info(`Email sent to unknown user`);
+    }
+
     return await Kehu.query()
       .findById(kehu.id)
       .eager("[role]")
