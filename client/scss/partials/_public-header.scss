@@ -1,0 +1,19 @@
+$header-height: 100px;
+
+.Header {
+  height: $header-height;
+  padding: 1rem 1rem;
+
+  @include mq(sm) {
+    padding: 1rem 2rem;
+  }
+}
+
+.Header-logo {
+  width: 100px;
+}
+
+.Header-login {
+  @extend .pull-right;
+  width: 177px;
+}
