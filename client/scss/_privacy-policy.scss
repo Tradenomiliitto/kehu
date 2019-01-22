@@ -1,0 +1,21 @@
+.PrivacyPolicy {
+  color: $secondary;
+  padding: 4rem 0;
+}
+
+.PrivacyPolicy-title {
+  font-size: 2rem;
+  font-weight: normal;
+  line-height: 2.125rem;
+
+  @include mq(md) {
+    font-size: 3rem;
+    line-height: 3.125rem;
+  }
+}
+
+.PrivacyPolicy-subtitle {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0;
+}
