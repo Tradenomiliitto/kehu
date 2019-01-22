@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import KehuCountPanel from "./components/report/KehuCountPanel";
 import TopRolesPanel from "./components/report/TopRolesPanel";
 import TopItemsPanel from "./components/report/TopItemsPanel";
+import TopTagsPanel from "./components/report/TopTagsPanel";
 import Spinner from "./components/Spinner";
 import { getKehus } from "./redux/kehu";
 
@@ -68,6 +69,9 @@ export class ReportPanel extends Component {
               text="Olet lähettänyt"
               number={report.numberOfSentKehus}
             />
+          </div>
+          <div className="col col-xs-12 col-md-6 col-xl-5">
+            <TopTagsPanel tags={report.tags.slice(0, 5)} />
           </div>
         </div>
       </div>
