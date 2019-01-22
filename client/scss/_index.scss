@@ -1,11 +1,3 @@
-.LandingSection1 {
-  background-image: url("/images/landing-hero-background.svg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  height: 80vh;
-}
-
 .LandingSectionContent {
   align-items: center;
   display: flex;
@@ -33,23 +25,34 @@
   }
 }
 
-.HeroSectionContent {
-  height: calc(100% - #{$header-height});
-  padding: 15% 1rem;
+.HeroSection {
+  background-image: url(/images/hero-section-bg.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 80vh;
 
-  @include mq(sm) {
-    padding: 15% 2rem;
+  @include mq(md) {
+    height: 100vh;
   }
 
   @include mq(lg) {
-    background-image: url("/images/landing-hero-image.svg");
+    background-size: contain;
+  }
+}
+
+.HeroSectionContent {
+  height: calc(100% - #{$header-height});
+  padding-top: 10%;
+
+  @include mq(lg) {
     background-repeat: no-repeat;
     background-position: right bottom;
   }
 }
 
 .HeroSectionContent-title {
-  color: $white;
+  color: $secondary;
   font-weight: 500;
 }
 
@@ -59,11 +62,60 @@
 
 .HeroSectionContent-text {
   font-size: 0.875rem;
+  margin: 0;
+}
+
+.HeroSection-bigThumb {
+  display: none;
+  position: absolute;
+
+  @include mq(md) {
+    display: block;
+    bottom: 0;
+    max-width: 50%;
+    right: 0;
+  }
+
+  @include mq(lg) {
+    bottom: initial;
+    max-width: initial;
+    top: 15%;
+  }
+
+  @include mq(xl) {
+    right: 5%;
+  }
+}
+
+.HeroSection-medThumb {
+  display: none;
+  position: absolute;
+
+  @include mq(lg) {
+    bottom: 10%;
+    display: block;
+    left: 40%;
+  }
+}
+
+.HeroSection-smallThumb {
+  display: none;
+  position: absolute;
+
+  @include mq(lg) {
+    bottom: 15%;
+    display: block;
+    left: 25%;
+  }
 }
 
 .LandingSection2-image {
-  height: 400px;
-  margin: 6rem 0 4rem;
+  margin: 0 0 4rem;
+
+  @include mq(lg) {
+    height: 400px;
+    margin-top: 6rem;
+  }
 }
 
 .LandingSection3 {
