@@ -1,0 +1,40 @@
+.ErrorPage {
+  min-height: calc(100vh - #{$footer-height});
+  padding: 4rem 0;
+}
+
+.ErrorPage-image {
+  display: block;
+  margin: 0 auto 2rem;
+  max-width: 180px;
+}
+
+.ErrorPage-title {
+  color: $secondary;
+  font-size: 2rem;
+  font-weight: normal;
+  line-height: 2.25rem;
+
+  @include mq(md) {
+    font-size: 3rem;
+    line-height: 3.5rem;
+  }
+
+  @include mq(lg) {
+    font-size: 5rem;
+    line-height: 5.8125rem;
+  }
+}
+
+.ErrorPage-text {
+  color: $secondary;
+
+  @include mq(md) {
+    font-size: 1.25rem;
+    line-height: 1.5rem;
+  }
+
+  > a {
+    color: $primary;
+  }
+}

@@ -1,5 +1,8 @@
+$footer-height: 245px;
+
 .Footer {
   background-color: $secondary;
+  min-height: $footer-height;
   padding: 4rem 0 2rem;
   text-align: center;
 }
