@@ -48,6 +48,7 @@ if (process.env.NODE_ENV !== "production") {
   app.use(require("webpack-hot-middleware")(compiler));
 }
 
+app.disable("x-powered-by");
 app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 app.use(logger("dev"));
 app.use(express.json());
