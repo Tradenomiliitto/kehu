@@ -11,7 +11,26 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  text-align: center;
+
+  &--padding {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+
+    @include mq(sm) {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+
+    @include mq(md) {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+
+    @include mq(lg) {
+      padding-top: 6rem;
+      padding-bottom: 6rem;
+    }
+  }
 }
 
 .HeroSectionContent {
@@ -42,22 +61,6 @@
   font-size: 0.875rem;
 }
 
-.LandingSectionContent--padding {
-  padding: 1rem;
-
-  @include mq(sm) {
-    padding: 2rem;
-  }
-
-  @include mq(md) {
-    padding: 4rem;
-  }
-
-  @include mq(lg) {
-    padding: 6rem;
-  }
-}
-
 .LandingSection2-image {
   height: 400px;
   margin: 6rem 0 4rem;
@@ -68,7 +71,8 @@
 }
 
 .LandingSection3-image {
-  padding: 6rem 0 0;
+  max-width: 365px;
+  padding: 6rem 0;
 }
 
 .LandingSection4-image {
@@ -83,10 +87,19 @@
   background-color: $lighter-grey;
 }
 
-.LandingSection6-image {
+.LandingSection6 {
   @include mq(xl) {
-    max-width: initial;
-    min-height: 512px;
-    width: auto;
+    background-image: url(/images/landing-section-6-image.png);
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: contain;
+  }
+}
+
+.BlogLinkSection {
+  padding-top: 2rem;
+
+  @include mq(xl) {
+    align-items: flex-start;
   }
 }
