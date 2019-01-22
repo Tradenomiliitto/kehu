@@ -110,36 +110,3 @@ $header-height: 100px;
     width: auto;
   }
 }
-
-.LandingSection7 {
-  background-color: $secondary;
-  padding: 4rem 0 2rem;
-  text-align: center;
-}
-
-.Footer-logo {
-  width: 190px;
-}
-
-.Footer-copyright {
-  color: $white;
-  font-weight: 300;
-  padding-top: 1rem;
-}
-
-.Footer-links {
-  list-style-type: none;
-  padding: 0;
-}
-
-.Footer-link {
-  color: $white;
-  font-weight: 300;
-  padding: 0 1rem;
-  transition: $button-transition;
-
-  &:hover {
-    text-decoration: none;
-    color: darken($white, 10%);
-  }
-}
