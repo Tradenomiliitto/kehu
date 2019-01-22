@@ -6,7 +6,8 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 module.exports = {
   mode: "production",
   entry: {
-    main: path.resolve(__dirname, "client", "index.js")
+    main: path.resolve(__dirname, "client", "index.js"),
+    public: path.resolve(__dirname, "client", "public.js")
   },
   devtool: "source-map",
   output: {

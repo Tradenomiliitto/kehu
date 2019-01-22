@@ -1,6 +1,7 @@
 .idea
 *.sqlite
 /public/main*
+/public/public*
 /public/*.bundle*
 /public/*.woff
 /public/*.ttf
