@@ -21,11 +21,13 @@ export default class TopTagsPanel extends Component {
   render() {
     return (
       <div className="TopTagsPanel ReportElement">
-        <PieChart
-          data={this.getData()}
-          transitionDuration=".2s"
-          transitionTimingFunction="ease-in-out"
-        />
+        <div className="TopTagsPanel-wrapper">
+          <PieChart
+            data={this.getData()}
+            transitionDuration=".2s"
+            transitionTimingFunction="ease-in-out"
+          />
+        </div>
         {this.renderLabels()}
       </div>
     );

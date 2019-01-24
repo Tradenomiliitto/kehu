@@ -1,3 +1,5 @@
+$element-height: 362px;
+
 .ReportPanel {
   margin-top: 2rem;
 }
@@ -12,7 +14,7 @@
 
 .KehuCount {
   color: $secondary;
-  height: 362px;
+  height: $element-height;
   padding-top: 3rem;
   text-align: center;
 }
@@ -157,4 +159,16 @@
   &--large {
     font-size: 24px !important;
   }
+}
+
+.TopTagsPanel {
+  height: $element-height;
+  padding: 0;
+}
+
+.TopTagsPanel-wrapper {
+  margin: 0 auto;
+  max-height: $element-height;
+  max-width: $element-height;
+  padding: 1rem;
 }
