@@ -6,7 +6,8 @@ class RoleImage extends Component {
   static propTypes = {
     className: PropTypes.string,
     id: PropTypes.number.isRequired,
-    roles: PropTypes.array.isRequired
+    roles: PropTypes.array.isRequired,
+    selectedId: PropTypes.number
   };
 
   render() {
@@ -16,12 +17,11 @@ class RoleImage extends Component {
       return null;
     }
 
-    return (
-      <img
-        src={`/images/role-${this.sanitizeRole()}.svg`}
-        className={className}
-      />
-    );
+    return <img src={this.createImageUrl()} className={className} />;
+  }
+
+  createImageUrl() {
+    return `/images/role-${this.sanitizeRole()}${this.determineVersion()}.svg`;
   }
 
   sanitizeRole() {
@@ -32,6 +32,16 @@ class RoleImage extends Component {
       .replace(/ä/g, "a")
       .replace(/ö/g, "o")
       .replace(/ /g, "-");
+  }
+
+  determineVersion() {
+    const { id, selectedId } = this.props;
+    if (id === selectedId) {
+      return "-selected";
+    } else if (!selectedId) {
+      return "-active";
+    }
+    return "";
   }
 }
 

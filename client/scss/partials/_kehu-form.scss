@@ -30,21 +30,40 @@
 
 .RoleSelector-button {
   margin: 0.25rem;
-  background-color: $lighter-grey;
-  border: 1px solid $dark-grey;
+  background-color: $white;
+  border: 1px solid $secondary;
   border-radius: 3px;
-  color: $dark-grey;
+  color: $secondary;
   cursor: pointer;
   font-size: 0.75rem;
-  padding: 4px;
+  outline: 0;
+  padding: 10px 4px 4px;
   transition: $button-transition;
 
   &:hover,
-  &--active {
+  &--selected {
     background-color: $light-pink;
     border-color: $pink;
     color: $dark-pink;
   }
+
+  &--disabled {
+    background-color: $lighter-grey;
+    border-color: $dark-grey;
+    color: $dark-grey;
+
+    &:hover {
+      background-color: $white;
+      border-color: $secondary;
+      color: $secondary;
+    }
+  }
+}
+
+.RoleSelector-image {
+  height: 70px;
+  margin-bottom: 6px;
+  width: 70px;
 }
 
 .KehuTextFieldContainer,

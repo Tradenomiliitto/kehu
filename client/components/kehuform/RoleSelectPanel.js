@@ -25,7 +25,8 @@ export default class RoleSelectPanel extends Component {
     return this.props.roles.map(role => {
       const buttonClass = cn({
         "RoleSelector-button": true,
-        "RoleSelector-button--active": role.id === selected
+        "RoleSelector-button--selected": role.id === selected,
+        "RoleSelector-button--disabled": selected && role.id !== selected
       });
       return (
         <button
@@ -33,8 +34,12 @@ export default class RoleSelectPanel extends Component {
           className={buttonClass}
           onClick={this.handleClick(role.id)}
         >
+          <RoleImage
+            className="RoleSelector-image"
+            id={role.id}
+            selectedId={selected}
+          />
           <p className="RoleSelector-role">{role.role}</p>
-          <RoleImage className="RoleSelector-image" id={role.id} />
         </button>
       );
     });
