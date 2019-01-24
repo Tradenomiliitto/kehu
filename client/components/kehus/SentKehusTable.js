@@ -15,7 +15,6 @@ export default class SentKehusTable extends Component {
           <tr>
             <th>Aika</th>
             <th>Kehuja</th>
-            <th>Nimi</th>
             <th>Vastaanottaja</th>
             <th>Kehu</th>
           </tr>

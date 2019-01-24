@@ -24,7 +24,6 @@ export default class SentKehuRow extends Component {
       <tr className="KehusTable-row kehu-row-nw" onClick={this.toggleState}>
         <td>{moment(kehu.date_given).format("D.M.YYYY")}</td>
         <td>{this.renderRoleName()}</td>
-        <td>{kehu.giver_name}</td>
         <td>{kehu.receiver_name}</td>
         <td className="KehusTable-cell--text text-js">{text}</td>
       </tr>
