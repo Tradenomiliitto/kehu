@@ -1,0 +1,14 @@
+mixin post-info (post)
+  p.Post-info
+    span.Post-author= post.author
+    span.Post-separator |
+    span.Post-published= post.published
+    span.Post-separator |
+    span.Post-tags= post.tags.join(' ')
+
+mixin post-card (post)
+  a(href=`/blogi/${post.slug}`).PostCard
+    img(src=post.image.url).PostCard-image
+    .PostCard-content
+      h2.PostCard-title= post.title
+      +post-info(post)

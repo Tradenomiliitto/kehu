@@ -1,11 +1,37 @@
 extends layout
+include _mixins
 
 block content
   include _header
 
-  p= post.title
+  .Blog
+    .container
+      .row
+        .col.col-xs-12.col-md-10.col-md-offset-1.col-xl-8.col-xl-offset-2
+          .Post
+            h1.Post-title= post.title
+            p.Post-info
+              span.Post-author= post.author
+              span.Post-separator |
+              span.Post-published= post.published
+              span.Post-separator |
+              span.Post-tags= post.tags.join(' ')
 
-  each similar in post.similarPosts
-    p.jooh= similar.title
+            img(src=post.image.url).Post-image
+
+            != post.content
+      .row
+        .col.col-xs-12.col-md-10.col-md-offset-1.col-xl-8.col-xl-offset-2
+          if post.prevPost
+            a(href=post.prevPost).Button.Button--inverse.Post-button Edellinen
+          if post.nextPost
+            a(href=post.nextPost).Button.Button--inverse.Post-button.Post-button--next Seuraava
+
+      .row
+        .col.col-xs-12.col-md-10.col-md-offset-1.col-xl-8.col-xl-offset-2
+          h2.SimilarPosts-title Lue lisää aiheesta:
+          .SimilarPosts
+            each similar in post.similarPosts
+              +post-card(similar)
 
   include _footer
