@@ -51,6 +51,19 @@ function parsePosts(entries) {
   return entries.items.reverse().map(parsePost.bind(null, entries.items));
 }
 
+function filterPostsByTag(posts, tag) {
+  if (!tag) {
+    return posts;
+  }
+  return posts.filter(post => post.tags.includes(tag));
+}
+
+function getUniqueTags(posts) {
+  return [...new Set([].concat.apply([], posts.map(p => p.tags)))];
+}
+
 module.exports = {
+  filterPostsByTag,
+  getUniqueTags,
   parsePosts
 };

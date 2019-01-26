@@ -34,4 +34,9 @@ block content
             each similar in post.similarPosts
               +post-card(similar)
 
+      if post.tags.length
+      .row
+        .col.col-xs-12.col-md-10.col-md-offset-1.col-xl-8.col-xl-offset-2
+          +tags-list(post.tags)
+
   include _footer

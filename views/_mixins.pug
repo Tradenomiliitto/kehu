@@ -12,3 +12,9 @@ mixin post-card (post)
     .PostCard-content
       h2.PostCard-title= post.title
       +post-info(post)
+
+mixin tags-list (tags)
+  .Tags
+    h2.Tags-title Selaa postauksia aihepiireittäin:
+    each tag in tags
+      a(href=`/blogi?aihe=${tag}`).Tags-tag= tag
