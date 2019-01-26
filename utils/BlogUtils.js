@@ -1,0 +1,27 @@
+const { documentToHtmlString } = require("@contentful/rich-text-html-renderer");
+const moment = require("moment");
+
+function parsePost(posts, post, index) {
+  return {
+    author: post.fields.author,
+    content: documentToHtmlString(post.fields.content),
+    excerpt: post.fields.excerpt,
+    image: {
+      url: post.fields.header.fields.file.url
+    },
+    nextPost: posts[index - 1] ? posts[index - 1].fields.url : null,
+    prevPost: posts[index + 1] ? posts[index + 1].fields.url : null,
+    published: moment(post.sys.createdAt).format("D.M.YYYY"),
+    slug: post.fields.url,
+    tags: post.fields.tags,
+    title: post.fields.title
+  };
+}
+
+function parsePosts(entries) {
+  return entries.items.reverse().map(parsePost.bind(null, entries.items));
+}
+
+module.exports = {
+  parsePosts
+};

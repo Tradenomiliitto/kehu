@@ -5,7 +5,7 @@ const BlogService = require("../services/BlogService");
 router.get("/", async (req, res) => {
   const posts = await BlogService.getPosts();
   res.render("blog", {
-    posts: posts.items
+    posts
   });
 });
 

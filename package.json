@@ -13,6 +13,7 @@
     "jest:watch": "jest --watch"
   },
   "dependencies": {
+    "@contentful/rich-text-html-renderer": "13.0.0",
     "@sendgrid/mail": "6.3.1",
     "auth0": "2.14.0",
     "classnames": "2.2.6",

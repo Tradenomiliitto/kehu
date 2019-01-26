@@ -1,5 +1,9 @@
 extends layout
 
 block content
+  include _header
+
   each post in posts
-    p= post.fields.title
+    p= post.title
+
+  include _footer
