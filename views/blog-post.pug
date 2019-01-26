@@ -5,4 +5,7 @@ block content
 
   p= post.title
 
+  each similar in post.similarPosts
+    p.jooh= similar.title
+
   include _footer
