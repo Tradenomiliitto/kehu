@@ -53,13 +53,8 @@ export class SendKehuForm extends Component {
   }
 
   renderPreview() {
-    const {
-      receiver_name,
-      receiver_email,
-      text,
-      date_given,
-      role_id
-    } = this.state;
+    const { receiver_name, receiver_email, text, date_given } = this.state;
+    const { profile } = this.props;
     return (
       <div className="SendKehuPreview preview-js">
         {this.renderErrors()}
@@ -74,7 +69,11 @@ export class SendKehuForm extends Component {
           <p className="KehuQuote kehu-text-nw">{text}</p>
         </div>
         <p className="KehuDetails">
-          <RoleImage className="KehuDetails-image" id={role_id} />
+          <img
+            src={profile.picture}
+            className="KehuDetails-image"
+            alt={`${profile.first_name} ${profile.last_name}`}
+          />
           <span className="kehu-giver-name-nw">{this.renderGiverName()}</span>
           <br />
           <span className="kehu-date-given-nw">
