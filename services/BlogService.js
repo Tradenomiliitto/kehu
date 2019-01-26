@@ -1,4 +1,4 @@
-const { client } = require("../utils/contentful");
+const { client } = require("../utils/Contentful");
 const logger = require("../logger");
 const { parsePosts, filterPostsByTag } = require("../utils/BlogUtils");
 
