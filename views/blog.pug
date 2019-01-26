@@ -4,6 +4,7 @@ block content
   include _header
 
   each post in posts
-    p= post.title
+    a(href=`/blogi/${post.slug}`)
+      p= post.title
 
   include _footer
