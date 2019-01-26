@@ -13,11 +13,15 @@
   font-weight: 300;
   color: $secondary;
   font-size: 0.875rem;
+  margin-top: 1rem;
+  min-height: 65px;
 }
 
 .KehuDetails-image {
   float: left;
-  padding-right: 1.5rem;
+  height: 65px;
+  margin-right: 1.5rem;
+  width: 65px;
 }
 
 .KehuItem {
