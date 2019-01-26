@@ -1,3 +1,4 @@
+const blog = require("./blog");
 const user = require("./user");
 const userApi = require("./api/user");
 const kehuApi = require("./api/kehu");
@@ -19,6 +20,8 @@ module.exports = function setupRoutes(app) {
       res.redirect("/");
     }
   });
+
+  app.use("/blogi", blog);
 
   app.use("/profiili", user);
 
