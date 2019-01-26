@@ -1,10 +1,18 @@
 extends layout
+include _mixins
 
 block content
   include _header
 
-  each post in posts
-    a(href=`/blogi/${post.slug}`)
-      p= post.title
+  .Blog
+    .container
+      .row
+        .col.col-xs-12
+          h1.Posts-title Kehun blogi
+          p.Posts-subtitle Nappaa parhaat vinkit, miten kehut auttavat sinua urallasi eteenpäin
+
+          .Posts
+            each post in posts
+              +post-card(post)
 
   include _footer

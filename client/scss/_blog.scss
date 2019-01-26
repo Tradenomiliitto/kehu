@@ -2,6 +2,34 @@
   background: $white-bg;
 }
 
+.Posts-title {
+  color: $pink;
+  font-size: 3.75rem;
+  font-weight: 500;
+  margin: 2rem 0 1rem !important;
+}
+
+.Posts-subtitle {
+  font-size: 1.25rem;
+  margin-bottom: 4rem;
+}
+
+.Posts {
+  column-count: 1;
+  column-gap: 2rem;
+  line-height: 0;
+  row-gap: 2rem;
+  margin-bottom: 4rem;
+
+  @include mq(md) {
+    column-count: 2;
+  }
+
+  @include mq(lg) {
+    column-count: 3;
+  }
+}
+
 .Post {
   background: $white;
   margin-top: 2rem;
@@ -16,6 +44,7 @@
 
 .Post-info {
   font-size: 0.875rem;
+  line-height: 1rem;
 }
 
 .Post-separator {
@@ -54,13 +83,19 @@
 
   @include mq(md) {
     column-count: 2;
+
+    > .PostCard {
+      display: block;
+      margin: 0;
+    }
   }
 }
 
 .PostCard {
   background: $white;
-  display: block;
+  display: inline-block;
   color: $black;
+  margin-bottom: 2rem;
 
   &:hover,
   &:active,
