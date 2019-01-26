@@ -27,7 +27,7 @@ module.exports = function setupRoutes(app) {
 
   app.get("/rekisteriseloste", (req, res) => {
     res.render("privacy-policy", {
-      user: req.user
+      env: process.env
     });
   });
 

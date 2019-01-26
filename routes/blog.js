@@ -5,14 +5,16 @@ const BlogService = require("../services/BlogService");
 router.get("/:slug", async (req, res) => {
   const post = await BlogService.getPost(req.params.slug);
   res.render("blog-post", {
-    post
+    post,
+    env: process.env
   });
 });
 
 router.get("/", async (req, res) => {
   const posts = await BlogService.getPosts();
   res.render("blog", {
-    posts
+    posts,
+    env: process.env
   });
 });
 
