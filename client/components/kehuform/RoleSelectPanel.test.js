@@ -17,7 +17,15 @@ describe("client:components:kehuform:RoleSelectPanel", () => {
   });
 
   it("does not render active role", () => {
-    expect(component.find(".RoleSelector-button--active").exists()).toBeFalsy();
+    expect(
+      component.find(".RoleSelector-button--selected").exists()
+    ).toBeFalsy();
+  });
+
+  it("does not render disabled role", () => {
+    expect(
+      component.find(".RoleSelector-button--disabled").exists()
+    ).toBeFalsy();
   });
 
   describe("when role is clicked", () => {
@@ -42,7 +50,28 @@ describe("client:components:kehuform:RoleSelectPanel", () => {
           component
             .find(".RoleSelector-button")
             .last()
-            .hasClass("RoleSelector-button--active")
+            .hasClass("RoleSelector-button--selected")
+        ).toBeTruthy();
+        expect(
+          component
+            .find(".RoleSelector-button")
+            .last()
+            .hasClass("RoleSelector-button--disabled")
+        ).toBeFalsy();
+      });
+
+      it("renders disabled role", () => {
+        expect(
+          component
+            .find(".RoleSelector-button")
+            .first()
+            .hasClass("RoleSelector-button--selected")
+        ).toBeFalsy();
+        expect(
+          component
+            .find(".RoleSelector-button")
+            .first()
+            .hasClass("RoleSelector-button--disabled")
         ).toBeTruthy();
       });
     });
