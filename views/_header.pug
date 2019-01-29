@@ -1,12 +1,53 @@
-.Header
+header.Header.Header--white
   .container
     .row
-      .col.col-xs-12
-        a(href="/")
-          img(src="/images/kehu-logo.png").Header-logo
+      .col.col-md-12.col-lg-4
+        a(href='/')
+          img.Header-logo(src='/images/kehu-logo.png')
+        button.Header-menuButton.menu-button-js
+          img(src='/images/icon-menu.png')
+      .col.col-md-12.col-lg-8
+        .Header-menuContainer
+          menu.Header-menu
+            if user
+              li.Header-menuItem
+                a(href='#')
+                  | Lisää Kehu
+              li.Header-menuItem
+                a(href='#')
+                  | Lähetä Kehu
+              li.Header-menuItem
+                a(href='/raportit')
+                  | Raportit
+              li.Header-menuItem
+                a(href='/blogi') Blogi
+              li.Header-menuItem
+                a(href='/kehut')
+                  | Kehut
+              li.Header-menuItem
+                a(href='/profiili')
+                  != user.first_name
+                  img.Header-profileImage(src=user.picture)
+            else
+              li.Header-menuItem
+                a(href='/blogi') Blogi
+              li.Header-menuItem
+                button.Button.Button--rounded.Header-login.login-js.login-nw Kirjaudu
 
-        ul.Header-links
-          li.Header-link
-            a(href="/blogi") Blogi
-          li.Header-link
-            button.Button.Button--rounded.Header-login.login-js.login-nw Kirjaudu
+
+script.
+  var menu = document.querySelector('.Header-menu');
+  var menuButton = document.querySelector('.menu-button-js');
+  var menuLinks = document.querySelectorAll('.menu-link-js');
+
+  menuButton.addEventListener('click', function (e) {
+    e.preventDefault();
+    menu.classList.toggle('Header-menu--open');
+  });
+
+  menuLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      menu.classList.remove('Header-menu--open');
+    });
+  });

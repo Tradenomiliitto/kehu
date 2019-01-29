@@ -7,6 +7,7 @@ router.get("/:slug", async (req, res) => {
   const post = await BlogService.getPost(req.params.slug);
   res.render("blog-post", {
     post,
+    user: req.user,
     env: process.env
   });
 });
@@ -17,6 +18,7 @@ router.get("/", async (req, res) => {
   res.render("blog", {
     posts,
     tags,
+    user: req.user,
     env: process.env
   });
 });

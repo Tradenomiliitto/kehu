@@ -1,8 +1,18 @@
+$header-height: 66px;
+
 .Header {
   background-color: $lighter-grey;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.14);
-  height: 66px;
+  height: $header-height;
   position: static;
+
+  &--white {
+    background-color: $white;
+
+    .Header-menuContainer {
+      background-color: $white;
+    }
+  }
 }
 
 .Header-logo {
@@ -62,7 +72,7 @@
 
   @include mq(lg) {
     display: inline;
-    line-height: 66px;
+    line-height: $header-height;
     padding: 0 1rem;
   }
 
@@ -85,4 +95,9 @@
   max-width: 40px;
   margin-left: 0.5rem;
   position: relative;
+}
+
+.Header-login {
+  line-height: initial;
+  width: 177px;
 }
