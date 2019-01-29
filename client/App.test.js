@@ -3,22 +3,24 @@ import { App } from "./App";
 describe("client:App", () => {
   let component;
   let getProfileStub;
+  let getKehusStub;
+
+  beforeEach(() => {
+    getProfileStub = jest.fn();
+    getKehusStub = jest.fn();
+  });
 
   describe("by default", () => {
     beforeEach(() => {
-      getProfileStub = jest.fn();
-      component = shallow(
-        <App
-          isAddKehuPortalVisible={false}
-          isSendKehuPortalVisible={false}
-          profileLoaded={false}
-          getProfile={getProfileStub}
-        />
-      );
+      component = shallow(<App {...createProps(false, false)} />);
     });
 
     it("fetches profile", () => {
       expect(getProfileStub).toHaveBeenCalled();
+    });
+
+    it("fetches kehus", () => {
+      expect(getKehusStub).toHaveBeenCalled();
     });
 
     it("renders Spinner", () => {
@@ -29,18 +31,53 @@ describe("client:App", () => {
 
   describe("when profile is loaded", () => {
     beforeEach(() => {
-      component = shallow(
-        <App
-          isAddKehuPortalVisible={false}
-          isSendKehuPortalVisible={false}
-          profileLoaded={true}
-          getProfile={getProfileStub}
-        />
-      );
+      component = shallow(<App {...createProps(true, false)} />);
     });
 
     it("does not fetch profile", () => {
       expect(getProfileStub).not.toHaveBeenCalled();
+    });
+
+    it("fetches kehus", () => {
+      expect(getKehusStub).toHaveBeenCalled();
+    });
+
+    it("renders Spinner", () => {
+      expect(component.find("Spinner").exists()).toBeTruthy();
+      expect(component.find(".App").exists()).toBeFalsy();
+    });
+  });
+
+  describe("when kehus are loaded", () => {
+    beforeEach(() => {
+      component = shallow(<App {...createProps(false, true)} />);
+    });
+
+    it("fetches profile", () => {
+      expect(getProfileStub).toHaveBeenCalled();
+    });
+
+    it("does not fetch kehus", () => {
+      expect(getKehusStub).not.toHaveBeenCalled();
+    });
+
+    it("renders Spinner", () => {
+      expect(component.find("Spinner").exists()).toBeTruthy();
+      expect(component.find(".App").exists()).toBeFalsy();
+    });
+  });
+
+  describe("when profile and kehus are loaded", () => {
+    beforeEach(() => {
+      component = shallow(<App {...createProps(true, true)} />);
+    });
+
+    it("does not fetch profile", () => {
+      expect(getProfileStub).not.toHaveBeenCalled();
+    });
+
+    it("does not fetch kehus", () => {
+      expect(getKehusStub).not.toHaveBeenCalled();
     });
 
     it("renders App", () => {
@@ -73,7 +110,14 @@ describe("client:App", () => {
     });
   });
 
-  afterEach(() => {
-    getProfileStub.mockClear();
-  });
+  function createProps(profileLoaded, kehusLoaded) {
+    return {
+      isAddKehuPortalVisible: false,
+      isSendKehuPortalVisible: false,
+      profileLoaded,
+      kehusLoaded,
+      getProfile: getProfileStub,
+      getKehus: getKehusStub
+    };
+  }
 });

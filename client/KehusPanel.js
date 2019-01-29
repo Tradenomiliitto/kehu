@@ -1,18 +1,14 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getKehus } from "./redux/kehu";
-import Spinner from "./components/Spinner";
 import KehusTable from "./components/kehus/KehusTable";
 import SentKehusTable from "./components/kehus/SentKehusTable";
 import ErrorPanel from "./components/ErrorPanel";
 
 export class KehusPanel extends Component {
   static propTypes = {
-    getKehus: PropTypes.func.isRequired,
     error: PropTypes.object,
     kehus: PropTypes.array.isRequired,
-    kehusLoaded: PropTypes.bool.isRequired,
     roles: PropTypes.array.isRequired,
     sentKehus: PropTypes.array
   };
@@ -24,42 +20,27 @@ export class KehusPanel extends Component {
     };
   }
 
-  componentDidMount() {
-    if (!this.props.kehusLoaded) {
-      this.props.getKehus();
-    }
-  }
-
   render() {
-    return (
-      <div className="container">
-        <div className="row">
-          <div className="col col-xs-12">{this.renderContent()}</div>
-        </div>
-      </div>
-    );
-  }
-
-  renderContent() {
-    const { kehusLoaded } = this.props;
-
-    if (!kehusLoaded) {
-      return <Spinner />;
-    }
-
     const titleText = this.state.showSentKehus
       ? "Lähetetyt Kehut"
       : "Saadut Kehut";
-
     return (
-      <div className="KehusPanel">
-        <div className="KehusPanelHeader">
-          <h1 className="KehusPanelHeader-title kehus-title-nw">{titleText}</h1>
-          <span className="KehusPanelHeader-text">Vaihda näkymää</span>
-          {this.renderToggleButton()}
+      <div className="container">
+        <div className="row">
+          <div className="col col-xs-12">
+            <div className="KehusPanel">
+              <div className="KehusPanelHeader">
+                <h1 className="KehusPanelHeader-title kehus-title-nw">
+                  {titleText}
+                </h1>
+                <span className="KehusPanelHeader-text">Vaihda näkymää</span>
+                {this.renderToggleButton()}
+              </div>
+              {this.renderErrors()}
+              {this.renderSelectedKehusTable()}
+            </div>
+          </div>
         </div>
-        {this.renderErrors()}
-        {this.renderSelectedKehusTable()}
       </div>
     );
   }
@@ -106,16 +87,11 @@ export class KehusPanel extends Component {
 const mapStateToProps = state => ({
   kehus: state.kehu.kehus,
   error: state.kehu.removeKehuError,
-  kehusLoaded: state.kehu.kehusLoaded,
   roles: state.profile.roles,
   sentKehus: state.kehu.sentKehus
 });
 
-const mapDispatchToProps = {
-  getKehus
-};
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(KehusPanel);

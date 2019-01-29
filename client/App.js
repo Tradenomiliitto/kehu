@@ -15,6 +15,7 @@ import SendKehuForm from "./components/kehuform/SendKehuForm";
 import KehuSuccessPanel from "./components/kehuform/KehuSuccessPanel";
 import SendKehuSuccessPanel from "./components/kehuform/SendKehuSuccessPanel";
 import { getProfile } from "./redux/profile";
+import { getKehus } from "./redux/kehu";
 import ClaimKehuPanel from "./ClaimKehuPanel";
 import KehusPanel from "./KehusPanel";
 import ProfilePanel from "./ProfilePanel";
@@ -26,15 +27,20 @@ export class App extends Component {
     isAddKehuPortalVisible: PropTypes.bool.isRequired,
     isSendKehuPortalVisible: PropTypes.bool.isRequired,
     profileLoaded: PropTypes.bool.isRequired,
+    kehusLoaded: PropTypes.bool.isRequired,
     successfullySavedKehu: PropTypes.object,
     successfullySentKehu: PropTypes.bool,
     getProfile: PropTypes.func.isRequired,
+    getKehus: PropTypes.func.isRequired,
     kehuToEdit: PropTypes.object
   };
 
   componentDidMount() {
     if (!this.props.profileLoaded) {
       this.props.getProfile();
+    }
+    if (!this.props.kehusLoaded) {
+      this.props.getKehus();
     }
   }
 
@@ -47,7 +53,7 @@ export class App extends Component {
   }
 
   defineContent() {
-    if (!this.props.profileLoaded) {
+    if (!this.props.profileLoaded || !this.props.kehusLoaded) {
       return <Spinner />;
     }
 
@@ -124,12 +130,14 @@ const mapStateToProps = state => ({
   isSendKehuPortalVisible: state.portal.sendKehuPortalVisible,
   successfullySavedKehu: state.kehu.savedKehu,
   successfullySentKehu: state.kehu.sendKehuSuccess,
+  kehusLoaded: state.kehu.kehusLoaded,
   profileLoaded: state.profile.profileLoaded,
   kehuToEdit: state.portal.kehu
 });
 
 const mapDispatchToProps = {
-  getProfile
+  getProfile,
+  getKehus
 };
 
 const AppContainer = connect(
