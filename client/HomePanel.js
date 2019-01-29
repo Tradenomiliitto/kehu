@@ -6,11 +6,21 @@ import {
   toggleSendKehuFormModal
 } from "./redux/portal";
 
-class HomePanel extends Component {
+export class HomePanel extends Component {
   static propTypes = {
+    history: PropTypes.shape({
+      location: PropTypes.shape({
+        search: PropTypes.string
+      }).isRequired,
+      replace: PropTypes.func.isRequired
+    }).isRequired,
     toggleAddKehuFormModal: PropTypes.func.isRequired,
     toggleSendKehuFormModal: PropTypes.func.isRequired
   };
+
+  componentDidMount() {
+    this.checkAndOpenModal();
+  }
 
   render() {
     return (
@@ -37,6 +47,19 @@ class HomePanel extends Component {
         </div>
       </div>
     );
+  }
+
+  checkAndOpenModal() {
+    const params = new URLSearchParams(this.props.history.location.search);
+    if (params.has("q")) {
+      if (params.get("q") === "lisaa") {
+        this.props.toggleAddKehuFormModal();
+      }
+      if (params.get("q") === "laheta") {
+        this.props.toggleSendKehuFormModal();
+      }
+      this.props.history.replace("/");
+    }
   }
 }
 
