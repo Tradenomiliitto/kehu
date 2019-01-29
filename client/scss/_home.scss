@@ -43,3 +43,37 @@
 .Welcome-text {
   color: $secondary;
 }
+
+.SidebarElement {
+  background-color: $white;
+  box-shadow: 0 2px 11px 0 rgba(0, 0, 0, 0.16);
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+
+.SidebarElement-title {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: $secondary;
+}
+
+.SidebarElement-text {
+  font-size: 0.875rem;
+}
+
+.SidebarElement-image {
+  margin-bottom: 1.5rem;
+}
+
+.SidebarElement-list {
+  list-style-type: none;
+  margin: 1rem 0;
+  padding: 0;
+
+  > li {
+    color: $secondary;
+    font-weight: lighter;
+    line-height: 2rem;
+    text-transform: capitalize;
+  }
+}

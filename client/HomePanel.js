@@ -1,6 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   toggleAddKehuFormModal,
   toggleSendKehuFormModal
@@ -14,6 +15,8 @@ export class HomePanel extends Component {
       }).isRequired,
       replace: PropTypes.func.isRequired
     }).isRequired,
+    hasKehus: PropTypes.bool.isRequired,
+    tags: PropTypes.array.isRequired,
     toggleAddKehuFormModal: PropTypes.func.isRequired,
     toggleSendKehuFormModal: PropTypes.func.isRequired
   };
@@ -54,7 +57,10 @@ export class HomePanel extends Component {
                 </div>
               </div>
               {this.renderWelcomeElement()}
-              <div className="col col-xs-12 col-md-3" />
+            </div>
+            <div className="col col-xs-12 col-md-3">
+              {this.renderTagsElement()}
+              {this.renderBlogElement()}
             </div>
           </div>
         </div>
@@ -89,6 +95,68 @@ export class HomePanel extends Component {
     }
   }
 
+  renderTagsElement() {
+    return (
+      <div className="SidebarElement">
+        <h3 className="SidebarElement-title">Kehutuimmat taitosi</h3>
+        {this.renderTagsContent()}
+        <Link to="/raportit" className="Button Button--fullWidth">
+          Tarkastele raporttiasi
+        </Link>
+      </div>
+    );
+  }
+
+  renderTagsContent() {
+    if (this.props.tags.length) {
+      return (
+        <ul className="SidebarElement-list">
+          {this.props.tags.map((tag, i) => (
+            <li key={i}>
+              {i + 1}. {tag.text}
+            </li>
+          ))}
+        </ul>
+      );
+    } else {
+      return (
+        <Fragment>
+          <p className="SidebarElement-text tags-text-js">
+            Jokaiseen kehuun liitetään siihen liittyvät taidot tageina. Kun
+            kehudataa alkaa kertyä, voit tarkastella mm. kehutuimpia taitojasi
+            Kehu-raportistasi.
+          </p>
+          <p className="SidebarElement-text">
+            Kehu ei ole sosiaalinen media, eli raporttisi ja kaikki tallentamasi
+            kehut näkyvät vain sinulle.
+          </p>
+        </Fragment>
+      );
+    }
+  }
+
+  renderBlogElement() {
+    return (
+      <div className="SidebarElement">
+        <h3 className="SidebarElement-title">
+          Omien vahvuuksien tunteminen on ehdoton valttikortti uralla
+        </h3>
+        <p className="SidebarElement-text">
+          Lähetä kehu kollegalle, ystävälle, esimiehelle, asiakkaalle tai
+          kenelle tahansa. Tarvitset vastaanottajan sähköpostiosoitteen.
+        </p>
+        <img
+          src="/images/landing-section-6-image.png"
+          alt="Blogi"
+          className="SidebarElement-image"
+        />
+        <a href="/blogit" className="Button Button--fullWidth">
+          Lue lisää blogista!
+        </a>
+      </div>
+    );
+  }
+
   checkAndOpenModal() {
     const params = new URLSearchParams(this.props.history.location.search);
     if (params.has("q")) {
@@ -104,7 +172,8 @@ export class HomePanel extends Component {
 }
 
 const mapStateToProps = state => ({
-  hasKehus: state.report.numberOfKehus > 0
+  hasKehus: state.report.numberOfKehus > 0,
+  tags: state.report.tags.slice(0, 5)
 });
 
 const mapActionsToProps = {
