@@ -47,12 +47,14 @@ export class KehusPanel extends Component {
       return <Spinner />;
     }
 
+    const titleText = this.state.showSentKehus
+      ? "Lähetetyt Kehut"
+      : "Saadut Kehut";
+
     return (
       <div className="KehusPanel">
         <div className="KehusPanelHeader">
-          <h1 className="KehusPanelHeader-title kehus-title-nw">
-            Saadut Kehut
-          </h1>
+          <h1 className="KehusPanelHeader-title kehus-title-nw">{titleText}</h1>
           <span className="KehusPanelHeader-text">Vaihda näkymää</span>
           {this.renderToggleButton()}
         </div>
