@@ -26,6 +26,10 @@ describe("client:Homepanel", () => {
     it("does not replace location", () => {
       expect(replaceStub).not.toHaveBeenCalled();
     });
+
+    it("renders Welcome element", () => {
+      expect(component.find(".Welcome").exists()).toBeTruthy();
+    });
   });
 
   describe('when "lisaa" query param is given', () => {
@@ -60,6 +64,13 @@ describe("client:Homepanel", () => {
     });
   });
 
+  describe("when user has Kehus", () => {
+    it("does not render Welcome element", () => {
+      component.setProps({ hasKehus: true });
+      expect(component.find(".Welcome").exists()).toBeFalsy();
+    });
+  });
+
   function createProps(search) {
     return {
       history: {
@@ -68,6 +79,7 @@ describe("client:Homepanel", () => {
         },
         replace: replaceStub
       },
+      hasKehus: false,
       toggleAddKehuFormModal: toggleAddKehuFormModalStub,
       toggleSendKehuFormModal: toggleSendKehuFormModalStub
     };

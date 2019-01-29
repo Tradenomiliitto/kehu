@@ -21,3 +21,25 @@
     margin: 1rem 0;
   }
 }
+
+.Welcome {
+  border: 2px dotted $dark-grey;
+  border-radius: 6px;
+  margin-top: 2rem;
+  padding: 2rem 2rem 2rem 0;
+}
+
+.Welcome-image {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+}
+
+.Welcome-title {
+  @extend .HomeButtons-title;
+  margin-bottom: 1.5rem;
+}
+
+.Welcome-text {
+  color: $secondary;
+}
