@@ -55,6 +55,9 @@ export class Header extends Component {
                     </a>
                   </li>
                   {this.renderMenuItem("/raportit", "Raportit")}
+                  <li className="Header-menuItem">
+                    <a href="/blogi">Blogi</a>
+                  </li>
                   {this.renderMenuItem("/kehut", "Kehut")}
                   <li className="Header-menuItem">
                     <Link to="/profiili" onClick={this.closeMenu}>
