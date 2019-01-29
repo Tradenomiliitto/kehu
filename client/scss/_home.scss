@@ -1,4 +1,23 @@
+.Home {
+  margin: 2rem 0;
+}
+
 .HomeButtons {
-  padding: 2rem;
+  background-color: $white;
+  padding: 2rem 1rem;
+}
+
+.HomeButtons-title {
+  color: $secondary;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.HomeButtons-buttons > button {
   text-align: center;
+  width: 100%;
+
+  &:first-child {
+    margin: 1rem 0;
+  }
 }

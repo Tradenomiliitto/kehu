@@ -24,24 +24,41 @@ export class HomePanel extends Component {
 
   render() {
     return (
-      <div className="HomeButtons home-nw">
+      <div className="Home home-nw">
         <div className="container">
           <div className="row">
-            <div className="col col-xs-12 col-md-6">
-              <button
-                className="Button Button--wide add-kehu-nw"
-                onClick={this.props.toggleAddKehuFormModal}
-              >
-                Lisää Kehu
-              </button>
-            </div>
-            <div className="col col-xs-12 col-md-6">
-              <button
-                className="Button Button--wide send-kehu-nw"
-                onClick={this.props.toggleSendKehuFormModal}
-              >
-                Lähetä Kehu
-              </button>
+            <div className="col col-xs-12 col-md-9">
+              <div className="row">
+                <div className="col col-xs-12">
+                  <div className="row HomeButtons">
+                    <div className="col col-xs-12 col-md-8">
+                      <h1 className="HomeButtons-title">Lisää uusi Kehu</h1>
+                      <p className="HomeButtons-text">
+                        Älä pidä kehujasi vakan alla! Tallenna Kehu-pankkiisi
+                        kuulemasi kehu tai pristä kollegaa lähettämällä Kehu!
+                      </p>
+                    </div>
+                    <div className="col col-xs-12 col-md-4">
+                      <div className="HomeButtons-buttons">
+                        <button
+                          className="Button add-kehu-nw"
+                          onClick={this.props.toggleAddKehuFormModal}
+                        >
+                          Lisää Kehu
+                        </button>
+                        <button
+                          className="Button send-kehu-nw"
+                          onClick={this.props.toggleSendKehuFormModal}
+                        >
+                          Lähetä Kehu
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col col-xs-12" />
+                </div>
+              </div>
+              <div className="col col-xs-12 col-md-3" />
             </div>
           </div>
         </div>
