@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import store from "./redux";
 import HomePanel from "./HomePanel";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import Portal from "./components/Portal";
 import KehuFormModal from "./components/KehuFormModal";
 import AddKehuForm from "./components/kehuform/AddKehuForm";
@@ -53,18 +54,21 @@ export class App extends Component {
     return (
       <div className="App">
         <Header />
-        <Switch>
-          <Route exact path="/" component={HomePanel} />
-          <Route
-            exact
-            path="/kehut/lisaa/:claim_id"
-            component={ClaimKehuPanel}
-          />
-          <Route exact path="/kehut" component={KehusPanel} />
-          <Route exact path="/profiili" component={ProfilePanel} />
-          <Route exact path="/raportit" component={ReportPanel} />
-        </Switch>
-        {this.renderPortal()}
+        <div className="Content">
+          <Switch>
+            <Route exact path="/" component={HomePanel} />
+            <Route
+              exact
+              path="/kehut/lisaa/:claim_id"
+              component={ClaimKehuPanel}
+            />
+            <Route exact path="/kehut" component={KehusPanel} />
+            <Route exact path="/profiili" component={ProfilePanel} />
+            <Route exact path="/raportit" component={ReportPanel} />
+          </Switch>
+          {this.renderPortal()}
+        </div>
+        <Footer />
       </div>
     );
   }

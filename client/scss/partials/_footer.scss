@@ -20,6 +20,10 @@ $footer-height: 245px;
 .Footer-links {
   list-style-type: none;
   padding: 0;
+
+  > li {
+    display: inline-block;
+  }
 }
 
 .Footer-link {
