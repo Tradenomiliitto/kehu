@@ -1,21 +1,15 @@
 extends layout
 
 block content
+  include _header
   .HeroSection
-    include _header
-
     .HeroSectionContent
       .container
         .row
-          .col.col-xs-12.col-md-8.col-lg-6
+          .col.col-xs-12.col-sm-6.col-md-8.col-lg-6
             h1.HeroSectionContent-title Opi tuntemaan vahvuutesi.
             p.HeroSectionContent-text Kehu on täysin ilmainen ja kaikille avoin palvelu, jonka avulla voit lähettää, vastaanottaa ja kirjata hyvää palautetta. Kehujen listaamisen kautta saat konkreettisen käsityksen omista taidoistasi ja vahvuuksistasi. Lisäksi voit levittää hyvää fiilistä ympärillesi helpolla tavalla. Palvelu on henkilökohtainen eikä lisäämäsi sisältö näy muille.
             button.Button.Button--rounded.Button--wide.HeroSectionContent-button.register-js.register-nw Luo tili
-
-      img(src="/images/hero-section-big-thumb.svg").HeroSection-bigThumb
-      img(src="/images/hero-section-med-thumb.svg").HeroSection-medThumb
-      img(src="/images/hero-section-small-thumb.svg").HeroSection-smallThumb
-
 
   .LandingSection2
     .container
