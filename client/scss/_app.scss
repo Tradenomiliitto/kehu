@@ -1,12 +1,5 @@
 .App {
-  background-image: url("/images/app-background-small.svg");
-  background-position: center right;
-  background-repeat: no-repeat;
-  background-size: cover;
-
-  @include mq(lg) {
-    background-image: url("/images/app-background.svg");
-  }
+  background-color: $white-bg;
 }
 
 .Content {
