@@ -1,6 +1,7 @@
 .ErrorPage {
-  min-height: calc(100vh - #{$footer-height});
-  padding: 0 0 4rem;
+  min-height: calc(100vh - #{$header-height + $footer-height});
+  display: flex;
+  align-items: center;
 }
 
 .ErrorPage-image {
