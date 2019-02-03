@@ -1,4 +1,11 @@
-const { loginWithGenericUser } = require("./lib/utils");
+const {
+  addTag,
+  expectCloseButton,
+  expectTags,
+  expectText,
+  navigateToKehuPage,
+  loginWithGenericUser
+} = require("./lib/utils");
 
 const TEXT = "This is kehu text";
 const GIVER_NAME = "Giver Name";
@@ -8,38 +15,6 @@ const SITUATION3 = "situation3";
 const TAG1 = "tag1";
 const TAG2 = "tag2";
 const TAG3 = "tag3";
-
-function addTag(browser, id, text) {
-  browser
-    .pause(100)
-    .setValue(`#${id}`, text)
-    .pause(100)
-    .click(`.${id}-add-nw`);
-}
-
-function navigateToKehuPage(browser) {
-  browser
-    .waitForElementVisible('a[href="/kehut"]')
-    .click('a[href="/kehut"]')
-    .waitForElementVisible(".kehus-title-nw")
-    .expect.element(".kehus-title-nw")
-    .text.to.equal("Saadut Kehut");
-}
-
-function expectText(browser, selector, text) {
-  browser.expect.element(selector).text.to.equal(text);
-}
-
-function expectTags(browser, tags) {
-  tags.forEach(tag => {
-    browser.expect.element(".kehu-tags-nw").text.to.contain(tag);
-  });
-}
-
-function expectCloseButton(browser) {
-  browser.click(".close-button-nw");
-  browser.expect.element(".modal-title-nw").to.be.not.present;
-}
 
 module.exports = {
   before: function(browser) {
