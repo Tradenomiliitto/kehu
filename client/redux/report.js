@@ -70,6 +70,13 @@ function addToRoles(roles, kehu) {
   return roles;
 }
 
+function countSentKehus(state, sentKehus) {
+  if (sentKehus) {
+    return sentKehus.length;
+  }
+  return state.numberOfSentKehus;
+}
+
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case RESET_REPORTS:
@@ -77,7 +84,7 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         numberOfKehus: action.payload.kehus.length,
-        numberOfSentKehus: action.payload.sent_kehus.length,
+        numberOfSentKehus: countSentKehus(state, action.payload.sent_kehus),
         roles: countRoles(action.payload.kehus),
         tags: countTags(action.payload.kehus),
         situations: countSituations(action.payload.kehus)

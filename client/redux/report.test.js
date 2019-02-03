@@ -134,11 +134,10 @@ describe("client:redux:report", () => {
           { role: "Muu", count: 4 }
         ]
       };
-      const action = { type: RESET_REPORTS, payload: { kehus, sent_kehus } };
+      const action = { type: RESET_REPORTS, payload: { kehus } };
       const expectedState = {
         ...state,
         numberOfKehus: kehus.length,
-        numberOfSentKehus: sent_kehus.length,
         roles: [
           { role: "Asiakas", count: 2 },
           { role: "Esimies", count: 1 },
