@@ -80,6 +80,7 @@ describe("client:Homepanel", () => {
         replace: replaceStub
       },
       hasKehus: false,
+      tags: [{ text: "Test" }, { text: "Tag" }],
       toggleAddKehuFormModal: toggleAddKehuFormModalStub,
       toggleSendKehuFormModal: toggleSendKehuFormModalStub
     };
