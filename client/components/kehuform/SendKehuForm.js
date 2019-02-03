@@ -58,7 +58,7 @@ export class SendKehuForm extends Component {
     return (
       <div className="SendKehuPreview preview-js">
         {this.renderErrors()}
-        <p className="SendKehuPreview-receiver">
+        <p className="SendKehuPreview-receiver receiver-nw">
           <b>Lähetetään kehun saajalle:</b>
           <br />
           {receiver_name}
@@ -91,7 +91,7 @@ export class SendKehuForm extends Component {
             Muokkaa Kehua
           </button>
           <button
-            className="Button Button--fullWidth send-kehu-js"
+            className="Button Button--fullWidth submit-send-kehu-nw send-kehu-js"
             onClick={this.sendKehu}
           >
             Lähetä Kehu

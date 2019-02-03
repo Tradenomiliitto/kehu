@@ -16,7 +16,7 @@ export class KehuFormModal extends Component {
           <div className="Modal-content">
             <div className="Modal-header">
               <button
-                className="Modal-closeButton close-button-js"
+                className="Modal-closeButton modal-close-nw close-button-js"
                 onClick={this.handleClick}
               >
                 &#10005;

@@ -51,7 +51,7 @@ export class KehusPanel extends Component {
       : "Lähetetyt Kehut";
     return (
       <button
-        className="Button KehusPanelHeader-button"
+        className="Button KehusPanelHeader-button toggle-view-nw"
         onClick={this.toggleKehusView}
       >
         {buttonText}
