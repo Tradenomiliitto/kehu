@@ -150,7 +150,7 @@ export class HomePanel extends Component {
           alt="Blogi"
           className="SidebarElement-image"
         />
-        <a href="/blogit" className="Button Button--fullWidth">
+        <a href="/blogi" className="Button Button--fullWidth">
           Lue lisää blogista!
         </a>
       </div>
