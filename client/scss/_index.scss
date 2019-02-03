@@ -47,10 +47,6 @@
   @include mq(md) {
     background-image: url(/images/hero-section-desktop.svg);
   }
-
-  @include mq(lg) {
-    background-size: cover;
-  }
 }
 
 .HeroSectionContent {
