@@ -13,7 +13,6 @@ const Redis = require("connect-redis");
 const csrf = require("csurf");
 const compression = require("compression");
 const methodOverride = require("method-override");
-const flash = require("express-flash");
 const httpsRedirect = require("express-https-redirect");
 const webpack = require("webpack");
 const webpackConfig = require("./webpack.dev.config");
@@ -72,7 +71,6 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", httpsRedirect());
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(flash());
 
 setupLocals(app);
 setupRoutes(app);
