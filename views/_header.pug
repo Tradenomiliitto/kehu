@@ -1,4 +1,4 @@
-header.Header.Header--white
+mixin header-content
   .container
     .row
       .col.col-md-12.col-lg-4
@@ -34,6 +34,12 @@ header.Header.Header--white
               li.Header-menuItem
                 button.Button.Button--rounded.Header-login.login-js.login-nw Kirjaudu
 
+if user
+  header.Header
+    +header-content()
+else
+  header.Header.Header--white
+    +header-content()
 
 script.
   var menu = document.querySelector('.Header-menu');
