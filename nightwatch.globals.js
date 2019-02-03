@@ -7,6 +7,8 @@ module.exports = {
     this.NEW_USER_PASSWORD = password(16, false, "[dWwp]", "Ab1-");
     this.GENERIC_USER_EMAIL = process.env.TEST_USER_EMAIL;
     this.GENERIC_USER_PASSWORD = process.env.TEST_USER_PASSWORD;
+    this.GENERIC_USER_2_EMAIL = process.env.TEST_USER_2_EMAIL;
+    this.GENERIC_USER_2_PASSWORD = process.env.TEST_USER_2_PASSWORD;
     done();
   },
   waitForConditionTimeout: 5000
