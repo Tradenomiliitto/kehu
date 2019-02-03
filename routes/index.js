@@ -10,6 +10,17 @@ module.exports = function setupRoutes(app) {
   app.use("/api/v1/profiili", ensureAuthenticated, userApi);
   app.use("/api/v1/kehut", ensureAuthenticated, kehuApi);
 
+  app.get("/kehut/lisaa/*", (req, res, next) => {
+    if (req.user) {
+      next();
+    } else {
+      req.session.returnTo = req.originalUrl;
+      res.render("redirect-login", {
+        env: process.env
+      });
+    }
+  });
+
   app.get(CLIENT_ROUTES, (req, res) => {
     if (req.user) {
       res.render("app", {

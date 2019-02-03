@@ -1,0 +1,45 @@
+extends layout
+
+block content
+  include _header
+
+  .RedirectLogin
+    p Uudelleenohjataan kirjautumiseen...
+
+  include _footer
+
+  script.
+    (function () {
+      var settings = {
+        auth: {
+          redirectUrl: '#{env.AUTH0_CALLBACK_URL}',
+          responseType: 'code',
+          params: {
+            scope: 'openid name email picture'
+          }
+        },
+        theme: {
+          logo: '/images/kehu-logo-auth0.png',
+          primaryColor: '#FF96AC'
+        },
+        mustAcceptTerms: true,
+        initialScreen: 'login',
+        additionalSignUpFields: [
+          {
+            name: "first_name",
+            placeholder: "Etunimi"
+          },
+          {
+            name: "last_name",
+            placeholder: "Sukunimi"
+          }
+        ],
+        language: 'fi',
+        languageDictionary: {
+          signUpTerms: 'Hyväksyn Kehu-sovelluksen <a href="https://kehu.herokuapp.com/rekisteriseloste" target="_blank" rel="noopener noreferrer">rekisteriselosteen</a>'
+        }
+      };
+
+      var redirectLock = new Auth0Lock('#{env.AUTH0_CLIENT_ID}', '#{env.AUTH0_DOMAIN}', settings);
+      redirectLock.show();
+    })();

@@ -11,7 +11,9 @@ router.get(
   "/callback",
   passport.authenticate("auth0", { failureRedirect: "/" }),
   (req, res) => {
-    res.redirect(req.session.returnTo || "/");
+    const returnTo = req.session.returnTo;
+    delete req.session.returnTo;
+    res.redirect(returnTo || "/");
   }
 );
 
