@@ -9,6 +9,16 @@ function canAuth0EmailBeUpdated(user) {
   return prefix === "auth0";
 }
 
+async function updateProfilePicture(user_id, picture) {
+  logger.info(`Updating profile picture for ${user_id}.`);
+  try {
+    return await User.query().patchAndFetchById(user_id, { picture });
+  } catch (e) {
+    console.error(e.message);
+    throw e;
+  }
+}
+
 async function updateProfile(user_id, data) {
   logger.info(`Updating user ${user_id}.`);
   const user = await User.query()
@@ -128,5 +138,7 @@ module.exports = {
   findUserByEmail,
   createUserFromAuth0,
   getContacts,
-  updateProfile
+  parseUser,
+  updateProfile,
+  updateProfilePicture
 };
