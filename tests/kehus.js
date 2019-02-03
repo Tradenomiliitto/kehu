@@ -89,10 +89,8 @@ module.exports = {
   RemoveKehu: function(browser) {
     navigateToKehuPage(browser);
     browser.assert.elementPresent(".kehu-row-nw");
-    browser
-      .click(".trash-red-nw")
-      .acceptAlert()
-      .pause(100);
+    browser.click(".trash-red-nw").acceptAlert();
+    browser.waitForElementNotPresent(".kehu-row-nw");
     browser.assert.elementNotPresent(".kehu-row-nw");
   },
   ValidateKehu: function(browser) {
