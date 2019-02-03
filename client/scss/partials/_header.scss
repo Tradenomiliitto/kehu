@@ -8,6 +8,7 @@ $header-height: 66px;
 
   &--white {
     background-color: $white;
+    box-shadow: none;
 
     .Header-menuContainer {
       background-color: $white;
