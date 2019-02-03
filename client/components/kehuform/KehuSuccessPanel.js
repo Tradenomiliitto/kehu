@@ -73,11 +73,15 @@ export class KehuSuccessPanel extends Component {
 
     for (let i = 1; i <= 5; i++) {
       const icon = i <= importance ? "primary" : "secondary";
+      const classNames =
+        i <= importance
+          ? "KehuStars-star stars-important-nw"
+          : "KehuStars-star stars-nw";
       stars.push(
         <img
           key={i}
           src={`/images/icon-star-${icon}.png`}
-          className="KehuStars-star"
+          className={classNames}
         />
       );
     }

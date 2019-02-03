@@ -30,7 +30,8 @@ export default class ImportanceSelectPanel extends Component {
     for (let i = 1; i <= 5; i++) {
       const starClass = cn({
         "ImportanceSelector-star": true,
-        "ImportanceSelector-star--active": this.isActiveStar(i)
+        "ImportanceSelector-star--active": this.isActiveStar(i),
+        "importance-selector-nw": true
       });
       stars.push(
         <span

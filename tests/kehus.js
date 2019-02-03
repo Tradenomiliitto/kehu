@@ -58,11 +58,14 @@ module.exports = {
     addTag(browser, "tags", TAG2);
     addTag(browser, "situations", SITUATION1);
     addTag(browser, "situations", SITUATION2);
+    browser.click(".importance-selector-nw:nth-of-type(3)");
     browser.click(".submit-kehu-nw");
     expectText(browser, ".modal-title-nw", "Kehu tallennettu!");
     expectText(browser, ".kehu-text-nw", TEXT);
     expectText(browser, ".kehu-giver-name-nw", GIVER_NAME);
     expectTags(browser, [TAG1, TAG2, SITUATION1, SITUATION2]);
+    browser.assert.elementPresent(".stars-important-nw:nth-of-type(3)");
+    browser.assert.elementNotPresent(".stars-important-nw:nth-of-type(4)");
     expectCloseButton(browser);
   },
   EditKehu: function(browser) {
