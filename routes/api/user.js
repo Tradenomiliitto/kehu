@@ -9,6 +9,7 @@ const RoleService = require("../../services/RoleService");
 const SituationService = require("../../services/SituationService");
 const TagService = require("../../services/TagService");
 const UserService = require("../../services/UserService");
+const FeedService = require("../../services/FeedService");
 const { defaults } = require("../../config");
 const { updateProfileSchema } = require("../../utils/ValidationSchemas");
 
@@ -54,7 +55,8 @@ router.get("/", async (req, res) => {
     defaults.tags
   );
   const profile = req.user;
-  res.json({ contacts, profile, roles, situations, tags });
+  const feed = await FeedService.getFeedItems(req.user.id);
+  res.json({ contacts, feed, profile, roles, situations, tags });
 });
 
 router.put(
