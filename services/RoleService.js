@@ -1,7 +1,7 @@
 const Role = require("../models/Role");
 
 async function getRoles() {
-  return await Role.query();
+  return await Role.query().orderBy("id");
 }
 
 module.exports = {
