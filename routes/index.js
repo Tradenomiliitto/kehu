@@ -43,6 +43,12 @@ module.exports = function setupRoutes(app) {
     });
   });
 
+  app.get("/cross-origin-fallback", (req, res) => {
+    res.render("cross-origin-fallback", {
+      env: process.env
+    });
+  });
+
   app.get("/", async (req, res) => {
     if (req.user) {
       res.render("app", {
