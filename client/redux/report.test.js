@@ -4,7 +4,7 @@ import reducer, { initialState, RESET_REPORTS } from "./report";
 describe("client:redux:report", () => {
   const kehus = [
     {
-      role: { role: "Esimies" },
+      role: { role: "Pomo" },
       tags: [{ text: "neuvottelu" }],
       situations: [{ text: "neukkari" }]
     },
@@ -42,7 +42,7 @@ describe("client:redux:report", () => {
         numberOfSentKehus: sent_kehus.length,
         roles: [
           { role: "Asiakas", count: 2 },
-          { role: "Esimies", count: 1 },
+          { role: "Pomo", count: 1 },
           { role: "Kollega", count: 1 }
         ],
         situations: [
@@ -64,7 +64,7 @@ describe("client:redux:report", () => {
         ...initialState,
         roles: [
           { role: "Asiakas", count: 2 },
-          { role: "Esimies", count: 1 },
+          { role: "Pomo", count: 1 },
           { role: "Kollega", count: 1 }
         ]
       };
@@ -77,7 +77,7 @@ describe("client:redux:report", () => {
         numberOfKehus: state.numberOfKehus + 1,
         roles: [
           { role: "Asiakas", count: 3 },
-          { role: "Esimies", count: 1 },
+          { role: "Pomo", count: 1 },
           { role: "Kollega", count: 1 }
         ],
         situations: [],
@@ -101,7 +101,7 @@ describe("client:redux:report", () => {
         ...initialState,
         roles: [
           { role: "Asiakas", count: 2 },
-          { role: "Esimies", count: 1 },
+          { role: "Pomo", count: 1 },
           { role: "Kollega", count: 1 }
         ]
       };
@@ -114,7 +114,7 @@ describe("client:redux:report", () => {
         numberOfKehus: state.numberOfKehus + 1,
         roles: [
           { role: "Asiakas", count: 2 },
-          { role: "Esimies", count: 1 },
+          { role: "Pomo", count: 1 },
           { role: "Kollega", count: 1 }
         ],
         situations: [],
@@ -130,7 +130,7 @@ describe("client:redux:report", () => {
         numberOfSentKehus: 7,
         roles: [
           { role: "Alainen", count: 7 },
-          { role: "Esimies", count: 1 },
+          { role: "Pomo", count: 1 },
           { role: "Muu", count: 4 }
         ]
       };
@@ -140,7 +140,7 @@ describe("client:redux:report", () => {
         numberOfKehus: kehus.length,
         roles: [
           { role: "Asiakas", count: 2 },
-          { role: "Esimies", count: 1 },
+          { role: "Pomo", count: 1 },
           { role: "Kollega", count: 1 }
         ],
         situations: [

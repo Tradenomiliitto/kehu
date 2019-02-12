@@ -3,7 +3,7 @@ exports.seed = function(knex, Promise) {
     .del()
     .then(function() {
       return knex("Roles").insert([
-        { id: 1, role: "Esimies" },
+        { id: 1, role: "Pomo" },
         { id: 2, role: "Alainen" },
         { id: 3, role: "Kollega" },
         { id: 4, role: "Asiakas" },
