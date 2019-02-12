@@ -84,7 +84,7 @@ async function findUserByEmail(email) {
       .first();
     if (kehu && kehu.owner_id) {
       return await User.query()
-        .where("id", owner_id)
+        .where("id", kehu.owner_id)
         .first();
     }
   } catch (error) {
