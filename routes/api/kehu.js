@@ -48,8 +48,12 @@ router.post("/laheta", checkSchema(sendKehuSchema), async (req, res) => {
 
 router.get("/lisaa/:claim_id", async (req, res) => {
   try {
-    await KehuService.claimKehu(req.user.id, req.params.claim_id);
-    res.status(203).json({});
+    const claimedKehu = await KehuService.claimKehu(
+      req.user.id,
+      req.params.claim_id
+    );
+    const kehu = await KehuService.getKehu(req.user.id, claimedKehu.id);
+    res.json({ kehu });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

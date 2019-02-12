@@ -111,8 +111,8 @@ export function claimKehu(id) {
   return async dispatch => {
     try {
       dispatch({ type: CLAIM_KEHU });
-      await get(`/kehut/lisaa/${id}`);
-      dispatch({ type: CLAIM_KEHU_SUCCESS });
+      const kehu = await get(`/kehut/lisaa/${id}`);
+      dispatch({ type: CLAIM_KEHU_SUCCESS, payload: kehu });
     } catch (e) {
       dispatch({ type: CLAIM_KEHU_ERROR, payload: e });
     }
@@ -223,7 +223,8 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         loading: false,
         error: null,
-        claimKehuSuccess: true
+        claimKehuSuccess: true,
+        kehus: addKehuToState(state.kehus, action.payload.kehu)
       };
 
     case GET_KEHUS_SUCCESS:

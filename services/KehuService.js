@@ -203,14 +203,18 @@ async function sendKehu(data) {
 
 async function claimKehu(user_id, claim_id) {
   logger.info(`Claiming Kehu with claim_id ${claim_id} for user ${user_id}`);
-  const result = await Kehu.query()
+  const kehu = await Kehu.query()
     .where("claim_id", claim_id)
-    .patch({ claim_id: null, owner_id: user_id });
+    .patch({ claim_id: null, owner_id: user_id })
+    .returning("*")
+    .first();
 
-  if (!result) {
+  if (!kehu) {
     logger.error(`No Kehu with claim_id ${claim_id} found.`);
     throw new Error(`No Kehu with claim_id ${claim_id} found.`);
   }
+
+  return kehu;
 }
 
 async function updateKehu(user_id, kehu_id, data) {
@@ -325,6 +329,7 @@ function parseArray(array) {
 
 module.exports = {
   getKehus,
+  getKehu,
   getSentKehus,
   createKehu,
   updateKehu,

@@ -265,12 +265,14 @@ describe("client:redux:kehu", () => {
         loading: true,
         error: new Error()
       };
-      const action = { type: CLAIM_KEHU_SUCCESS };
+      const kehu = { id: 3 };
+      const action = { type: CLAIM_KEHU_SUCCESS, payload: { kehu } };
       const expectedState = {
         ...state,
         loading: false,
         error: null,
-        claimKehuSuccess: true
+        claimKehuSuccess: true,
+        kehus: [kehu]
       };
       expect(reducer(state, action)).toEqual(expectedState);
     });
@@ -457,7 +459,7 @@ describe("client:redux:kehu", () => {
         const store = mockStore(initialState);
         const expectedActions = [
           { type: CLAIM_KEHU },
-          { type: CLAIM_KEHU_SUCCESS }
+          { type: CLAIM_KEHU_SUCCESS, payload: response }
         ];
 
         store.dispatch(claimKehu(id)).then(() => {
