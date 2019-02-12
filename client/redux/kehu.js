@@ -1,3 +1,4 @@
+import moment from "moment";
 import { get, del, post, put } from "../util/ApiUtil";
 import { RESET_REPORTS } from "./report";
 
@@ -124,7 +125,11 @@ export function resetKehuFormState() {
 }
 
 function addKehuToState(kehus, kehu) {
-  return [...kehus, kehu];
+  return [...kehus, kehu].sort((a, b) => {
+    const aMoment = moment(a.date_given);
+    const bMoment = moment(b.date_given);
+    return aMoment.isAfter(bMoment) ? -1 : 1;
+  });
 }
 
 function updateKehuInState(kehus, kehu) {

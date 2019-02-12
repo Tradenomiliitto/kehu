@@ -49,21 +49,25 @@ describe("client:redux:kehu", () => {
     });
 
     it("on ADD_KEHU_SUCCESS", () => {
-      const kehus = [{ id: 1 }, { id: 2 }, { id: 3 }];
+      const kehus = [
+        { id: 1, date_given: "2019-01-02" },
+        { id: 2, date_given: "2019-01-03" },
+        { id: 3, date_given: "2019-01-04" }
+      ];
       const state = {
         ...initialState,
         loading: true,
         error: new Error(),
         kehus
       };
-      const kehu = { id: 4 };
+      const kehu = { id: 4, date_given: "2019-01-01" };
       const action = { type: ADD_KEHU_SUCCESS, payload: { kehu } };
       const expectedState = {
         ...state,
         loading: false,
         savedKehu: kehu,
         error: null,
-        kehus: kehus.concat(kehu)
+        kehus: [...kehus.reverse(), kehu]
       };
       expect(reducer(state, action)).toEqual(expectedState);
     });
@@ -225,21 +229,24 @@ describe("client:redux:kehu", () => {
     });
 
     it("on SEND_KEHU_SUCCESS", () => {
-      const sentKehus = [{ id: 1 }, { id: 2 }];
+      const sentKehus = [
+        { id: 1, date_given: "2019-01-01" },
+        { id: 2, date_given: "2019-01-03" }
+      ];
       const state = {
         ...initialState,
         loading: true,
         error: new Error(),
         sentKehus
       };
-      const kehu = { id: 3 };
+      const kehu = { id: 3, date_given: "2019-01-02" };
       const action = { type: SEND_KEHU_SUCCESS, payload: { kehu } };
       const expectedState = {
         ...state,
         loading: false,
         error: null,
         sendKehuSuccess: true,
-        sentKehus: [...sentKehus, kehu]
+        sentKehus: [sentKehus[1], kehu, sentKehus[0]]
       };
       expect(reducer(state, action)).toEqual(expectedState);
     });
