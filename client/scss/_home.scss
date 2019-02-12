@@ -5,6 +5,11 @@
 .HomeButtons {
   background-color: $white;
   padding: 2rem 1rem;
+
+  @include mq(0, md) {
+    margin: 0 0 1rem;
+    padding: 2rem 0;
+  }
 }
 
 .HomeButtons-title {
