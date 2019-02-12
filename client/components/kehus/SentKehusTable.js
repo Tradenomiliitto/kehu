@@ -10,7 +10,7 @@ export default class SentKehusTable extends Component {
 
   render() {
     return (
-      <table className="Table KehusTable">
+      <table className="Table KehusTable KehusTable--sent">
         <thead className="KehusTable-head">
           <tr>
             <th>Aika</th>

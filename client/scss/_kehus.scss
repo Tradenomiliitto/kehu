@@ -39,6 +39,21 @@
 .KehusTable {
   background-color: $table-stripe-bg;
 
+  @include mq($until: md) {
+    display: block;
+    overflow-x: auto;
+  }
+
+  &--sent {
+    display: table;
+    overflow-x: initial;
+
+    @include mq($until: sm) {
+      display: block;
+      overflow-x: auto;
+    }
+  }
+
   > thead th {
     border-bottom-width: 1px; // Baseguide override
   }
