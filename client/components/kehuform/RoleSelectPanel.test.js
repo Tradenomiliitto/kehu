@@ -3,7 +3,7 @@ import RoleSelectPanel from "./RoleSelectPanel";
 describe("client:components:kehuform:RoleSelectPanel", () => {
   let component;
   let handleClickStub;
-  const roles = [{ id: 1, role: "role1" }, { id: 2, role: "role2" }];
+  const roles = [{ id: 1, role: "role1" }, { id: 8, role: "role2" }];
 
   beforeEach(() => {
     handleClickStub = jest.fn();
@@ -26,6 +26,10 @@ describe("client:components:kehuform:RoleSelectPanel", () => {
     expect(
       component.find(".RoleSelector-button--disabled").exists()
     ).toBeFalsy();
+  });
+
+  it("renders all roles", () => {
+    expect(component.find(".RoleSelector-button").length).toEqual(2);
   });
 
   describe("when role is clicked", () => {
@@ -88,6 +92,16 @@ describe("client:components:kehuform:RoleSelectPanel", () => {
 
     it("does not call callback", () => {
       expect(handleClickStub).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("when should hide self", () => {
+    beforeEach(() => {
+      component.setProps({ hideSelf: true });
+    });
+
+    it("hides role with id 8", () => {
+      expect(component.find(".RoleSelector-button").length).toEqual(1);
     });
   });
 });

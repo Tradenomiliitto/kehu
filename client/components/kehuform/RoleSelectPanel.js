@@ -13,7 +13,8 @@ export default class RoleSelectPanel extends Component {
       })
     ).isRequired,
     selected: PropTypes.number,
-    handleClick: PropTypes.func.isRequired
+    handleClick: PropTypes.func.isRequired,
+    hideSelf: PropTypes.bool
   };
 
   render() {
@@ -21,8 +22,12 @@ export default class RoleSelectPanel extends Component {
   }
 
   renderRoles() {
-    const { selected } = this.props;
+    const { selected, hideSelf } = this.props;
+    const SELF_ID = 8;
     return this.props.roles.map(role => {
+      if (hideSelf && role.id === SELF_ID) {
+        return null;
+      }
       const buttonClass = cn({
         "RoleSelector-button": true,
         "RoleSelector-button--selected": role.id === selected,
