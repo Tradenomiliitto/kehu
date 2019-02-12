@@ -90,6 +90,12 @@ describe("client:components:kehuform:RoleSelectPanel", () => {
         .simulate("click", { preventDefault: () => {} });
     });
 
+    it("renders all roles as disabled", () => {
+      expect(component.find(".RoleSelector-button--disabled").length).toEqual(
+        roles.length
+      );
+    });
+
     it("does not call callback", () => {
       expect(handleClickStub).not.toHaveBeenCalled();
     });
