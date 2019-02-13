@@ -13,6 +13,11 @@ export class SentKehuItem extends Component {
     const { kehu } = this.props;
     return (
       <div className="FeedItem">
+        <img
+          src={kehu.picture}
+          className="FeedItem-image"
+          alt={kehu.giver_name}
+        />
         <span className="FeedItem-date">
           {moment(kehu.date_given).format("D.M.YYYY")}
         </span>

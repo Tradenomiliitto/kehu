@@ -13,7 +13,15 @@ async function getKehus(user_id) {
 
 async function getSentKehus(user_id) {
   return await Kehu.query()
-    .select("date_given", "giver_name", "role_id", "receiver_name", "text")
+    .select(
+      "date_given",
+      "giver_name",
+      "role_id",
+      "receiver_name",
+      "text",
+      "Users.picture as picture"
+    )
+    .join("Users", "Kehus.giver_id", "=", "Users.id")
     .limit(5)
     .where(function() {
       this.where("giver_id", user_id).andWhere("owner_id", "<>", user_id);
@@ -32,9 +40,13 @@ function sortKehus(a, b) {
 
 async function getFeedItems(user_id) {
   logger.info(`Fetching feed items for user ${user_id}`);
-  const kehus = await getKehus(user_id);
-  const sentKehus = await getSentKehus(user_id);
-  return [...kehus, ...sentKehus].sort(sortKehus).slice(0, 5);
+  try {
+    const kehus = await getKehus(user_id);
+    const sentKehus = await getSentKehus(user_id);
+    return [...kehus, ...sentKehus].sort(sortKehus).slice(0, 5);
+  } catch (e) {
+    logger.error(e);
+  }
 }
 
 module.exports = {

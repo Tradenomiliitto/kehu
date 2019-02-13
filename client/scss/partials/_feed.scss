@@ -1,3 +1,5 @@
+$imageDim: 78px;
+
 .Feed-title {
   color: $secondary;
   font-size: 2rem;
@@ -13,8 +15,16 @@
 .FeedItem {
   background-color: $white;
   box-shadow: 0 2px 11px 0 rgba(0, 0, 0, 0.16);
-  padding: 1rem 2rem;
+  padding: 1rem 2rem 1rem 1rem;
   margin-bottom: 1rem;
+  min-height: calc(2rem + #{$imageDim});
+}
+
+.FeedItem-image {
+  border-radius: calc(#{$imageDim} / 2);
+  float: left;
+  height: $imageDim;
+  width: $imageDim;
 }
 
 .FeedItem-date {
@@ -25,10 +35,11 @@
   font-size: 1.125rem;
   font-weight: 300;
   margin: 1.5rem 0 0;
+  padding-left: calc(#{$imageDim} + 1rem);
 }
 
 .FeedItem-info {
   font-size: 0.8125rem;
   font-weight: 500;
-  margin: 0 0 1.5rem !important;
+  padding-left: calc(#{$imageDim} + 1rem);
 }
