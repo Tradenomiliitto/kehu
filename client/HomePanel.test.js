@@ -28,7 +28,7 @@ describe("client:Homepanel", () => {
     });
 
     it("renders Welcome element", () => {
-      expect(component.find(".Welcome").exists()).toBeTruthy();
+      expect(component.find("WelcomePanel").exists()).toBeTruthy();
     });
   });
 
