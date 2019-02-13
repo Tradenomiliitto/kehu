@@ -30,6 +30,10 @@ describe("client:Homepanel", () => {
     it("renders Welcome element", () => {
       expect(component.find("WelcomePanel").exists()).toBeTruthy();
     });
+
+    it("noes not render FeedPanel", () => {
+      expect(component.find("FeedPanel").exists()).toBeFalsy();
+    });
   });
 
   describe('when "lisaa" query param is given', () => {
@@ -67,7 +71,8 @@ describe("client:Homepanel", () => {
   describe("when user has Kehus", () => {
     it("does not render Welcome element", () => {
       component.setProps({ hasKehus: true });
-      expect(component.find(".Welcome").exists()).toBeFalsy();
+      expect(component.find("WelcomePanel").exists()).toBeFalsy();
+      expect(component.find("FeedPanel").exists()).toBeTruthy();
     });
   });
 
@@ -79,6 +84,7 @@ describe("client:Homepanel", () => {
         },
         replace: replaceStub
       },
+      feedItems: [{ item: 1 }, { item: 2 }],
       hasKehus: false,
       tags: [{ text: "Test" }, { text: "Tag" }],
       toggleAddKehuFormModal: toggleAddKehuFormModalStub,

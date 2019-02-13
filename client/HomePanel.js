@@ -7,6 +7,7 @@ import {
   toggleSendKehuFormModal
 } from "./redux/portal";
 import WelcomePanel from "./components/home/WelcomePanel";
+import FeedPanel from "./components/home/FeedPanel";
 
 export class HomePanel extends Component {
   static propTypes = {
@@ -16,6 +17,7 @@ export class HomePanel extends Component {
       }).isRequired,
       replace: PropTypes.func.isRequired
     }).isRequired,
+    feedItems: PropTypes.array.isRequired,
     hasKehus: PropTypes.bool.isRequired,
     tags: PropTypes.array.isRequired,
     toggleAddKehuFormModal: PropTypes.func.isRequired,
@@ -57,7 +59,7 @@ export class HomePanel extends Component {
                   </div>
                 </div>
               </div>
-              {this.renderWelcomeElement()}
+              {this.renderMainContent()}
             </div>
             <div className="col col-xs-12 col-md-3">
               {this.renderTagsElement()}
@@ -69,10 +71,11 @@ export class HomePanel extends Component {
     );
   }
 
-  renderWelcomeElement() {
-    if (!this.props.hasKehus) {
-      return <WelcomePanel />;
+  renderMainContent() {
+    if (this.props.hasKehus) {
+      return <FeedPanel items={this.props.feedItems} />;
     }
+    return <WelcomePanel />;
   }
 
   renderTagsElement() {
@@ -152,6 +155,7 @@ export class HomePanel extends Component {
 }
 
 const mapStateToProps = state => ({
+  feedItems: state.profile.feedItems,
   hasKehus: state.report.numberOfKehus > 0,
   tags: state.report.tags.slice(0, 5)
 });
