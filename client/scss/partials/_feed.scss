@@ -18,6 +18,13 @@ $imageDim: 78px;
   padding: 1rem 2rem 1rem 1rem;
   margin-bottom: 1rem;
   min-height: calc(2rem + #{$imageDim});
+
+  &--noImage {
+    .FeedItem-text,
+    .FeedItem-info {
+      padding-left: 0;
+    }
+  }
 }
 
 .FeedItem-image {

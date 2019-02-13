@@ -5,9 +5,11 @@ const logger = require("../logger");
 
 async function getKehus(user_id) {
   return await Kehu.query()
+    .select("*", "Users.picture as picture")
+    .join("Users", "Kehus.giver_id", "=", "Users.id")
+    .limit(5)
     .where("owner_id", user_id)
     .eager("[role, situations, tags]")
-    .limit(5)
     .orderBy("date_given", "desc");
 }
 

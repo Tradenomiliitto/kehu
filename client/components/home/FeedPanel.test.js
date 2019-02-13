@@ -1,4 +1,5 @@
 import FeedPanel from "./FeedPanel";
+import KehuItem from "./KehuItem";
 import SentKehuItem from "./SentKehuItem";
 
 describe("client:components:home:FeedPanel", () => {
@@ -16,7 +17,7 @@ describe("client:components:home:FeedPanel", () => {
   });
 
   it("renders KehuItem for all kehus", () => {
-    expect(component.find("KehuItem").length).toEqual(3);
+    expect(component.find(KehuItem).length).toEqual(3);
   });
 
   it("renders SentKehuItem for all sent kehus", () => {

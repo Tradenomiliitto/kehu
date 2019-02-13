@@ -1,16 +1,18 @@
-import KehuItem from "./KehuItem";
+import { KehuItem } from "./KehuItem";
 import moment from "moment";
 
 describe("client:components:home:KehuItem", () => {
   let component;
+  const roles = [{ id: 1, role: "client" }, { id: 6, role: "client" }];
   const kehu = {
     date_given: "2019-02-10",
     text: "text",
-    giver_name: "name"
+    giver_name: "name",
+    picture: "pic-src"
   };
 
   beforeEach(() => {
-    component = shallow(<KehuItem kehu={kehu} />);
+    component = shallow(<KehuItem kehu={kehu} roles={roles} />);
   });
 
   it("renders date", () => {
@@ -30,7 +32,7 @@ describe("client:components:home:KehuItem", () => {
 
   describe("when role is given", () => {
     it("renders correct info", () => {
-      const role = { role: "client" };
+      const role = { id: 1, role: "client" };
       component.setProps({ kehu: { ...kehu, role } });
       const expectedInfo = `${kehu.giver_name}, ${role.role}`;
       expect(component.find(".FeedItem-info").text()).toEqual(expectedInfo);
@@ -49,16 +51,19 @@ describe("client:components:home:KehuItem", () => {
   });
 
   describe("when received kehu", () => {
-    it("renders correct info", () => {
+    it("renders correct info and shows sender image", () => {
       component.setProps({ kehu: { ...kehu, receiver_email: "some@email" } });
       const expectedInfo = `Vastaanotettu kehu: ${kehu.giver_name}`;
       expect(component.find(".FeedItem-info").text()).toEqual(expectedInfo);
+      expect(component.find(".FeedItem-image").prop("src")).toEqual(
+        kehu.picture
+      );
     });
   });
 
-  describe("when all at once", () => {
+  describe("when all info at once", () => {
     it("renders correct info", () => {
-      const role = { role: "client" };
+      const role = { id: 1, role: "client" };
       const tags = [{ text: "client" }, { text: "customer" }];
       component.setProps({
         kehu: { ...kehu, tags, role, receiver_email: "some@email" }
@@ -67,6 +72,23 @@ describe("client:components:home:KehuItem", () => {
         role.role
       }. Asiasanat: ${tags[0].text}, ${tags[1].text}`;
       expect(component.find(".FeedItem-info").text()).toEqual(expectedInfo);
+    });
+  });
+
+  describe("when user had saved the kehu role", () => {
+    it("renders image", () => {
+      const role = { id: 6, role: "client" };
+      const src = `/images/role-client.svg`;
+      component.setProps({ kehu: { ...kehu, picture: null, role } });
+      expect(component.find(".FeedItem-image").prop("src")).toEqual(src);
+    });
+  });
+
+  describe("when kehu has no picture or role", () => {
+    it("does not render image", () => {
+      component.setProps({ kehu: { ...kehu, picture: null } });
+      expect(component.find(".FeedItem-image").exists()).toBeFalsy();
+      expect(component.hasClass("FeedItem--noImage"));
     });
   });
 });

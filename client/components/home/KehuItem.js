@@ -1,16 +1,24 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
+import { connect } from "react-redux";
+import cn from "classnames";
 
-export default class KehuItem extends Component {
+export class KehuItem extends Component {
   static propTypes = {
     kehu: PropTypes.object.isRequired
   };
 
   render() {
     const { kehu } = this.props;
+    const imageSrc = this.createImageSrc(kehu);
+    const classNames = cn({
+      FeedItem: true,
+      "FeedItem--noImage": !imageSrc
+    });
     return (
-      <div className="FeedItem">
+      <div className={classNames}>
+        {this.renderImage(kehu, imageSrc)}
         <span className="FeedItem-date">
           {moment(kehu.date_given).format("D.M.YYYY")}
         </span>
@@ -18,6 +26,31 @@ export default class KehuItem extends Component {
         <p className="FeedItem-info">{this.createInfo(kehu)}</p>
       </div>
     );
+  }
+
+  renderImage(kehu, src) {
+    if (src) {
+      return <img src={src} className="FeedItem-image" alt={kehu.giver_name} />;
+    }
+  }
+
+  createImageSrc(kehu) {
+    if (kehu.receiver_email && kehu.picture) {
+      return kehu.picture;
+    }
+    if (kehu.role) {
+      return `/images/role-${this.sanitizeRole(kehu.role.id)}.svg`;
+    }
+  }
+
+  sanitizeRole(id) {
+    const { roles } = this.props;
+    return roles
+      .find(r => r.id === id)
+      .role.toLowerCase()
+      .replace(/ä/g, "a")
+      .replace(/ö/g, "o")
+      .replace(/ /g, "-");
   }
 
   createInfo(kehu) {
@@ -40,3 +73,12 @@ export default class KehuItem extends Component {
     return text;
   }
 }
+
+const mapStateToProps = state => ({
+  roles: state.profile.roles
+});
+
+export default connect(
+  mapStateToProps,
+  null
+)(KehuItem);
