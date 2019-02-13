@@ -25,12 +25,14 @@ describe("client:redux:profile", () => {
       const state = initialState;
       const newSituation = { text: "situation1" };
       const newTag = { text: "tag1" };
+      const feedItem = { item: 1 };
       const payload = {
         profile: { user: 1 },
         contacts: [{ name: "name" }],
         roles: [{ id: 1 }],
         situations: [newSituation],
-        tags: [newTag]
+        tags: [newTag],
+        feed: [feedItem]
       };
       const action = { type: PROFILE_LOADED, payload };
       const expectedState = {
@@ -40,7 +42,8 @@ describe("client:redux:profile", () => {
         contacts: payload.contacts,
         roles: payload.roles,
         situations: payload.situations,
-        tags: payload.tags
+        tags: payload.tags,
+        feedItems: payload.feed
       };
       expect(reducer(state, action)).toEqual(expectedState);
     });
