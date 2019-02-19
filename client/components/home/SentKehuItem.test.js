@@ -7,7 +7,7 @@ describe("client:components:home:SentKehuItem", () => {
   const kehu = {
     date_given: "2019-02-10",
     text: "text",
-    giver_name: "name"
+    receiver_name: "name"
   };
 
   beforeEach(() => {
@@ -25,14 +25,14 @@ describe("client:components:home:SentKehuItem", () => {
   });
 
   it("renders correct info", () => {
-    const expectedInfo = `Lähetetty kehu: ${kehu.giver_name}`;
+    const expectedInfo = `Lähetetty kehu: ${kehu.receiver_name}`;
     expect(component.find(".FeedItem-info").text()).toEqual(expectedInfo);
   });
 
   describe("when role is given", () => {
     it("renders correct info", () => {
       component.setProps({ kehu: { ...kehu, role_id: 6 } });
-      const expectedInfo = `Lähetetty kehu: ${kehu.giver_name}, ${
+      const expectedInfo = `Lähetetty kehu: ${kehu.receiver_name}, ${
         roles[1].role
       }`;
       expect(component.find(".FeedItem-info").text()).toEqual(expectedInfo);

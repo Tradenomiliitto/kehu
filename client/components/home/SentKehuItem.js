@@ -32,9 +32,9 @@ export class SentKehuItem extends Component {
 
     if (kehu.role_id) {
       const role = this.props.roles.find(r => r.id === kehu.role_id);
-      text += `${kehu.giver_name}, ${role.role}`;
+      text += `${kehu.receiver_name}, ${role.role}`;
     } else {
-      text += kehu.giver_name;
+      text += kehu.receiver_name;
     }
 
     return text;
