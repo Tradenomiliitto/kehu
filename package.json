@@ -107,7 +107,9 @@
     ]
   },
   "jest": {
-    "setupTestFrameworkScriptFile": "<rootDir>/jest.setup.js"
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest.setup.js"
+    ]
   },
   "husky": {
     "hooks": {
