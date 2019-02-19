@@ -122,3 +122,11 @@
     align-items: flex-start;
   }
 }
+
+.auth0-lock.auth0-lock .auth0-lock-name {
+  display: none;
+}
+
+.auth0-lock.auth0-lock .auth0-lock-header {
+  height: 80px !important;
+}
