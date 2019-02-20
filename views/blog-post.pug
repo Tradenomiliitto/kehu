@@ -27,12 +27,13 @@ block content
           if post.nextPost
             a(href=post.nextPost).Button.Button--inverse.Post-button.Post-button--next Seuraava
 
-      .row
-        .col.col-xs-12.col-md-10.col-md-offset-1.col-xl-8.col-xl-offset-2
-          h2.SimilarPosts-title Lue lisää aiheesta:
-          .SimilarPosts
-            each similar in post.similarPosts
-              +post-card(similar)
+      if post.similarPosts.length
+        .row
+          .col.col-xs-12.col-md-10.col-md-offset-1.col-xl-8.col-xl-offset-2
+            h2.SimilarPosts-title Lue lisää aiheesta:
+            .SimilarPosts
+              each similar in post.similarPosts
+                +post-card(similar)
 
       if post.tags.length
       .row
