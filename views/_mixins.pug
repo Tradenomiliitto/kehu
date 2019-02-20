@@ -14,7 +14,8 @@ mixin post-card (post)
       +post-info(post)
 
 mixin tags-list (tags)
-  .Tags
-    h2.Tags-title Selaa postauksia aihepiireittäin:
-    each tag in tags
-      a(href=`/blogi?aihe=${tag}`).Tags-tag= tag
+  if (tags && tags.length)
+    .Tags
+      h2.Tags-title Selaa postauksia aihepiireittäin:
+      each tag in tags
+        a(href=`/blogi?aihe=${tag}`).Tags-tag= tag

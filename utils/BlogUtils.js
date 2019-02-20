@@ -46,7 +46,7 @@ function parsePost(posts, post, index) {
     published: moment(post.sys.createdAt).format("D.M.YYYY"),
     similarPosts: getSimilarPosts(post, posts),
     slug: post.fields.url,
-    tags: post.fields.tags,
+    tags: post.fields.tags || [],
     title: post.fields.title
   };
 }
