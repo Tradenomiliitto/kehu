@@ -16,6 +16,10 @@ function parseSimilarPost(post) {
 }
 
 function getSimilarPosts(post, posts) {
+  if (!post.fields.tags || !post.fields.tags.length) {
+    return [];
+  }
+
   return post.fields.tags.reduce((acc, tag) => {
     if (acc.length === 2) {
       return acc;
