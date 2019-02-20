@@ -25,7 +25,12 @@ function getSimilarPosts(post, posts) {
       return acc;
     }
     posts.forEach(p => {
-      if (acc.length < 2 && p.fields.tags.includes(tag)) {
+      if (
+        acc.length < 2 &&
+        p.fields.tags &&
+        p.fields.tags.length &&
+        p.fields.tags.includes(tag)
+      ) {
         acc.push(parseSimilarPost(p));
       }
     });
