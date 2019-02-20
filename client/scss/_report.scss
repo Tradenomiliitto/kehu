@@ -163,12 +163,12 @@ $element-height: 362px;
 
 .TopTagsPanel {
   height: $element-height;
-  padding: 0;
+}
+
+.TopTagsPanel-title {
+  @extend .TopRoles-title;
 }
 
 .TopTagsPanel-wrapper {
-  margin: 0 auto;
-  max-height: $element-height;
-  max-width: $element-height;
-  padding: 1rem;
+  height: calc(#{$element-height} - 5.5rem - 34px);
 }
