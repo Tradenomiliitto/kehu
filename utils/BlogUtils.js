@@ -59,7 +59,10 @@ function filterPostsByTag(posts, tag) {
 }
 
 function getUniqueTags(posts) {
-  return [...new Set([].concat.apply([], posts.map(p => p.tags)))];
+  if (posts && posts.length) {
+    return [...new Set([].concat.apply([], posts.map(p => p.tags)))];
+  }
+  return [];
 }
 
 module.exports = {
