@@ -94,6 +94,9 @@
 .PostCard {
   background: $white;
   display: block;
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
+  break-inside: avoid;
   color: $black;
   margin-bottom: 2rem;
 
