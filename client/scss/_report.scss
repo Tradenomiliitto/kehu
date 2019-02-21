@@ -1,7 +1,78 @@
 $element-height: 362px;
 
 .ReportPanel {
-  margin: 2rem 0;
+  margin: 1rem 0 2rem;
+
+  @include mq(lg) {
+    margin-top: 5rem;
+  }
+}
+
+.PreviewButton {
+  display: none;
+  float: right;
+  margin-top: 2rem;
+
+  @include mq(lg) {
+    display: block;
+  }
+}
+
+.PrintableModal {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.PrintableModal-overlay {
+  background-color: rgba(0, 0, 0, 0.4);
+  height: 100%;
+  padding: 0;
+  width: 100%;
+}
+
+.PrintableContainer {
+  max-height: 100%;
+  overflow: scroll;
+}
+
+.SaveButtonContainer {
+  background: $white;
+  height: calc(38px + 2rem);
+  margin: 0 auto;
+  width: 210mm;
+}
+
+.SaveButton {
+  float: right;
+  margin: 1rem;
+}
+
+.PrintableReport {
+  background: $white;
+  height: 297mm;
+  margin: 0 auto;
+  width: 210mm;
+
+  .ReportElement {
+    box-shadow: initial;
+    margin: initial;
+  }
+
+  .KehuCount {
+    padding-top: 2rem;
+  }
+
+  .TopTagsPanel-wrapper {
+    height: calc(#{$element-height} - 7.5rem);
+  }
+}
+
+.html2canvas-container {
+  width: 3000px !important;
+  height: 5000px !important;
 }
 
 .ReportElement {
