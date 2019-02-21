@@ -26,6 +26,24 @@ $footer-height: 245px;
   }
 }
 
+.Footer-partner {
+  margin: 0 0.5rem;
+  width: 100px;
+
+  @include mq(sm) {
+    width: 120px;
+  }
+
+  @include mq(md) {
+    margin: 0 1rem;
+    width: 130px;
+  }
+
+  @include mq(lg) {
+    width: 150px;
+  }
+}
+
 .Footer-link {
   color: $white;
   font-weight: 300;
