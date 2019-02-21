@@ -3,7 +3,8 @@ import { Provider } from "react-redux";
 import { connect } from "react-redux";
 import { hot } from "react-hot-loader";
 import PropTypes from "prop-types";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Router, Route, Switch } from "react-router-dom";
+import createHistory from "history/createBrowserHistory";
 import store from "./redux";
 import HomePanel from "./HomePanel";
 import Header from "./components/Header";
@@ -21,6 +22,10 @@ import KehusPanel from "./KehusPanel";
 import ProfilePanel from "./ProfilePanel";
 import ReportPanel from "./ReportPanel";
 import Spinner from "./components/Spinner";
+import { handlePageView } from "./util/AnalyticsUtil";
+
+const history = createHistory();
+history.listen(handlePageView);
 
 export class App extends Component {
   static propTypes = {
@@ -47,7 +52,7 @@ export class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Router>{this.defineContent()}</Router>
+        <Router history={history}>{this.defineContent()}</Router>
       </Provider>
     );
   }

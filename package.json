@@ -30,6 +30,7 @@
     "express-https-redirect": "1.0.0",
     "express-session": "1.15.6",
     "express-validator": "5.3.1",
+    "history": "4.7.2",
     "html2canvas": "1.0.0-alpha.12",
     "http-errors": "1.7.2",
     "jspdf": "1.5.3",
