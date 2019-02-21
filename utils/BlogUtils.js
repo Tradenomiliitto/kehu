@@ -29,7 +29,8 @@ function getSimilarPosts(post, posts) {
         acc.length < 2 &&
         p.fields.tags &&
         p.fields.tags.length &&
-        p.fields.tags.includes(tag)
+        p.fields.tags.includes(tag) &&
+        p.fields.title !== post.fields.title
       ) {
         acc.push(parseSimilarPost(p));
       }
