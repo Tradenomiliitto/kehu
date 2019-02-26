@@ -15,7 +15,7 @@ block content
               span.Post-separator |
               span.Post-published= post.published
               span.Post-separator |
-              span.Post-tags= post.tags.join(' ')
+              span.Post-tags= post.tags.map(t => t.charAt(0).toUpperCase() + t.slice(1)).join(' ')
 
             img(src=post.image.url).Post-image
 
