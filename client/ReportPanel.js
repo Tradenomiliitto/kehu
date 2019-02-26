@@ -34,7 +34,7 @@ export class ReportPanel extends Component {
         <div className="row">
           <div className="col col-xs-12">
             <button className="Button PreviewButton" onClick={this.openPreview}>
-              Esikatsele
+              Lataa raportti
             </button>
             <div className="ReportPanel">
               <div className="row">
