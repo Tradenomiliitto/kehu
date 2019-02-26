@@ -1,6 +1,5 @@
 mixin partner-logo (partner)
-  .col.col-xs-6.col-md-3.col-lg-2
-    img.Footer-partner(src=`/images/logo-${partner}-square.png`, alt=partner)
+  img.Footer-partner(src=`/images/logo-${partner}-square.png`, alt=partner)
 
 .Footer
   .container
@@ -11,12 +10,11 @@ mixin partner-logo (partner)
           p.Footer-copyright © Tradenomiliitto 2018
 
           .Footer-partners
-            .row
-              .col.col-lg-2
-              +partner-logo('futuuri')
-              +partner-logo('montevista')
-              +partner-logo('yka')
-              +partner-logo('up')
+            +partner-logo('tral')
+            +partner-logo('futuuri')
+            +partner-logo('montevista')
+            +partner-logo('yka')
+            +partner-logo('up')
 
           ul.Footer-links
             li

@@ -26,21 +26,27 @@ $footer-height: 245px;
   }
 }
 
+.Footer-partners {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
 .Footer-partner {
-  margin: 0 0.5rem;
+  height: 100px;
+  margin: 0 1rem;
   width: 100px;
 
   @include mq(sm) {
+    height: 120px;
     width: 120px;
   }
 
   @include mq(md) {
-    margin: 0 1rem;
+    height: 130px;
+    margin: 0 2rem;
     width: 130px;
-  }
-
-  @include mq(lg) {
-    width: 150px;
   }
 }
 
