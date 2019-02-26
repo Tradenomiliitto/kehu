@@ -20,7 +20,7 @@ export default class TopItemsPanel extends Component {
               style={{
                 fontFamily: '"Work Sans", sans-serif',
                 fontWeight: 300,
-                padding: 1,
+                padding: 2,
                 width: "100%",
                 height: "100%"
               }}
