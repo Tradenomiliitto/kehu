@@ -9,12 +9,12 @@ const {
 
 const TEXT = "This is kehu text";
 const GIVER_NAME = "Giver Name";
-const SITUATION1 = "situation1";
-const SITUATION2 = "situation2";
-const SITUATION3 = "situation3";
-const TAG1 = "tag1";
-const TAG2 = "tag2";
-const TAG3 = "tag3";
+const SITUATION1 = "Situation1";
+const SITUATION2 = "Situation2";
+const SITUATION3 = "Situation3";
+const TAG1 = "Tag1";
+const TAG2 = "Tag2";
+const TAG3 = "Tag3";
 
 module.exports = {
   before: function(browser) {
@@ -51,6 +51,8 @@ module.exports = {
       .clearValue("#text")
       .setValue("#text", newKehuText)
       .click(".tags-remove-nw")
+      .click(".tags-remove-nw")
+      .click(".situations-remove-nw")
       .click(".situations-remove-nw");
 
     addTag(browser, "tags", TAG3);
@@ -61,7 +63,7 @@ module.exports = {
     expectText(browser, ".modal-title-nw", "Kehu tallennettu!");
     expectText(browser, ".kehu-text-nw", newKehuText);
     expectText(browser, ".kehu-giver-name-nw", GIVER_NAME);
-    expectTags(browser, [TAG3, TAG2, SITUATION3, SITUATION2]);
+    expectTags(browser, [TAG3, SITUATION3]);
     expectCloseButton(browser);
   },
   RemoveKehu: function(browser) {

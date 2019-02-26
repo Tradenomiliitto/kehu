@@ -10,12 +10,10 @@ const {
 
 const RECEIVER_NAME = "Receiver Name";
 const TEXT = "This is kehu text";
-const SITUATION1 = "situation1";
-const SITUATION2 = "situation2";
-const SITUATION3 = "situation3";
-const TAG1 = "tag1";
-const TAG2 = "tag2";
-const TAG3 = "tag3";
+const SITUATION1 = "Situation1";
+const SITUATION2 = "Situation2";
+const TAG1 = "Tag1";
+const TAG2 = "Tag2";
 
 module.exports = {
   before: function(browser) {
