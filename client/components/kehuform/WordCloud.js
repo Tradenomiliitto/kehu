@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import cn from "classnames";
 import TagCloud from "react-tag-cloud";
+import { capitalizeText } from "../../util/TextUtil";
 
 export default class WordCloud extends PureComponent {
   static propTypes = {
@@ -47,7 +48,7 @@ export default class WordCloud extends PureComponent {
           className={classNames}
           onClick={this.handleItemClick(item.text)}
         >
-          {item.text}
+          {capitalizeText(item.text)}
         </div>
       );
     });

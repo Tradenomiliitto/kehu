@@ -12,6 +12,7 @@ import ReceiverNameField from "./ReceiverNameField";
 import ReceiverEmailField from "./ReceiverEmailField";
 import RoleImage from "./RoleImage";
 import ContactsToggle from "./ContactsToggle";
+import { capitalizeText } from "../../util/TextUtil";
 
 export class SendKehuForm extends Component {
   static propTypes = {
@@ -116,7 +117,7 @@ export class SendKehuForm extends Component {
     return [...tags, ...situations].map((it, i) => {
       return (
         <span className="KehuItem" key={i}>
-          {it}
+          {capitalizeText(it)}
         </span>
       );
     });

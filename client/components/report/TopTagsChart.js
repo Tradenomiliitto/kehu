@@ -1,5 +1,6 @@
 import Chart from "chart.js";
 import "chartjs-plugin-labels";
+import { capitalizeText } from "../../util/TextUtil";
 
 const COLORS = ["#3EABAB", "#FF96AC", "#3B5F5F", "#F3BBC8", "#FAE6EB"];
 
@@ -39,9 +40,7 @@ export default class TopTagsChart {
           backgroundColor: COLORS
         }
       ],
-      labels: tags
-        .map(t => t.text)
-        .map(t => t.charAt(0).toUpperCase() + t.slice(1))
+      labels: tags.map(t => t.text).map(capitalizeText)
     };
   }
 }

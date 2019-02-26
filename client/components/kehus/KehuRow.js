@@ -6,7 +6,7 @@ import cn from "classnames";
 import KehusTableActionButton from "./KehusTableActionButton";
 import { removeKehu } from "../../redux/kehu";
 import { openEditKehuModal } from "../../redux/portal";
-import { truncateText } from "../../util/TextUtil";
+import { capitalizeText, truncateText } from "../../util/TextUtil";
 
 export class KehuRow extends Component {
   static propTypes = {
@@ -65,7 +65,7 @@ export class KehuRow extends Component {
   renderItem(tag) {
     return (
       <span key={tag.text} className="KehusTable-item">
-        {tag.text}
+        {capitalizeText(tag.text)}
       </span>
     );
   }

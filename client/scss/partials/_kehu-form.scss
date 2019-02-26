@@ -151,14 +151,12 @@
   cursor: pointer;
   font-size: 14px !important;
   margin: 0.25rem;
-  text-transform: capitalize;
 
   &--active {
     background-color: $light-pink;
     border: 1px solid $pink;
     border-radius: 2px;
     padding: 0;
-    text-transform: capitalize;
   }
 
   &--medium {
@@ -186,7 +184,6 @@
   display: inline-block;
   margin: 0.5rem 0.5rem 0 0;
   padding: 2px 4px;
-  text-transform: capitalize;
 }
 
 .WordCloudValue-removeButton {

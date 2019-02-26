@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import moment from "moment";
 import { connect } from "react-redux";
 import cn from "classnames";
+import { capitalizeText } from "../../util/TextUtil";
 
 export class KehuItem extends Component {
   static propTypes = {
@@ -67,7 +68,10 @@ export class KehuItem extends Component {
     }
 
     if (kehu.tags && kehu.tags.length) {
-      text += `. Asiasanat: ${kehu.tags.map(t => t.text).join(", ")}`;
+      text += `. Asiasanat: ${kehu.tags
+        .map(t => t.text)
+        .map(capitalizeText)
+        .join(", ")}`;
     }
 
     return text;

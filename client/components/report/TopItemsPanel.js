@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import TagCloud from "react-tag-cloud";
 import cn from "classnames";
+import { capitalizeText } from "../../util/TextUtil";
 
 export default class TopItemsPanel extends Component {
   static propTypes = {
@@ -43,7 +44,7 @@ export default class TopItemsPanel extends Component {
       });
       return (
         <div key={i} className={classNames}>
-          {item.text}
+          {capitalizeText(item.text)}
         </div>
       );
     });

@@ -8,6 +8,7 @@ import {
 } from "./redux/portal";
 import WelcomePanel from "./components/home/WelcomePanel";
 import FeedPanel from "./components/home/FeedPanel";
+import { capitalizeText } from "./util/TextUtil";
 
 export class HomePanel extends Component {
   static propTypes = {
@@ -96,7 +97,7 @@ export class HomePanel extends Component {
         <ul className="SidebarElement-list">
           {this.props.tags.map((tag, i) => (
             <li key={i}>
-              {i + 1}. {tag.text}
+              {i + 1}. {capitalizeText(tag.text)}
             </li>
           ))}
         </ul>

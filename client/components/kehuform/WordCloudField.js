@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import WordCloud from "./WordCloud";
+import { capitalizeText } from "../../util/TextUtil";
 
 export default class WordCloudField extends PureComponent {
   static propTypes = {
@@ -67,7 +68,7 @@ export default class WordCloudField extends PureComponent {
     return this.props.values.map(item => {
       return (
         <div className="WordCloudValue item-js" key={item}>
-          {item}
+          {capitalizeText(item)}
           <button
             className={`WordCloudValue-removeButton ${id}-remove-nw`}
             onClick={this.handleRemoveClick(item)}

@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import moment from "moment";
 import { resetKehuFormState } from "../../redux/kehu";
 import RoleImage from "./RoleImage";
+import { capitalizeText } from "../../util/TextUtil";
 
 export class KehuSuccessPanel extends Component {
   static propTypes = {
@@ -59,7 +60,7 @@ export class KehuSuccessPanel extends Component {
     return [...tags, ...situations].map((it, i) => {
       return (
         <span className="KehuItem" key={i}>
-          {it.text}
+          {capitalizeText(it.text)}
         </span>
       );
     });

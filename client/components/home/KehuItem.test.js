@@ -1,5 +1,6 @@
 import { KehuItem } from "./KehuItem";
 import moment from "moment";
+import { capitalizeText } from "../../util/TextUtil";
 
 describe("client:components:home:KehuItem", () => {
   let component;
@@ -43,9 +44,9 @@ describe("client:components:home:KehuItem", () => {
     it("renders correct info", () => {
       const tags = [{ text: "client" }, { text: "customer" }];
       component.setProps({ kehu: { ...kehu, tags } });
-      const expectedInfo = `${kehu.giver_name}. Asiasanat: ${tags[0].text}, ${
-        tags[1].text
-      }`;
+      const expectedInfo = `${kehu.giver_name}. Asiasanat: ${capitalizeText(
+        tags[0].text
+      )}, ${capitalizeText(tags[1].text)}`;
       expect(component.find(".FeedItem-info").text()).toEqual(expectedInfo);
     });
   });
@@ -70,7 +71,9 @@ describe("client:components:home:KehuItem", () => {
       });
       const expectedInfo = `Vastaanotettu kehu: ${kehu.giver_name}, ${
         role.role
-      }. Asiasanat: ${tags[0].text}, ${tags[1].text}`;
+      }. Asiasanat: ${capitalizeText(tags[0].text)}, ${capitalizeText(
+        tags[1].text
+      )}`;
       expect(component.find(".FeedItem-info").text()).toEqual(expectedInfo);
     });
   });
