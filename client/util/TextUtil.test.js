@@ -1,4 +1,4 @@
-import { truncateText } from "./TextUtil";
+import { capitalizeText, truncateText } from "./TextUtil";
 
 describe("client:utils:TextUtil", () => {
   describe("truncateText", () => {
@@ -65,5 +65,13 @@ describe("client:utils:TextUtil", () => {
     function expectText(text, length, expectedText) {
       expect(truncateText(text, length)).toEqual(expectedText);
     }
+  });
+
+  describe("capitalizeText", () => {
+    it("capitalizes the first letter of a text", () => {
+      expect(capitalizeText("text")).toEqual("Text");
+      expect(capitalizeText("text with spaces")).toEqual("Text with spaces");
+      expect(capitalizeText("text-with-hyphen")).toEqual("Text-with-hyphen");
+    });
   });
 });

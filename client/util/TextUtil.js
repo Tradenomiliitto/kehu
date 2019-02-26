@@ -31,3 +31,7 @@ export function truncateText(text, length) {
 
   return truncatedText;
 }
+
+export function capitalizeText(text) {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
