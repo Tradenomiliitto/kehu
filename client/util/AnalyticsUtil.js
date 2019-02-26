@@ -1,5 +1,4 @@
 export function handlePageView(location) {
-  console.log(location);
   if (typeof window.ga === "function") {
     let page = "";
     if (location.pathname) {
