@@ -1,0 +1,11 @@
+.Terms {
+  @extend .PrivacyPolicy;
+}
+
+.Terms-title {
+  @extend .PrivacyPolicy-title;
+}
+
+.Terms-subtitle {
+  @extend .PrivacyPolicy-subtitle;
+}
