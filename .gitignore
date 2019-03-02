@@ -12,6 +12,7 @@
 dump.rdb
 reports
 .DS_Store
+latest.dump
 
 # Logs
 logs
