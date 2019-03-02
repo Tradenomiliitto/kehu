@@ -34,6 +34,13 @@ module.exports = function setupRoutes(app) {
 
   app.use("/blogi", blog);
 
+  app.get("/info", (req, res) => {
+    res.render("info", {
+      user: req.user,
+      env: process.env
+    });
+  });
+
   app.get("/kayttoehdot", (req, res) => {
     res.render("terms", {
       user: req.user,
