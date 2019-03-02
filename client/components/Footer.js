@@ -34,6 +34,11 @@ export default function Footer() {
                   </a>
                 </li>
                 <li>
+                  <a className="Footer-link" href="/info">
+                    Info
+                  </a>
+                </li>
+                <li>
                   <a className="Footer-link" href="/kayttoehdot">
                     Käyttöehdot
                   </a>
