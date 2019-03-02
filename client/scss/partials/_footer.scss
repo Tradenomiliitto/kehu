@@ -34,19 +34,19 @@ $footer-height: 245px;
 }
 
 .Footer-partner {
-  height: 100px;
+  height: 80px;
   margin: 0 1rem;
-  width: 100px;
+  width: 80px;
 
   @include mq(sm) {
-    height: 120px;
-    width: 120px;
+    height: 100px;
+    width: 100px;
   }
 
   @include mq(md) {
-    height: 130px;
+    height: 110px;
     margin: 0 2rem;
-    width: 130px;
+    width: 110px;
   }
 }
 
