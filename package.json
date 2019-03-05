@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "npx webpack --env prod",
+    "build": "npm run build:prod && npm run migrate:latest",
     "build:dev": "npx webpack --env dev --watch",
+    "build:prod": "npx webpack --env prod",
     "migrate:latest": "npx knex migrate:latest",
-    "postinstall": "npm run build && npm run migrate:latest",
     "start": "node ./bin/www",
     "start:dev": "nodemon ./bin/www & npm run build:dev",
     "test": "npx nightwatch && npx jest",
@@ -121,5 +121,6 @@
     "hooks": {
       "pre-commit": "pretty-quick --staged"
     }
-  }
+  },
+  "heroku-run-build-script": true
 }
