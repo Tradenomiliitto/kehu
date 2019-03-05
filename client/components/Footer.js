@@ -23,6 +23,7 @@ export default function Footer() {
                 {partnerLogo("tral")}
                 {partnerLogo("futuuri")}
                 {partnerLogo("insinooriliitto")}
+                {partnerLogo("loimu")}
                 {partnerLogo("montevista")}
                 {partnerLogo("yka")}
                 {partnerLogo("up")}

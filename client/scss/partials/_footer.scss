@@ -35,7 +35,7 @@ $footer-height: 245px;
 
 .Footer-partner {
   height: 80px;
-  margin: 0 1rem;
+  margin: 0 0.75rem;
   width: 80px;
 
   @include mq(sm) {
@@ -45,7 +45,7 @@ $footer-height: 245px;
 
   @include mq(md) {
     height: 110px;
-    margin: 0 2rem;
+    margin: 0 1rem;
     width: 110px;
   }
 }
