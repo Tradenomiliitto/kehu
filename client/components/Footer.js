@@ -21,6 +21,7 @@ export default function Footer() {
               <p className="Footer-copyright">© Tradenomiliitto 2018</p>
               <div className="Footer-partners">
                 {partnerLogo("tral")}
+                {partnerLogo("ae")}
                 {partnerLogo("futuuri")}
                 {partnerLogo("insinooriliitto")}
                 {partnerLogo("loimu")}
