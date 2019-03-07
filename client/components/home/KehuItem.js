@@ -36,8 +36,8 @@ export class KehuItem extends Component {
   }
 
   createImageSrc(kehu) {
-    if (kehu.receiver_email && kehu.picture) {
-      return kehu.picture;
+    if (kehu.receiver_email && kehu.giver && kehu.giver.picture) {
+      return kehu.giver.picture;
     }
     if (kehu.role) {
       return `/images/role-${this.sanitizeRole(kehu.role.id)}.svg`;

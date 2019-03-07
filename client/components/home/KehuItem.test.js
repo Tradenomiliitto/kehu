@@ -9,7 +9,9 @@ describe("client:components:home:KehuItem", () => {
     date_given: "2019-02-10",
     text: "text",
     giver_name: "name",
-    picture: "pic-src"
+    giver: {
+      picture: "pic-src"
+    }
   };
 
   beforeEach(() => {
@@ -57,7 +59,7 @@ describe("client:components:home:KehuItem", () => {
       const expectedInfo = `Vastaanotettu kehu: ${kehu.giver_name}`;
       expect(component.find(".FeedItem-info").text()).toEqual(expectedInfo);
       expect(component.find(".FeedItem-image").prop("src")).toEqual(
-        kehu.picture
+        kehu.giver.picture
       );
     });
   });
