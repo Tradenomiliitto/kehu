@@ -33,6 +33,8 @@ mixin partner-logo (partner)
 script(src='//cdn.auth0.com/js/lock/11.7.2/lock.min.js')
 script.
   (function () {
+    var LOGIN_TYPE = 'login';
+    var SIGNUP_TYPE = 'signup';
     var settings = {
       auth: {
         redirectUrl: '#{env.AUTH0_CALLBACK_URL}',
@@ -70,14 +72,19 @@ script.
     var loginButtons = document.querySelectorAll('.login-js');
     var registerButtons = document.querySelectorAll('.register-js');
 
-    function eventBinder(lock) {
+    function eventBinder(lock, type) {
       return function (button) {
         button.addEventListener('click', function () {
           lock.show();
+          if (type === SIGNUP_TYPE) {
+            var container = document.querySelector('.auth0-lock-social-buttons-container');
+            var noticeTextElement = '<p>Rekisteröityäksesi sinun tulee hyväksyä rekisteriseloste ja käyttöehdot.</p>';
+            container.insertAdjacentHTML('afterbegin', noticeTextElement);
+          }
         });
       }
     }
 
-    loginButtons.forEach(eventBinder(loginLock));
-    registerButtons.forEach(eventBinder(registerLock));
+    loginButtons.forEach(eventBinder(loginLock, LOGIN_TYPE));
+    registerButtons.forEach(eventBinder(registerLock, SIGNUP_TYPE));
   })();
