@@ -100,7 +100,7 @@ export class Header extends Component {
   };
 
   toggleMenu = () => {
-    this.setState({ menuOpen: !this.state.menuOpen });
+    this.setState(state => ({ menuOpen: !state.menuOpen }));
   };
 
   closeMenu = () => {

@@ -60,7 +60,7 @@ export class KehusPanel extends Component {
   }
 
   toggleKehusView = () => {
-    this.setState({ showSentKehus: !this.state.showSentKehus });
+    this.setState(state => ({ showSentKehus: !state.showSentKehus }));
   };
 
   renderErrors() {

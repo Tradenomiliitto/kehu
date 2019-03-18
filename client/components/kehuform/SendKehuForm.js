@@ -239,7 +239,7 @@ export class SendKehuForm extends Component {
 
   togglePreview = ev => {
     ev.preventDefault();
-    this.setState({ preview: !this.state.preview });
+    this.setState(state => ({ preview: !state.preview }));
   };
 
   sendKehu = () => {

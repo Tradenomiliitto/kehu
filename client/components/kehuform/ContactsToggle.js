@@ -59,6 +59,6 @@ export default class ContactsToggle extends Component {
   };
 
   toggleState = () => {
-    this.setState({ open: !this.state.open });
+    this.setState(state => ({ open: !state.open }));
   };
 }

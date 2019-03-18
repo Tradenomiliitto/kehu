@@ -107,7 +107,7 @@ export class ProfilePanel extends Component {
   };
 
   toggleEdit = () => {
-    this.setState({ isEditing: !this.state.isEditing });
+    this.setState(state => ({ isEditing: !state.isEditing }));
   };
 
   resetPassword = ev => {

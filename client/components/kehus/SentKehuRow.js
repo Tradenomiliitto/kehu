@@ -39,6 +39,6 @@ export default class SentKehuRow extends Component {
   }
 
   toggleState = () => {
-    this.setState({ open: !this.state.open });
+    this.setState(state => ({ open: !state.open }));
   };
 }

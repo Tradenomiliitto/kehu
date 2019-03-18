@@ -47,6 +47,6 @@ export default class CommentField extends Component {
 
   handleClick = ev => {
     ev.preventDefault();
-    this.setState({ open: !this.state.open });
+    this.setState(state => ({ open: !state.open }));
   };
 }
