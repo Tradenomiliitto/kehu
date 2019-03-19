@@ -1,6 +1,7 @@
 const Auth0Strategy = require("passport-auth0");
 const UserService = require("./services/UserService");
 const Auth0 = require("./utils/Auth0Client");
+const logger = require("./logger");
 
 function setupPassport(passport) {
   const strategy = new Auth0Strategy(
@@ -20,23 +21,29 @@ function setupPassport(passport) {
   });
 
   passport.deserializeUser(async function(user, done) {
-    const kehuUser = await UserService.findUserByAuth0Id(user.id);
+    try {
+      const kehuUser = await UserService.findUserByAuth0Id(user.id);
 
-    if (kehuUser) {
-      const auth0User = await Auth0.getUser({ id: user.id });
-      const parsedUser = UserService.parseUser(auth0User);
-      if (kehuUser.picture === parsedUser.picture) {
-        done(null, kehuUser);
+      if (kehuUser) {
+        const auth0User = await Auth0.getUser({ id: user.id });
+        const parsedUser = UserService.parseUser(auth0User);
+        if (kehuUser.picture === parsedUser.picture) {
+          done(null, kehuUser);
+        } else {
+          const updatedUser = await UserService.updateProfilePicture(
+            kehuUser.id,
+            parsedUser.picture
+          );
+          done(null, updatedUser);
+        }
       } else {
-        const updatedUser = await UserService.updateProfilePicture(
-          kehuUser.id,
-          parsedUser.picture
-        );
-        done(null, updatedUser);
+        const createdUser = await UserService.createUserFromAuth0(user);
+        done(null, createdUser);
       }
-    } else {
-      const createdUser = await UserService.createUserFromAuth0(user);
-      done(null, createdUser);
+    } catch (e) {
+      logger.error(`Deserializing user failed.`);
+      logger.error(e);
+      done(e, null);
     }
   });
 
