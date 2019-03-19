@@ -50,6 +50,7 @@ script.
       },
       mustAcceptTerms: true,
       initialScreen: 'login',
+      configurationBaseUrl: 'https://cdn.eu.auth0.com',
       additionalSignUpFields: [
         {
           name: "first_name",
@@ -67,8 +68,8 @@ script.
     };
 
     var registerSettings = Object.assign({}, settings, {initialScreen: 'signUp'});
-    var loginLock = new Auth0Lock('#{env.AUTH0_CLIENT_ID}', '#{env.AUTH0_DOMAIN}', settings);
-    var registerLock = new Auth0Lock('#{env.AUTH0_CLIENT_ID}', '#{env.AUTH0_DOMAIN}', registerSettings);
+    var loginLock = new Auth0Lock('#{env.AUTH0_CLIENT_ID}', '#{env.AUTH0_CUSTOM_DOMAIN}', settings);
+    var registerLock = new Auth0Lock('#{env.AUTH0_CLIENT_ID}', '#{env.AUTH0_CUSTOM_DOMAIN}', registerSettings);
 
     var loginButtons = document.querySelectorAll('.login-js');
     var registerButtons = document.querySelectorAll('.register-js');
