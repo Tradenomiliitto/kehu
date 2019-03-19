@@ -34,7 +34,8 @@ describe("client:util:ApiUtil", () => {
           Accept: "application/json",
           "content-type": "application/json",
           "CSRF-Token": token
-        }
+        },
+        credentials: "same-origin"
       });
       expect(res).toEqual(jsonResponse);
     });
@@ -58,7 +59,8 @@ describe("client:util:ApiUtil", () => {
           Accept: "application/json",
           "content-type": "application/json",
           "CSRF-Token": token
-        }
+        },
+        credentials: "same-origin"
       });
     });
   });
@@ -84,6 +86,7 @@ describe("client:util:ApiUtil", () => {
           "content-type": "application/json",
           "CSRF-Token": token
         },
+        credentials: "same-origin",
         body: JSON.stringify(body)
       });
       expect(res).toEqual(jsonResponse);
@@ -111,6 +114,7 @@ describe("client:util:ApiUtil", () => {
           "content-type": "application/json",
           "CSRF-Token": token
         },
+        credentials: "same-origin",
         body: JSON.stringify(body)
       });
       expect(res).toEqual(jsonResponse);

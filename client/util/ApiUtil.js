@@ -4,7 +4,8 @@ export function get(url) {
     headers: {
       Accept: "application/json",
       "content-type": "application/json"
-    }
+    },
+    credentials: "same-origin"
   })
     .then(checkResponseStatus)
     .then(res => res.json());
@@ -16,7 +17,8 @@ export function del(url) {
     headers: {
       Accept: "application/json",
       "content-type": "application/json"
-    }
+    },
+    credentials: "same-origin"
   }).then(checkResponseStatus);
 }
 
@@ -27,6 +29,7 @@ export function post(url, body) {
       Accept: "application/json",
       "content-type": "application/json"
     },
+    credentials: "same-origin",
     body: JSON.stringify(body)
   })
     .then(checkResponseStatus)
@@ -40,6 +43,7 @@ export function put(url, body) {
       Accept: "application/json",
       "content-type": "application/json"
     },
+    credentials: "same-origin",
     body: JSON.stringify(body)
   })
     .then(checkResponseStatus)
