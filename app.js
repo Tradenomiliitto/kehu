@@ -20,6 +20,7 @@ const webpackConfig = require("./webpack.dev.config");
 const RedisStore = Redis(session);
 const csrfProtection = csrf({ cookie: true });
 const compiler = webpack(webpackConfig);
+const staticify = require("staticify")(path.join(__dirname, "public"));
 
 const { setupLocals } = require("./utils/ServerUtils");
 const setupPassport = require("./passport");
@@ -67,12 +68,20 @@ app.use(
     })
   })
 );
+
+app.use(staticify.middleware);
+
+app.use((req, res, next) => {
+  req.url = req.url.replace(/\/([^\/]+)\.[0-9a-f]+\.(css|js)$/, "/$1.$2");
+  next();
+});
+
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/", httpsRedirect());
 app.use(passport.initialize());
 app.use(passport.session());
 
-setupLocals(app);
+setupLocals(app, staticify.getVersionedPath);
 setupRoutes(app);
 
 app.use(function(req, res, next) {

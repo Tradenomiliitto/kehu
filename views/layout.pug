@@ -2,7 +2,7 @@ doctype html
 html
     head
         include _head
-        link(rel='stylesheet', href='/public.css')
+        link(rel='stylesheet', href=getVersionedPath('/public.css'))
     body
         block content
         include _analytics

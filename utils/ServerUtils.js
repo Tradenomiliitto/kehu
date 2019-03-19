@@ -6,9 +6,10 @@ function isAuth0User(user) {
   return prefix === "auth0";
 }
 
-function setupLocals(app) {
+function setupLocals(app, getVersionedPath) {
   app.locals.isAuth0User = isAuth0User;
   app.locals.moment = moment;
+  app.locals.getVersionedPath = getVersionedPath;
 }
 
 module.exports = {

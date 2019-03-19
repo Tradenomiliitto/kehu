@@ -4,7 +4,7 @@ block content
   #app
   #portal.Portal
 
-  script(src="/main.js")
+  script(src=getVersionedPath("/main.js"))
   script(src='//cdn.auth0.com/js/lock/11.7.2/lock.min.js')
   script.
     var settings = {

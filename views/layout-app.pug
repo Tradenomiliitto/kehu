@@ -2,7 +2,7 @@ doctype html
 html
   head
     include _head
-    link(rel='stylesheet', href='/main.css')
+    link(rel='stylesheet', href=getVersionedPath('/main.css'))
     meta(name="csrf-token" content=csrfToken)
   body
     noscript Valitettavasti Kehu-sovellus ei toimi ilman JavaScriptia. Ota se käyttöön jatkaaksesi käyttöä.
