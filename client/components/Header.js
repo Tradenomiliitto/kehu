@@ -61,9 +61,9 @@ export class Header extends Component {
                   {this.renderMenuItem("/kehut", "Kehut")}
                   <li className="Header-menuItem">
                     <Link to="/profiili" onClick={this.closeMenu}>
-                      {profile.first_name}
+                      {profile && profile.first_name}
                       <img
-                        src={profile.picture}
+                        src={profile && profile.picture}
                         className="Header-profileImage"
                       />
                     </Link>
