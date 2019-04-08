@@ -27,8 +27,9 @@ export default function Footer() {
                 {partnerLogo("insinooriliitto")}
                 {partnerLogo("loimu")}
                 {partnerLogo("montevista")}
-                {partnerLogo("yka")}
                 {partnerLogo("up")}
+                {partnerLogo("yka")}
+                {partnerLogo("yty")}
               </div>
               <ul className="Footer-links">
                 <li>
