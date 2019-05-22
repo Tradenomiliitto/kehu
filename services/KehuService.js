@@ -11,6 +11,13 @@ const {
 const { raw } = require("objection");
 const logger = require("../logger");
 
+async function deleteKehusForUser(user_id) {
+  await Kehu.query()
+    .delete()
+    .where("owner_id", user_id);
+  // TODO: Remove user data from sent kehus?
+}
+
 async function getKehus(user_id) {
   logger.info(`Fetching kehus for user ${user_id}`);
   return await Kehu.query()
@@ -328,6 +335,7 @@ function parseArray(array) {
 }
 
 module.exports = {
+  deleteKehusForUser,
   getKehus,
   getKehu,
   getSentKehus,
