@@ -44,9 +44,7 @@
 }
 
 .ProfileActionLink {
-  color: $secondary;
   display: block;
-  font-weight: 500;
   margin: 1rem 0;
   transition: $button-transition;
 
@@ -58,7 +56,6 @@
   &:active,
   &:visited,
   &:focus {
-    color: $light-secondary;
     text-decoration: none;
   }
 }
