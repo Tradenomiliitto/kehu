@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { hot } from "react-hot-loader";
 import PropTypes from "prop-types";
 import { Router, Route, Switch } from "react-router-dom";
-import createHistory from "history/createBrowserHistory";
+import { createBrowserHistory } from "history";
 import store from "./redux";
 import HomePanel from "./HomePanel";
 import Header from "./components/Header";
@@ -24,7 +24,7 @@ import ReportPanel from "./ReportPanel";
 import Spinner from "./components/Spinner";
 import { handlePageView } from "./util/AnalyticsUtil";
 
-const history = createHistory();
+const history = createBrowserHistory();
 history.listen(handlePageView);
 
 export class App extends Component {
