@@ -3,6 +3,7 @@ const User = require("../models/User");
 const logger = require("../logger");
 const Auth0 = require("../utils/Auth0Client");
 const { raw } = require("objection");
+const { deleteKehusForUser } = require("./KehuService");
 
 function canAuth0EmailBeUpdated(user) {
   const prefix = user.auth0_id.split("|")[0];
@@ -133,7 +134,24 @@ async function createUserFromAuth0(user) {
   }
 }
 
+async function deleteProfile(user_id) {
+  logger.info(`Deleting user: ${user_id}`);
+  await deleteKehusForUser(user_id);
+  logger.info(`Deleting Kehus...`);
+  const user = await User.query()
+    .where("id", user_id)
+    .first();
+  logger.info(`Deleting Auth0 data...`);
+  await Auth0.deleteUser({ id: user.auth0_id });
+  logger.info(`Deleting user data...`);
+  await User.query()
+    .delete()
+    .where("id", user_id);
+  logger.info(`User ${user_id} deleted.`);
+}
+
 module.exports = {
+  deleteProfile,
   findUserByAuth0Id,
   findUserByEmail,
   createUserFromAuth0,
