@@ -1,51 +1,78 @@
 # Kehu
 
-Kehu is a social web service for members of the trade union Tradenomiliitto. It is up and running at https://kehu.herokuapp.com/
+Kehu is a social web service for members of the trade union Tradenomiliitto. It is up and running at https://www.mykehu.fi
 
-### Local Development
-
-Setup environment variables by copying .env-template `$ cp .env-template .env` and fill in needed variables.
-
-Kehu application uses PostgreSQL database for storing model data and Redis for storing user sessions. You need them both
-to run the application. NodeJS backend is build with Express and accesses database through Objection.js ORM.
-
-User management and authentication are handled using Auth0 with Passport library.
+#### Frontend
 
 You can find JavaScript and SCSS under /client directory, from where they are build and bundled with webpack.
 
-Following npm scripts are available:
+Frontend is build using old school React and Redux. No CRA, TS or other gimmicks at this time.
 
-Build frontend assets once or in watch mode:
+[index.js](client/index.js) is the entry point for "private" Single Page App section of the application, and [public.js](client/public.js) (contains only styles) entry point to the "public" section of application (blog etc.).
+
+JavaScript for public section of the application is included in related pug template files, such as [\_header.pug](views/_header.pug).
+
+#### Backend
+
+Kehu backend is build with Express and uses PostgreSQL database for storing model data and Redis for storing user sessions. You need them both
+to run the application. NodeJS backend accesses database through [Objection.js](https://vincit.github.io/objection.js/) ORM (build on top of [Knex](https://knexjs.org)).
+
+User management and authentication are handled using Auth0 with Passport library.
+
+Blog content is managed with Contentful headless CMS.
+
+#### Testing
+
+Unit tests are run with [Jest](https://jestjs.io) and e2e tests with [Nightwatch.js](https://nightwatchjs.org).
+
+### Local Development
+
+Setup environment variables by copying .env-template and fill in needed variables.
 
 ```
-$ npm run build
-$ npm run build:dev
+$ cp .env-template .env
 ```
 
-Apply latest database migration:
+Install dependencies:
 
 ```
-$ npm run migrate:latest
+$ npm install
 ```
 
-Start server normally or in development mode:
+Run migrations and seeds:
 
 ```
-$ npm start
+$ npx knex migrate:latest
+$ npx knex seed:run
+```
+
+Run [nodemon](https://nodemon.io) server for Express backend and Webpack for frontend in watch mode:
+
+```
 $ npm run start:dev
 ```
 
-Development server runs with nodemon and also builds and watches frontend asset changes and rebuilds when necessary.
+Run all (e2e + unit) tests or jest in watch mode:
 
-Prettier is run on precommit hook for all staged files.
+```
+$ npm run test
+$ npm run jest:watch
+```
 
 ### Deployment
+
+Prettier is run on precommit hook for all staged files.
 
 Kehu application runs on Heroku. Once new code is pushed to Heroku repository, postinstall hook builds assets and runs
 latest database migrations.
 
+There is QA environment running at https://beta.mykehu.fi and production environment at https://www.mykehu.fi. The applications have separate databases, but share the same Auth0 and SendGrid instance.
+
+`develop` branch matches the code deployed on QA, and `master` matches the code deployed on production.
+
 ```
-$ git push heroku master
+$ git push heroku-beta develop:master
+$ git push heroku-prod master
 ```
 
 ### License
