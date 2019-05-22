@@ -10,6 +10,7 @@ function setupLocals(app, getVersionedPath) {
   app.locals.isAuth0User = isAuth0User;
   app.locals.moment = moment;
   app.locals.getVersionedPath = getVersionedPath;
+  app.locals.currentYear = new Date().getFullYear();
 }
 
 module.exports = {

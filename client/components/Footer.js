@@ -18,7 +18,9 @@ export default function Footer() {
           <div className="col">
             <div>
               <img className="Footer-logo" src="/images/kehu-logo.png" />
-              <p className="Footer-copyright">© Tradenomiliitto 2018</p>
+              <p className="Footer-copyright">
+                © Tradenomiliitto {new Date().getFullYear()}
+              </p>
               <div className="Footer-partners">
                 {partnerLogo("tral")}
                 {partnerLogo("ae")}
