@@ -42,7 +42,7 @@ export class ProfilePanel extends Component {
                   </div>
                   <div className="col col-xs-12 col-lg-8 col-lg-pull-4">
                     <div className="row">
-                      <div className="col col-xs-8">
+                      <div className="col col-xs-12 col-md-8">
                         <button
                           className="ProfileEditButton"
                           onClick={this.toggleEdit}

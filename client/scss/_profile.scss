@@ -68,8 +68,12 @@
   @extend .KehusTableActionButton;
   right: 1rem;
   position: absolute;
-  top: -4rem;
+  top: 0;
   z-index: 5;
+
+  @include mq(lg) {
+    top: -4rem;
+  }
 }
 
 .ProfileEditButton-image {
