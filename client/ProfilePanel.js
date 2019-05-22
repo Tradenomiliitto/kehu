@@ -4,9 +4,11 @@ import { connect } from "react-redux";
 import ProfileInfoPanel from "./components/profile/ProfileInfoPanel";
 import ProfileEditForm from "./components/profile/ProfileEditForm";
 import SuccessPanel from "./components/SuccessPanel";
+import { deleteProfile } from "./redux/profile";
 
 export class ProfilePanel extends Component {
   static propTypes = {
+    deleteProfile: PropTypes.func.isRequired,
     profile: PropTypes.object.isRequired
   };
 
@@ -67,6 +69,12 @@ export class ProfilePanel extends Component {
                         >
                           Kirjaudu ulos
                         </a>
+                        <button
+                          className="Button Button--inverse ProfileActionLink ProfileDeleteLink"
+                          onClick={this.handleDeleteButtonClick}
+                        >
+                          Poista käyttäjätunnus
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -114,6 +122,18 @@ export class ProfilePanel extends Component {
     ev.preventDefault();
     window.PASSWORD_RESET_LOCK.show();
   };
+
+  handleDeleteButtonClick = () => {
+    const confirmText = `
+Oletko varma, että haluat poistaa käyttäjätunnuksen? 
+
+Valitsemalla kyllä sekä profiili että tallennetut kehut poistetaan, eikä sitä voi enää peruuttaa.
+`;
+
+    if (confirm(confirmText)) {
+      this.props.deleteProfile();
+    }
+  };
 }
 
 const mapStateToProps = state => ({
@@ -122,5 +142,7 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  null
+  {
+    deleteProfile
+  }
 )(ProfilePanel);

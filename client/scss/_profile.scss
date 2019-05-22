@@ -60,6 +60,12 @@
   }
 }
 
+.ProfileDeleteLink {
+  border-radius: $button-border-radius;
+  margin-top: 4rem;
+  width: 100%;
+}
+
 .auth0-lock.auth0-lock .auth0-lock-back-button {
   display: none;
 }
