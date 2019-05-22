@@ -8,7 +8,11 @@ import reducer, {
   UPDATE_PROFILE_SUCCESS,
   UPDATE_PROFILE_ERROR,
   getProfile,
-  updateProfile
+  updateProfile,
+  DELETE_PROFILE,
+  DELETE_PROFILE_ERROR,
+  DELETE_PROFILE_SUCCESS,
+  deleteProfile
 } from "./profile";
 import * as ApiUtil from "../util/ApiUtil";
 
@@ -86,6 +90,36 @@ describe("client:redux:profile", () => {
       };
       expect(reducer(state, action)).toEqual(expectedState);
     });
+
+    it("on DELETE_PROFILE", () => {
+      const state = { ...initialState, deleteProfileError: true };
+      const action = { type: DELETE_PROFILE };
+      const expectedState = {
+        ...state,
+        loading: true,
+        deleteProfileError: null
+      };
+      expect(reducer(state, action)).toEqual(expectedState);
+    });
+
+    it("on DELETE_PROFILE_SUCCESS", () => {
+      const state = { ...initialState, loading: true };
+      const action = { type: DELETE_PROFILE_SUCCESS };
+      const expectedState = { ...state, loading: false };
+      expect(reducer(state, action)).toEqual(expectedState);
+    });
+
+    it("on DELETE_PROFILE_ERROR", () => {
+      const error = new Error("random error");
+      const state = { ...initialState, loading: true };
+      const action = { type: DELETE_PROFILE_ERROR, payload: error };
+      const expectedState = {
+        ...state,
+        loading: false,
+        deleteProfileError: action.payload
+      };
+      expect(reducer(state, action)).toEqual(expectedState);
+    });
   });
 
   describe("actions", () => {
@@ -158,6 +192,43 @@ describe("client:redux:profile", () => {
 
         store.dispatch(updateProfile(data)).then(() => {
           expect(ApiUtil.put).toBeCalledWith(`/profiili`, data);
+          expect(store.getActions()).toEqual(expectedActions);
+          done();
+        });
+      });
+    });
+
+    describe("deleteProfile", () => {
+      it("when deleting succeeds", done => {
+        const response = { success: true };
+
+        ApiUtil.del = jest.fn(() => new Promise(res => res(response)));
+
+        const store = mockStore({ profile: initialState });
+        const expectedActions = [
+          { type: DELETE_PROFILE },
+          { type: DELETE_PROFILE_SUCCESS }
+        ];
+
+        store.dispatch(deleteProfile()).then(() => {
+          expect(ApiUtil.del).toBeCalledWith(`/profiili`);
+          expect(store.getActions()).toEqual(expectedActions);
+          done();
+        });
+      });
+
+      it("when updating fails", done => {
+        const error = new Error("network error");
+        ApiUtil.del = jest.fn(() => new Promise((res, rej) => rej(error)));
+
+        const store = mockStore(initialState);
+        const expectedActions = [
+          { type: DELETE_PROFILE },
+          { type: DELETE_PROFILE_ERROR, payload: error }
+        ];
+
+        store.dispatch(deleteProfile()).then(() => {
+          expect(ApiUtil.del).toBeCalledWith(`/profiili`);
           expect(store.getActions()).toEqual(expectedActions);
           done();
         });

@@ -1,4 +1,4 @@
-import { get, put } from "../util/ApiUtil";
+import { del, get, put } from "../util/ApiUtil";
 
 export const PROFILE_LOADED = "profile/PROFILE_LOADED";
 export const PROFILE_ERROR = "profile/PROFILE_ERROR";
@@ -6,6 +6,10 @@ export const PROFILE_ERROR = "profile/PROFILE_ERROR";
 export const UPDATE_PROFILE = "profile/UPDATE_PROFILE";
 export const UPDATE_PROFILE_SUCCESS = "profile/UPDATE_PROFILE_SUCCESS";
 export const UPDATE_PROFILE_ERROR = "profile/UPDATE_PROFILE_ERROR";
+
+export const DELETE_PROFILE = "profile/DELETE_PROFILE";
+export const DELETE_PROFILE_SUCCESS = "profile/DELETE_PROFILE_SUCCESS";
+export const DELETE_PROFILE_ERROR = "profile/DELETE_PROFILE_ERROR";
 
 export const initialState = {
   error: null,
@@ -39,6 +43,18 @@ export function updateProfile(data) {
       dispatch({ type: UPDATE_PROFILE_SUCCESS, payload });
     } catch (e) {
       dispatch({ type: UPDATE_PROFILE_ERROR, payload: e });
+    }
+  };
+}
+
+export function deleteProfile() {
+  return async dispatch => {
+    try {
+      dispatch({ type: DELETE_PROFILE });
+      await del("/profiili");
+      dispatch({ type: DELETE_PROFILE_SUCCESS });
+    } catch (e) {
+      dispatch({ type: DELETE_PROFILE_ERROR, payload: e });
     }
   };
 }
@@ -80,6 +96,27 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         loading: false,
         updateProfileError: action.payload
+      };
+
+    case DELETE_PROFILE:
+      return {
+        ...state,
+        loading: true,
+        deleteProfileError: null
+      };
+    case DELETE_PROFILE_SUCCESS:
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 1000);
+      return {
+        ...state,
+        loading: false
+      };
+    case DELETE_PROFILE_ERROR:
+      return {
+        ...state,
+        loading: false,
+        deleteProfileError: action.payload
       };
 
     default:
