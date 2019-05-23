@@ -134,7 +134,17 @@ async function createUserFromAuth0(user) {
 }
 
 async function deleteKehusForUser(user_id) {
-  // TODO: Remove user data from sent kehus?
+  logger.info(`Deleting information from sent kehus...`);
+  const patch = Kehu.fromJson({ giver_id: null }, { skipValidation: true });
+  await Kehu.query()
+    .patch(patch)
+    .where(function() {
+      this.where("giver_id", user_id).andWhere("owner_id", "<>", user_id);
+    })
+    .orWhere(function() {
+      this.where("giver_id", user_id).andWhere(raw("claim_id IS NOT NULL"));
+    });
+  logger.info(`Deleting all user's kehus...`);
   return await Kehu.query()
     .delete()
     .where("owner_id", user_id);
@@ -143,7 +153,6 @@ async function deleteKehusForUser(user_id) {
 async function deleteProfile(user_id) {
   logger.info(`Deleting user: ${user_id}`);
   await deleteKehusForUser(user_id);
-  logger.info(`Deleting Kehus...`);
   const user = await User.query()
     .where("id", user_id)
     .first();
