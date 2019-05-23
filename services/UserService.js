@@ -3,7 +3,6 @@ const User = require("../models/User");
 const logger = require("../logger");
 const Auth0 = require("../utils/Auth0Client");
 const { raw } = require("objection");
-const { deleteKehusForUser } = require("./KehuService");
 
 function canAuth0EmailBeUpdated(user) {
   const prefix = user.auth0_id.split("|")[0];
@@ -132,6 +131,13 @@ async function createUserFromAuth0(user) {
   } catch (error) {
     logger.error(error.stack);
   }
+}
+
+async function deleteKehusForUser(user_id) {
+  // TODO: Remove user data from sent kehus?
+  return await Kehu.query()
+    .delete()
+    .where("owner_id", user_id);
 }
 
 async function deleteProfile(user_id) {
