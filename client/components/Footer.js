@@ -23,6 +23,7 @@ export default function Footer() {
               </p>
               <div className="Footer-partners">
                 {partnerLogo("tral")}
+                {partnerLogo("akava")}
                 {partnerLogo("ae")}
                 {partnerLogo("ekonomit")}
                 {partnerLogo("futuuri")}
