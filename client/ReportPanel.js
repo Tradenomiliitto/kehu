@@ -167,13 +167,17 @@ export class ReportPanel extends Component {
     const input = document.getElementById("PrintableReport");
     html2canvas(input, {
       scrollY: 0,
-      height: 1200,
+      height: input.clientHeight,
       width: input.clientWidth
     }).then(canvas => {
-      const pdf = new jsPDF("p", "mm", [canvas.width, canvas.height]);
+      const pdf = new jsPDF({
+        orientation: "p",
+        unit: "mm",
+        format: "a4"
+      });
       const width = pdf.internal.pageSize.getWidth();
       const height = pdf.internal.pageSize.getHeight();
-      pdf.addImage(canvas, "JPEG", 0, 0, width, height - 20);
+      pdf.addImage(canvas, "JPEG", 0, 0, width, height);
       pdf.save("kehu-raportti.pdf");
     });
   }
