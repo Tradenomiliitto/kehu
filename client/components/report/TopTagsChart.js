@@ -21,7 +21,8 @@ export default class TopTagsChart {
             render: "label",
             fontSize: 14,
             fontColor: "#000",
-            fontFamily: '"Work Sans", Arial, sans-serif'
+            fontFamily: '"Work Sans", Arial, sans-serif',
+            position: "border"
           }
         },
         responsive: true,
