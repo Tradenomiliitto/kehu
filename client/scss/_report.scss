@@ -242,3 +242,18 @@ $element-height: 362px;
 .TopTagsPanel-wrapper {
   height: calc(#{$element-height} - 5.5rem - 34px);
 }
+
+.ListItems {
+  height: 300px;
+}
+
+.ListItems-title {
+  @extend .TopRoles-title;
+}
+
+.ListItems-container {
+  font-weight: 300;
+  font-size: 1.3rem;
+  position: relative;
+  left: -18px;
+}
