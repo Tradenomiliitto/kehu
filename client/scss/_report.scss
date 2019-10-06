@@ -87,6 +87,26 @@ $element-height: 362px;
     height: 100px;
     margin-top: 10px;
     background: $green;
+
+    .Footer__kehu {
+      width: 100px;
+      color: $white;
+      font-weight: 300;
+      top: 28px;
+      left: 50px;
+      position: relative;
+      font-size: 0.7rem;
+      line-height: 1.6rem;
+      float: left;
+    }
+
+    .Footer__tral-logo {
+      width: 150px;
+      position: relative;
+      right: 47px;
+      bottom: 28px;
+      float: right;
+    }
   }
 
   .KehuCount {

@@ -153,7 +153,20 @@ export class ReportPanel extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className="PrintableReport__Footer">FOOTER</div>
+                  <div className="PrintableReport__Footer">
+                    <div className="Footer__kehu">
+                      <img
+                        className="Footer__kehu-logo"
+                        src="/images/kehu-logo.png"
+                      />
+                      <br />
+                      mykehu.fi
+                    </div>
+                    <img
+                      className="Footer__tral-logo"
+                      src="/images/logo-tral-square.png"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
