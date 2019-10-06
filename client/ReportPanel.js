@@ -7,6 +7,7 @@ import KehuCountPanel from "./components/report/KehuCountPanel";
 import TopRolesPanel from "./components/report/TopRolesPanel";
 import TopItemsPanel from "./components/report/TopItemsPanel";
 import TopTagsPanel from "./components/report/TopTagsPanel";
+import ListItemsPanel from "./components/report/ListItemsPanel";
 import Portal from "./components/Portal";
 
 export class ReportPanel extends Component {
@@ -108,38 +109,51 @@ export class ReportPanel extends Component {
                   </button>
                 </div>
                 <div id="PrintableReport" className="PrintableReport">
-                  <div className="row">
-                    <div className="col col-xs-6">
-                      <TopItemsPanel
-                        title="Kehutuimmat taidot"
-                        items={report.tags}
-                      />
-                    </div>
-                    <div className="col col-xs-6">
-                      <TopRolesPanel roles={report.roles} />
-                    </div>
-                    <div className="col col-xs-6">
-                      <KehuCountPanel
-                        text="Sinulla on yhteensä"
-                        number={report.numberOfKehus}
-                      />
-                    </div>
-                    <div className="col col-xs-6">
-                      <TopItemsPanel
-                        title="Kehutuimmat tilanteet"
-                        items={report.situations}
-                      />
-                    </div>
-                    <div className="col col-xs-6">
-                      <KehuCountPanel
-                        text="Olet lähettänyt"
-                        number={report.numberOfSentKehus}
-                      />
-                    </div>
-                    <div className="col col-xs-6">
-                      <TopTagsPanel tags={report.tags.slice(0, 5)} />
+                  <div className="row row--margins">
+                    <div className="col col-xs-12 col--centerMargin element--verticalPadding">
+                      <div className="PrintableReport__Header">HEADER</div>
                     </div>
                   </div>
+                  <div className="row row--margins">
+                    <div className="col col-xs-6 col--centerMargin">
+                      <div className="element--verticalPadding element--combined">
+                        <ListItemsPanel
+                          title="Kehutuimmat taidot"
+                          items={report.tags.slice(0, 5)}
+                        />
+                        <TopTagsPanel tags={report.tags} />
+                      </div>
+                      <div className="element--verticalPadding">
+                        <ListItemsPanel
+                          title="Kehutuimmat tilanteet"
+                          items={report.situations.slice(0, 5)}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="col col-xs-6 col--centerMargin">
+                      <div className="element--verticalPadding">
+                        <KehuCountPanel
+                          text="Sinulla on yhteensä"
+                          number={report.numberOfKehus}
+                        />
+                        <img
+                          className="Thumb-image"
+                          src="/images/kehu-sent-thumb.png"
+                        />
+                      </div>
+                      <div className="element--verticalPadding KehuCount--small">
+                        <KehuCountPanel
+                          text="Olet lähettänyt Kehuja"
+                          number={report.numberOfSentKehus}
+                        />
+                      </div>
+                      <div className="element--verticalPadding">
+                        <TopRolesPanel roles={report.roles} />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="PrintableReport__Footer">FOOTER</div>
                 </div>
               </div>
             </div>

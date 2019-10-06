@@ -57,12 +57,107 @@ $element-height: 362px;
   width: 210mm;
 
   .ReportElement {
+    background: $white-bg;
     box-shadow: initial;
     margin: initial;
   }
 
+  .row--margins {
+    margin-left: 38px;
+    margin-right: 38px;
+  }
+
+  .col--centerMargin {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .element--verticalPadding {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .PrintableReport__Header {
+    height: 155px;
+    background: $white-bg;
+  }
+
+  .PrintableReport__Footer {
+    height: 100px;
+    margin-top: 10px;
+    background: $green;
+  }
+
   .KehuCount {
     padding-top: 2rem;
+    height: 300px;
+    text-align: left;
+  }
+
+  .KehuCount-text {
+    font-size: 1.5rem;
+  }
+
+  .TopRole {
+    height: 150px;
+  }
+
+  .TopRoles-title {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    margin-bottom: 14px;
+  }
+
+  .Thumb-image {
+    float: right;
+    position: absolute;
+    z-index: 1;
+    width: 40%;
+    top: 100px;
+    right: -10px;
+  }
+
+  .KehuCount--small {
+    .KehuCount {
+      height: 167px;
+    }
+
+    .KehuCount-text {
+      width: 50%;
+      font-size: 1.5rem;
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    .KehuCount-count {
+      font-size: 140px;
+      top: -2px;
+      right: 19px;
+      text-align: right;
+      position: absolute;
+      float: right;
+    }
+
+    .KehuCount-bottom {
+      display: none;
+      font-size: 2rem;
+    }
+  }
+
+  .element--combined {
+    .TopTagsPanel {
+      height: auto;
+      padding-top: 5px;
+      margin-top: -50px;
+    }
+
+    .TopTagsPanel-title {
+      display: none;
+    }
+
+    .TopTagsPanel-wrapper {
+      height: 200px;
+    }
   }
 
   .TopTagsPanel-wrapper {
