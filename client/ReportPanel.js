@@ -9,6 +9,7 @@ import TopItemsPanel from "./components/report/TopItemsPanel";
 import TopTagsPanel from "./components/report/TopTagsPanel";
 import ListItemsPanel from "./components/report/ListItemsPanel";
 import Portal from "./components/Portal";
+import { FinnishDate } from "./util/TextUtil";
 
 export class ReportPanel extends Component {
   static propTypes = {
@@ -18,6 +19,10 @@ export class ReportPanel extends Component {
       roles: PropTypes.array.isRequired,
       situations: PropTypes.array.isRequired,
       tags: PropTypes.array.isRequired
+    }).isRequired,
+    profile: PropTypes.shape({
+      first_name: PropTypes.string.isRequired,
+      last_name: PropTypes.string.isRequired
     }).isRequired
   };
 
@@ -88,7 +93,7 @@ export class ReportPanel extends Component {
 
   renderPortal() {
     if (this.state.preview) {
-      const { report } = this.props;
+      const { report, profile } = this.props;
       return (
         <Portal>
           <div className="PrintableModal">
@@ -111,7 +116,25 @@ export class ReportPanel extends Component {
                 <div id="PrintableReport" className="PrintableReport">
                   <div className="row row--margins">
                     <div className="col col-xs-12 col--centerMargin element--verticalPadding">
-                      <div className="PrintableReport__Header">HEADER</div>
+                      <div className="PrintableReport__Header">
+                        <div className="col col-xs-9">
+                          <div className="ReportTitle">Osaamisprofiili</div>
+                          <div className="ReportSubtitle">
+                            Tämä raportti on koottu yksilöiden antamien
+                            palautteiden, Kehujen, perusteella, ja kuvaa
+                            omistajansa osaamista ja vahvuuksia
+                          </div>
+                        </div>
+                        <div className="col col-xs-3">
+                          <div className="ReportUsername">
+                            {profile && profile.first_name}{" "}
+                            {profile && profile.last_name}
+                          </div>
+                          <div className="ReportDate">
+                            mykehu.fi {FinnishDate()}
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div className="row row--margins">
@@ -197,7 +220,8 @@ export class ReportPanel extends Component {
 }
 
 const mapStateToProps = state => ({
-  report: state.report
+  report: state.report,
+  profile: state.profile.profile
 });
 
 export default connect(

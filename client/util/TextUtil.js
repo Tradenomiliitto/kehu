@@ -35,3 +35,10 @@ export function truncateText(text, length) {
 export function capitalizeText(text) {
   return text.charAt(0).toUpperCase() + text.slice(1);
 }
+
+export function FinnishDate(date) {
+  if (date instanceof Date === false) {
+    date = new Date();
+  }
+  return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
+}

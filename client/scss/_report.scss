@@ -187,6 +187,34 @@ $element-height: 362px;
   .TopTagsPanel-wrapper {
     height: calc(#{$element-height} - 7.5rem);
   }
+
+  .PrintableReport__Header {
+    padding: 10px;
+  }
+
+  .ReportTitle {
+    font-size: 4rem;
+    font-weight: 500;
+    color: $pink;
+  }
+
+  .ReportSubtitle {
+    font-size: 0.75rem;
+    padding-left: 5px;
+    margin-top: -4px;
+  }
+
+  .ReportUsername {
+    padding-top: 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: right;
+  }
+
+  .ReportDate {
+    @extend .ReportSubtitle;
+    text-align: right;
+  }
 }
 
 .html2canvas-container {
