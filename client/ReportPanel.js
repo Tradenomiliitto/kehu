@@ -94,6 +94,32 @@ export class ReportPanel extends Component {
   renderPortal() {
     if (this.state.preview) {
       const { report, profile } = this.props;
+
+      // Render TOP kehujat bar chart if >5 items, otherwise render list
+      let topRoles;
+      if (report.roles.length > 5) {
+        topRoles = <TopRolesPanel roles={report.roles} />;
+      } else {
+        // situation and tag arrays have { text, count } objects
+        // roles array has {role, count } objects
+        // so transformation is required
+        let items = report.roles.map(i => {
+          return {
+            text: i.role,
+            count: i.count
+          };
+        });
+        topRoles = (
+          <div>
+            <ListItemsPanel title="TOP Kehujat" items={items.slice(0, 5)} />
+            <img
+              className="TopRoles-image"
+              src="/images/role-opettaja-selected.svg"
+            />
+          </div>
+        );
+      }
+
       return (
         <Portal>
           <div className="PrintableModal">
@@ -171,9 +197,7 @@ export class ReportPanel extends Component {
                           number={report.numberOfSentKehus}
                         />
                       </div>
-                      <div className="element--verticalPadding">
-                        <TopRolesPanel roles={report.roles} />
-                      </div>
+                      <div className="element--verticalPadding">{topRoles}</div>
                     </div>
                   </div>
                   <div className="PrintableReport__Footer">
