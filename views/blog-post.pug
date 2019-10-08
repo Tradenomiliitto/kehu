@@ -1,6 +1,10 @@
 extends layout
 include _mixins
 
+block config
+  - config_title = post.title;
+  - config_image = post.image.url;
+
 block content
   include _header
 
