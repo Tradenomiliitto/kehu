@@ -45,9 +45,9 @@ export class ReportPanel extends Component {
             <div className="ReportPanel">
               <div className="row">
                 <div className="col col-xs-12 col-md-6 col-xl-3">
-                  <TopItemsPanel
+                  <ListItemsPanel
                     title="Kehutuimmat taidot"
-                    items={report.tags}
+                    items={report.tags.slice(0, 5)}
                   />
                 </div>
                 <div className="col col-xs-12 col-md-6 col-xl-5">
@@ -60,9 +60,9 @@ export class ReportPanel extends Component {
                   />
                 </div>
                 <div className="col col-xs-12 col-md-6 col-xl-3">
-                  <TopItemsPanel
+                  <ListItemsPanel
                     title="Kehutuimmat tilanteet"
-                    items={report.situations}
+                    items={report.situations.slice(0, 5)}
                   />
                 </div>
                 <div className="col col-xs-12 col-md-6 col-xl-4">

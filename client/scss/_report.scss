@@ -227,6 +227,14 @@ $element-height: 362px;
     @extend .ReportSubtitle;
     text-align: right;
   }
+
+  .ListItems {
+    height: 300px;
+  }
+
+  .ListItems-container {
+    font-size: 1.3rem;
+  }
 }
 
 .html2canvas-container {
@@ -403,7 +411,7 @@ $element-height: 362px;
 }
 
 .ListItems {
-  height: 300px;
+  height: $element-height;
 }
 
 .ListItems-title {
@@ -412,7 +420,7 @@ $element-height: 362px;
 
 .ListItems-container {
   font-weight: 300;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   position: relative;
   left: -18px;
 }
