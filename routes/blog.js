@@ -8,6 +8,7 @@ router.get("/:slug", async (req, res) => {
   res.render("blog-post", {
     post,
     user: req.user,
+    pageUrl: process.env.HOME_URL + req.originalUrl,
     env: process.env
   });
 });
@@ -19,6 +20,7 @@ router.get("/", async (req, res) => {
     posts,
     tags,
     user: req.user,
+    pageUrl: process.env.HOME_URL + req.originalUrl,
     env: process.env
   });
 });
