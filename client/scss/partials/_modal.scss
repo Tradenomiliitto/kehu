@@ -28,6 +28,10 @@
   width: 395px;
 }
 
+.selectKehusToReport .Modal-content {
+  @include container;
+}
+
 .Modal-closeButton {
   background: none;
   border: 0;

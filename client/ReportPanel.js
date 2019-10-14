@@ -12,6 +12,7 @@ import Portal from "./components/Portal";
 import { FinnishDate } from "./util/TextUtil";
 import { toggleSelectKehusModal } from "./redux/report";
 import KehuFormModal from "./components/KehuFormModal";
+import SelectKehusPanel from "./components/report/SelectKehusPanel";
 
 export class ReportPanel extends Component {
   static propTypes = {
@@ -105,7 +106,13 @@ export class ReportPanel extends Component {
       // Render select kehus dialog
       let selectKehusPortal = "";
       if (this.props.isSelectKehusModalVisible) {
-        selectKehusPortal = <KehuFormModal title="Valitse kehut" />;
+        selectKehusPortal = (
+          <div className="selectKehusToReport">
+            <KehuFormModal title="Valitse kehut">
+              <SelectKehusPanel />
+            </KehuFormModal>
+          </div>
+        );
       }
 
       // Render TOP kehujat bar chart if >5 items, otherwise render list
