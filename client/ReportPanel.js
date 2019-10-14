@@ -10,6 +10,8 @@ import TopTagsPanel from "./components/report/TopTagsPanel";
 import ListItemsPanel from "./components/report/ListItemsPanel";
 import Portal from "./components/Portal";
 import { FinnishDate } from "./util/TextUtil";
+import { toggleSelectKehusModal } from "./redux/report";
+import KehuFormModal from "./components/KehuFormModal";
 
 export class ReportPanel extends Component {
   static propTypes = {
@@ -23,7 +25,8 @@ export class ReportPanel extends Component {
     profile: PropTypes.shape({
       first_name: PropTypes.string.isRequired,
       last_name: PropTypes.string.isRequired
-    }).isRequired
+    }).isRequired,
+    isSelectKehusModalVisible: PropTypes.bool.isRequired
   };
 
   constructor() {
@@ -91,9 +94,19 @@ export class ReportPanel extends Component {
     this.setState({ preview: false });
   };
 
+  toggleSelectKehus = () => {
+    this.props.toggleSelectKehusModal();
+  };
+
   renderPortal() {
     if (this.state.preview) {
       const { report, profile } = this.props;
+
+      // Render select kehus dialog
+      let selectKehusPortal = "";
+      if (this.props.isSelectKehusModalVisible) {
+        selectKehusPortal = <KehuFormModal title="Valitse kehut" />;
+      }
 
       // Render TOP kehujat bar chart if >5 items, otherwise render list
       let topRoles;
@@ -137,6 +150,12 @@ export class ReportPanel extends Component {
                     onClick={this.closePreview}
                   >
                     Sulje
+                  </button>
+                  <button
+                    className="Button Button--inverseNoBorders SaveButton"
+                    onClick={this.toggleSelectKehus}
+                  >
+                    Valitse kehut
                   </button>
                 </div>
                 <div id="PrintableReport" className="PrintableReport">
@@ -218,6 +237,7 @@ export class ReportPanel extends Component {
               </div>
             </div>
           </div>
+          {selectKehusPortal}
         </Portal>
       );
     }
@@ -245,10 +265,11 @@ export class ReportPanel extends Component {
 
 const mapStateToProps = state => ({
   report: state.report,
-  profile: state.profile.profile
+  profile: state.profile.profile,
+  isSelectKehusModalVisible: state.report.selectKehusModalVisible
 });
 
 export default connect(
   mapStateToProps,
-  null
+  { toggleSelectKehusModal }
 )(ReportPanel);
