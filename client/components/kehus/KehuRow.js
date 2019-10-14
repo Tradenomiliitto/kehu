@@ -32,6 +32,11 @@ export class KehuRow extends Component {
     });
     return (
       <tr className="KehusTable-row kehu-row-nw" onClick={this.toggleState}>
+        {this.props.selectKehus ? (
+          <td>
+            <input type="checkbox" />
+          </td>
+        ) : null}
         <td>{moment(kehu.date_given).format("D.M.YYYY")}</td>
         <td>{kehu.role && kehu.role.role}</td>
         <td>{kehu.giver_name}</td>

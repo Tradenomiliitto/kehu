@@ -22,6 +22,11 @@ export default class SentKehuRow extends Component {
     const text = open ? kehu.text : truncateText(kehu.text, 200);
     return (
       <tr className="KehusTable-row kehu-row-nw" onClick={this.toggleState}>
+        {this.props.selectKehus ? (
+          <td>
+            <input type="checkbox" />
+          </td>
+        ) : null}
         <td>{moment(kehu.date_given).format("D.M.YYYY")}</td>
         <td>{this.renderRoleName()}</td>
         <td className="receiver-nw">{kehu.receiver_name}</td>
