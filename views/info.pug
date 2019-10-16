@@ -1,5 +1,11 @@
 extends layout
 
+block config
+  - config_title = 'Kehu – Info';
+  - config_ogTitle = config_title;
+  - config_description = 'Kehu on täysin ilmainen ja kaikille avoin palvelu, jonka avulla voit lähettää, vastaanottaa ja kirjata hyvää palautetta. Kehujen listaamisen kautta saat konkreettisen käsityksen omista taidoistasi ja vahvuuksistasi. Lisäksi voit levittää hyvää fiilistä ympärillesi helpolla tavalla. ';
+  - config_pageUrl = pageUrl;
+
 block content
   include _header
   .Info
@@ -8,7 +14,7 @@ block content
         .col.col-12.col-lg-8.col-lg-offset-2
           h1.Info-title Opi tuntemaan vahvuutesi
 
-          p Kehu on täysin ilmainen ja kaikille avoin palvelu, jonka avulla voit lähettää, vastaanottaa ja kirjata hyvää palautetta. Kehujen listaamisen kautta saat konkreettisen käsityksen omista taidoistasi ja vahvuuksistasi. Lisäksi voit levittää hyvää fiilistä ympärillesi helpolla tavalla. Palvelu on henkilökohtainen eikä lisäämäsi sisältö näy muille. 
+          p Kehu on täysin ilmainen ja kaikille avoin palvelu, jonka avulla voit lähettää, vastaanottaa ja kirjata hyvää palautetta. Kehujen listaamisen kautta saat konkreettisen käsityksen omista taidoistasi ja vahvuuksistasi. Lisäksi voit levittää hyvää fiilistä ympärillesi helpolla tavalla. Palvelu on henkilökohtainen eikä lisäämäsi sisältö näy muille.
 
           h2.Info-subtitle Kerää positiivinen palaute hyödynnettäväksi dataksi
 

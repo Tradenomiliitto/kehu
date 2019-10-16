@@ -37,6 +37,7 @@ module.exports = function setupRoutes(app) {
   app.get("/info", (req, res) => {
     res.render("info", {
       user: req.user,
+      pageUrl: process.env.HOME_URL + req.originalUrl,
       env: process.env
     });
   });
@@ -44,6 +45,7 @@ module.exports = function setupRoutes(app) {
   app.get("/kayttoehdot", (req, res) => {
     res.render("terms", {
       user: req.user,
+      pageUrl: process.env.HOME_URL + req.originalUrl,
       env: process.env
     });
   });
@@ -53,6 +55,7 @@ module.exports = function setupRoutes(app) {
   app.get("/rekisteriseloste", (req, res) => {
     res.render("privacy-policy", {
       user: req.user,
+      pageUrl: process.env.HOME_URL + req.originalUrl,
       env: process.env
     });
   });

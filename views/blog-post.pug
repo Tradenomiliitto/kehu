@@ -2,7 +2,9 @@ extends layout
 include _mixins
 
 block config
-  - config_title = post.title;
+  - config_title = 'Kehu – ' + post.title;
+  - config_ogTitle = config_title;
+  - config_description = post.excerpt;
   - config_image = post.image.url;
   - config_pageUrl = pageUrl;
   - config_ogType = 'article';
