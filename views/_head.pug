@@ -2,22 +2,24 @@
 - config_ogTitle = config_ogTitle || 'Koe positiivisen palautteen voima!'
 - config_image = config_image || process.env.HOME_URL+'/images/kehu-some-share.png'
 - config_title = config_title || 'Kehu – Koe positiivisen palautteen voima!'
+- config_pageUrl = config_pageUrl || process.env.HOME_URL
 meta(charset='utf-8')
 meta(http-equiv='X-UA-Compatible', content='IE=edge')
 title #{config_title}
-meta(name='description', content=config_description)
 meta(name='title', content=config_title)
+meta(name='description', content=config_description)
 meta(property='og:title' content=config_ogTitle)
 meta(property='og:description' content=config_description)
 meta(property='og:type' content=(config_ogType || 'website'))
 meta(property='og:locale' content='fi_FI')
-meta(property='og:url' content=(config_pageUrl || process.env.HOME_URL))
+meta(property='og:url' content=config_pageUrl)
 meta(property='og:site_name' content='Kehu – Koe positiivisen palautteen voima!')
 meta(property='og:image' content=config_image)
-meta(name='twitter:card' content='summary')
-meta(name='twitter:title' content=config_ogTitle)
-meta(name='twitter:description' content=config_description)
-meta(name='twitter:image' content=config_image)
+meta(property='twitter:card' content='summary')
+meta(property='twitter:url' content=config_pageUrl)
+meta(property='twitter:title' content=config_ogTitle)
+meta(property='twitter:description' content=config_description)
+meta(property='twitter:image' content=config_image)
 meta(name='viewport', content='width=device-width, initial-scale=1')
 meta(name='msapplication-TileColor', content='#ffffff')
 meta(name='msapplication-TileImage', content='/ms-icon-144x144.png')
