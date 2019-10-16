@@ -1,10 +1,12 @@
 - config_description = config_description || 'Kehu on täysin ilmainen ja kaikille avoin palvelu, jonka avulla voit lähettää, vastaanottaa ja kirjata hyvää palautetta. Koe positiivisen palautteen voima, ja anna ensimmäisen Kehusi jo tänään!'
 - config_ogTitle = config_ogTitle || 'Koe positiivisen palautteen voima!'
 - config_image = config_image || process.env.HOME_URL+'/images/kehu-some-share.png'
+- config_title = config_title || 'Kehu – Koe positiivisen palautteen voima!'
 meta(charset='utf-8')
 meta(http-equiv='X-UA-Compatible', content='IE=edge')
-title #{config_title || 'Kehu – Koe positiivisen palautteen voima!'}
+title #{config_title}
 meta(name='description', content=config_description)
+meta(name='title', content=config_title)
 meta(property='og:title' content=config_ogTitle)
 meta(property='og:description' content=config_description)
 meta(property='og:type' content=(config_ogType || 'website'))
