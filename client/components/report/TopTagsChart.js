@@ -41,7 +41,7 @@ export default class TopTagsChart {
           backgroundColor: COLORS
         }
       ],
-      labels: tags.map(t => t.text).map(capitalizeText)
+      labels: tags.map((t, i) => (i < 5 ? t.text : "")).map(capitalizeText)
     };
   }
 }

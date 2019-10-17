@@ -76,7 +76,7 @@ export class ReportPanel extends Component {
                   />
                 </div>
                 <div className="col col-xs-12 col-md-6 col-xl-5">
-                  <TopTagsPanel tags={report.tags.slice(0, 5)} />
+                  <TopTagsPanel tags={report.tags} />
                 </div>
               </div>
             </div>
