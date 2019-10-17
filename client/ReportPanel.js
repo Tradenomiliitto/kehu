@@ -158,12 +158,6 @@ export class ReportPanel extends Component {
                   >
                     Sulje
                   </button>
-                  <button
-                    className="Button Button--inverseNoBorders SaveButton"
-                    onClick={this.toggleSelectKehus}
-                  >
-                    Valitse kehut
-                  </button>
                 </div>
                 <div id="PrintableReport" className="PrintableReport">
                   <div className="row row--margins">
