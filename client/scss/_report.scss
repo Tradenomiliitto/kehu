@@ -344,7 +344,8 @@ $element-height: 362px;
   max-height: 0;
   position: absolute;
   transition: max-height 1s ease-out;
-  width: 2rem;
+  width: 67%;
+  max-width: 2rem;
 
   &--animate {
     max-height: 100%;
