@@ -1,25 +1,14 @@
-import {
-  ADD_KEHU_SUCCESS,
-  GET_KEHUS_SUCCESS,
-  SEND_KEHU_SUCCESS,
-  RESET_KEHU_FORM
-} from "./kehu";
+import { ADD_KEHU_SUCCESS, GET_KEHUS_SUCCESS, SEND_KEHU_SUCCESS } from "./kehu";
 
 export const RESET_REPORTS = "report/RESET_REPORTS";
-export const TOGGLE_SELECT_KEHU_MODAL = "report/TOGGLE_SELECT_KEHU_MODAL";
 
 export const initialState = {
   numberOfKehus: 0,
   numberOfSentKehus: 0,
   roles: [],
   situations: [],
-  tags: [],
-  selectKehusModalVisible: false
+  tags: []
 };
-
-export function toggleSelectKehusModal() {
-  return { type: TOGGLE_SELECT_KEHU_MODAL };
-}
 
 function sortItems(a, b) {
   if (a.count < b.count) {
@@ -112,18 +101,6 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         numberOfKehus: state.numberOfKehus + 1,
         roles: addToRoles(state.roles, action.payload.kehu)
-      };
-
-    case RESET_KEHU_FORM:
-      return {
-        ...state,
-        selectKehusModalVisible: false
-      };
-
-    case TOGGLE_SELECT_KEHU_MODAL:
-      return {
-        ...state,
-        selectKehusModalVisible: !state.selectKehusModalVisible
       };
 
     default:

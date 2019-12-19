@@ -6,7 +6,8 @@ import { resetKehuFormState } from "../redux/kehu";
 export class KehuFormModal extends Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
-    resetKehuFormState: PropTypes.func.isRequired
+    resetKehuFormState: PropTypes.func.isRequired,
+    closeModal: PropTypes.func
   };
 
   render() {
@@ -33,7 +34,11 @@ export class KehuFormModal extends Component {
   }
 
   handleClick = () => {
-    this.props.resetKehuFormState();
+    if (this.props.closeModal) {
+      this.props.closeModal();
+    } else {
+      this.props.resetKehuFormState();
+    }
   };
 }
 

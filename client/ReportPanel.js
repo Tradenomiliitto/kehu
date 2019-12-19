@@ -26,14 +26,14 @@ export class ReportPanel extends Component {
     profile: PropTypes.shape({
       first_name: PropTypes.string.isRequired,
       last_name: PropTypes.string.isRequired
-    }).isRequired,
-    isSelectKehusModalVisible: PropTypes.bool.isRequired
+    }).isRequired
   };
 
   constructor() {
     super();
     this.state = {
-      preview: false
+      preview: false,
+      isSelectKehusModalVisible: false
     };
   }
 
@@ -96,7 +96,9 @@ export class ReportPanel extends Component {
   };
 
   toggleSelectKehus = () => {
-    this.props.toggleSelectKehusModal();
+    this.setState({
+      isSelectKehusModalVisible: !this.state.isSelectKehusModalVisible
+    });
   };
 
   renderPortal() {
@@ -105,10 +107,13 @@ export class ReportPanel extends Component {
 
       // Render select kehus dialog
       let selectKehusPortal = "";
-      if (this.props.isSelectKehusModalVisible) {
+      if (this.state.isSelectKehusModalVisible) {
         selectKehusPortal = (
           <div className="selectKehusToReport">
-            <KehuFormModal title="Valitse kehut">
+            <KehuFormModal
+              title="Valitse kehut"
+              closeModal={this.toggleSelectKehus}
+            >
               <SelectKehusPanel />
             </KehuFormModal>
           </div>
@@ -272,11 +277,7 @@ export class ReportPanel extends Component {
 
 const mapStateToProps = state => ({
   report: state.report,
-  profile: state.profile.profile,
-  isSelectKehusModalVisible: state.report.selectKehusModalVisible
+  profile: state.profile.profile
 });
 
-export default connect(
-  mapStateToProps,
-  { toggleSelectKehusModal }
-)(ReportPanel);
+export default connect(mapStateToProps)(ReportPanel);
