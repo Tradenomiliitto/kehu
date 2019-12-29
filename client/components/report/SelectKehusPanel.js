@@ -15,9 +15,7 @@ export class KehusPanel extends Component {
 
   constructor() {
     super();
-    this.state = {
-      showSentKehus: false
-    };
+    this.state = {};
   }
 
   render() {
@@ -39,10 +37,10 @@ export class KehusPanel extends Component {
         <SentKehusTable
           kehus={this.props.sentKehus}
           roles={this.props.roles}
-          selectKehus="true"
+          isKehuSelection={true}
         />
         Saadut kehut
-        <KehusTable kehus={this.props.kehus} selectKehus="true" />
+        <KehusTable kehus={this.props.kehus} isKehuSelection={true} />
       </div>
     );
   }

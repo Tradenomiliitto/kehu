@@ -1,12 +1,17 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import moment from "moment";
+import { selectSentKehu } from "../../redux/report";
 import { truncateText } from "../../util/TextUtil";
+import Checkbox from "../report/Checkbox";
 
-export default class SentKehuRow extends Component {
+export class SentKehuRow extends Component {
   static propTypes = {
     kehu: PropTypes.object.isRequired,
-    roles: PropTypes.array.isRequired
+    roles: PropTypes.array.isRequired,
+    isKehuSelection: PropTypes.bool,
+    unselectedSentKehus: PropTypes.object
   };
 
   constructor() {
@@ -22,9 +27,13 @@ export default class SentKehuRow extends Component {
     const text = open ? kehu.text : truncateText(kehu.text, 200);
     return (
       <tr className="KehusTable-row kehu-row-nw" onClick={this.toggleState}>
-        {this.props.selectKehus ? (
+        {this.props.isKehuSelection ? (
           <td>
-            <input type="checkbox" />
+            <Checkbox
+              name={String(kehu.id)}
+              checked={!this.props.unselectedSentKehus.has(String(kehu.id))}
+              onChange={this.handeSelectKehuClick}
+            />
           </td>
         ) : null}
         <td>{moment(kehu.date_given).format("D.M.YYYY")}</td>
@@ -46,4 +55,21 @@ export default class SentKehuRow extends Component {
   toggleState = () => {
     this.setState(state => ({ open: !state.open }));
   };
+
+  handeSelectKehuClick = ev => {
+    ev.stopPropagation();
+    const id = ev.target.name;
+    const isChecked = ev.target.checked;
+    this.props.selectSentKehu(id, isChecked);
+  };
 }
+
+const mapStateToProps = state => ({
+  unselectedSentKehus: state.report.unselectedSentKehus,
+  profile: state.profile.profile
+});
+
+export default connect(
+  mapStateToProps,
+  { selectSentKehu }
+)(SentKehuRow);

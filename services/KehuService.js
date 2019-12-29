@@ -22,7 +22,14 @@ async function getKehus(user_id) {
 async function getSentKehus(user_id) {
   logger.info(`Fetching given Kehus for user ${user_id}`);
   return await Kehu.query()
-    .select("date_given", "giver_name", "role_id", "receiver_name", "text")
+    .select(
+      "id",
+      "date_given",
+      "giver_name",
+      "role_id",
+      "receiver_name",
+      "text"
+    )
     .where(function() {
       this.where("giver_id", user_id).andWhere("owner_id", "<>", user_id);
     })

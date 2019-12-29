@@ -13,7 +13,7 @@ export default class SentKehusTable extends Component {
       <table className="Table KehusTable KehusTable--sent">
         <thead className="KehusTable-head">
           <tr>
-            {this.props.selectKehus ? <th>Näytä raportissa</th> : null}
+            {this.props.isKehuSelection ? <th>Näytä raportissa</th> : null}
             <th>Aika</th>
             <th>Kehuja</th>
             <th>Vastaanottaja</th>
@@ -31,7 +31,7 @@ export default class SentKehusTable extends Component {
         key={i}
         kehu={kehu}
         roles={this.props.roles}
-        selectKehus={this.props.selectKehus}
+        isKehuSelection={this.props.isKehuSelection}
       />
     ));
   }

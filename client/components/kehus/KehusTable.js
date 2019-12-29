@@ -12,7 +12,7 @@ export default class KehusTable extends Component {
       <table className="Table KehusTable">
         <thead className="KehusTable-head">
           <tr>
-            {this.props.selectKehus ? <th>Näytä raportissa</th> : null}
+            {this.props.isKehuSelection ? <th>Näytä raportissa</th> : null}
             <th>Aika</th>
             <th>Kehuja</th>
             <th>Nimi</th>
@@ -57,7 +57,11 @@ export default class KehusTable extends Component {
 
   renderRows() {
     return this.props.kehus.map(kehu => (
-      <KehuRow key={kehu.id} kehu={kehu} selectKehus={this.props.selectKehus} />
+      <KehuRow
+        key={kehu.id}
+        kehu={kehu}
+        isKehuSelection={this.props.isKehuSelection}
+      />
     ));
   }
 }

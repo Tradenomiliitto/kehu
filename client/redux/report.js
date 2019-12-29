@@ -1,13 +1,16 @@
 import { ADD_KEHU_SUCCESS, GET_KEHUS_SUCCESS, SEND_KEHU_SUCCESS } from "./kehu";
 
 export const RESET_REPORTS = "report/RESET_REPORTS";
+export const SELECT_KEHU = "report/SELECT_KEHU";
 
 export const initialState = {
   numberOfKehus: 0,
   numberOfSentKehus: 0,
   roles: [],
   situations: [],
-  tags: []
+  tags: [],
+  unselectedKehus: new Set(),
+  unselectedSentKehus: new Set()
 };
 
 function sortItems(a, b) {
@@ -103,7 +106,29 @@ export default function reducer(state = initialState, action = {}) {
         roles: addToRoles(state.roles, action.payload.kehu)
       };
 
+    case SELECT_KEHU:
+      let selection = action.sent ? "unselectedSentKehus" : "unselectedKehus";
+      let unselectedKehus = new Set(state[selection]);
+      if (action.status) {
+        unselectedKehus.delete(action.id);
+      } else {
+        unselectedKehus.add(action.id);
+      }
+      return {
+        ...state,
+        [selection]: unselectedKehus
+      };
+
     default:
       return state;
   }
+}
+
+// Action creator to updated kehus selected for report
+export function selectKehu(id, status = true) {
+  return { type: SELECT_KEHU, id, status, sent: false };
+}
+
+export function selectSentKehu(id, status = true) {
+  return { type: SELECT_KEHU, id, status, sent: true };
 }

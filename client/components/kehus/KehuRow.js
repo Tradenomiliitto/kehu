@@ -7,12 +7,16 @@ import KehusTableActionButton from "./KehusTableActionButton";
 import { removeKehu } from "../../redux/kehu";
 import { openEditKehuModal } from "../../redux/portal";
 import { capitalizeText, truncateText } from "../../util/TextUtil";
+import { selectKehu } from "../../redux/report";
+import Checkbox from "../report/Checkbox";
 
 export class KehuRow extends Component {
   static propTypes = {
     kehu: PropTypes.object.isRequired,
     removeKehu: PropTypes.func.isRequired,
-    openEditKehuModal: PropTypes.func.isRequired
+    openEditKehuModal: PropTypes.func.isRequired,
+    isKehuSelection: PropTypes.bool,
+    unselectedKehus: PropTypes.object
   };
 
   constructor() {
@@ -32,9 +36,13 @@ export class KehuRow extends Component {
     });
     return (
       <tr className="KehusTable-row kehu-row-nw" onClick={this.toggleState}>
-        {this.props.selectKehus ? (
+        {this.props.isKehuSelection ? (
           <td>
-            <input type="checkbox" />
+            <Checkbox
+              name={String(kehu.id)}
+              checked={!this.props.unselectedKehus.has(String(kehu.id))}
+              onChange={this.handeSelectKehuClick}
+            />
           </td>
         ) : null}
         <td>{moment(kehu.date_given).format("D.M.YYYY")}</td>
@@ -123,12 +131,24 @@ export class KehuRow extends Component {
       removeKehu(id);
     }
   };
+
+  handeSelectKehuClick = ev => {
+    ev.stopPropagation();
+    const id = ev.target.name;
+    const isChecked = ev.target.checked;
+    this.props.selectKehu(id, isChecked);
+  };
 }
 
+const mapStateToProps = state => ({
+  unselectedKehus: state.report.unselectedKehus
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   {
     removeKehu,
-    openEditKehuModal
+    openEditKehuModal,
+    selectKehu
   }
 )(KehuRow);

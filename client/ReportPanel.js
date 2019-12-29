@@ -10,7 +10,6 @@ import TopTagsPanel from "./components/report/TopTagsPanel";
 import ListItemsPanel from "./components/report/ListItemsPanel";
 import Portal from "./components/Portal";
 import { FinnishDate } from "./util/TextUtil";
-import { toggleSelectKehusModal } from "./redux/report";
 import KehuFormModal from "./components/KehuFormModal";
 import SelectKehusPanel from "./components/report/SelectKehusPanel";
 
