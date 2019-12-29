@@ -263,6 +263,7 @@ export class ReportPanel extends Component {
   printReport() {
     const input = document.getElementById("PrintableReport");
     html2canvas(input, {
+      scale: 4, // Pdf quality parameter
       scrollY: 0,
       height: input.clientHeight,
       width: input.clientWidth
