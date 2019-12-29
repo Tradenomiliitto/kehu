@@ -75,7 +75,6 @@
   right: 1rem;
   position: absolute;
   top: 0;
-  z-index: 5;
 
   @include mq(lg) {
     top: -4rem;
