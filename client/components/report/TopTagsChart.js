@@ -6,6 +6,7 @@ const COLORS = ["#3EABAB", "#FF96AC", "#3B5F5F", "#F3BBC8", "#FAE6EB"];
 
 export default class TopTagsChart {
   constructor(canvas, props) {
+    this.tagsHash = JSON.stringify(props.tags);
     const data = this.formatData(props);
     this.chart = new Chart(canvas.getContext("2d"), {
       data,
@@ -43,5 +44,13 @@ export default class TopTagsChart {
       ],
       labels: tags.map((t, i) => (i < 5 ? t.text : "")).map(capitalizeText)
     };
+  }
+
+  updateData(props) {
+    if (JSON.stringify(props.tags) !== this.tagsHash) {
+      this.tagsHash = JSON.stringify(props.tags);
+      this.chart.data = this.formatData(props);
+      this.chart.update();
+    }
   }
 }

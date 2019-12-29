@@ -11,6 +11,10 @@ export default class TopTagsPanel extends Component {
     this.chart = new TopTagsChart(this.canvas, this.props);
   }
 
+  componentDidUpdate() {
+    this.chart.updateData(this.props);
+  }
+
   render() {
     return (
       <div className="TopTagsPanel ReportElement">
