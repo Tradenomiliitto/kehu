@@ -1,4 +1,5 @@
 const winston = require("winston");
+const { colorize, combine, timestamp, printf } = winston.format;
 
 const logger = winston.createLogger({
   level: "info",
@@ -9,10 +10,24 @@ const logger = winston.createLogger({
   ]
 });
 
+const myFormat = printf(info => {
+  let { level, message, timestamp, ...rest } = info;
+  let error = info.error || info.err;
+  if (error instanceof Error) {
+    delete rest.error;
+    delete rest.err;
+    rest.errorStatusCode = error.statusCode;
+    rest.errorMessage = error.message;
+  }
+  return `${timestamp} [${level}]: ${message} ${
+    Object.entries(rest).length > 0 ? JSON.stringify(rest) : ""
+  }${error && error.stack != null ? `\n${error.stack}` : ""}`;
+});
+
 if (process.env.NODE_ENV !== "production") {
   logger.add(
     new winston.transports.Console({
-      format: winston.format.simple()
+      format: combine(timestamp({ format: "HH:mm:ss" }), colorize(), myFormat)
     })
   );
 }

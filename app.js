@@ -3,7 +3,7 @@ const favicon = require("serve-favicon");
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
-const logger = require("morgan");
+const morgan = require("morgan");
 const session = require("express-session");
 const passport = require("passport");
 const Knex = require("knex");
@@ -16,6 +16,7 @@ const methodOverride = require("method-override");
 const httpsRedirect = require("express-https-redirect");
 const webpack = require("webpack");
 const webpackConfig = require("./webpack.dev.config");
+const log = require("./logger");
 
 const RedisStore = Redis(session);
 const csrfProtection = csrf({ cookie: true });
@@ -52,7 +53,7 @@ if (process.env.NODE_ENV !== "production") {
 app.disable("x-powered-by");
 app.use(compression());
 app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
-app.use(logger("dev"));
+app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -91,6 +92,10 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
+
+  if (err.status !== 404) {
+    log.warn("Express error handler", { err });
+  }
 
   res.status(err.status || 500);
   res.render("error", {

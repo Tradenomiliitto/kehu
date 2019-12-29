@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 require('dotenv').config({silent: true});
+const log = require('../logger');
 
 /**
  * Module dependencies.
@@ -88,4 +89,5 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
+  log.info('Listening on ' + bind);
 }
