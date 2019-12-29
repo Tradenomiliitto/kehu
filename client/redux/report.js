@@ -73,10 +73,14 @@ function addToRoles(roles, kehu) {
   return roles;
 }
 
-export function countReportStatistics(kehus, sent_kehus) {
+export function countReportStatistics(
+  kehus,
+  sent_kehus,
+  numberOfSentKehus = 0
+) {
   return {
     numberOfKehus: kehus.length || 0,
-    numberOfSentKehus: sent_kehus.length || 0,
+    numberOfSentKehus: sent_kehus ? sent_kehus.length : numberOfSentKehus,
     roles: countRoles(kehus),
     tags: countTags(kehus),
     situations: countSituations(kehus)
@@ -91,7 +95,8 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         ...countReportStatistics(
           action.payload.kehus,
-          action.payload.sent_kehus
+          action.payload.sent_kehus,
+          state.numberOfSentKehus
         )
       };
 

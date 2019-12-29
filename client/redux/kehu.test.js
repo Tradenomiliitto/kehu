@@ -301,10 +301,21 @@ describe("client:redux:kehu", () => {
 
         ApiUtil.post = jest.fn(() => new Promise(res => res(response)));
 
-        const store = mockStore(initialState);
+        // addKehu function requires full state
+        const state = { kehu: { ...initialState } };
+        const store = mockStore(state);
         const expectedActions = [
           { type: ADD_KEHU },
-          { type: ADD_KEHU_SUCCESS, payload: response }
+          { type: ADD_KEHU_SUCCESS, payload: response },
+          {
+            type: RESET_REPORTS,
+            payload: {
+              kehus: state.kehu.kehus,
+              // Note: redux-mock-store does not update the Redux store so
+              // sent_kehus is still equal to original state value
+              sent_kehus: state.kehu.sentKehus
+            }
+          }
         ];
 
         store.dispatch(addKehu(data)).then(() => {
@@ -424,10 +435,21 @@ describe("client:redux:kehu", () => {
 
         ApiUtil.post = jest.fn(() => new Promise(res => res(response)));
 
-        const store = mockStore(initialState);
+        // sendKehu function requires full state
+        const state = { kehu: { ...initialState } };
+        const store = mockStore(state);
         const expectedActions = [
           { type: SEND_KEHU },
-          { type: SEND_KEHU_SUCCESS, payload: response }
+          { type: SEND_KEHU_SUCCESS, payload: response },
+          {
+            type: RESET_REPORTS,
+            payload: {
+              kehus: state.kehu.kehus,
+              // Note: redux-mock-store does not update the Redux store so
+              // sent_kehus is still equal to original state value
+              sent_kehus: state.kehu.sentKehus
+            }
+          }
         ];
 
         store.dispatch(sendKehu(data)).then(() => {

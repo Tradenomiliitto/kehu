@@ -41,11 +41,18 @@ export const initialState = {
 };
 
 export function addKehu(data) {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     try {
       dispatch({ type: ADD_KEHU });
       const kehu = await post("/kehut", data);
       dispatch({ type: ADD_KEHU_SUCCESS, payload: kehu });
+      dispatch({
+        type: RESET_REPORTS,
+        payload: {
+          kehus: getState().kehu.kehus,
+          sent_kehus: getState().kehu.sentKehus
+        }
+      });
     } catch (e) {
       dispatch({ type: ADD_KEHU_ERROR, payload: e });
     }
@@ -97,11 +104,18 @@ export function getKehus() {
 }
 
 export function sendKehu(data) {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     try {
       dispatch({ type: SEND_KEHU });
       const kehu = await post("/kehut/laheta", data);
       dispatch({ type: SEND_KEHU_SUCCESS, payload: kehu });
+      dispatch({
+        type: RESET_REPORTS,
+        payload: {
+          kehus: getState().kehu.kehus,
+          sent_kehus: getState().kehu.sentKehus
+        }
+      });
     } catch (e) {
       dispatch({ type: SEND_KEHU_ERROR, payload: e });
     }
