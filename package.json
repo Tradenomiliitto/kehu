@@ -34,7 +34,7 @@
     "html2canvas": "1.0.0-alpha.12",
     "http-errors": "1.7.2",
     "jspdf": "1.5.3",
-    "knex": "0.16.5",
+    "knex": "0.20.5",
     "method-override": "3.0.0",
     "mini-css-extract-plugin": "0.6.0",
     "moment": "2.24.0",
