@@ -12,15 +12,20 @@ import Portal from "./components/Portal";
 import { FinnishDate } from "./util/TextUtil";
 import KehuFormModal from "./components/KehuFormModal";
 import SelectKehusPanel from "./components/report/SelectKehusPanel";
+import { countReportStatistics } from "./redux/report";
 
 export class ReportPanel extends Component {
   static propTypes = {
+    kehus: PropTypes.array.isRequired,
+    sentKehus: PropTypes.array,
     report: PropTypes.shape({
       numberOfKehus: PropTypes.number.isRequired,
       numberOfSentKehus: PropTypes.number.isRequired,
       roles: PropTypes.array.isRequired,
       situations: PropTypes.array.isRequired,
-      tags: PropTypes.array.isRequired
+      tags: PropTypes.array.isRequired,
+      unselectedKehus: PropTypes.object,
+      unselectedSentKehus: PropTypes.object
     }).isRequired,
     profile: PropTypes.shape({
       first_name: PropTypes.string.isRequired,
@@ -102,7 +107,8 @@ export class ReportPanel extends Component {
 
   renderPortal() {
     if (this.state.preview) {
-      const { report, profile } = this.props;
+      const { profile } = this.props;
+      const report = this.countReportStatisticsForSelectedKehus();
 
       // Render select kehus dialog
       let selectKehusPortal = "";
@@ -272,9 +278,27 @@ export class ReportPanel extends Component {
       pdf.save("kehu-raportti.pdf");
     });
   }
+
+  countReportStatisticsForSelectedKehus() {
+    const {
+      kehus,
+      sentKehus,
+      report: { unselectedKehus, unselectedSentKehus }
+    } = this.props;
+
+    const selectedKehus = kehus.filter(
+      kehu => !unselectedKehus.has(String(kehu.id))
+    );
+    const selectedSentKehus = sentKehus.filter(
+      kehu => !unselectedSentKehus.has(String(kehu.id))
+    );
+    return countReportStatistics(selectedKehus, selectedSentKehus);
+  }
 }
 
 const mapStateToProps = state => ({
+  kehus: state.kehu.kehus,
+  sentKehus: state.kehu.sentKehus,
   report: state.report,
   profile: state.profile.profile
 });

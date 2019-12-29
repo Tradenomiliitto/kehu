@@ -73,11 +73,14 @@ function addToRoles(roles, kehu) {
   return roles;
 }
 
-function countSentKehus(state, sentKehus) {
-  if (sentKehus) {
-    return sentKehus.length;
-  }
-  return state.numberOfSentKehus;
+export function countReportStatistics(kehus, sent_kehus) {
+  return {
+    numberOfKehus: kehus.length || 0,
+    numberOfSentKehus: sent_kehus.length || 0,
+    roles: countRoles(kehus),
+    tags: countTags(kehus),
+    situations: countSituations(kehus)
+  };
 }
 
 export default function reducer(state = initialState, action = {}) {
@@ -86,11 +89,10 @@ export default function reducer(state = initialState, action = {}) {
     case GET_KEHUS_SUCCESS:
       return {
         ...state,
-        numberOfKehus: action.payload.kehus.length,
-        numberOfSentKehus: countSentKehus(state, action.payload.sent_kehus),
-        roles: countRoles(action.payload.kehus),
-        tags: countTags(action.payload.kehus),
-        situations: countSituations(action.payload.kehus)
+        ...countReportStatistics(
+          action.payload.kehus,
+          action.payload.sent_kehus
+        )
       };
 
     case SEND_KEHU_SUCCESS:
