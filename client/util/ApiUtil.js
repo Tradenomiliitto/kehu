@@ -11,6 +11,17 @@ export function get(url) {
     .then(res => res.json());
 }
 
+export function getText(url) {
+  return kehuFetch(url, {
+    method: "GET",
+    headers: {
+      Accept: "text",
+      "content-type": "text"
+    },
+    credentials: "same-origin"
+  }).then(res => res.text());
+}
+
 export function del(url) {
   return kehuFetch(url, {
     method: "DELETE",

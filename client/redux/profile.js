@@ -35,11 +35,12 @@ export function getProfile() {
   };
 }
 
-export function updateProfile(data) {
+export function updateProfile(data, pictureOnly = false) {
   return async dispatch => {
     try {
       dispatch({ type: UPDATE_PROFILE });
-      const payload = await put("/profiili", data);
+      const url = pictureOnly ? "/profiili/kuva" : "/profiili";
+      const payload = await put(url, data);
       dispatch({ type: UPDATE_PROFILE_SUCCESS, payload });
     } catch (e) {
       dispatch({ type: UPDATE_PROFILE_ERROR, payload: e });
