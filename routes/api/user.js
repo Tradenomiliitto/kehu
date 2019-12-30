@@ -1,4 +1,5 @@
 const express = require("express");
+const cloudinary = require("cloudinary").v2;
 const router = express.Router();
 const {
   body,
@@ -12,6 +13,7 @@ const UserService = require("../../services/UserService");
 const FeedService = require("../../services/FeedService");
 const { defaults } = require("../../config");
 const { updateProfileSchema } = require("../../utils/ValidationSchemas");
+const logger = require("../../logger");
 
 const MAX_ITEMS = 15;
 
@@ -88,6 +90,40 @@ router.delete("/", async (req, res) => {
     await UserService.deleteProfile(req.user.id);
     req.logout();
     res.status(200).send();
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.get("/cloudinary-signature", (req, res) => {
+  logger.info("Sending Cloudinary signature", { params_to_sign: req.query });
+  let response;
+  try {
+    // Verify that user is uploading and potentially overwriting their own picture
+    if (req.query.data.public_id !== "profile_" + req.user.auth0_id) {
+      throw new Error("public_id not matching profile");
+    }
+
+    response = cloudinary.utils.api_sign_request(
+      req.query.data,
+      process.env.CLOUDINARY_SECRET
+    );
+  } catch (e) {
+    logger.info("Unable to generate Cloudinary signature", {
+      errorMessage: e.message
+    });
+    response = "Error generating Cloudinary signature";
+  }
+  res.send(response);
+});
+
+router.put("/kuva", async (req, res) => {
+  try {
+    const updatedUser = await UserService.updateProfilePicture(
+      req.user.id,
+      req.body.picture
+    );
+    res.json(updatedUser);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

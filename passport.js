@@ -25,6 +25,11 @@ function setupPassport(passport) {
       const kehuUser = await UserService.findUserByAuth0Id(user.id);
 
       if (kehuUser) {
+        done(null, kehuUser);
+        /* Profile picture comparison to Auth0 disabled after own profile
+           picture uploading was taken into use. This means that updates
+           on social media profile pictures are not reflected in Kehu
+           after profile creation
         const auth0User = await Auth0.getUser({ id: user.id });
         const parsedUser = UserService.parseUser(auth0User);
         if (kehuUser.picture === parsedUser.picture) {
@@ -35,7 +40,7 @@ function setupPassport(passport) {
             parsedUser.picture
           );
           done(null, updatedUser);
-        }
+        }*/
       } else {
         const createdUser = await UserService.createUserFromAuth0(user);
         done(null, createdUser);
