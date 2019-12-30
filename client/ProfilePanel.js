@@ -4,11 +4,14 @@ import { connect } from "react-redux";
 import ProfileInfoPanel from "./components/profile/ProfileInfoPanel";
 import ProfileEditForm from "./components/profile/ProfileEditForm";
 import SuccessPanel from "./components/SuccessPanel";
-import { deleteProfile } from "./redux/profile";
+import { deleteProfile, updateProfile } from "./redux/profile";
+import { getText } from "./util/ApiUtil";
+import { toQueryString } from "./util/TextUtil";
 
 export class ProfilePanel extends Component {
   static propTypes = {
     deleteProfile: PropTypes.func.isRequired,
+    updateProfile: PropTypes.func.isRequired,
     profile: PropTypes.object.isRequired
   };
 
@@ -34,17 +37,25 @@ export class ProfilePanel extends Component {
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col col-xs-12 col-lg-4 col-lg-4 col-lg-push-8">
+                  <div className="col col-xs-12 col-md-6 col-md-push-6">
                     <div className="ProfilePicture">
                       <img
                         src={profile.picture}
                         className="ProfilePicture-image"
                       />
                     </div>
+                    <div className="UploadNewProfilePicture">
+                      <button
+                        onClick={this.uploadWidget}
+                        className="Button upload-button"
+                      >
+                        Vaihda profiilikuva
+                      </button>
+                    </div>
                   </div>
-                  <div className="col col-xs-12 col-lg-8 col-lg-pull-4">
+                  <div className="col col-xs-12 col-md-6 col-md-pull-6">
                     <div className="row">
-                      <div className="col col-xs-12 col-md-8">
+                      <div className="col col-xs-12">
                         <button
                           className="ProfileEditButton"
                           onClick={this.toggleEdit}
@@ -107,6 +118,59 @@ export class ProfilePanel extends Component {
     return <ProfileInfoPanel profile={this.props.profile} />;
   }
 
+  uploadWidget = () => {
+    cloudinary.openUploadWidget(
+      {
+        cloudName: process.env.CLOUDINARY_CLOUD_NAME,
+        uploadPreset: process.env.CLOUDINARY_UPLOAD_PRESET,
+        apiKey: process.env.CLOUDINARY_API_KEY,
+        cropping: true,
+        croppingAspectRatio: 1,
+        showSkipCropButton: false,
+        //croppingCoordinatesMode: 'face', // signature generation not working for some reason when using face mode
+        multiple: false,
+        publicId: "profile_" + this.props.profile.auth0_id,
+        uploadSignature: this.generateSignature,
+        language: "fi",
+        styles: {
+          palette: {
+            window: "#FFFFFF",
+            windowBorder: "#CFCFCF",
+            tabIcon: "#FF96AC",
+            menuIcons: "#5A616A",
+            textDark: "#000000",
+            textLight: "#FFFFFF",
+            link: "#FF96AC",
+            action: "#FF96AC",
+            inactiveTabIcon: "#3B5F5F",
+            error: "#ff5f83",
+            inProgress: "#0078FF",
+            complete: "#DBFFE5",
+            sourceBg: "#EDF1F1"
+          }
+        }
+      },
+      async (error, result) => {
+        // Update profile picture if upload was succesful
+        if (result && result.event === "success") {
+          this.props.updateProfile(
+            {
+              picture: result.info.secure_url
+            },
+            true
+          );
+        }
+      }
+    );
+  };
+
+  generateSignature = async (callback, params_to_sign) => {
+    let path = "/profiili/cloudinary-signature?";
+    let params = toQueryString({ data: params_to_sign });
+    let signature = await getText(encodeURI(path + params));
+    callback(signature);
+  };
+
   handleSuccess = () => {
     this.setState({
       success: true,
@@ -125,7 +189,7 @@ export class ProfilePanel extends Component {
 
   handleDeleteButtonClick = () => {
     const confirmText = `
-Oletko varma, että haluat poistaa käyttäjätunnuksen? 
+Oletko varma, että haluat poistaa käyttäjätunnuksen?
 
 Valitsemalla kyllä sekä profiili että tallennetut kehut poistetaan, eikä sitä voi enää peruuttaa.
 `;
@@ -143,6 +207,7 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {
-    deleteProfile
+    deleteProfile,
+    updateProfile
   }
 )(ProfilePanel);

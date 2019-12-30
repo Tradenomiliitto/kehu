@@ -26,6 +26,11 @@
   max-width: 120px;
 }
 
+.UploadNewProfilePicture {
+  margin-top: 3rem;
+  text-align: center;
+}
+
 .ProfileInfo-label {
   color: $secondary;
   font-weight: 500;
@@ -75,10 +80,6 @@
   right: 1rem;
   position: absolute;
   top: 0;
-
-  @include mq(lg) {
-    top: -4rem;
-  }
 }
 
 .ProfileEditButton-image {
