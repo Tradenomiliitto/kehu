@@ -16,9 +16,18 @@ export default class SuccessPanel extends Component {
 
   componentDidMount() {
     if (this.props.hideAfter) {
-      setTimeout(() => {
+      this.hideAfterTimerHandle = setTimeout(() => {
         this.setState({ hidden: true });
+        this.hideAfterTimerHandle = 0;
       }, this.props.hideAfter);
+    }
+  }
+
+  componentWillUnmount() {
+    // Is our timer running?
+    if (this.hideAfterTimerHandle) {
+      clearTimeout(this.hideAfterTimerHandle);
+      this.hideAfterTimerHandle = 0;
     }
   }
 
