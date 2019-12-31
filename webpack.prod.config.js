@@ -4,6 +4,16 @@ const Dotenv = require("dotenv-webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 
+// Include env vars from system (required for Heroku deployment)
+const dotenv = new Dotenv({ systemvars: true });
+// Remove env vars not starting with REACT_APP_ to prevent accidentally
+// including confidential information
+Object.keys(dotenv.definitions).forEach(key => {
+  if (!key.startsWith("process.env.REACT_APP_")) {
+    delete dotenv.definitions[key];
+  }
+});
+
 module.exports = {
   mode: "production",
   entry: {
@@ -50,9 +60,7 @@ module.exports = {
   },
   plugins: [
     new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /fi/),
-    new Dotenv({
-      path: "./.react.env"
-    }),
+    dotenv,
     new MiniCssExtractPlugin({
       filename: "[name].css",
       chunkFilename: "[id].css"

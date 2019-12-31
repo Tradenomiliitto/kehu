@@ -121,9 +121,9 @@ export class ProfilePanel extends Component {
   uploadWidget = () => {
     cloudinary.openUploadWidget(
       {
-        cloudName: process.env.CLOUDINARY_CLOUD_NAME,
-        uploadPreset: process.env.CLOUDINARY_UPLOAD_PRESET,
-        apiKey: process.env.CLOUDINARY_API_KEY,
+        cloudName: process.env.REACT_APP_CLOUDINARY_CLOUD_NAME,
+        uploadPreset: process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET,
+        apiKey: process.env.REACT_APP_CLOUDINARY_API_KEY,
         cropping: true,
         croppingAspectRatio: 1,
         showSkipCropButton: false,
@@ -153,12 +153,7 @@ export class ProfilePanel extends Component {
       async (error, result) => {
         // Update profile picture if upload was succesful
         if (result && result.event === "success") {
-          this.props.updateProfile(
-            {
-              picture: result.info.secure_url
-            },
-            true
-          );
+          this.props.updateProfile({ picture: result.info.secure_url }, true);
         }
       }
     );

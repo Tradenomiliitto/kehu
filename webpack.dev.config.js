@@ -3,6 +3,16 @@ const webpack = require("webpack");
 const Dotenv = require("dotenv-webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
+// Include env vars from system (required for Heroku deployment)
+const dotenv = new Dotenv({ systemvars: true });
+// Remove env vars not starting with REACT_APP_ to prevent accidentally
+// including confidential information
+Object.keys(dotenv.definitions).forEach(key => {
+  if (!key.startsWith("process.env.REACT_APP_")) {
+    delete dotenv.definitions[key];
+  }
+});
+
 module.exports = {
   mode: "development",
   entry: {
@@ -54,9 +64,7 @@ module.exports = {
       filename: "[name].css",
       chunkFilename: "[id].css"
     }),
-    new Dotenv({
-      path: "./.react.env"
-    }),
+    dotenv,
     new webpack.HotModuleReplacementPlugin()
   ]
 };
