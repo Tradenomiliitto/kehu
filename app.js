@@ -15,19 +15,23 @@ const compression = require("compression");
 const methodOverride = require("method-override");
 const httpsRedirect = require("express-https-redirect");
 const webpack = require("webpack");
-const webpackConfig = require("./webpack.dev.config");
-const log = require("./logger");
 
+// Following packages are not required in production and importing them
+// will throw an error if devDependencies are not installed
+const isProd = process.env.NODE_ENV === "production";
+const webpackConfig = isProd ? null : require("./webpack.dev.config");
+const compiler = isProd ? null : webpack(webpackConfig);
+
+const log = require("./logger");
 const RedisStore = Redis(session);
 const csrfProtection = csrf({ cookie: true });
-const compiler = webpack(webpackConfig);
 const staticify = require("staticify")(path.join(__dirname, "public"));
 
 const { setupLocals } = require("./utils/ServerUtils");
 const setupPassport = require("./passport");
 const setupRoutes = require("./routes");
 
-pg.defaults.ssl = process.env.NODE_ENV === "production";
+pg.defaults.ssl = isProd;
 const knex = Knex({
   client: "pg",
   connection: process.env.DATABASE_URL
@@ -40,7 +44,7 @@ setupPassport(passport);
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
-if (process.env.NODE_ENV !== "production") {
+if (!isProd) {
   app.use(
     require("webpack-dev-middleware")(compiler, {
       noInfo: true,
