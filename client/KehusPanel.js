@@ -59,7 +59,8 @@ export class KehusPanel extends Component {
     );
   }
 
-  toggleKehusView = () => {
+  toggleKehusView = ev => {
+    ev.target.blur();
     this.setState(state => ({ showSentKehus: !state.showSentKehus }));
   };
 
