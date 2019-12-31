@@ -1,5 +1,6 @@
 const { transaction } = require("objection");
 const uuidv4 = require("uuid/v4");
+const XLSX = require("xlsx");
 const Kehu = require("../models/Kehu");
 const { findTagWithText } = require("./TagService");
 const { findSituationWithText } = require("./SituationService");
@@ -334,7 +335,103 @@ function parseArray(array) {
     .map(text => ({ text }));
 }
 
+async function excelReport(userId) {
+  // Fetch and format received Kehus
+  const kehus = await Kehu.query()
+    .select(
+      "date_given as Aika",
+      "giver_name as Nimi",
+      "text as Kehu",
+      "comment as Kommentti",
+      "importance as Tähdet"
+    )
+    .where("owner_id", userId)
+    .eager("[role, situations, tags]")
+    .orderBy("date_given", "desc");
+
+  // Join arrays to fit in a single spreadsheet cell
+  kehus.forEach(kehu => {
+    if (kehu.role) {
+      kehu.Kehuja = kehu.role.role;
+    }
+    delete kehu.role;
+    if (isArray(kehu.tags)) {
+      kehu.Taidot = kehu.tags.map(t => t.text).join(", ");
+    }
+    delete kehu.tags;
+    if (isArray(kehu.situations)) {
+      kehu.Tilanne = kehu.situations.map(t => t.text).join(", ");
+    }
+    delete kehu.situations;
+  });
+
+  // Fetch and format sent Kehus
+  const sent_kehus = await Kehu.query()
+    .select(
+      "date_given as Aika",
+      "receiver_name as Vastaanottaja",
+      "text as Kehu"
+    )
+    .where(function() {
+      this.where("giver_id", userId).andWhere("owner_id", "<>", userId);
+    })
+    .orWhere(function() {
+      this.where("giver_id", userId).andWhere(raw("claim_id IS NOT NULL"));
+    })
+    .eager("[role]")
+    .orderBy("date_given", "desc");
+
+  // Join arrays to fit in a single spreadsheet cell
+  sent_kehus.forEach(kehu => {
+    if (kehu.role) {
+      kehu.Kehuja = kehu.role.role;
+    }
+    delete kehu.role;
+  });
+
+  // Create new sheets from json, define column orders and widths
+  const wb = XLSX.utils.book_new();
+  wb.SheetNames.push("Saadut kehut");
+  wb.Sheets["Saadut kehut"] = XLSX.utils.json_to_sheet(kehus, {
+    header: [
+      "Aika",
+      "Kehuja",
+      "Nimi",
+      "Kehu",
+      "Tilanne",
+      "Taidot",
+      "Tähdet",
+      "Kommentti"
+    ]
+  });
+  wb.Sheets["Saadut kehut"]["!cols"] = [10, 10, 20, 50, 30, 30, 8, 50].map(
+    width => ({
+      width
+    })
+  );
+
+  wb.SheetNames.push("Lähetetyt kehut");
+  wb.Sheets["Lähetetyt kehut"] = XLSX.utils.json_to_sheet(sent_kehus, {
+    header: ["Aika", "Kehuja", "Vastaanottaja", "Kehu"]
+  });
+  wb.Sheets["Lähetetyt kehut"]["!cols"] = [10, 10, 35, 60].map(width => ({
+    width
+  }));
+
+  return XLSX.write(wb, {
+    type: "buffer",
+    bookType: "xlsx",
+    compression: true
+  });
+}
+
+// Returns true if o is array
+function isArray(o) {
+  return Object.prototype.toString.call(o) === "[object Array]";
+}
+
 module.exports = {
+  excelReport,
   getKehus,
   getKehu,
   getSentKehus,

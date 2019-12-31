@@ -96,4 +96,13 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+router.get("/kehu-raportti.xlsx", async (req, res) => {
+  try {
+    const xlsxBuffer = await KehuService.excelReport(req.user.id);
+    res.status(200).send(xlsxBuffer);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;
