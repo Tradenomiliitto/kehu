@@ -35,6 +35,12 @@ export class KehusPanel extends Component {
                 </h1>
                 <span className="KehusPanelHeader-text">Vaihda näkymää</span>
                 {this.renderToggleButton()}
+                <a href="/api/v1/kehut/kehu-raportti.xlsx">
+                  <img
+                    src="/images/excel-icon.svg"
+                    className="download-report-icon"
+                  />
+                </a>
               </div>
               {this.renderErrors()}
               {this.renderSelectedKehusTable()}
