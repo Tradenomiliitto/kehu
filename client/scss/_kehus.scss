@@ -18,15 +18,15 @@
 }
 
 .KehusPanelHeader-text {
-  margin: 0 0 1rem;
+  margin: 0 0 1rem 0;
   display: block;
 
-  @include mq(sm) {
+  @include mq(450px) {
     display: inline;
     margin: 0 1rem 0 0;
   }
 
-  @include mq(md) {
+  @include mq(735px) {
     margin: 0 1rem 0 2rem;
   }
 }
@@ -129,8 +129,22 @@
   max-width: 18px;
 }
 
-.download-report-icon {
+.KehusPanelHeader-toggle-container {
+  display: block;
+
+  @include mq(730px) {
+    display: inline;
+  }
+}
+
+.KehusPanelHeader-download-report {
   float: right;
   width: 3em;
-  margin-right: 2.5em;
+  margin-left: 1em;
+  margin-bottom: 1em;
+
+  @include mq($until: 730px) {
+    margin-left: 2em;
+    margin-top: -1em;
+  }
 }

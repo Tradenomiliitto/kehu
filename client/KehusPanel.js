@@ -33,14 +33,16 @@ export class KehusPanel extends Component {
                 <h1 className="KehusPanelHeader-title kehus-title-nw">
                   {titleText}
                 </h1>
-                <span className="KehusPanelHeader-text">Vaihda näkymää</span>
-                {this.renderToggleButton()}
-                <a href="/api/v1/kehut/kehu-raportti.xlsx">
-                  <img
-                    src="/images/excel-icon.svg"
-                    className="download-report-icon"
-                  />
-                </a>
+                <div className="KehusPanelHeader-toggle-container">
+                  <span className="KehusPanelHeader-text">Vaihda näkymää</span>
+                  {this.renderToggleButton()}
+                  <a href="/api/v1/kehut/kehu-raportti.xlsx">
+                    <img
+                      src="/images/excel-icon.svg"
+                      className="KehusPanelHeader-download-report"
+                    />
+                  </a>
+                </div>
               </div>
               {this.renderErrors()}
               {this.renderSelectedKehusTable()}
