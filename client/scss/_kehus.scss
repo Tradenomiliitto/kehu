@@ -73,12 +73,6 @@
 .KehusTable-row {
   cursor: pointer;
   font-size: 0.75rem;
-
-  td:nth-child(5),
-  td:nth-child(6) {
-    max-width: 150px;
-    overflow: hidden;
-  }
 }
 
 .KehusTable-cell {
@@ -95,6 +89,19 @@
     max-height: initial;
     overflow: initial;
   }
+}
+
+.KehusTable-tagColumn {
+  max-width: 150px;
+  overflow: hidden;
+}
+
+.KehusTable-senderColumn {
+  min-width: 180px;
+}
+
+.KehusTable-kehuColumn {
+  width: 100%;
 }
 
 .KehusTable-starColumn {

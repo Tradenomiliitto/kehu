@@ -49,12 +49,12 @@ export class KehuRow extends Component {
         <td>{kehu.role && kehu.role.role}</td>
         <td>{kehu.giver_name}</td>
         <td className="KehusTable-cell--text text-js">{text}</td>
-        <td>
+        <td className="KehusTable-tagColumn">
           <div className={tagsClasses}>
             {kehu.situations.map(this.renderItem)}
           </div>
         </td>
-        <td>
+        <td className="KehusTable-tagColumn">
           <div className={tagsClasses}>{kehu.tags.map(this.renderItem)}</div>
         </td>
         <td>{this.renderStars()}</td>

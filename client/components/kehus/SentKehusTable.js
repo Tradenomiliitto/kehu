@@ -16,8 +16,8 @@ export default class SentKehusTable extends Component {
             {this.props.isKehuSelection ? <th>Näytä raportissa</th> : null}
             <th>Aika</th>
             <th>Kehuja</th>
-            <th>Vastaanottaja</th>
-            <th>Kehu</th>
+            <th className="KehusTable-senderColumn">Vastaanottaja</th>
+            <th className="KehusTable-kehuColumn">Kehu</th>
           </tr>
         </thead>
         <tbody>{this.renderRows()}</tbody>
