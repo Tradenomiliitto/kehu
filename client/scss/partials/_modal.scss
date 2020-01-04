@@ -32,7 +32,7 @@
   @include container;
 }
 
-.Modal-closeButton {
+.Modal-closeCross {
   background: none;
   border: 0;
   color: $brown;
@@ -48,4 +48,10 @@
   font-size: 1.375rem;
   margin: 0.5rem 0 0;
   text-align: center;
+}
+
+.Modal-closeButton {
+  position: absolute;
+  right: 2em;
+  top: 1em;
 }

@@ -7,7 +7,14 @@ export class KehuFormModal extends Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
     resetKehuFormState: PropTypes.func.isRequired,
+    hasCloseCross: PropTypes.bool,
+    hasCloseButton: PropTypes.bool,
     closeModal: PropTypes.func
+  };
+
+  static defaultProps = {
+    hasCloseCross: true,
+    hasCloseButton: false
   };
 
   render() {
@@ -16,15 +23,25 @@ export class KehuFormModal extends Component {
         <div className="Modal-overlay">
           <div className="Modal-content">
             <div className="Modal-header">
-              <button
-                className="Modal-closeButton modal-close-nw close-button-js"
-                onClick={this.handleClick}
-              >
-                &#10005;
-              </button>
+              {this.props.hasCloseCross && (
+                <button
+                  className="Modal-closeCross modal-close-nw close-button-js"
+                  onClick={this.handleClick}
+                >
+                  &#10005;
+                </button>
+              )}
               <h3 className="Modal-title modal-title-js modal-title-nw">
                 {this.props.title}
               </h3>
+              {this.props.hasCloseButton && (
+                <button
+                  className="Button Modal-closeButton"
+                  onClick={this.handleClick}
+                >
+                  Valmis
+                </button>
+              )}
             </div>
             {this.props.children}
           </div>

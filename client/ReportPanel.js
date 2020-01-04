@@ -118,6 +118,8 @@ export class ReportPanel extends Component {
             <KehuFormModal
               title="Valitse kehut"
               closeModal={this.toggleSelectKehus}
+              hasCloseCross={false}
+              hasCloseButton={true}
             >
               <SelectKehusPanel />
             </KehuFormModal>
