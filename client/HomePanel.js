@@ -40,7 +40,7 @@ export class HomePanel extends Component {
                   <h1 className="HomeButtons-title">Lisää uusi Kehu</h1>
                   <p className="HomeButtons-text">
                     Älä pidä kehujasi vakan alla! Tallenna Kehu-pankkiisi
-                    kuulemasi kehu tai pristä kollegaa lähettämällä Kehu!
+                    kuulemasi kehu tai piristä kollegaa lähettämällä Kehu!
                   </p>
                 </div>
                 <div className="col col-xs-12 col-md-4">
