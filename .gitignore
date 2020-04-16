@@ -13,6 +13,7 @@ dump.rdb
 reports
 .DS_Store
 latest.dump
+.vscode
 
 # Logs
 logs
