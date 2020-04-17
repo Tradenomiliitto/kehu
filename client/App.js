@@ -23,6 +23,8 @@ import ProfilePanel from "./ProfilePanel";
 import ReportPanel from "./ReportPanel";
 import Spinner from "./components/Spinner";
 import { handlePageView } from "./util/AnalyticsUtil";
+import { compose } from "redux";
+import { withTranslation } from "react-i18next";
 
 const history = createBrowserHistory();
 history.listen(handlePageView);
@@ -58,7 +60,11 @@ export class App extends Component {
   }
 
   defineContent() {
-    if (!this.props.profileLoaded || !this.props.kehusLoaded) {
+    if (
+      !this.props.profileLoaded ||
+      !this.props.kehusLoaded ||
+      !this.props.tReady
+    ) {
       return <Spinner />;
     }
 
@@ -145,9 +151,12 @@ const mapDispatchToProps = {
   getKehus
 };
 
-const AppContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
+const AppContainer = compose(
+  withTranslation(),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
 )(App);
 
 const HotApp = hot(module)(AppContainer);

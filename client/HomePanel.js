@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { compose } from "redux";
+import { withTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import {
   toggleAddKehuFormModal,
@@ -30,6 +32,7 @@ export class HomePanel extends Component {
   }
 
   render() {
+    const { t } = this.props;
     return (
       <div className="Home home-nw">
         <div className="container">
@@ -37,7 +40,9 @@ export class HomePanel extends Component {
             <div className="col col-xs-12 col-md-9">
               <div className="row HomeButtons">
                 <div className="col col-xs-12 col-md-8">
-                  <h1 className="HomeButtons-title">Lisää uusi Kehu</h1>
+                  <h1 className="HomeButtons-title">
+                    {t("home.add-new-kehu")}
+                  </h1>
                   <p className="HomeButtons-text">
                     Älä pidä kehujasi vakan alla! Tallenna Kehu-pankkiisi
                     kuulemasi kehu tai piristä kollegaa lähettämällä Kehu!
@@ -49,13 +54,13 @@ export class HomePanel extends Component {
                       className="Button add-kehu-nw"
                       onClick={this.props.toggleAddKehuFormModal}
                     >
-                      Lisää Kehu
+                      {t("home.add-kehu-button")}
                     </button>
                     <button
                       className="Button send-kehu-nw"
                       onClick={this.props.toggleSendKehuFormModal}
                     >
-                      Lähetä Kehu
+                      {t("home.send-kehu-button")}
                     </button>
                   </div>
                 </div>
@@ -166,7 +171,10 @@ const mapActionsToProps = {
   toggleSendKehuFormModal
 };
 
-export default connect(
-  mapStateToProps,
-  mapActionsToProps
+export default compose(
+  withTranslation(),
+  connect(
+    mapStateToProps,
+    mapActionsToProps
+  )
 )(HomePanel);
