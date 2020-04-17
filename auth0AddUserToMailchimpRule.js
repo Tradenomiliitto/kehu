@@ -1,27 +1,4 @@
-/**
-Auth0 post-registration hook to add user to Mailchimp email list
-Hooks are modified from https://manage.auth0.com/dashboard/eu/kehu/hooks
-
-@param {object} user - The user being created
-@param {string} user.id - user id
-@param {string} user.tenant - Auth0 tenant name
-@param {string} user.username - user name
-@param {string} user.email - email
-@param {boolean} user.emailVerified - is e-mail verified?
-@param {string} user.phoneNumber - phone number
-@param {boolean} user.phoneNumberVerified - is phone number verified?
-@param {object} user.user_metadata - user metadata
-@param {object} user.app_metadata - application metadata
-@param {object} context - Auth0 connection and other context info
-@param {string} context.requestLanguage - language of the client agent
-@param {object} context.connection - information about the Auth0 connection
-@param {object} context.connection.id - connection id
-@param {object} context.connection.name - connection name
-@param {object} context.connection.tenant - connection tenant
-@param {object} context.webtask - webtask context
-@param {function} cb - function (error, response)
-*/
-module.exports = function(user, context, cb) {
+async function addUserToMailchimp(user, context, callback) {
   const axios = require("axios");
 
   const BASE_URL = "https://us16.api.mailchimp.com/3.0";
@@ -29,17 +6,31 @@ module.exports = function(user, context, cb) {
 
   const auth = {
     username: "kehu",
-    password: context.webtask.secrets.MAILCHIMP_APIKEY
+    password: configuration.MAILCHIMP_APIKEY
   };
 
-  console.log(`Adding ${user.email} to Mailchimp`);
+  // Short-circuit if the user signed up already or is using a refresh token
+  const logins = context.stats.loginsCount;
+  if (logins > 1 || context.protocol === "oauth2-refresh-token") {
+    console.log(
+      `User ${user.email} has ${logins} logins, not adding to Mailchimp`
+    );
+    return callback(null, user, context);
+  }
+
+  console.log(`${logins} login, adding ${user.email} to Mailchimp`);
 
   axios
     .post(
       `${BASE_URL}/lists/${LIST_ID}/members`,
       {
         email_address: user.email,
-        status: "subscribed"
+        status: "subscribed",
+        // On the contrary to API docs ISO string is not accepted
+        timestamp_signup: new Date()
+          .toISOString()
+          .replace("T", " ")
+          .substring(0, 19)
       },
       { auth }
     )
@@ -51,12 +42,15 @@ module.exports = function(user, context, cb) {
       console.log("Error when adding user to Mailchimp: " + err.message);
       console.log(((err || {}).response || {}).data);
     });
-  cb();
-};
 
-// HOOK ENDS HERE
+  // don’t wait for the Mailchimp API call to finish, return right away (the
+  // request will continue on the sandbox)
+  return callback(null, user, context);
+}
+
+// RULE ENDS HERE
 // Underneath is the request used to create the mail list where the users are
-// added. Response for the request also included to save the information
+// added. Response for the request is also included to save the information
 
 // POST /lists
 // JSON-body:
