@@ -4,8 +4,11 @@ const userApi = require("./api/user");
 const kehuApi = require("./api/kehu");
 const { ensureAuthenticated } = require("../utils/Middlewares");
 
+// Load languages from file and create allowed routes which are redirected to
+// React app
+const languages = require("../languages.json");
+const LANG = languages.map(lang => "/" + lang.value);
 const ROUTES = ["/kehut", "/kehut/lisaa/*", "/profiili", "/raportit"];
-const LANG = ["/fi", "/en"];
 const CLIENT_ROUTES = [...ROUTES];
 LANG.forEach(lang => ROUTES.forEach(route => CLIENT_ROUTES.push(lang + route)));
 LANG.forEach(lang => CLIENT_ROUTES.push(lang + "/"));

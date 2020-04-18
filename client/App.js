@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import { connect } from "react-redux";
 import { hot } from "react-hot-loader";
 import PropTypes from "prop-types";
-import { Router, Route, Switch } from "react-router-dom";
+import { Router, Route, Switch, Redirect } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import store from "./redux";
 import HomePanel from "./HomePanel";
@@ -68,29 +68,27 @@ export class App extends Component {
       return <Spinner />;
     }
 
+    const lng = "/" + this.props.i18n.language;
+
     return (
       <div className="App">
         <Header />
         <div className="Content">
           <Switch>
-            <Route exact path="/" component={HomePanel} />
+            <Route exact path={`${lng}/`} component={HomePanel} />
             <Route
               exact
-              path="/kehut/lisaa/:claim_id"
+              path={`${lng}/kehut/lisaa/:claim_id`}
               component={ClaimKehuPanel}
             />
-            <Route exact path="/kehut" component={KehusPanel} />
-            <Route exact path="/profiili" component={ProfilePanel} />
-            <Route exact path="/raportit" component={ReportPanel} />
+            <Route exact path={`${lng}/kehut`} component={KehusPanel} />
+            <Route exact path={`${lng}/profiili`} component={ProfilePanel} />
+            <Route exact path={`${lng}/raportit`} component={ReportPanel} />
             <Route
-              exact
-              path="/:lang/kehut/lisaa/:claim_id"
-              component={ClaimKehuPanel}
+              path="/:lang/*"
+              render={props => lngRedirect(lng, props.match)}
             />
-            <Route exact path="/:lang/kehut" component={KehusPanel} />
-            <Route exact path="/:lang/profiili" component={ProfilePanel} />
-            <Route exact path="/:lang/raportit" component={ReportPanel} />
-            <Route exact path="/:lang/" component={HomePanel} />
+            <Redirect to={lng} />
           </Switch>
           {this.renderPortal()}
         </div>
@@ -175,3 +173,8 @@ export default () => (
     <HotApp />
   </Provider>
 );
+
+function lngRedirect(language, match) {
+  // match.params[0] contains the url after language prefix
+  return <Redirect to={language + "/" + match.params[0]} />;
+}
