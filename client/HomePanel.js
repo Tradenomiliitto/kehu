@@ -41,7 +41,7 @@ export class HomePanel extends Component {
               <div className="row HomeButtons">
                 <div className="col col-xs-12 col-md-8">
                   <h1 className="HomeButtons-title">
-                    {t("home.add-new-kehu")}
+                    {t("home.add-new-kehu", "Lisää uusi Kehu")}
                   </h1>
                   <p className="HomeButtons-text">
                     Älä pidä kehujasi vakan alla! Tallenna Kehu-pankkiisi
@@ -54,13 +54,13 @@ export class HomePanel extends Component {
                       className="Button add-kehu-nw"
                       onClick={this.props.toggleAddKehuFormModal}
                     >
-                      {t("home.add-kehu-button")}
+                      {t("home.add-kehu-button", "Lisää Kehu")}
                     </button>
                     <button
                       className="Button send-kehu-nw"
                       onClick={this.props.toggleSendKehuFormModal}
                     >
-                      {t("home.send-kehu-button")}
+                      {t("home.send-kehu-button", "Lähetä Kehu")}
                     </button>
                   </div>
                 </div>
@@ -85,12 +85,15 @@ export class HomePanel extends Component {
   }
 
   renderTagsElement() {
+    const { t } = this.props;
     return (
       <div className="SidebarElement">
-        <h3 className="SidebarElement-title">Kehutuimmat taitosi</h3>
+        <h3 className="SidebarElement-title">
+          {t("home.sidebar.skills-title", "Kehutuimmat taitosi")}
+        </h3>
         {this.renderTagsContent()}
         <Link to="/raportit" className="Button Button--fullWidth">
-          Tarkastele raporttiasi
+          {t("home.sidebar.view-raport", "Tarkastele raporttiasi")}
         </Link>
       </div>
     );

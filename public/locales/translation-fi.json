@@ -1,7 +1,11 @@
 {
   "home": {
-    "add-new-kehu": "Lisää uusi Kehu",
     "add-kehu-button": "Lisää Kehu",
-    "send-kehu-button": "Lähetä Kehu"
+    "add-new-kehu": "Lisää uusi Kehu",
+    "send-kehu-button": "Lähetä Kehu",
+    "sidebar": {
+      "skills-title": "Kehutuimmat taitosi",
+      "view-raport": "Tarkastele raporttiasi"
+    }
   }
 }
