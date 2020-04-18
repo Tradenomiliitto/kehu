@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { withTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { LangLink as Link } from "./util/LangLink";
 import {
   toggleAddKehuFormModal,
   toggleSendKehuFormModal

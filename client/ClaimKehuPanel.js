@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { LangLink as Link } from "./util/LangLink";
 import { claimKehu } from "./redux/kehu";
 import Spinner from "./components/Spinner";
 import ErrorPanel from "./components/ErrorPanel";
@@ -52,9 +52,9 @@ export class ClaimKehuPanel extends Component {
         </div>
 
         <p>Kehu lisätty onnistuneesti!</p>
-        <Link to="/kehut" className="Button Button--inverseNoBorders">
+        <LangLink to="/kehut" className="Button Button--inverseNoBorders">
           Näytä Kehut
-        </Link>
+        </LangLink>
       </div>
     );
   }

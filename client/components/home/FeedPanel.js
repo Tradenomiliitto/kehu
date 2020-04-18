@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { LangLink as Link } from "../../util/LangLink";
 import KehuItem from "./KehuItem";
 import SentKehuItem from "./SentKehuItem";
 

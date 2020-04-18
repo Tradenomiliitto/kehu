@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import cn from "classnames";
-import { Link } from "react-router-dom";
+import { LangLink as Link } from "../util/LangLink";
 import { connect } from "react-redux";
 import {
   toggleAddKehuFormModal,
