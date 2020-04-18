@@ -7,6 +7,7 @@ import {
   toggleAddKehuFormModal,
   toggleSendKehuFormModal
 } from "../redux/portal";
+import LanguageSelector from "./LanguageSelector";
 
 export class Header extends Component {
   static propTypes = {
@@ -40,6 +41,7 @@ export class Header extends Component {
               <button className="Header-menuButton" onClick={this.toggleMenu}>
                 <img src="/images/icon-menu.png" />
               </button>
+              <LanguageSelector />
             </div>
             <div className="col col-md-12 col-lg-8">
               <div className="Header-menuContainer">
