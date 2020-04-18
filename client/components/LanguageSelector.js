@@ -28,7 +28,12 @@ const customStyles = {
 
 const LanguageSelector = () => {
   const [t, i18n] = useTranslation();
-  const [selectedValue, setSelectedValue] = useState(languages[0]);
+
+  // Find correct language
+  let language = languages.find(lang => lang.value === i18n.language);
+  if (language == null) language = languages[0];
+
+  const [selectedValue, setSelectedValue] = useState(language);
 
   return (
     <Select
