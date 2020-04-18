@@ -82,6 +82,15 @@ export class App extends Component {
             <Route exact path="/kehut" component={KehusPanel} />
             <Route exact path="/profiili" component={ProfilePanel} />
             <Route exact path="/raportit" component={ReportPanel} />
+            <Route
+              exact
+              path="/:lang/kehut/lisaa/:claim_id"
+              component={ClaimKehuPanel}
+            />
+            <Route exact path="/:lang/kehut" component={KehusPanel} />
+            <Route exact path="/:lang/profiili" component={ProfilePanel} />
+            <Route exact path="/:lang/raportit" component={ReportPanel} />
+            <Route exact path="/:lang/" component={HomePanel} />
           </Switch>
           {this.renderPortal()}
         </div>

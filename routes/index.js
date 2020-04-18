@@ -4,7 +4,11 @@ const userApi = require("./api/user");
 const kehuApi = require("./api/kehu");
 const { ensureAuthenticated } = require("../utils/Middlewares");
 
-const CLIENT_ROUTES = ["/kehut", "/kehut/lisaa/*", "/profiili", "/raportit"];
+const ROUTES = ["/kehut", "/kehut/lisaa/*", "/profiili", "/raportit"];
+const LANG = ["/fi", "/en"];
+const CLIENT_ROUTES = [...ROUTES];
+LANG.forEach(lang => ROUTES.forEach(route => CLIENT_ROUTES.push(lang + route)));
+LANG.forEach(lang => CLIENT_ROUTES.push(lang + "/"));
 
 module.exports = function setupRoutes(app) {
   app.use("/api/v1/profiili", ensureAuthenticated, userApi);
