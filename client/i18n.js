@@ -20,7 +20,7 @@ i18n
 
     detection: {
       // order and from where user language should be detected
-      order: ["path"],
+      order: ["path", "localStorage", "navigator"],
 
       // only detect languages that are in the whitelist
       checkWhitelist: true
