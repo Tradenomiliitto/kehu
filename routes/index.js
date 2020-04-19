@@ -21,17 +21,14 @@ module.exports = function setupRoutes(app) {
       next();
     } else {
       req.session.returnTo = req.originalUrl;
-      res.render("redirect-login", {
-        env: process.env
-      });
+      res.render("redirect-login", {});
     }
   });
 
   app.get(CLIENT_ROUTES, (req, res) => {
     if (req.user) {
       res.render("app", {
-        csrfToken: req.csrfToken(),
-        env: process.env
+        csrfToken: req.csrfToken()
       });
     } else {
       res.redirect("/");
@@ -41,41 +38,26 @@ module.exports = function setupRoutes(app) {
   app.use("/blogi", blog);
 
   app.get("/info", (req, res) => {
-    res.render("info", {
-      user: req.user,
-      pageUrl: process.env.HOME_URL + req.originalUrl,
-      env: process.env
-    });
+    res.render("info", {});
   });
 
   app.get("/kayttoehdot", (req, res) => {
-    res.render("terms", {
-      user: req.user,
-      pageUrl: process.env.HOME_URL + req.originalUrl,
-      env: process.env
-    });
+    res.render("terms", {});
   });
 
   app.use("/profiili", user);
 
   app.get("/rekisteriseloste", (req, res) => {
-    res.render("privacy-policy", {
-      user: req.user,
-      pageUrl: process.env.HOME_URL + req.originalUrl,
-      env: process.env
-    });
+    res.render("privacy-policy", {});
   });
 
   app.get(["/", ...LANG], async (req, res) => {
     if (req.user) {
       res.render("app", {
-        csrfToken: req.csrfToken(),
-        env: process.env
+        csrfToken: req.csrfToken()
       });
     } else {
-      res.render("index", {
-        env: process.env
-      });
+      res.render("index", {});
     }
   });
 };

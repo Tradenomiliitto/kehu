@@ -108,11 +108,6 @@ app.use(
 );
 
 app.use((req, res, next) => {
-  // Add locals to render views
-  res.locals.language = req.language;
-  res.locals.languages = languages;
-  res.locals.pathWithoutLanguage = req.url;
-
   req.url = req.url.replace(/\/([^\/]+)\.[0-9a-f]+\.(css|js)$/, "/$1.$2");
   next();
 });
@@ -121,6 +116,17 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", httpsRedirect());
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Add locals for rendering pug views
+app.use((req, res, next) => {
+  res.locals.user = req.user;
+  res.locals.pageUrl = process.env.HOME_URL + req.originalUrl;
+  res.locals.env = process.env;
+  res.locals.language = req.language;
+  res.locals.languages = languages;
+  res.locals.pathWithoutLanguage = req.url;
+  next();
+});
 
 setupLocals(app, staticify.getVersionedPath);
 setupRoutes(app);

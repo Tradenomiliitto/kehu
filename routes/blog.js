@@ -13,10 +13,7 @@ router.get("/:slug", async (req, res, next) => {
   }
 
   res.render("blog-post", {
-    post,
-    user: req.user,
-    pageUrl: process.env.HOME_URL + req.originalUrl,
-    env: process.env
+    post
   });
 });
 
@@ -25,10 +22,7 @@ router.get("/", async (req, res) => {
   const tags = getUniqueTags(posts);
   res.render("blog", {
     posts,
-    tags,
-    user: req.user,
-    pageUrl: process.env.HOME_URL + req.originalUrl,
-    env: process.env
+    tags
   });
 });
 
