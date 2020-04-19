@@ -25,13 +25,13 @@ mixin partner-logo (partner)
 
           ul.Footer-links
             li
-              a.Footer-link(href="/blogi") Blogi
+              a.Footer-link(href=`/${language}/blogi`) Blogi
             li
-              a.Footer-link(href="/info") Info
+              a.Footer-link(href=`/${language}/info`) Info
             li
-              a.Footer-link(href="/kayttoehdot") Käyttöehdot
+              a.Footer-link(href=`/${language}/kayttoehdot`) Käyttöehdot
             li
-              a.Footer-link(href="/rekisteriseloste") Rekisteriseloste
+              a.Footer-link(href=`/${language}/rekisteriseloste`) Rekisteriseloste
             li
               a.Footer-link(href="https://www.tral.fi/yhteystiedot/") Yhteystiedot
 
@@ -67,7 +67,7 @@ script.
       ],
       language: 'fi',
       languageDictionary: {
-        signUpTerms: 'Hyväksyn <a href="#{env.HOME_URL}/rekisteriseloste" target="_blank" rel="noopener noreferrer">rekisteriselosteen</a> ja <a href="#{env.HOME_URL}/kayttoehdot" target="_blank" rel="noopener noreferrer">käyttöehdot</a>'
+        signUpTerms: 'Hyväksyn <a href="#{env.HOME_URL}/#{language}/rekisteriseloste" target="_blank" rel="noopener noreferrer">rekisteriselosteen</a> ja <a href="#{env.HOME_URL}/#{language}/kayttoehdot" target="_blank" rel="noopener noreferrer">käyttöehdot</a>'
       }
     };
 

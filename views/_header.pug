@@ -2,7 +2,7 @@ mixin header-content
   .container
     .row
       .col.col-md-12.col-lg-4
-        a(href='/')
+        a(href=`/${language}`)
           img.Header-logo(src='/images/kehu-logo.png')
         div.Header-selectLanguage
           select.selectLanguage(name="language")
@@ -15,26 +15,26 @@ mixin header-content
           menu.Header-menu
             if user
               li.Header-menuItem
-                a(href='/?q=lisaa')
+                a(href=`/${language}/?q=lisaa`)
                   | Lisää Kehu
               li.Header-menuItem
-                a(href='/?q=laheta')
+                a(href=`/${language}/?q=laheta`)
                   | Lähetä Kehu
               li.Header-menuItem
-                a(href='/raportit')
+                a(href=`/${language}/raportit`)
                   | Raportit
               li.Header-menuItem
-                a(href='/blogi') Blogi
+                a(href=`/${language}/blogi`) Blogi
               li.Header-menuItem
-                a(href='/kehut')
+                a(href=`/${language}/kehut`)
                   | Kehut
               li.Header-menuItem
-                a(href='/profiili')
+                a(href=`/${language}/profiili`)
                   != user.first_name
                   img.Header-profileImage(src=user.picture)
             else
               li.Header-menuItem
-                a(href='/blogi') Blogi
+                a(href=`/${language}/blogi`) Blogi
               li.Header-menuItem
                 button.Button.Button--rounded.Header-login.login-js.login-nw Kirjaudu
 

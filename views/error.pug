@@ -10,7 +10,7 @@ block content
 
         .col.col-xs-12.col-md-8
           h1.ErrorPage-title Täältä ei löydy mitään kehuttavaa
-          p.ErrorPage-text SOS koodisana #{error.status}. Palaa takaisin edelliselle sivulle tai #[a(href="/") navigoi etusivullemme].
+          p.ErrorPage-text SOS koodisana #{error.status}. Palaa takaisin edelliselle sivulle tai #[a(href=`/${language}`) navigoi etusivullemme].
 
           //pre #{error.stack}
 

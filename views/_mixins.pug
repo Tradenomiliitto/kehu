@@ -7,7 +7,7 @@ mixin post-info (post)
     span.Post-tags= post.tags.join(' ')
 
 mixin post-card (post)
-  a(href=`/blogi/${post.slug}`).PostCard
+  a(href=`/${language}/blogi/${post.slug}`).PostCard
     img(src=post.image.url).PostCard-image
     .PostCard-content
       h2.PostCard-title= post.title
@@ -18,4 +18,4 @@ mixin tags-list (tags)
     .Tags
       h2.Tags-title Selaa postauksia aihepiireittäin:
       each tag in tags
-        a(href=`/blogi?aihe=${tag}`).Tags-tag= tag.charAt(0).toUpperCase() + tag.slice(1)
+        a(href=`/${language}/blogi?aihe=${tag}`).Tags-tag= tag.charAt(0).toUpperCase() + tag.slice(1)
