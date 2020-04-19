@@ -11,7 +11,6 @@ const LANG = languages.map(lang => "/" + lang.value);
 const ROUTES = ["/kehut", "/kehut/lisaa/*", "/profiili", "/raportit"];
 const CLIENT_ROUTES = [...ROUTES];
 LANG.forEach(lang => ROUTES.forEach(route => CLIENT_ROUTES.push(lang + route)));
-LANG.forEach(lang => CLIENT_ROUTES.push(lang + "/"));
 
 module.exports = function setupRoutes(app) {
   app.use("/api/v1/profiili", ensureAuthenticated, userApi);
@@ -67,7 +66,7 @@ module.exports = function setupRoutes(app) {
     });
   });
 
-  app.get("/", async (req, res) => {
+  app.get(["/", ...LANG], async (req, res) => {
     if (req.user) {
       res.render("app", {
         csrfToken: req.csrfToken(),

@@ -15,6 +15,10 @@ const compression = require("compression");
 const methodOverride = require("method-override");
 const httpsRedirect = require("express-https-redirect");
 const webpack = require("webpack");
+const i18next = require("i18next");
+const i18nextMiddleware = require("i18next-express-middleware");
+const i18nextBackend = require("i18next-node-fs-backend");
+const languages = require("./languages.json");
 
 // Following packages are not required in production and importing them
 // will throw an error if devDependencies are not installed
@@ -75,6 +79,33 @@ app.use(
 );
 
 app.use(staticify.middleware);
+
+const langWhitelist = languages.map(lang => lang.value);
+
+i18next
+  .use(i18nextBackend)
+  .use(i18nextMiddleware.LanguageDetector)
+  .init({
+    fallbackLng: "fi",
+    whitelist: langWhitelist,
+    preload: langWhitelist,
+
+    backend: {
+      loadPath: __dirname + "/public/locales/{{ns}}-{{lng}}.json"
+    },
+    detection: {
+      // order and from where user language should be detected
+      order: ["path", "localStorage", "navigator"],
+
+      // only detect languages that are in the whitelist
+      checkWhitelist: true
+    }
+  });
+app.use(
+  i18nextMiddleware.handle(i18next, {
+    removeLngFromUrl: true
+  })
+);
 
 app.use((req, res, next) => {
   req.url = req.url.replace(/\/([^\/]+)\.[0-9a-f]+\.(css|js)$/, "/$1.$2");
