@@ -4,7 +4,7 @@ const passport = require("passport");
 
 router.get("/kirjaudu-ulos", (req, res) => {
   req.logout();
-  res.redirect("/");
+  res.redirect("/" + (req.query.redirectLanguage || ""));
 });
 
 router.get(
@@ -13,7 +13,7 @@ router.get(
   (req, res) => {
     const returnTo = req.session.returnTo;
     delete req.session.returnTo;
-    res.redirect(returnTo || "/");
+    res.redirect(returnTo || req.session.languageRedirect || "/");
   }
 );
 

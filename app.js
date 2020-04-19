@@ -117,8 +117,13 @@ app.use("/", httpsRedirect());
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Add locals for rendering pug views
 app.use((req, res, next) => {
+  // Add language to session for correct redirect after login
+  // conditional required, otherwise value overwritten with 'fi' after login
+  if (!req.user && req.path !== "/profiili/callback")
+    req.session.languageRedirect = "/" + req.language;
+
+  // Add locals for rendering pug views
   res.locals.user = req.user;
   res.locals.pageUrl = process.env.HOME_URL + req.originalUrl;
   res.locals.env = process.env;

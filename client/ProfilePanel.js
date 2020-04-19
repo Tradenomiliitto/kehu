@@ -7,6 +7,8 @@ import SuccessPanel from "./components/SuccessPanel";
 import { deleteProfile, updateProfile } from "./redux/profile";
 import { getText } from "./util/ApiUtil";
 import { toQueryString } from "./util/TextUtil";
+import { compose } from "redux";
+import { withTranslation } from "react-i18next";
 
 export class ProfilePanel extends Component {
   static propTypes = {
@@ -75,7 +77,9 @@ export class ProfilePanel extends Component {
                           Vaihda salasana
                         </a>
                         <a
-                          href="/profiili/kirjaudu-ulos"
+                          href={`/profiili/kirjaudu-ulos?redirectLanguage=${
+                            this.props.i18n.language
+                          }`}
                           className="Button ProfileActionLink"
                         >
                           Kirjaudu ulos
@@ -199,10 +203,13 @@ const mapStateToProps = state => ({
   profile: state.profile.profile
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    deleteProfile,
-    updateProfile
-  }
+export default compose(
+  withTranslation(),
+  connect(
+    mapStateToProps,
+    {
+      deleteProfile,
+      updateProfile
+    }
+  )
 )(ProfilePanel);
