@@ -108,6 +108,11 @@ app.use(
 );
 
 app.use((req, res, next) => {
+  // Add locals to render views
+  res.locals.language = req.language;
+  res.locals.languages = languages;
+  res.locals.pathWithoutLanguage = req.url;
+
   req.url = req.url.replace(/\/([^\/]+)\.[0-9a-f]+\.(css|js)$/, "/$1.$2");
   next();
 });
