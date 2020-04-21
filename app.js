@@ -89,6 +89,8 @@ i18next
     fallbackLng: "fi",
     whitelist: langWhitelist,
     preload: langWhitelist,
+    ns: "translation-public", // Namespace to load
+    defaultNS: "translation-public", // Default namespace (if not defined)
 
     backend: {
       loadPath: __dirname + "/public/locales/{{ns}}-{{lng}}.json"
@@ -99,6 +101,9 @@ i18next
 
       // only detect languages that are in the whitelist
       checkWhitelist: true
+    },
+    interpolation: {
+      escapeValue: false // pug already safe from xss
     }
   });
 app.use(
