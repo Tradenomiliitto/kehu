@@ -2,9 +2,9 @@ extends layout
 include _mixins
 
 block config
-  - config_title = 'Kehu – Blogit';
+  - config_title = t('blog.page-title', 'Kehu – Blogit');
   - config_ogTitle = config_title;
-  - config_description = 'Lue blogeja työhyvinvoinnista, positiivisen palautteen vaikutuksesta, oman osaamisen tunnistamisesta ja sanoittamisesta sekä urasuunnittelusta.';
+  - config_description = t('blog.page-description', 'Lue blogeja työhyvinvoinnista, positiivisen palautteen vaikutuksesta, oman osaamisen tunnistamisesta ja sanoittamisesta sekä urasuunnittelusta.');
   - config_pageUrl = pageUrl;
 
 block content
@@ -14,8 +14,8 @@ block content
     .container
       .row
         .col.col-xs-12
-          h1.Posts-title Kehun blogi
-          p.Posts-subtitle Nappaa parhaat vinkit, miten kehut auttavat sinua urallasi eteenpäin
+          h1.Posts-title #{t('blog.title', 'Kehun blogi')}
+          p.Posts-subtitle #{t('blog.subtitle', 'Nappaa parhaat vinkit, miten kehut auttavat sinua urallasi eteenpäin')}
 
           .Posts
             each post in posts

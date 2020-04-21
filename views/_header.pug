@@ -16,27 +16,27 @@ mixin header-content
             if user
               li.Header-menuItem
                 a(href=`/${language}/?q=lisaa`)
-                  | Lisää Kehu
+                  | #{t('navbar.add-kehu', 'Lisää Kehu')}
               li.Header-menuItem
                 a(href=`/${language}/?q=laheta`)
-                  | Lähetä Kehu
+                  | #{t('navbar.send-kehu', 'Lähetä Kehu')}
               li.Header-menuItem
                 a(href=`/${language}/raportit`)
-                  | Raportit
+                  | #{t('navbar.report', 'Raportit')}
               li.Header-menuItem
-                a(href=`/${language}/blogi`) Blogi
+                a(href=`/${language}/blogi`) #{t('navbar.blog', 'Blogi')}
               li.Header-menuItem
                 a(href=`/${language}/kehut`)
-                  | Kehut
+                  | #{t('navbar.kehus', 'Kehut')}
               li.Header-menuItem
                 a(href=`/${language}/profiili`)
                   != user.first_name
                   img.Header-profileImage(src=user.picture)
             else
               li.Header-menuItem
-                a(href=`/${language}/blogi`) Blogi
+                a(href=`/${language}/blogi`) #{t('navbar.blog')}
               li.Header-menuItem
-                button.Button.Button--rounded.Header-login.login-js.login-nw Kirjaudu
+                button.Button.Button--rounded.Header-login.login-js.login-nw #{t('navbar.login', 'Kirjaudu')}
 
 if user
   header.Header

@@ -31,14 +31,14 @@ block content
       .row
         .col.col-xs-12.col-md-10.col-md-offset-1.col-xl-8.col-xl-offset-2
           if post.prevPost
-            a(href=post.prevPost).Button.Button--inverse.Post-button Edellinen
+            a(href=post.prevPost).Button.Button--inverse.Post-button #{t('blog.previous-post', 'Edellinen')}
           if post.nextPost
-            a(href=post.nextPost).Button.Button--inverse.Post-button.Post-button--next Seuraava
+            a(href=post.nextPost).Button.Button--inverse.Post-button.Post-button--next #{t('blog.next-post', 'Seuraava')}
 
       if post.similarPosts.length
         .row
           .col.col-xs-12.col-md-10.col-md-offset-1.col-xl-8.col-xl-offset-2
-            h2.SimilarPosts-title Lue lisää aiheesta:
+            h2.SimilarPosts-title #{t('blog.show-similar-posts', 'Lue lisää aiheesta:')}
             .SimilarPosts
               each similar in post.similarPosts
                 +post-card(similar)

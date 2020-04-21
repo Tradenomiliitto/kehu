@@ -1,9 +1,9 @@
 extends layout
 
 block config
-  - config_title = 'Kehu – Rekisteriseloste';
+  - config_title = t('privacy-policy.page-title', 'Kehu – Rekisteriseloste');
   - config_ogTitle = config_title;
-  - config_description = 'Rekisteriseloste';
+  - config_description = t('privacy-policy.page-description', 'Rekisteriseloste');
   - config_pageUrl = pageUrl;
 
 block content
@@ -12,63 +12,63 @@ block content
         main.container(role='main')
             .row
                 .col.col-12.col-lg-8.col-lg-offset-2
-                    h1.PrivacyPolicy-title REKISTERISELOSTE
+                    h1.PrivacyPolicy-title #{t('privacy-policy.title', 'REKISTERISELOSTE')}
 
-                    h2.PrivacyPolicy-subtitle 1 Rekisterinpitäjä
+                    h2.PrivacyPolicy-subtitle #{t('privacy-policy.01-subtitle', '1 Rekisterinpitäjä')}
 
                     p
                         | Tradenomiliitto TRAL ry
                         br
                         | Ratavartijankatu 2, 00520 Helsinki
                         br
-                        | Puh. #[a(href="tel:0201558800") 020 155 8800]
+                        | #{t('privacy-policy.phone-abbreviation', 'Puh.')} #[a(href="tel:0201558800") 020 155 8800]
                         br
                         | #[a(href="mailto:toimisto@tral.fi") toimisto@tral.fi]
 
-                    h2.PrivacyPolicy-subtitle 2 Yhteyshenkilö rekisteriä koskevissa asioissa
+                    h2.PrivacyPolicy-subtitle #{t('privacy-policy.02-subtitle', '2 Yhteyshenkilö rekisteriä koskevissa asioissa')}
 
                     p
                         | Tomi Kouva
                         br
                         | Ratavartijankatu 2, 00520 Helsinki
                         br
-                        | Puh. #[a(href="tel:0201558813") 020 155 8813]
+                        | #{t('privacy-policy.phone-abbreviation')} #[a(href="tel:0201558813") 020 155 8813]
                         br
                         | #[a(href="mailto:tomi.kouva@tral.fi") tomi.kouva@tral.fi]
 
-                    h2.PrivacyPolicy-subtitle 3 Rekisterin nimi
+                    h2.PrivacyPolicy-subtitle #{t('privacy-policy.03-subtitle', '3 Rekisterin nimi')}
 
-                    p KEHU–palvelun käyttäjärekisteri
+                    p #{t('privacy-policy.03a-text', 'KEHU–palvelun käyttäjärekisteri')}
 
-                    h2.PrivacyPolicy-subtitle 4 Henkilötietojen käsittelyn tarkoitus
+                    h2.PrivacyPolicy-subtitle #{t('privacy-policy.04-subtitle', '4 Henkilötietojen käsittelyn tarkoitus')}
 
-                    p Jäsenpalvelujen toimittaminen
-                    p Palvelun jatkokehittäminen
-                    p Henkilötietoja käsitellään henkilötietolain sallimissa ja velvoittamissa rajoissa palvelun tuottamisessa.
+                    p #{t('privacy-policy.04a-text', 'Jäsenpalvelujen toimittaminen')}
+                    p #{t('privacy-policy.04b-text', 'Palvelun jatkokehittäminen')}
+                    p #{t('privacy-policy.04c-text', 'Henkilötietoja käsitellään henkilötietolain sallimissa ja velvoittamissa rajoissa palvelun tuottamisessa.')}
 
-                    h2.PrivacyPolicy-subtitle 5 Rekisterin tietosisältö
+                    h2.PrivacyPolicy-subtitle #{t('privacy-policy.05-subtitle', '5 Rekisterin tietosisältö')}
 
-                    p Käyttäjien palveluun syöttämät tiedot, kuten nimi ja yhteystiedot.
-                    p Käyttäjän nimi ja profiilikuva on saatavilla vain muille kirjautuneille käyttäjille.
-                    p Käyttäjä määrittelee itse, mitä yhteystietoja haluaa jakaa ja kenelle.
-                    p Kerättyä tietoa ylläpidetään Heroku-palvelussa.
+                    p #{t('privacy-policy.05a-text', 'Käyttäjien palveluun syöttämät tiedot, kuten nimi ja yhteystiedot.')}
+                    p #{t('privacy-policy.05b-text', 'Käyttäjän nimi ja profiilikuva on saatavilla vain muille kirjautuneille käyttäjille.')}
+                    p #{t('privacy-policy.05c-text', 'Käyttäjä määrittelee itse, mitä yhteystietoja haluaa jakaa ja kenelle.')}
+                    p #{t('privacy-policy.05d-text', 'Kerättyä tietoa ylläpidetään Heroku-palvelussa.')}
 
-                    h2.PrivacyPolicy-subtitle 6 Säännönmukaiset tietolähteet
+                    h2.PrivacyPolicy-subtitle #{t('privacy-policy.06-subtitle', '6 Säännönmukaiset tietolähteet')}
 
-                    p Käyttäjien itse palveluun syöttämät tiedot.
-                    p KEHUun tallennetut tiedot eivät päivity Tradenomiliiton jäsenrekisteriin tai muihin kirjautumiseen käytettyihin palveluihin.
+                    p #{t('privacy-policy.06a-text', 'Käyttäjien itse palveluun syöttämät tiedot.')}
+                    p #{t('privacy-policy.06b-text', 'KEHUun tallennetut tiedot eivät päivity Tradenomiliiton jäsenrekisteriin tai muihin kirjautumiseen käytettyihin palveluihin.')}
 
-                    h2.PrivacyPolicy-subtitle 7 Tietojen säännönmukaiset luovutukset
+                    h2.PrivacyPolicy-subtitle #{t('privacy-policy.07-subtitle', '7 Tietojen säännönmukaiset luovutukset')}
 
-                    p Alihankkijalla, Rebase Interactive, on oikeus käsitellä käyttäjien palveluun syöttämiä tietoja.
-                    p Palvelun kehityksessä hyödynnetään Google Analytics –palvelua.
+                    p #{t('privacy-policy.07a-text', 'Alihankkijalla, Rebase Interactive, on oikeus käsitellä käyttäjien palveluun syöttämiä tietoja.')}
+                    p #{t('privacy-policy.07b-text', 'Palvelun kehityksessä hyödynnetään Google Analytics –palvelua.')}
 
-                    h2.PrivacyPolicy-subtitle 8 Tietojen siirto EU:n tai ETA:n ulkopuolelle
+                    h2.PrivacyPolicy-subtitle #{t('privacy-policy.08-subtitle', '8 Tietojen siirto EU:n tai ETA:n ulkopuolelle')}
 
-                    p Tietoja ei siirretä EU- tai ETA-maiden ulkopuolelle.
+                    p #{t('privacy-policy.08-text', 'Tietoja ei siirretä EU- tai ETA-maiden ulkopuolelle.')}
 
-                    h2.PrivacyPolicy-subtitle 9 Rekisterin suojauksen periaatteet
+                    h2.PrivacyPolicy-subtitle #{t('privacy-policy.09-subtitle', '9 Rekisterin suojauksen periaatteet')}
 
-                    p Rekisteri on suojattu ulkopuoliselta käytöltä ja henkilötietojen käyttöä valvotaan. Pääsy rekisteriin on sallittu rajatulle joukolle.
+                    p #{t('privacy-policy.09-text', 'Rekisteri on suojattu ulkopuoliselta käytöltä ja henkilötietojen käyttöä valvotaan. Pääsy rekisteriin on sallittu rajatulle joukolle.')}
 
     include _footer

@@ -36,6 +36,8 @@ mixin partner-logo (partner)
               a.Footer-link(href="https://www.tral.fi/yhteystiedot/") Yhteystiedot
 
 script(src='//cdn.auth0.com/js/lock/11.7.2/lock.min.js')
+- var link1 = `<a href="${env.HOME_URL}/${language}/rekisteriseloste" target="_blank" rel="noopener noreferrer">`
+- var link2 = `<a href="${env.HOME_URL}/${language}/kayttoehdot" target="_blank" rel="noopener noreferrer">`
 script.
   (function () {
     var LOGIN_TYPE = 'login';
@@ -58,16 +60,16 @@ script.
       additionalSignUpFields: [
         {
           name: "first_name",
-          placeholder: "Etunimi"
+          placeholder: "#{t('login.first-name', 'Etunimi')}"
         },
         {
           name: "last_name",
-          placeholder: "Sukunimi"
+          placeholder: "#{t('login.last-name', 'Sukunimi')}"
         }
       ],
-      language: 'fi',
+      language: '#{language}',
       languageDictionary: {
-        signUpTerms: 'Hyväksyn <a href="#{env.HOME_URL}/#{language}/rekisteriseloste" target="_blank" rel="noopener noreferrer">rekisteriselosteen</a> ja <a href="#{env.HOME_URL}/#{language}/kayttoehdot" target="_blank" rel="noopener noreferrer">käyttöehdot</a>'
+        signUpTerms: '!{t("login.signup-terms", { defaultValue: "Hyväksyn {{link1}}rekisteriselosteen{{end-link}} ja {{link2}}käyttöehdot{{end-link}}", link1, link2, "end-link": "</a>"} )}'
       }
     };
 
@@ -84,7 +86,7 @@ script.
           lock.show();
           if (type === SIGNUP_TYPE) {
             var container = document.querySelector('.auth0-lock-social-buttons-container');
-            var noticeTextElement = '<p><b>Rekisteröityäksesi sinun tulee ensin hyväksyä rekisteriseloste ja käyttöehdot ikkunan alalaidasta.</b></p>';
+            var noticeTextElement = '<p><b>#{t("login.signup-terms-notice", "Rekisteröityäksesi sinun tulee ensin hyväksyä rekisteriseloste ja käyttöehdot ikkunan alalaidasta.")}</b></p>';
             container.insertAdjacentHTML('afterbegin', noticeTextElement);
           }
         });

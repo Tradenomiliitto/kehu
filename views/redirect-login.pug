@@ -4,10 +4,11 @@ block content
   include _header
 
   .RedirectLogin
-    p Uudelleenohjataan kirjautumiseen...
+    p #{t('login.redirect-to-login', 'Uudelleenohjataan kirjautumiseen...')}
 
   include _footer
-
+- var link1 = `<a href="${env.HOME_URL}/${language}/rekisteriseloste" target="_blank" rel="noopener noreferrer">`
+- var link2 = `<a href="${env.HOME_URL}/${language}/kayttoehdot" target="_blank" rel="noopener noreferrer">`
   script.
     (function () {
       var settings = {
@@ -28,16 +29,16 @@ block content
         additionalSignUpFields: [
           {
             name: "first_name",
-            placeholder: "Etunimi"
+            placeholder: "#{t('login.first-name', 'Etunimi')}"
           },
           {
             name: "last_name",
-            placeholder: "Sukunimi"
+            placeholder: "#{t('login.last-name', 'Sukunimi')}"
           }
         ],
-        language: 'fi',
+        language: '#{language}',
         languageDictionary: {
-          signUpTerms: 'Hyväksyn <a href="#{env.HOME_URL}/#{language}/rekisteriseloste" target="_blank" rel="noopener noreferrer">rekisteriselosteen</a> ja <a href="#{env.HOME_URL}/#{language}/kayttoehdot" target="_blank" rel="noopener noreferrer">käyttöehdot</a>'
+          signUpTerms: '!{t("login.signup-terms", { defaultValue: "Hyväksyn {{link1}}rekisteriselosteen{{end-link}} ja {{link2}}käyttöehdot{{end-link}}", link1, link2, "end-link": "</a>"} )}'
         }
       };
 

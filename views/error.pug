@@ -9,8 +9,8 @@ block content
           img.ErrorPage-image(src="/images/kehu-thumbs-down.png")
 
         .col.col-xs-12.col-md-8
-          h1.ErrorPage-title Täältä ei löydy mitään kehuttavaa
-          p.ErrorPage-text SOS koodisana #{error.status}. Palaa takaisin edelliselle sivulle tai #[a(href=`/${language}`) navigoi etusivullemme].
+          h1.ErrorPage-title #{t('error.title', 'Täältä ei löydy mitään kehuttavaa')}
+          p.ErrorPage-text !{t('error.text', { status: error.status, link: `<a href="/${language}">`, 'end-link': '</a>', defaultValue: 'SOS koodisana {{status}}. Palaa takaisin edelliselle sivulle tai {{link}}navigoi etusivullemme{{end-link}}.' })}
 
           //pre #{error.stack}
 

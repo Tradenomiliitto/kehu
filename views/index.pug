@@ -7,9 +7,9 @@ block content
       .container
         .row
           .col.col-xs-12.col-sm-6.col-md-8.col-lg-6
-            h1.HeroSectionContent-title Opi tuntemaan vahvuutesi.
-            p.HeroSectionContent-text Kehu on täysin ilmainen ja kaikille avoin palvelu, jonka avulla voit lähettää, vastaanottaa ja kirjata hyvää palautetta. Kehujen listaamisen kautta saat konkreettisen käsityksen omista taidoistasi ja vahvuuksistasi. Lisäksi voit levittää hyvää fiilistä ympärillesi helpolla tavalla. Palvelu on henkilökohtainen eikä lisäämäsi sisältö näy muille.
-            button.Button.Button--rounded.Button--wide.HeroSectionContent-button.register-js.register-nw Luo tili
+            h1.HeroSectionContent-title #{t('frontpage.title', 'Opi tuntemaan vahvuutesi.')}
+            p.HeroSectionContent-text #{t('frontpage.title-text' ,'Kehu on täysin ilmainen ja kaikille avoin palvelu, jonka avulla voit lähettää, vastaanottaa ja kirjata hyvää palautetta. Kehujen listaamisen kautta saat konkreettisen käsityksen omista taidoistasi ja vahvuuksistasi. Lisäksi voit levittää hyvää fiilistä ympärillesi helpolla tavalla. Palvelu on henkilökohtainen eikä lisäämäsi sisältö näy muille.')}
+            button.Button.Button--rounded.Button--wide.HeroSectionContent-button.register-js.register-nw #{t('frontpage.create-account-btn', 'Luo tili')}
 
   .LandingSection2
     .container
@@ -17,15 +17,15 @@ block content
         .col.col-xs-12.col-md-6.LandingSectionContent
           img(src="/images/data-diagram.png").LandingSection2-image
         .col.col-xs-12.col-md-6.LandingSectionContent
-          h2.Heading--secondary Kerää positiivinen palaute hyödynnettäväksi dataksi
-          p.LandingSection-bp Kehussa vastaanottamasi tai sinne kirjaamasi hyvä palaute kertyy helppokäyttöiseksi tilastoksi, jota voit käyttää hyväksesi työpaikkaa hakiessa tai kehityskeskustelussa. Lisää taitosi ja vahvuutesi työhakemukseen tai CV:hen tai mainitse saamasi kehu työhaastattelussa!
+          h2.Heading--secondary #{t('frontpage.title2-data', 'Kerää positiivinen palaute hyödynnettäväksi dataksi')}
+          p.LandingSection-bp #{t('frontpage.title2-data-text', 'Kehussa vastaanottamasi tai sinne kirjaamasi hyvä palaute kertyy helppokäyttöiseksi tilastoksi, jota voit käyttää hyväksesi työpaikkaa hakiessa tai kehityskeskustelussa. Lisää taitosi ja vahvuutesi työhakemukseen tai CV:hen tai mainitse saamasi kehu työhaastattelussa!')}
 
   .LandingSection3
     .container
       .row
         .col.col-xs-12.col-md-6.LandingSectionContent
-          h2.Heading--secondary.LandingSection-tp Lisää työhyvinvointia kehumalla kollegaa tai alaista
-          p Maailmaan mahtuu aina lisää kannustavia sanoja. Levitä iloa ympärillesi kehumalla alaista tai kollegaa hyvin tehdystä työstä ja luo hyvää ilmapiiriä työyhteisöösi. Hyvän palautteen antaminen on helppoa - tarvitset vain kehuttavan henkilön sähköpostiosoitteen.
+          h2.Heading--secondary.LandingSection-tp #{t('frontpage.title3-wellbeing', 'Lisää työhyvinvointia kehumalla kollegaa tai alaista')}
+          p #{t('frontpage.title3-wellbeing-text', 'Maailmaan mahtuu aina lisää kannustavia sanoja. Levitä iloa ympärillesi kehumalla alaista tai kollegaa hyvin tehdystä työstä ja luo hyvää ilmapiiriä työyhteisöösi. Hyvän palautteen antaminen on helppoa - tarvitset vain kehuttavan henkilön sähköpostiosoitteen.')}
         .col.col-xs-12.col-md-6.LandingSectionContent
           img(src="/images/kehu-sent-thumb.png").LandingSection3-image
 
@@ -33,10 +33,10 @@ block content
     .container
       .row
         .col.col-xs-12.col-md-6.LandingSectionContent.LandingSectionContent--padding
-          h2.Heading--secondary Ala kerryttämään dataa kehuistasi jo tänään
-          p Kun tunnet vahvuutesi, voit hyödyntää niitä työnhaussa ja kehityskeskusteluissa
+          h2.Heading--secondary #{t('frontpage.title4-joinnow', 'Ala kerryttämään dataa kehuistasi jo tänään')}
+          p #{t('frontpage.title4-joinnow-text', 'Kun tunnet vahvuutesi, voit hyödyntää niitä työnhaussa ja kehityskeskusteluissa')}
         .col.col-xs-12.col-md-6.LandingSectionContent.LandingSectionContent--padding
-          button.Button.Button--rounded.Button--wide.register-js Luo tili
+          button.Button.Button--rounded.Button--wide.register-js #{t('frontpage.create-account-btn')}
 
   .LandingSection6
     .container
@@ -44,9 +44,9 @@ block content
         .col.col-xs-12.col-xl-6.LandingSectionContent.LandingSectionContent--padding
           .row
             .col.col-xs-12.col-md-6.col-xl-12.LandingSectionContent
-              h2.Heading--secondary Mitä hyötyä kehujen keräämisestä on?
-              p Blogista löydät vinkkejä mm. oman osaamisen tunnistamiseen, työhakuun, palautteen antamiseen, kehityskeskusteluihin sekä työhakemuksen ja CV:n laadintaan.
+              h2.Heading--secondary #{t('frontpage.title5-benefits', 'Mitä hyötyä kehujen keräämisestä on?')}
+              p #{t('frontpage.title5-benefits-text', 'Blogista löydät vinkkejä mm. oman osaamisen tunnistamiseen, työhakuun, palautteen antamiseen, kehityskeskusteluihin sekä työhakemuksen ja CV:n laadintaan.')}
             .col.col-xs-12.col-md-6.col-xl-12.LandingSectionContent.BlogLinkSection
-              a(href=`/${language}/blogi/`).Button.Button--inverse.Button--wide Lue blogia
+              a(href=`/${language}/blogi/`).Button.Button--inverse.Button--wide #{t('frontpage.readblog-btn', 'Lue blogia')}
 
   include _footer

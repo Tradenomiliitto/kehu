@@ -16,6 +16,6 @@ mixin post-card (post)
 mixin tags-list (tags)
   if (tags && tags.length)
     .Tags
-      h2.Tags-title Selaa postauksia aihepiireittäin:
+      h2.Tags-title #{t('blog.browse-by-tags', 'Selaa postauksia aihepiireittäin:')}
       each tag in tags
         a(href=`/${language}/blogi?aihe=${tag}`).Tags-tag= tag.charAt(0).toUpperCase() + tag.slice(1)

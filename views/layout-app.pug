@@ -5,6 +5,6 @@ html
     link(rel='stylesheet', href=getVersionedPath('/main.css'))
     meta(name="csrf-token" content=csrfToken)
   body
-    noscript Valitettavasti Kehu-sovellus ei toimi ilman JavaScriptia. Ota se käyttöön jatkaaksesi käyttöä.
+    noscript #{t('error.javascript-required', 'Valitettavasti Kehu-sovellus ei toimi ilman JavaScriptia. Ota se käyttöön jatkaaksesi käyttöä.')}
     block content
     include _analytics
