@@ -1,9 +1,9 @@
 const winston = require("winston");
-const { colorize, combine, timestamp, printf } = winston.format;
+const { colorize, combine, timestamp, printf, errors } = winston.format;
 
 const logger = winston.createLogger({
   level: "info",
-  format: winston.format.json(),
+  format: combine(errors({ stack: true }), winston.format.json()),
   transports: [
     new winston.transports.File({ filename: "error.log", level: "error" }),
     new winston.transports.File({ filename: "combined.log" })
@@ -11,17 +11,18 @@ const logger = winston.createLogger({
 });
 
 const myFormat = printf(info => {
-  let { level, message, timestamp, ...rest } = info;
+  let { level, message, timestamp, stack, ...rest } = info;
   let error = info.error || info.err;
   if (error instanceof Error) {
     delete rest.error;
     delete rest.err;
     rest.errorStatusCode = error.statusCode;
-    rest.errorMessage = error.message;
+    message += "\n" + error.message;
+    stack = error.stack;
   }
   return `${timestamp} [${level}]: ${message} ${
     Object.entries(rest).length > 0 ? JSON.stringify(rest) : ""
-  }${error && error.stack != null ? `\n${error.stack}` : ""}`;
+  }${stack != null ? `\n${stack}` : ""}`;
 });
 
 if (process.env.NODE_ENV !== "production") {
