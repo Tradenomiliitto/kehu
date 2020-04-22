@@ -1,11 +1,146 @@
 {
+  "footer": {
+    "blog": "",
+    "contact-details": "",
+    "info": "",
+    "privacy-policy": "",
+    "terms": "",
+    "tradenomiliitto": ""
+  },
+  "header": {
+    "add-kehu-link": "",
+    "blog-link": "",
+    "kehut-link": "",
+    "report-link": "",
+    "send-kehu-link": ""
+  },
   "home": {
-    "add-kehu-button": "Add Kehu",
-    "add-new-kehu": "Add new Kehu",
-    "send-kehu-button": "Send Kehu",
+    "add-new-kehu-btn": "",
+    "add-new-kehu-text": "",
+    "add-new-kehu-title": "",
+    "feed": {
+      "show-all-btn": "",
+      "title": ""
+    },
+    "send-new-kehu-btn": "",
     "sidebar": {
+      "skills-no-skills-text1": "",
+      "skills-no-skills-text2": "",
       "skills-title": "Kehutuimmat taitosi",
-      "view-raport": "Tarkastele raporttiasi"
+      "skills-view-raport-btn": "",
+      "strengths-read-more-btn": "",
+      "strengths-text": "",
+      "strengths-title": ""
+    },
+    "welcome": {
+      "text-1": "",
+      "text-2": "",
+      "text-3": "",
+      "text-4": "",
+      "title": ""
     }
+  },
+  "kehus": {
+    "confirm-removal": "",
+    "kehu-received": "",
+    "received-kehus-btn": "",
+    "remove-kehu-error": "",
+    "sent-kehus-btn": "",
+    "show-in-report": "",
+    "skills": "",
+    "table-columns": {
+      "kehu": "",
+      "name": "",
+      "receiver": "",
+      "sender": "",
+      "situation": "",
+      "skills": "",
+      "time": ""
+    },
+    "title-received-kehus": "",
+    "title-sent-kehus": "",
+    "toggle-view": ""
+  },
+  "kehus-sent-kehu": "",
+  "modals": {
+    "add-kehu": {
+      "comment-btn": "",
+      "comment-placeholder": "",
+      "datefield": "",
+      "error": "",
+      "importance": "",
+      "kehu-giver-input": "",
+      "kehu-giver-placeholder": "",
+      "save-kehu-btn": "",
+      "textfield-placeholder": "",
+      "title-add-kehu": "",
+      "title-edit-kehu": "",
+      "title-successfully-saved": ""
+    },
+    "claim-kehu": {
+      "error": "",
+      "received-kehu-notice": "",
+      "show-kehus-link": "",
+      "success": ""
+    },
+    "close-btn": "",
+    "ready-btn": "",
+    "send-kehu": {
+      "error": "",
+      "modify-kehu-btn": "",
+      "preview-and-submit-btn": "",
+      "preview-receiver": "",
+      "receiver-email": "",
+      "receiver-email-placeholder": "",
+      "receiver-name": "",
+      "receiver-name-placeholder": "",
+      "send-kehu-btn": "",
+      "sender-role-selection": "",
+      "success-text": "",
+      "success-title": "",
+      "title": ""
+    },
+    "wordcloud": {
+      "add-btn": "",
+      "label-situations": "",
+      "label-tags": "",
+      "placeholder-situations": "",
+      "placeholder-tags": ""
+    }
+  },
+  "profile": {
+    "change-password-btn": "",
+    "change-picture-btn": "",
+    "confirm-profile-deletion": "",
+    "delete-profile": "",
+    "email": "",
+    "first-name": "",
+    "last-name": "",
+    "logout-btn": "",
+    "save-btn": "",
+    "title": "",
+    "update-error": "",
+    "update-successful": ""
+  },
+  "report": {
+    "kehu": "",
+    "kehu_plural": "",
+    "load-report": {
+      "close": "",
+      "download": "",
+      "filename": "",
+      "number-of-sent-kehus-title": "",
+      "report-subtitle": "",
+      "report-title": "",
+      "select-kehus": ""
+    },
+    "load-report-btn": "",
+    "number-of-kehus-title": "",
+    "number-of-sent-kehus-title": "",
+    "select-kehus-title": "",
+    "situations-title": "",
+    "skills-title": "",
+    "top-roles-no-data-notice": "",
+    "top-roles-title": ""
   }
 }

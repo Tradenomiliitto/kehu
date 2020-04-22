@@ -1,11 +1,146 @@
 {
+  "footer": {
+    "blog": "Blogi",
+    "contact-details": "Yhteystiedot",
+    "info": "Info",
+    "privacy-policy": "Rekisteriseloste",
+    "terms": "Käyttöehdot",
+    "tradenomiliitto": "Tradenomiliitto"
+  },
+  "header": {
+    "add-kehu-link": "Lisää Kehu",
+    "blog-link": "Blogi",
+    "kehut-link": "Kehut",
+    "report-link": "Raportit",
+    "send-kehu-link": "Lähetä Kehu"
+  },
   "home": {
-    "add-kehu-button": "Lisää Kehu",
-    "add-new-kehu": "Lisää uusi Kehu",
-    "send-kehu-button": "Lähetä Kehu",
+    "add-new-kehu-btn": "Lisää Kehu",
+    "add-new-kehu-text": "Älä pidä kehujasi vakan alla! Tallenna Kehu-pankkiisi kuulemasi kehu tai piristä kollegaa lähettämällä Kehu!",
+    "add-new-kehu-title": "Lisää uusi Kehu",
+    "feed": {
+      "show-all-btn": "Kaikki Kehut",
+      "title": "Viimeaikainen toiminta"
+    },
+    "send-new-kehu-btn": "Lähetä Kehu",
     "sidebar": {
+      "skills-no-skills-text1": "Jokaiseen kehuun liitetään siihen liittyvät taidot tageina. Kun kehudataa alkaa kertyä, voit tarkastella mm. kehutuimpia taitojasi Kehu-raportistasi.",
+      "skills-no-skills-text2": "Kehu ei ole sosiaalinen media, eli raporttisi ja kaikki tallentamasi kehut näkyvät vain sinulle.",
       "skills-title": "Kehutuimmat taitosi",
-      "view-raport": "Tarkastele raporttiasi"
+      "skills-view-raport-btn": "Tarkastele raporttiasi",
+      "strengths-read-more-btn": "Lue lisää blogista!",
+      "strengths-text": "Lähetä kehu kollegalle, ystävälle, esimiehelle, asiakkaalle tai kenelle tahansa. Tarvitset vastaanottajan sähköpostiosoitteen.",
+      "strengths-title": "Omien vahvuuksien tunteminen on ehdoton valttikortti uralla"
+    },
+    "welcome": {
+      "text-1": "Huomioithan, että voit jatkossa liittää Kehu-tiliisi myös muita käytössäsi olevia sähköpostiosoitteita. Kehujen lähettämisen yhteydessä toimitetaan vastaanottajalle aina myös sähköposti, josta löytyy ohjaus osoitteen liittämiseen omaan tiliin. Tämä tarkoittaa myös, että sinun ei tarvitse tietää, mitä sähköpostiosoitetta esimerkiksi kollegasi käyttää Kehu-tilillään, sillä kaikki vastaanotetut kehut on mahdollista liittää samalle tilille.",
+      "text-2": "Aloita Kehun käyttö lisäämällä uusi kehu - se voi olla jotain mitä sinulle on sanottu, kirjoitettu, annettu formaalina palautteena, tai minkä vain itse koet kehuksi.",
+      "text-3": "Aloita tiesi oman osaamisesi tilastoguruksi heti ja tallenna ensimmäinen kehusi!",
+      "text-4": "Mikäli olet rekisteröitynyt Facebookin tai Googlen kautta, käythän lisäämässä oman sähköpostisi omaan profiiliisi, jotta muiden lähettämien kehujen vastaanottaminen olisi mahdollisimman vaivatonta.",
+      "title": "Tervetuloa Kehuun!"
     }
+  },
+  "kehus": {
+    "confirm-removal": "Haluatko varmasti poistaa Kehun?",
+    "kehu-received": "Vastaanotettu kehu:",
+    "received-kehus-btn": "Saadut Kehut",
+    "remove-kehu-error": "Valitettavasti Kehun poistaminen epäonnistui. Seuraava virhe tapahtui: {{error}}",
+    "sent-kehus-btn": "Lähetetyt Kehut",
+    "show-in-report": "Näytä raportissa",
+    "skills": "Asiasanat",
+    "table-columns": {
+      "kehu": "Kehu",
+      "name": "Nimi",
+      "receiver": "Vastaanottaja",
+      "sender": "Kehuja",
+      "situation": "Tilanne",
+      "skills": "Taidot",
+      "time": "Aika"
+    },
+    "title-received-kehus": "Saadut kehut",
+    "title-sent-kehus": "Lähetetyt kehut",
+    "toggle-view": "Vaihda näkymää"
+  },
+  "kehus-sent-kehu": "Lähetetty kehu",
+  "modals": {
+    "add-kehu": {
+      "comment-btn": "Omat kommentit",
+      "comment-placeholder": "Omat kommentit",
+      "datefield": "Päivämäärä:",
+      "error": "Valitettavasti Kehun {{action}} epäonnistui. Seuraava virhe tapahtui: {{error}}.",
+      "importance": "Kehun tärkeys",
+      "kehu-giver-input": "Minua kehui:",
+      "kehu-giver-placeholder": "Nimi",
+      "save-kehu-btn": "Tallenna Kehu",
+      "textfield-placeholder": "Hyvää työtä! Olet...",
+      "title-add-kehu": "Lisää Kehu",
+      "title-edit-kehu": "Muokkaa Kehua",
+      "title-successfully-saved": "Kehu tallennettu!"
+    },
+    "claim-kehu": {
+      "error": "Kehun lisäämisessä tapahtui virhe tai se on jo lisätty. Yritä myöhemmin uudelleen.",
+      "received-kehu-notice": "Saatu Kehu on muokattavissa vain asiasanojen, tilanteen, tärkeyden ja kommentin osalta. Nämä tiedot eivät näy Kehun antajalle.",
+      "show-kehus-link": "Näytä Kehut",
+      "success": "Kehu lisätty onnistuneesti!"
+    },
+    "close-btn": "Sulje",
+    "ready-btn": "Valmis",
+    "send-kehu": {
+      "error": "Valitettavasti Kehun lähettäminen epäonnistui. Seuraava virhe tapahtui: {{error}}",
+      "modify-kehu-btn": "Muokkaa Kehua",
+      "preview-and-submit-btn": "Esikatsele ja lähetä",
+      "preview-receiver": "Lähetetään kehun saajalle:",
+      "receiver-email": "Sähköpostiosoite",
+      "receiver-email-placeholder": "Sähköpostisoite",
+      "receiver-name": "Kehun saaja",
+      "receiver-name-placeholder": "Nimi",
+      "send-kehu-btn": "Lähetä Kehu",
+      "sender-role-selection": "Olen Kehun saajan:",
+      "success-text": "Hienoa, jatka samaan malliin.",
+      "success-title": "Kehu lähetetty!",
+      "title": "Lähetä Kehu"
+    },
+    "wordcloud": {
+      "add-btn": "Lisää",
+      "label-situations": "Kehu koskee tilannetta",
+      "label-tags": "Kehun asiasanat<br/>(taidot ja ominaisuudet)",
+      "placeholder-situations": "Uusi tilanne",
+      "placeholder-tags": "Uusi asiasana"
+    }
+  },
+  "profile": {
+    "change-password-btn": "Vaihda salasana",
+    "change-picture-btn": "Vaihda profiilikuva",
+    "confirm-profile-deletion": "Oletko varma, että haluat poistaa käyttäjätunnuksen?{{newline}}Valitsemalla kyllä sekä profiili että tallennetut kehut poistetaan, eikä sitä voi enää peruuttaa.",
+    "delete-profile": "Poista käyttäjätunnus",
+    "email": "Sähköposti",
+    "first-name": "Etunimi",
+    "last-name": "Sukunimi",
+    "logout-btn": "Kirjaudu ulos",
+    "save-btn": "Tallenna",
+    "title": "Profiili",
+    "update-error": "Valitettavasti profiilin päivitys epäonnistui. Tapahtui seuraava virhe: {{error}}",
+    "update-successful": "Profiilin päivitys onnistui."
+  },
+  "report": {
+    "kehu": "KEHU",
+    "kehu_plural": "",
+    "load-report": {
+      "close": "Sulje",
+      "download": "Tallenna",
+      "filename": "kehu-raportti.pdf",
+      "number-of-sent-kehus-title": "Olet lähettänyt Kehuja",
+      "report-subtitle": "Tämä raportti on koottu yksilöiden antamien palautteiden, Kehujen, perusteella, ja kuvaa omistajansa osaamista ja vahvuuksia",
+      "report-title": "Osaamisprofiili",
+      "select-kehus": "Valitse kehut"
+    },
+    "load-report-btn": "Lataa raportti",
+    "number-of-kehus-title": "Sinulla on yhteensä",
+    "number-of-sent-kehus-title": "Olet lähettänyt",
+    "select-kehus-title": "Valitse kehut",
+    "situations-title": "Kehutuimmat tilanteet",
+    "skills-title": "Kehutuimmat taidot",
+    "top-roles-no-data-notice": "<0>Ei tarpeeksi tietoa TOP Kehujien näyttämiseksi.</0><1>Lisää kehu tai merkitse roolit olemassa oleviin kehuihin.</1>",
+    "top-roles-title": "TOP Kehujat"
   }
 }
