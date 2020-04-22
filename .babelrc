@@ -5,7 +5,7 @@
       "i18next-extract",
       {
         "locales": ["fi", "en"],
-        "useI18nextDefaultValue": true,
+        "useI18nextDefaultValue": ["fi"],
         "outputPath": "public/locales/{{ns}}-{{locale}}.json"
       }
     ],
