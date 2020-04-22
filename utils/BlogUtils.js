@@ -45,7 +45,7 @@ function parsePost(posts, post, index) {
     content: documentToHtmlString(post.fields.content),
     excerpt: post.fields.excerpt,
     image: {
-      url: post.fields.header.fields.file.url
+      url: ((post.fields.header.fields || {}).file || {}).url
     },
     nextPost: posts[index - 1] ? posts[index - 1].fields.url : null,
     prevPost: posts[index + 1] ? posts[index + 1].fields.url : null,
