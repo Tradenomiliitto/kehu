@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { compose } from "redux";
+import { withTranslation } from "react-i18next";
 import moment from "moment";
 import ErrorPanel from "../ErrorPanel";
 import { sendKehu } from "../../redux/kehu";
@@ -55,12 +57,17 @@ export class SendKehuForm extends Component {
 
   renderPreview() {
     const { receiver_name, receiver_email, text, date_given } = this.state;
-    const { profile } = this.props;
+    const { t, profile } = this.props;
     return (
       <div className="SendKehuPreview preview-js">
         {this.renderErrors()}
         <p className="SendKehuPreview-receiver receiver-nw">
-          <b>Lähetetään kehun saajalle:</b>
+          <b>
+            {t(
+              "modals.send-kehu.preview-receiver",
+              "Lähetetään kehun saajalle:"
+            )}
+          </b>
           <br />
           {receiver_name}
           <br />
@@ -89,13 +96,13 @@ export class SendKehuForm extends Component {
             className="Button Button--fullWidth Button--inverseNoBorders"
             onClick={this.togglePreview}
           >
-            Muokkaa Kehua
+            {t("modals.send-kehu.modify-kehu-btn", "Muokkaa Kehua")}
           </button>
           <button
             className="Button Button--fullWidth submit-send-kehu-nw send-kehu-js"
             onClick={this.sendKehu}
           >
-            Lähetä Kehu
+            {t("modals.send-kehu.send-kehu-btn", "Lähetä Kehu")}
           </button>
         </div>
       </div>
@@ -133,7 +140,7 @@ export class SendKehuForm extends Component {
       situations,
       role_id
     } = this.state;
-    const { contacts, roles, profile } = this.props;
+    const { t, contacts, roles, profile } = this.props;
     return (
       <form className="Form form-js" onSubmit={this.togglePreview}>
         {this.renderErrors()}
@@ -151,7 +158,9 @@ export class SendKehuForm extends Component {
           handleChange={this.handleChangeWithEvent("receiver_email")}
         />
         <div className="Form-group">
-          <label>Olen Kehun saajan:</label>
+          <label>
+            {t("modals.send-kehu.sender-role-selection", "Olen Kehun saajan:")}
+          </label>
           <RoleSelectPanel
             disabled={false}
             hideSelf={true}
@@ -175,12 +184,10 @@ export class SendKehuForm extends Component {
           cloudItems={this.props.tags}
           label={
             <span>
-              Kehun asiasanat
-              <br />
-              (taidot ja ominaisuudet)
+              <Trans i18nKey="modals.wordcloud.label-tags" />
             </span>
           }
-          placeholder="Uusi asiasana"
+          placeholder={t("modals.wordcloud.placeholder-tags", "Uusi asiasana")}
           values={tags}
           handleChange={this.handleChangeWithValue("tags")}
         />
@@ -188,31 +195,41 @@ export class SendKehuForm extends Component {
           id="situations"
           className="Situation"
           cloudItems={this.props.situations}
-          label="Kehu koskee tilannetta"
-          placeholder="Uusi tilanne"
+          label={t(
+            "modals.wordcloud.label-situations",
+            "Kehu koskee tilannetta"
+          )}
+          placeholder={t(
+            "modals.wordcloud.placeholder-situations",
+            "Uusi tilanne"
+          )}
           values={situations}
           handleChange={this.handleChangeWithValue("situations")}
         />
         <input
           type="submit"
           className="Button Button--fullWidth submit-kehu-nw"
-          value="Esikatsele ja lähetä"
+          value={t(
+            "modals.send-kehu.preview-and-submit-btn",
+            "Esikatsele ja lähetä"
+          )}
         />
       </form>
     );
   }
 
   renderErrors() {
-    const { error } = this.props;
+    const { t, error } = this.props;
     if (error && error.responseJson && error.responseJson.errors) {
       return error.responseJson.errors.map((e, i) => (
         <ErrorPanel key={i} message={e.msg} />
       ));
     }
     if (error && error.message) {
-      const message = `Valitettavasti Kehun lähettäminen epäonnistui. Seuraava virhe tapahtui: ${
-        error.message
-      }.`;
+      const message = t("modals.send-kehu.error", {
+        error: error.message,
+        defaultValue: `Valitettavasti Kehun lähettäminen epäonnistui. Seuraava virhe tapahtui: {{error}}`
+      });
       return <ErrorPanel message={message} />;
     }
   }
@@ -265,7 +282,10 @@ const mapDispatchToProps = {
   sendKehu
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+export default compose(
+  withTranslation(),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
 )(SendKehuForm);

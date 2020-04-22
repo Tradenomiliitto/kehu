@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
 import { connect } from "react-redux";
+import { compose } from "redux";
+import { withTranslation } from "react-i18next";
 import cn from "classnames";
 import { capitalizeText } from "../../util/TextUtil";
 
@@ -55,10 +57,11 @@ export class KehuItem extends Component {
   }
 
   createInfo(kehu) {
+    const { t } = this.props;
     let text = "";
 
     if (kehu.receiver_email) {
-      text += "Vastaanotettu kehu: ";
+      text += t("kehus.kehu-received", "Vastaanotettu kehu:") + " ";
     }
 
     if (kehu.role && kehu.role.role) {
@@ -68,7 +71,7 @@ export class KehuItem extends Component {
     }
 
     if (kehu.tags && kehu.tags.length) {
-      text += `. Asiasanat: ${kehu.tags
+      text += `. ${t("kehus.skills", "Asiasanat")}: ${kehu.tags
         .map(t => t.text)
         .map(capitalizeText)
         .join(", ")}`;
@@ -82,7 +85,10 @@ const mapStateToProps = state => ({
   roles: state.profile.roles
 });
 
-export default connect(
-  mapStateToProps,
-  null
+export default compose(
+  withTranslation(),
+  connect(
+    mapStateToProps,
+    null
+  )
 )(KehuItem);

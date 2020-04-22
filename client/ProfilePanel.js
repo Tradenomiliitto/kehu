@@ -26,7 +26,7 @@ export class ProfilePanel extends Component {
   }
 
   render() {
-    const { profile } = this.props;
+    const { t, profile } = this.props;
     return (
       <div className="container">
         <div className="row">
@@ -35,7 +35,9 @@ export class ProfilePanel extends Component {
               <div className="container">
                 <div className="row">
                   <div className="col col-xs-12">
-                    <h1 className="ProfilePanel-title">Profiili</h1>
+                    <h1 className="ProfilePanel-title">
+                      {t("profile.title", "Profiili")}
+                    </h1>
                   </div>
                 </div>
                 <div className="row">
@@ -51,7 +53,7 @@ export class ProfilePanel extends Component {
                         onClick={this.uploadWidget}
                         className="Button upload-button"
                       >
-                        Vaihda profiilikuva
+                        {t("profile.change-picture-btn", "Vaihda profiilikuva")}
                       </button>
                     </div>
                   </div>
@@ -74,7 +76,7 @@ export class ProfilePanel extends Component {
                           onClick={this.resetPassword}
                           className="Button ProfileActionLink"
                         >
-                          Vaihda salasana
+                          {t("profile.change-password-btn", "Vaihda salasana")}
                         </a>
                         <a
                           href={`/profiili/kirjaudu-ulos?redirectLanguage=${
@@ -82,13 +84,13 @@ export class ProfilePanel extends Component {
                           }`}
                           className="Button ProfileActionLink"
                         >
-                          Kirjaudu ulos
+                          {t("profile.logout-btn", "Kirjaudu ulos")}
                         </a>
                         <button
                           className="Button Button--inverse ProfileActionLink ProfileDeleteLink"
                           onClick={this.handleDeleteButtonClick}
                         >
-                          Poista käyttäjätunnus
+                          {t("profile.delete-profile", "Poista käyttäjätunnus")}
                         </button>
                       </div>
                     </div>
@@ -103,9 +105,16 @@ export class ProfilePanel extends Component {
   }
 
   renderSuccessPanel() {
+    const { t } = this.props;
     if (this.state.success) {
       return (
-        <SuccessPanel message="Profiilin päivitys onnistui." hideAfter={5000} />
+        <SuccessPanel
+          message={t(
+            "profile.update-successful",
+            "Profiilin päivitys onnistui."
+          )}
+          hideAfter={5000}
+        />
       );
     }
   }
@@ -135,7 +144,7 @@ export class ProfilePanel extends Component {
         multiple: false,
         publicId: "profile_" + this.props.profile.auth0_id,
         uploadSignature: this.generateSignature,
-        language: "fi",
+        language: this.props.i18n.language,
         styles: {
           palette: {
             window: "#FFFFFF",
@@ -187,11 +196,14 @@ export class ProfilePanel extends Component {
   };
 
   handleDeleteButtonClick = () => {
-    const confirmText = `
-Oletko varma, että haluat poistaa käyttäjätunnuksen?
-
-Valitsemalla kyllä sekä profiili että tallennetut kehut poistetaan, eikä sitä voi enää peruuttaa.
-`;
+    const confirmText =
+      "\n" +
+      this.props.t("profile.confirm-profile-deletion", {
+        newline: "\n\n",
+        defaultValue:
+          "Oletko varma, että haluat poistaa käyttäjätunnuksen?{{newline}}Valitsemalla kyllä sekä profiili että tallennetut kehut poistetaan, eikä sitä voi enää peruuttaa."
+      }) +
+      "\n";
 
     if (confirm(confirmText)) {
       this.props.deleteProfile();

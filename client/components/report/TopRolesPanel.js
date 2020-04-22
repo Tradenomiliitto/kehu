@@ -1,8 +1,9 @@
 import React, { Component, Fragment } from "react";
+import { withTranslation, Trans } from "react-i18next";
 import PropTypes from "prop-types";
 import cn from "classnames";
 
-export default class TopRolesPanel extends Component {
+export class TopRolesPanel extends Component {
   static propTypes = {
     roles: PropTypes.array.isRequired
   };
@@ -33,24 +34,30 @@ export default class TopRolesPanel extends Component {
   }
 
   render() {
+    const { t } = this.props;
     return (
       <div className="ReportElement TopRoles">
-        <p className="TopRoles-title">TOP Kehujat</p>
+        <p className="TopRoles-title">
+          {t("report.top-roles-title", "TOP Kehujat")}
+        </p>
         {this.renderContent()}
       </div>
     );
   }
 
   renderContent() {
+    const { t } = this.props;
     if (!this.props.roles.length) {
       return (
         <Fragment>
-          <p className="TopRoles-notice">
-            Ei tarpeeksi tietoa TOP Kehujien näyttämiseksi.
-          </p>
-          <p className="TopRoles-notice">
-            Lisää kehu tai merkitse roolit olemassa oleviin kehuihin.
-          </p>
+          <Trans i18nKey="report.top-roles-no-data-notice">
+            <p className="TopRoles-notice">
+              Ei tarpeeksi tietoa TOP Kehujien näyttämiseksi.
+            </p>
+            <p className="TopRoles-notice">
+              Lisää kehu tai merkitse roolit olemassa oleviin kehuihin.
+            </p>
+          </Trans>
         </Fragment>
       );
     }
@@ -113,3 +120,4 @@ export default class TopRolesPanel extends Component {
     });
   }
 }
+export default withTranslation()(TopRolesPanel);

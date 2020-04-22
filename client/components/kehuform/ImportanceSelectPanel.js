@@ -1,8 +1,9 @@
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import cn from "classnames";
 
-export default class ImportanceSelectPanel extends Component {
+export class ImportanceSelectPanel extends Component {
   static propTypes = {
     handleClick: PropTypes.func.isRequired,
     value: PropTypes.number.isRequired
@@ -16,9 +17,12 @@ export default class ImportanceSelectPanel extends Component {
   }
 
   render() {
+    const { t } = this.props;
     return (
       <div className="Form-group ImportanceSelectorContainer">
-        <label htmlFor="giver_name">Kehun tärkeys</label>
+        <label htmlFor="giver_name">
+          {t("modals.add-kehu.importance", "Kehun tärkeys")}
+        </label>
         <div className="ImportanceSelector">{this.renderStars()}</div>
       </div>
     );
@@ -67,3 +71,5 @@ export default class ImportanceSelectPanel extends Component {
     return () => this.props.handleClick(number);
   };
 }
+
+export default withTranslation()(ImportanceSelectPanel);

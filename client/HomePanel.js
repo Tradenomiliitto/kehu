@@ -41,11 +41,13 @@ export class HomePanel extends Component {
               <div className="row HomeButtons">
                 <div className="col col-xs-12 col-md-8">
                   <h1 className="HomeButtons-title">
-                    {t("home.add-new-kehu", "Lisää uusi Kehu")}
+                    {t("home.add-new-kehu-title", "Lisää uusi Kehu")}
                   </h1>
                   <p className="HomeButtons-text">
-                    Älä pidä kehujasi vakan alla! Tallenna Kehu-pankkiisi
-                    kuulemasi kehu tai piristä kollegaa lähettämällä Kehu!
+                    {t(
+                      "home.add-new-kehu-text",
+                      "Älä pidä kehujasi vakan alla! Tallenna Kehu-pankkiisi kuulemasi kehu tai piristä kollegaa lähettämällä Kehu!"
+                    )}
                   </p>
                 </div>
                 <div className="col col-xs-12 col-md-4">
@@ -54,13 +56,13 @@ export class HomePanel extends Component {
                       className="Button add-kehu-nw"
                       onClick={this.props.toggleAddKehuFormModal}
                     >
-                      {t("home.add-kehu-button", "Lisää Kehu")}
+                      {t("home.add-new-kehu-btn", "Lisää Kehu")}
                     </button>
                     <button
                       className="Button send-kehu-nw"
                       onClick={this.props.toggleSendKehuFormModal}
                     >
-                      {t("home.send-kehu-button", "Lähetä Kehu")}
+                      {t("home.send-new-kehu-btn", "Lähetä Kehu")}
                     </button>
                   </div>
                 </div>
@@ -93,13 +95,14 @@ export class HomePanel extends Component {
         </h3>
         {this.renderTagsContent()}
         <Link to="/raportit" className="Button Button--fullWidth">
-          {t("home.sidebar.view-raport", "Tarkastele raporttiasi")}
+          {t("home.sidebar.skills-view-raport-btn", "Tarkastele raporttiasi")}
         </Link>
       </div>
     );
   }
 
   renderTagsContent() {
+    const { t } = this.props;
     if (this.props.tags.length) {
       return (
         <ul className="SidebarElement-list">
@@ -114,13 +117,16 @@ export class HomePanel extends Component {
       return (
         <Fragment>
           <p className="SidebarElement-text tags-text-js">
-            Jokaiseen kehuun liitetään siihen liittyvät taidot tageina. Kun
-            kehudataa alkaa kertyä, voit tarkastella mm. kehutuimpia taitojasi
-            Kehu-raportistasi.
+            {t(
+              "home.sidebar.skills-no-skills-text1",
+              "Jokaiseen kehuun liitetään siihen liittyvät taidot tageina. Kun kehudataa alkaa kertyä, voit tarkastella mm. kehutuimpia taitojasi Kehu-raportistasi."
+            )}
           </p>
           <p className="SidebarElement-text">
-            Kehu ei ole sosiaalinen media, eli raporttisi ja kaikki tallentamasi
-            kehut näkyvät vain sinulle.
+            {t(
+              "home.sidebar.skills-no-skills-text2",
+              "Kehu ei ole sosiaalinen media, eli raporttisi ja kaikki tallentamasi kehut näkyvät vain sinulle."
+            )}
           </p>
         </Fragment>
       );
@@ -128,14 +134,20 @@ export class HomePanel extends Component {
   }
 
   renderBlogElement() {
+    const { t } = this.props;
     return (
       <div className="SidebarElement">
         <h3 className="SidebarElement-title">
-          Omien vahvuuksien tunteminen on ehdoton valttikortti uralla
+          {t(
+            "home.sidebar.strengths-title",
+            "Omien vahvuuksien tunteminen on ehdoton valttikortti uralla"
+          )}
         </h3>
         <p className="SidebarElement-text">
-          Lähetä kehu kollegalle, ystävälle, esimiehelle, asiakkaalle tai
-          kenelle tahansa. Tarvitset vastaanottajan sähköpostiosoitteen.
+          {t(
+            "home.sidebar.strengths-text",
+            "Lähetä kehu kollegalle, ystävälle, esimiehelle, asiakkaalle tai kenelle tahansa. Tarvitset vastaanottajan sähköpostiosoitteen."
+          )}
         </p>
         <img
           src="/images/landing-section-6-image.png"
@@ -143,7 +155,7 @@ export class HomePanel extends Component {
           className="SidebarElement-image"
         />
         <a href="/blogi" className="Button Button--fullWidth">
-          Lue lisää blogista!
+          {t("home.sidebar.strengths-read-more-btn", "Lue lisää blogista!")}
         </a>
       </div>
     );

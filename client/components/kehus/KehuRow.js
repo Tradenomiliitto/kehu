@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { compose } from "redux";
+import { withTranslation } from "react-i18next";
 import moment from "moment";
 import cn from "classnames";
 import KehusTableActionButton from "./KehusTableActionButton";
@@ -122,12 +124,15 @@ export class KehuRow extends Component {
   };
 
   handleRemoveClick = ev => {
+    const { t } = this.props;
     ev.stopPropagation();
     const {
       kehu: { id },
       removeKehu
     } = this.props;
-    if (confirm("Haluatko varmasti poistaa Kehun?")) {
+    if (
+      confirm(t("kehus.confirm-removal", "Haluatko varmasti poistaa Kehun?"))
+    ) {
       removeKehu(id);
     }
   };
@@ -144,11 +149,14 @@ const mapStateToProps = state => ({
   unselectedKehus: state.report.unselectedKehus
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    removeKehu,
-    openEditKehuModal,
-    selectKehu
-  }
+export default compose(
+  withTranslation(),
+  connect(
+    mapStateToProps,
+    {
+      removeKehu,
+      openEditKehuModal,
+      selectKehu
+    }
+  )
 )(KehuRow);

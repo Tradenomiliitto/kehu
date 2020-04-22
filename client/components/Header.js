@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { compose } from "redux";
+import { withTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import cn from "classnames";
 import { LangLink as Link } from "../util/LangLink";
@@ -28,7 +30,7 @@ export class Header extends Component {
       "Header-menu": true,
       "Header-menu--open": this.state.menuOpen
     });
-    const { profile } = this.props;
+    const { t, i18n, profile } = this.props;
 
     return (
       <header className="Header">
@@ -48,19 +50,27 @@ export class Header extends Component {
                 <menu className={menuClass}>
                   <li className="Header-menuItem">
                     <a href="#" onClick={this.openAddKehuFormModal}>
-                      Lisää Kehu
+                      {t("header.add-kehu-link", "Lisää Kehu")}
                     </a>
                   </li>
                   <li className="Header-menuItem">
                     <a href="#" onClick={this.openSendKehuFormModal}>
-                      Lähetä Kehu
+                      {t("header.send-kehu-link", "Lähetä Kehu")}
                     </a>
                   </li>
-                  {this.renderMenuItem("/raportit", "Raportit")}
+                  {this.renderMenuItem(
+                    "/raportit",
+                    t("header.report-link", "Raportit")
+                  )}
                   <li className="Header-menuItem">
-                    <a href="/blogi">Blogi</a>
+                    <a href={`/${i18n.language}/blogi`}>
+                      {t("header.blog-link", "Blogi")}
+                    </a>
                   </li>
-                  {this.renderMenuItem("/kehut", "Kehut")}
+                  {this.renderMenuItem(
+                    "/kehut",
+                    t("header.kehut-link", "Kehut")
+                  )}
                   <li className="Header-menuItem">
                     <Link to="/profiili" onClick={this.closeMenu}>
                       {profile && profile.first_name}
@@ -114,7 +124,10 @@ const mapStateToProps = state => ({
   profile: state.profile.profile
 });
 
-export default connect(
-  mapStateToProps,
-  { toggleAddKehuFormModal, toggleSendKehuFormModal }
+export default compose(
+  withTranslation(),
+  connect(
+    mapStateToProps,
+    { toggleAddKehuFormModal, toggleSendKehuFormModal }
+  )
 )(Header);

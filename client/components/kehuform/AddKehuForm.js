@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { compose } from "redux";
+import { withTranslation, Trans } from "react-i18next";
 import moment from "moment";
 import PropTypes from "prop-types";
 import { addKehu, updateKehu } from "../../redux/kehu";
@@ -50,6 +52,7 @@ export class AddKehuForm extends Component {
   }
 
   render() {
+    const { t } = this.props;
     const {
       giver_name,
       text,
@@ -92,12 +95,14 @@ export class AddKehuForm extends Component {
           cloudItems={this.props.tags}
           label={
             <span>
-              Kehun asiasanat
-              <br />
-              (taidot ja ominaisuudet)
+              <Trans i18nKey="modals.wordcloud.label-tags">
+                Kehun asiasanat
+                <br />
+                (taidot ja ominaisuudet)
+              </Trans>
             </span>
           }
-          placeholder="Uusi asiasana"
+          placeholder={t("modals.wordcloud.placeholder-tags", "Uusi asiasana")}
           values={tags}
           handleChange={this.handleChangeWithValue("tags")}
         />
@@ -105,8 +110,14 @@ export class AddKehuForm extends Component {
           id="situations"
           className="Situation"
           cloudItems={this.props.situations}
-          label="Kehu koskee tilannetta"
-          placeholder="Uusi tilanne"
+          label={t(
+            "modals.wordcloud.label-situations",
+            "Kehu koskee tilannetta"
+          )}
+          placeholder={t(
+            "modals.wordcloud.placeholder-situations",
+            "Uusi tilanne"
+          )}
           values={situations}
           handleChange={this.handleChangeWithValue("situations")}
         />
@@ -121,24 +132,28 @@ export class AddKehuForm extends Component {
         <input
           type="submit"
           className="Button Button--fullWidth submit-kehu-nw"
-          value="Tallenna Kehu"
+          value={t("modals.add-kehu.save-kehu-btn", "Tallenna Kehu")}
         />
       </form>
     );
   }
 
   renderReceivedKehuNotice() {
+    const { t } = this.props;
     if (this.isReceivedKehu()) {
       return (
         <p className="ReceivedKehuNotice">
-          Saatu Kehu on muokattavissa vain asiasanojen, tilanteen, tärkeyden ja
-          kommentin osalta. Nämä tiedot eivät näy Kehun antajalle.
+          {t(
+            "modals.claim-kehu.received-kehu-notice",
+            "Saatu Kehu on muokattavissa vain asiasanojen, tilanteen, tärkeyden ja kommentin osalta. Nämä tiedot eivät näy Kehun antajalle."
+          )}
         </p>
       );
     }
   }
 
   renderErrors() {
+    const { t } = this.props;
     const { error } = this.props;
     if (error && error.responseJson && error.responseJson.errors) {
       return error.responseJson.errors.map((e, i) => (
@@ -147,9 +162,11 @@ export class AddKehuForm extends Component {
     }
     if (error && error.message) {
       const action = this.props.kehu ? "päivittäminen" : "lisääminen";
-      const message = `Valitettavasti Kehun ${action} epäonnistui. Seuraava virhe tapahtui: ${
-        error.message
-      }.`;
+      const message = t("modals.add-kehu.error", {
+        action,
+        error: error.message,
+        defaultValue: `Valitettavasti Kehun {{action}} epäonnistui. Seuraava virhe tapahtui: {{error}}.`
+      });
       return <ErrorPanel message={message} />;
     }
   }
@@ -198,7 +215,10 @@ const mapDispatchToProps = {
   updateKehu
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+export default compose(
+  withTranslation(),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
 )(AddKehuForm);

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { compose } from "redux";
+import { withTranslation } from "react-i18next";
 import { LangLink as Link } from "./util/LangLink";
 import { claimKehu } from "./redux/kehu";
 import Spinner from "./components/Spinner";
@@ -35,9 +37,15 @@ export class ClaimKehuPanel extends Component {
   }
 
   renderContent() {
+    const { t } = this.props;
     if (this.props.error) {
       return (
-        <ErrorPanel message="Kehun lisäämisessä tapahtui virhe tai se on jo lisätty. Yritä myöhemmin uudelleen." />
+        <ErrorPanel
+          message={t(
+            "modals.claim-kehu.error",
+            "Kehun lisäämisessä tapahtui virhe tai se on jo lisätty. Yritä myöhemmin uudelleen."
+          )}
+        />
       );
     }
 
@@ -51,9 +59,9 @@ export class ClaimKehuPanel extends Component {
           <span>&#10004;</span>
         </div>
 
-        <p>Kehu lisätty onnistuneesti!</p>
+        <p>{t("modals.claim-kehu.success", "Kehu lisätty onnistuneesti!")}</p>
         <LangLink to="/kehut" className="Button Button--inverseNoBorders">
-          Näytä Kehut
+          {t("modals.claim-kehu.show-kehus-link", "Näytä Kehut")}
         </LangLink>
       </div>
     );
@@ -69,7 +77,10 @@ const mapActionsToProps = {
   claimKehu
 };
 
-export default connect(
-  mapStateToProps,
-  mapActionsToProps
+export default compose(
+  withTranslation(),
+  connect(
+    mapStateToProps,
+    mapActionsToProps
+  )
 )(ClaimKehuPanel);

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { withTranslation } from "react-i18next";
+import { compose } from "redux";
 import KehusTable from "./components/kehus/KehusTable";
 import SentKehusTable from "./components/kehus/SentKehusTable";
 import ErrorPanel from "./components/ErrorPanel";
@@ -21,9 +23,10 @@ export class KehusPanel extends Component {
   }
 
   render() {
+    const { t } = this.props;
     const titleText = this.state.showSentKehus
-      ? "Lähetetyt Kehut"
-      : "Saadut Kehut";
+      ? t("kehus.title-sent-kehus", "Lähetetyt Kehut")
+      : t("kehus.title-received-kehus", "Saadut Kehut");
     return (
       <div className="container">
         <div className="row">
@@ -34,7 +37,9 @@ export class KehusPanel extends Component {
                   {titleText}
                 </h1>
                 <div className="KehusPanelHeader-toggle-container">
-                  <span className="KehusPanelHeader-text">Vaihda näkymää</span>
+                  <span className="KehusPanelHeader-text">
+                    {t("kehus.toggle-view", "Vaihda näkymää")}
+                  </span>
                   {this.renderToggleButton()}
                   <a href="/api/v1/kehut/kehu-raportti.xlsx">
                     <img
@@ -54,9 +59,10 @@ export class KehusPanel extends Component {
   }
 
   renderToggleButton() {
+    const { t } = this.props;
     const buttonText = this.state.showSentKehus
-      ? "Saadut Kehut"
-      : "Lähetetyt Kehut";
+      ? t("kehus.received-kehus-btn", "Saadut Kehut")
+      : t("kehus.sent-kehus-btn", "Lähetetyt Kehut");
     return (
       <button
         className="Button KehusPanelHeader-button toggle-view-nw"
@@ -73,11 +79,13 @@ export class KehusPanel extends Component {
   };
 
   renderErrors() {
-    const { error } = this.props;
+    const { t, error } = this.props;
     if (error && error.message) {
-      const message = `Valitettavasti Kehun poistaminen epäonnistui. Seuraava virhe tapahtui: ${
-        error.message
-      }.`;
+      const message = t("kehus.remove-kehu-error", {
+        error: error.message,
+        defaultValue:
+          "Valitettavasti Kehun poistaminen epäonnistui. Seuraava virhe tapahtui: {{error}}"
+      });
       return <ErrorPanel message={message} />;
     }
   }
@@ -100,7 +108,10 @@ const mapStateToProps = state => ({
   sentKehus: state.kehu.sentKehus
 });
 
-export default connect(
-  mapStateToProps,
-  null
+export default compose(
+  withTranslation(),
+  connect(
+    mapStateToProps,
+    null
+  )
 )(KehusPanel);

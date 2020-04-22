@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { compose } from "redux";
+import { withTranslation } from "react-i18next";
 import { connect } from "react-redux";
 import moment from "moment";
 
@@ -28,7 +30,7 @@ export class SentKehuItem extends Component {
   }
 
   createInfo(kehu) {
-    let text = "Lähetetty kehu: ";
+    let text = this.props.t("kehus-sent-kehu", "Lähetetty kehu") + ": ";
 
     if (kehu.role_id) {
       const role = this.props.roles.find(r => r.id === kehu.role_id);
@@ -45,7 +47,10 @@ const mapStateToProps = state => ({
   roles: state.profile.roles
 });
 
-export default connect(
-  mapStateToProps,
-  null
+export default compose(
+  withTranslation(),
+  connect(
+    mapStateToProps,
+    null
+  )
 )(SentKehuItem);

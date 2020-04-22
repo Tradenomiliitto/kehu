@@ -7,6 +7,8 @@ import ErrorPanel from "../ErrorPanel";
 
 export class KehusPanel extends Component {
   static propTypes = {
+    sentTitle: PropTypes.string.isRequired,
+    receivedTitle: PropTypes.string.isRequired,
     error: PropTypes.object,
     kehus: PropTypes.array.isRequired,
     roles: PropTypes.array.isRequired,
@@ -33,13 +35,13 @@ export class KehusPanel extends Component {
   renderSelectedKehusTable() {
     return (
       <div>
-        Lähetetyt kehut
+        {this.props.sentTitle}
         <SentKehusTable
           kehus={this.props.sentKehus}
           roles={this.props.roles}
           isKehuSelection={true}
         />
-        Saadut kehut
+        {this.props.receivedTitle}
         <KehusTable kehus={this.props.kehus} isKehuSelection={true} />
       </div>
     );

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { compose } from "redux";
+import { withTranslation } from "react-i18next";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import KehuCountPanel from "./components/report/KehuCountPanel";
@@ -42,19 +44,20 @@ export class ReportPanel extends Component {
   }
 
   render() {
+    const { t } = this.props;
     const { report } = this.props;
     return (
       <div className="container">
         <div className="row">
           <div className="col col-xs-12">
             <button className="Button PreviewButton" onClick={this.openPreview}>
-              Lataa raportti
+              {t("report.load-report-btn", "Lataa raportti")}
             </button>
             <div className="ReportPanel">
               <div className="row">
                 <div className="col col-xs-12 col-md-6 col-xl-3">
                   <ListItemsPanel
-                    title="Kehutuimmat taidot"
+                    title={t("report.skills-title", "Kehutuimmat taidot")}
                     items={report.tags.slice(0, 5)}
                   />
                 </div>
@@ -63,24 +66,36 @@ export class ReportPanel extends Component {
                 </div>
                 <div className="col col-xs-12 col-md-6 col-xl-4">
                   <KehuCountPanel
-                    text="Sinulla on yhteensä"
+                    text={t(
+                      "report.number-of-kehus-title",
+                      "Sinulla on yhteensä"
+                    )}
                     number={report.numberOfKehus}
                   />
                 </div>
                 <div className="col col-xs-12 col-md-6 col-xl-3">
                   <ListItemsPanel
-                    title="Kehutuimmat tilanteet"
+                    title={t(
+                      "report.situations-title",
+                      "Kehutuimmat tilanteet"
+                    )}
                     items={report.situations.slice(0, 5)}
                   />
                 </div>
                 <div className="col col-xs-12 col-md-6 col-xl-4">
                   <KehuCountPanel
-                    text="Olet lähettänyt"
+                    text={t(
+                      "report.number-of-sent-kehus-title",
+                      "Olet lähettänyt"
+                    )}
                     number={report.numberOfSentKehus}
                   />
                 </div>
                 <div className="col col-xs-12 col-md-6 col-xl-5">
-                  <TopTagsPanel tags={report.tags} />
+                  <TopTagsPanel
+                    tags={report.tags}
+                    title={t("report.skills-title", "Kehutuimmat taidot")}
+                  />
                 </div>
               </div>
             </div>
@@ -107,7 +122,7 @@ export class ReportPanel extends Component {
 
   renderPortal() {
     if (this.state.preview) {
-      const { profile } = this.props;
+      const { t, profile } = this.props;
       const report = this.countReportStatisticsForSelectedKehus();
 
       // Render select kehus dialog
@@ -116,12 +131,15 @@ export class ReportPanel extends Component {
         selectKehusPortal = (
           <div className="selectKehusToReport">
             <KehuFormModal
-              title="Valitse kehut"
+              title={t("report.select-kehus-title", "Valitse kehut")}
               closeModal={this.toggleSelectKehus}
               hasCloseCross={false}
               hasCloseButton={true}
             >
-              <SelectKehusPanel />
+              <SelectKehusPanel
+                sentTitle={t("kehus.title-sent-kehus", "Lähetetyt kehut")}
+                receivedTitle={t("kehus.title-received-kehus", "Saadut kehut")}
+              />
             </KehuFormModal>
           </div>
         );
@@ -143,7 +161,10 @@ export class ReportPanel extends Component {
         });
         topRoles = (
           <div>
-            <ListItemsPanel title="TOP Kehujat" items={items.slice(0, 5)} />
+            <ListItemsPanel
+              title={t("report.top-roles-title", "TOP Kehujat")}
+              items={items.slice(0, 5)}
+            />
             <img
               className="TopRoles-image"
               src="/images/role-opettaja-selected.svg"
@@ -162,19 +183,19 @@ export class ReportPanel extends Component {
                     className="Button SaveButton"
                     onClick={this.printReport}
                   >
-                    Tallenna
+                    {t("report.load-report.download", "Tallenna")}
                   </button>
                   <button
                     className="Button Button--inverseNoBorders SaveButton"
                     onClick={this.closePreview}
                   >
-                    Sulje
+                    {t("report.load-report.close", "Sulje")}
                   </button>
                   <button
                     className="Button Button--inverseNoBorders SaveButton"
                     onClick={this.toggleSelectKehus}
                   >
-                    Valitse kehut
+                    {t("report.load-report.select-kehus", "Valitse kehut")}
                   </button>
                 </div>
                 <div id="PrintableReport" className="PrintableReport">
@@ -182,11 +203,17 @@ export class ReportPanel extends Component {
                     <div className="col col-xs-12 col--centerMargin element--verticalPadding">
                       <div className="PrintableReport__Header">
                         <div className="col col-xs-9">
-                          <div className="ReportTitle">Osaamisprofiili</div>
+                          <div className="ReportTitle">
+                            {t(
+                              "report.load-report.report-title",
+                              "Osaamisprofiili"
+                            )}
+                          </div>
                           <div className="ReportSubtitle">
-                            Tämä raportti on koottu yksilöiden antamien
-                            palautteiden, Kehujen, perusteella, ja kuvaa
-                            omistajansa osaamista ja vahvuuksia
+                            {t(
+                              "report.load-report.report-subtitle",
+                              "Tämä raportti on koottu yksilöiden antamien palautteiden, Kehujen, perusteella, ja kuvaa omistajansa osaamista ja vahvuuksia"
+                            )}
                           </div>
                         </div>
                         <div className="col col-xs-3">
@@ -205,14 +232,20 @@ export class ReportPanel extends Component {
                     <div className="col col-xs-6 col--centerMargin">
                       <div className="element--verticalPadding element--combined">
                         <ListItemsPanel
-                          title="Kehutuimmat taidot"
+                          title={t("report.skills-title", "Kehutuimmat taidot")}
                           items={report.tags.slice(0, 5)}
                         />
-                        <TopTagsPanel tags={report.tags} />
+                        <TopTagsPanel
+                          tags={report.tags}
+                          title={t("report.skills-title", "Kehutuimmat taidot")}
+                        />
                       </div>
                       <div className="element--verticalPadding">
                         <ListItemsPanel
-                          title="Kehutuimmat tilanteet"
+                          title={t(
+                            "report.situations-title",
+                            "Kehutuimmat tilanteet"
+                          )}
                           items={report.situations.slice(0, 5)}
                         />
                       </div>
@@ -221,7 +254,10 @@ export class ReportPanel extends Component {
                     <div className="col col-xs-6 col--centerMargin">
                       <div className="element--verticalPadding">
                         <KehuCountPanel
-                          text="Sinulla on yhteensä"
+                          text={t(
+                            "report.number-of-kehus-title",
+                            "Sinulla on yhteensä"
+                          )}
                           number={report.numberOfKehus}
                         />
                         <img
@@ -231,7 +267,10 @@ export class ReportPanel extends Component {
                       </div>
                       <div className="element--verticalPadding KehuCount--small">
                         <KehuCountPanel
-                          text="Olet lähettänyt Kehuja"
+                          text={t(
+                            "report.load-report.number-of-sent-kehus-title",
+                            "Olet lähettänyt Kehuja"
+                          )}
                           number={report.numberOfSentKehus}
                         />
                       </div>
@@ -263,6 +302,7 @@ export class ReportPanel extends Component {
   }
 
   printReport() {
+    const { t } = this.props;
     const input = document.getElementById("PrintableReport");
     html2canvas(input, {
       scale: 4, // Pdf quality parameter
@@ -278,7 +318,7 @@ export class ReportPanel extends Component {
       const width = pdf.internal.pageSize.getWidth();
       const height = pdf.internal.pageSize.getHeight();
       pdf.addImage(canvas, "JPEG", 0, 0, width, height);
-      pdf.save("kehu-raportti.pdf");
+      pdf.save(t("report.load-report.filename", "kehu-raportti.pdf"));
     });
   }
 
@@ -306,4 +346,7 @@ const mapStateToProps = state => ({
   profile: state.profile.profile
 });
 
-export default connect(mapStateToProps)(ReportPanel);
+export default compose(
+  withTranslation(),
+  connect(mapStateToProps)
+)(ReportPanel);

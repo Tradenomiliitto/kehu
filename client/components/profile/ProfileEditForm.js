@@ -1,4 +1,6 @@
 import React, { Component, Fragment } from "react";
+import { compose } from "redux";
+import { withTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import InputField from "./InputField";
@@ -30,6 +32,7 @@ export class ProfileEditForm extends Component {
   }
 
   render() {
+    const { t } = this.props;
     const { first_name, last_name, email } = this.state;
     return (
       <Fragment>
@@ -37,29 +40,29 @@ export class ProfileEditForm extends Component {
         <form className="ProfileEditForm" onSubmit={this.handleSubmit}>
           <InputField
             name="first_name"
-            label="Etunimi"
-            placeholder="Etunimi"
+            label={t("profile.first-name", "Etunimi")}
+            placeholder={t("profile.first-name", "Etunimi")}
             value={first_name}
             handleChange={this.handleChange("first_name")}
           />
           <InputField
             name="last_name"
-            label="Sukunimi"
-            placeholder="Sukunimi"
+            label={t("profile.last-name", "Sukunimi")}
+            placeholder={t("profile.last-name", "Sukunimi")}
             value={last_name}
             handleChange={this.handleChange("last_name")}
           />
           <InputField
             name="email"
-            label="Sähköposti"
-            placeholder="Sähköposti"
+            label={t("profile.email", "Sähköposti")}
+            placeholder={t("profile.email", "Sähköposti")}
             value={email}
             handleChange={this.handleChange("email")}
           />
           <input
             type="submit"
             className="Button Button--fullWidth submit-profile-nw"
-            value="Tallenna"
+            value={t("profile.save-btn", "Tallenna")}
           />
         </form>
       </Fragment>
@@ -67,14 +70,18 @@ export class ProfileEditForm extends Component {
   }
 
   renderErrors() {
-    const { error } = this.props;
+    const { t, error } = this.props;
     if (error && error.responseJson && error.responseJson.errors) {
       return error.responseJson.errors.map((e, i) => (
         <ErrorPanel key={i} message={e.msg} />
       ));
     }
     if (error) {
-      const message = `Valitettavasti profiilin päivitys epäonnistui. Tapahtui seuraava virhe: ${error}`;
+      const message = t("profile.update-error", {
+        error,
+        defaultValue:
+          "Valitettavasti profiilin päivitys epäonnistui. Tapahtui seuraava virhe: {{error}}"
+      });
       return <ErrorPanel message={message} />;
     }
   }
@@ -100,7 +107,10 @@ const mapActionsToProps = {
   updateProfile
 };
 
-export default connect(
-  mapStateToProps,
-  mapActionsToProps
+export default compose(
+  withTranslation(),
+  connect(
+    mapStateToProps,
+    mapActionsToProps
+  )
 )(ProfileEditForm);

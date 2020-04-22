@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { compose } from "redux";
+import { withTranslation } from "react-i18next";
 import { resetKehuFormState } from "../redux/kehu";
 
 export class KehuFormModal extends Component {
@@ -18,6 +20,7 @@ export class KehuFormModal extends Component {
   };
 
   render() {
+    const { t } = this.props;
     return (
       <div className="Modal">
         <div className="Modal-overlay">
@@ -39,7 +42,7 @@ export class KehuFormModal extends Component {
                   className="Button Modal-closeButton"
                   onClick={this.handleClick}
                 >
-                  Valmis
+                  {t("modals.ready-btn", "Valmis")}
                 </button>
               )}
             </div>
@@ -59,7 +62,10 @@ export class KehuFormModal extends Component {
   };
 }
 
-export default connect(
-  null,
-  { resetKehuFormState }
+export default compose(
+  withTranslation(),
+  connect(
+    null,
+    { resetKehuFormState }
+  )
 )(KehuFormModal);

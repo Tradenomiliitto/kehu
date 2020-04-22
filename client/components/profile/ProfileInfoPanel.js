@@ -1,22 +1,29 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { withTranslation } from "react-i18next";
 
-export default class ProfileInfoPanel extends Component {
+export class ProfileInfoPanel extends Component {
   static propTypes = {
     profile: PropTypes.object.isRequired
   };
 
   render() {
-    const { profile } = this.props;
+    const { t, profile } = this.props;
     return (
       <div className="ProfileInfo">
-        <p className="ProfileInfo-label">Etunimi</p>
+        <p className="ProfileInfo-label">
+          {t("profile.first-name", "Etunimi")}
+        </p>
         <p className="ProfileInfo-text">{profile.first_name}</p>
-        <p className="ProfileInfo-label">Sukunimi</p>
+        <p className="ProfileInfo-label">
+          {t("profile.last-name", "Sukunimi")}
+        </p>
         <p className="ProfileInfo-text">{profile.last_name}</p>
-        <p className="ProfileInfo-label">Sähköposti</p>
+        <p className="ProfileInfo-label">{t("profile.email", "Sähköposti")}</p>
         <p className="ProfileInfo-text">{profile.email}</p>
       </div>
     );
   }
 }
+
+export default withTranslation()(ProfileInfoPanel);

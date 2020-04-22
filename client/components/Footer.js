@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 function partnerLogo(partner) {
   return (
@@ -11,6 +12,7 @@ function partnerLogo(partner) {
 }
 
 export default function Footer() {
+  const [t, i18n] = useTranslation();
   return (
     <div className="Footer">
       <div className="container">
@@ -19,7 +21,8 @@ export default function Footer() {
             <div>
               <img className="Footer-logo" src="/images/kehu-logo.png" />
               <p className="Footer-copyright">
-                © Tradenomiliitto {new Date().getFullYear()}
+                © {t("footer.tradenomiliitto", "Tradenomiliitto")}{" "}
+                {new Date().getFullYear()}
               </p>
               <div className="Footer-partners">
                 {partnerLogo("tral")}
@@ -37,31 +40,41 @@ export default function Footer() {
               </div>
               <ul className="Footer-links">
                 <li>
-                  <a className="Footer-link" href="/blogi">
-                    Blogi
+                  <a className="Footer-link" href={`/${i18n.language}/blogi`}>
+                    {t("footer.blog", "Blogi")}
                   </a>
                 </li>
                 <li>
-                  <a className="Footer-link" href="/info">
-                    Info
-                  </a>
-                </li>
-                <li>
-                  <a className="Footer-link" href="/kayttoehdot">
-                    Käyttöehdot
-                  </a>
-                </li>
-                <li>
-                  <a className="Footer-link" href="/rekisteriseloste">
-                    Rekisteriseloste
+                  <a className="Footer-link" href={`/${i18n.language}/info`}>
+                    {t("footer.info", "Info")}
                   </a>
                 </li>
                 <li>
                   <a
                     className="Footer-link"
-                    href="https://www.tral.fi/yhteystiedot/"
+                    href={`/${i18n.language}/kayttoehdot`}
                   >
-                    Yhteystiedot
+                    {t("footer.terms", "Käyttöehdot")}
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="Footer-link"
+                    href={`/${i18n.language}/rekisteriseloste`}
+                  >
+                    {t("footer.privacy-policy", "Rekisteriseloste")}
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="Footer-link"
+                    href={
+                      i18n.language === "en"
+                        ? "https://www.tradenomi.fi/en/contacts/"
+                        : "https://www.tradenomi.fi/yhteystiedot/"
+                    }
+                  >
+                    {t("footer.contact-details", "Yhteystiedot")}
                   </a>
                 </li>
               </ul>

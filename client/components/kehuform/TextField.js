@@ -1,6 +1,8 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 export default function TextField({ value, handleChange, disabled }) {
+  const [t, i18n] = useTranslation();
   return (
     <div className="Form-group KehuTextFieldContainer">
       <textarea
@@ -8,7 +10,10 @@ export default function TextField({ value, handleChange, disabled }) {
         className="KehuTextField"
         name="text"
         rows={7}
-        placeholder="Hyvää työtä! Olet..."
+        placeholder={t(
+          "modals.add-kehu.textfield-placeholder",
+          "Hyvää työtä! Olet..."
+        )}
         disabled={disabled}
         value={value}
         onChange={handleChange}

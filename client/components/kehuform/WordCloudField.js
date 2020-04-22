@@ -1,9 +1,10 @@
 import React, { PureComponent } from "react";
+import { withTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import WordCloud from "./WordCloud";
 import { capitalizeText } from "../../util/TextUtil";
 
-export default class WordCloudField extends PureComponent {
+export class WordCloudField extends PureComponent {
   static propTypes = {
     className: PropTypes.string,
     cloudItems: PropTypes.array.isRequired,
@@ -25,6 +26,7 @@ export default class WordCloudField extends PureComponent {
   render() {
     const { inputValue } = this.state;
     const {
+      t,
       className,
       cloudItems,
       id,
@@ -56,7 +58,7 @@ export default class WordCloudField extends PureComponent {
           className={`Button add-js ${id}-add-nw`}
           onClick={this.handleAddClick}
         >
-          Lisää
+          {t("modals.wordcloud.add-btn", "Lisää")}
         </button>
         {this.renderItems()}
       </div>
@@ -121,3 +123,5 @@ export default class WordCloudField extends PureComponent {
     };
   };
 }
+
+export default withTranslation()(WordCloudField);

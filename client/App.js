@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Provider } from "react-redux";
-import { connect } from "react-redux";
+import { compose } from "redux";
+import { withTranslation } from "react-i18next";
+import { Provider, connect } from "react-redux";
 import { hot } from "react-hot-loader";
 import PropTypes from "prop-types";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
@@ -23,8 +24,6 @@ import ProfilePanel from "./ProfilePanel";
 import ReportPanel from "./ReportPanel";
 import Spinner from "./components/Spinner";
 import { handlePageView } from "./util/AnalyticsUtil";
-import { compose } from "redux";
-import { withTranslation } from "react-i18next";
 
 const history = createBrowserHistory();
 history.listen(handlePageView);
@@ -106,28 +105,37 @@ export class App extends Component {
   }
 
   renderAddKehuContent() {
+    const { t } = this.props;
     if (this.props.successfullySavedKehu) {
       return (
-        <KehuFormModal title="Kehu tallennettu!">
+        <KehuFormModal
+          title={t(
+            "modals.add-kehu.title-successfully-saved",
+            "Kehu tallennettu!"
+          )}
+        >
           <KehuSuccessPanel kehu={this.props.successfullySavedKehu} />
         </KehuFormModal>
       );
     }
     if (this.props.kehuToEdit) {
       return (
-        <KehuFormModal title="Muokkaa Kehua">
+        <KehuFormModal
+          title={t("modals.add-kehu.title-edit-kehu", "Muokkaa Kehua")}
+        >
           <AddKehuForm kehu={this.props.kehuToEdit} />
         </KehuFormModal>
       );
     }
     return (
-      <KehuFormModal title="Lisää Kehu">
+      <KehuFormModal title={t("modals.add-kehu.title-add-kehu", "Lisää Kehu")}>
         <AddKehuForm />
       </KehuFormModal>
     );
   }
 
   renderSendKehuContent() {
+    const { t } = this.props;
     if (this.props.successfullySentKehu) {
       return (
         <KehuFormModal title="">
@@ -136,7 +144,7 @@ export class App extends Component {
       );
     }
     return (
-      <KehuFormModal title="Lähetä Kehu">
+      <KehuFormModal title={t("modals.send-kehu.title", "Lähetä Kehu")}>
         <SendKehuForm />
       </KehuFormModal>
     );

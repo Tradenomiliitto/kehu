@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { compose } from "redux";
+import { withTranslation } from "react-i18next";
 import moment from "moment";
 import { resetKehuFormState } from "../../redux/kehu";
 import RoleImage from "./RoleImage";
@@ -13,7 +15,7 @@ export class KehuSuccessPanel extends Component {
   };
 
   render() {
-    const { kehu } = this.props;
+    const { t, kehu } = this.props;
     return (
       <div className="KehuSuccessPanel kehu-success-nw">
         <div className="KehuQuoteContainer">
@@ -39,7 +41,7 @@ export class KehuSuccessPanel extends Component {
           className="Button Button--fullWidth KehuCloseButton close-button-nw"
           onClick={this.handleClick}
         >
-          Sulje
+          {t("modals.close-btn", "Sulje")}
         </button>
       </div>
     );
@@ -106,7 +108,10 @@ const mapDispatchToProps = {
   resetKehuFormState
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
+export default compose(
+  withTranslation(),
+  connect(
+    null,
+    mapDispatchToProps
+  )
 )(KehuSuccessPanel);

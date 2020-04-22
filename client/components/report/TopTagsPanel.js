@@ -4,6 +4,7 @@ import TopTagsChart from "./TopTagsChart";
 
 export default class TopTagsPanel extends Component {
   static propTypes = {
+    title: PropTypes.string.isRequired,
     tags: PropTypes.array.isRequired
   };
 
@@ -18,7 +19,7 @@ export default class TopTagsPanel extends Component {
   render() {
     return (
       <div className="TopTagsPanel ReportElement">
-        <p className="TopTagsPanel-title">Kehutuimmat taidot</p>
+        <p className="TopTagsPanel-title">{this.props.title}</p>
         <div className="TopTagsPanel-wrapper">
           <canvas
             className="TopTagsPanel-canvas"
