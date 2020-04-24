@@ -1,5 +1,39 @@
 const { documentToHtmlString } = require("@contentful/rich-text-html-renderer");
+const { BLOCKS } = require("@contentful/rich-text-types");
 const moment = require("moment");
+const logger = require("../logger");
+
+// rich-text-html-renderer ignores embedded content so custom renderer
+// is required
+// https://github.com/contentful/rich-text/issues/61
+const richTextOptions = {
+  renderNode: {
+    [BLOCKS.EMBEDDED_ASSET]: node => {
+      try {
+        let { title, description, file } = node.data.target.fields;
+        const mimeType = file.contentType;
+        const mimeGroup = mimeType.split("/")[0];
+
+        switch (mimeGroup) {
+          case "image":
+            title = title ? `title="${title}"` : "";
+            description = description ? `alt="${description}"` : "";
+            return `<img src="${file.url}" ${title} ${description} />`;
+          default:
+            logger.error(`Unknown mime type: ${mimeGroup}`);
+            return process.env.NODE_ENV !== "production"
+              ? `Unknown mime type: ${mimeGroup}`
+              : "";
+        }
+      } catch (err) {
+        logger.error("Error rendering asset", { err });
+        return process.env.NODE_ENV !== "production"
+          ? "Error rendering asset"
+          : "";
+      }
+    }
+  }
+};
 
 function parseSimilarPost(post) {
   return {
@@ -42,7 +76,7 @@ function getSimilarPosts(post, posts) {
 function parsePost(posts, post, index) {
   return {
     author: post.fields.author,
-    content: documentToHtmlString(post.fields.content),
+    content: documentToHtmlString(post.fields.content, richTextOptions),
     excerpt: post.fields.excerpt,
     image: {
       url: ((post.fields.header.fields || {}).file || {}).url
