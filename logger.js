@@ -21,7 +21,9 @@ const myFormat = printf(info => {
     stack = error.stack;
   }
   return `${timestamp} [${level}]: ${message} ${
-    Object.entries(rest).length > 0 ? JSON.stringify(rest) : ""
+    Object.entries(rest).length > 0 && JSON.stringify(rest) !== "{}"
+      ? JSON.stringify(rest)
+      : ""
   }${stack != null ? `\n${stack}` : ""}`;
 });
 
