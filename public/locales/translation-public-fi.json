@@ -71,7 +71,15 @@
   },
   "privacy-policy": {
     "01-subtitle": "1 Rekisterinpitäjä",
+    "01-tral-name": "Tradenomiliitto TRAL ry",
+    "01-tral-address": "Ratavartijankatu 2, 00520 Helsinki",
+    "01-tral-phone-number": "Puh. {{link}}020 155 8800{{linkend}}",
+    "01-tral-email": "{{link}}toimisto@tradenomi.fi{{linkend}}",
     "02-subtitle": "2 Yhteyshenkilö rekisteriä koskevissa asioissa",
+    "02-contact-name": "Tomi Kouva",
+    "02-contact-address": "Ratavartijankatu 2, 00520 Helsinki",
+    "02-contact-phone-number": "Puh. {{link}}020 155 8813{{linkend}}",
+    "02-contact-email": "{{link}}tomi.kouva@tradenomi.fi{{linkend}}",
     "03-subtitle": "3 Rekisterin nimi",
     "03a-text": "KEHU–palvelun käyttäjärekisteri",
     "04-subtitle": "4 Henkilötietojen käsittelyn tarkoitus",
@@ -95,7 +103,6 @@
     "09-text": "Rekisteri on suojattu ulkopuoliselta käytöltä ja henkilötietojen käyttöä valvotaan. Pääsy rekisteriin on sallittu rajatulle joukolle.",
     "page-description": "Rekisteriseloste",
     "page-title": "Kehu – Rekisteriseloste",
-    "phone-abbreviation": "Puh.",
     "title": "REKISTERISELOSTE"
   },
   "terms": {

@@ -71,7 +71,15 @@
   },
   "privacy-policy": {
     "01-subtitle": "1 Controller",
+    "01-tral-name": "Union of Professional Business Graduates TRAL",
+    "01-tral-address": "Ratavartijankatu 2, 00520 Helsinki, Finland",
+    "01-tral-phone-number": "Tel. {{link}}+358 (0)20 155 8800{{linkend}}",
+    "01-tral-email": "{{link}}toimisto@tradenomi.fi{{linkend}}",
     "02-subtitle": "2 Contact details in issues related to the data file",
+    "02-contact-name": "Tomi Kouva",
+    "02-contact-address": "Ratavartijankatu 2, 00520 Helsinki, Finland",
+    "02-contact-phone-number": "Tel. {{link}}+358 (0)20 155 8813{{linkend}}",
+    "02-contact-email": "{{link}}tomi.kouva@tradenomi.fi{{linkend}}",
     "03-subtitle": "3 Name of the data file",
     "03a-text": "User register of the KEHU service",
     "04-subtitle": "4 Purpose of the processing of personal data",
@@ -95,7 +103,6 @@
     "09-text": "The data file is protected from external use, and the use of personal data is monitored. Only a limited group of people have access to the data file.",
     "page-description": "Data File Description",
     "page-title": "Kehu – Data File Description",
-    "phone-abbreviation": "Phone",
     "title": "DATA FILE DESCRIPTION"
   },
   "terms": {

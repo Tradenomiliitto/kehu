@@ -17,24 +17,24 @@ block content
                     h2.PrivacyPolicy-subtitle #{t('privacy-policy.01-subtitle', '1 Rekisterinpitäjä')}
 
                     p
-                        | Tradenomiliitto TRAL ry
+                        | #{t('privacy-policy.01-tral-name', 'Tradenomiliitto TRAL ry')}
                         br
-                        | Ratavartijankatu 2, 00520 Helsinki
+                        | #{t('privacy-policy.01-tral-address', 'Ratavartijankatu 2, 00520 Helsinki')}
                         br
-                        | #{t('privacy-policy.phone-abbreviation', 'Puh.')} #[a(href="tel:0201558800") 020 155 8800]
+                        | !{t('privacy-policy.01-tral-phone-number', { defaultValue: 'Puh. {{link}}020 155 8800{{linkend}}', link: '<a href="tel:+358201558800">', linkend: '</a>'})}
                         br
-                        | #[a(href="mailto:toimisto@tral.fi") toimisto@tral.fi]
+                        | !{t('privacy-policy.01-tral-email', { defaultValue: '{{link}}toimisto@tradenomi.fi{{linkend}}', link: '<a href="mailto:toimisto@tradenomi.fi">', linkend: '</a>'})}
 
                     h2.PrivacyPolicy-subtitle #{t('privacy-policy.02-subtitle', '2 Yhteyshenkilö rekisteriä koskevissa asioissa')}
 
                     p
-                        | Tomi Kouva
+                        | #{t('privacy-policy.02-contact-name', 'Tomi Kouva')}
                         br
-                        | Ratavartijankatu 2, 00520 Helsinki
+                        | #{t('privacy-policy.02-contact-address', 'Ratavartijankatu 2, 00520 Helsinki')}
                         br
-                        | #{t('privacy-policy.phone-abbreviation')} #[a(href="tel:0201558813") 020 155 8813]
+                        | !{t('privacy-policy.02-contact-phone-number', { defaultValue: 'Puh. {{link}}020 155 8813{{linkend}}', link: '<a href="tel:+358201558813">', linkend: '</a>'})}
                         br
-                        | #[a(href="mailto:tomi.kouva@tral.fi") tomi.kouva@tral.fi]
+                        | !{t('privacy-policy.02-contact-email', { defaultValue: '{{link}}tomi.kouva@tradenomi.fi{{linkend}}', link: '<a href="mailto:tomi.kouva@tradenomi.fi">', linkend: '</a>'})}
 
                     h2.PrivacyPolicy-subtitle #{t('privacy-policy.03-subtitle', '3 Rekisterin nimi')}
 
