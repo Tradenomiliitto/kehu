@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { compose } from "redux";
-import { withTranslation } from "react-i18next";
+import { withTranslation, Trans } from "react-i18next";
 import moment from "moment";
 import ErrorPanel from "../ErrorPanel";
 import { sendKehu } from "../../redux/kehu";
