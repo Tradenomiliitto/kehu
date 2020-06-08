@@ -6,7 +6,6 @@
       {
         "locales": ["fi", "en"],
         "useI18nextDefaultValue": ["fi"],
-        "discardOldKeys": true,
         "outputPath": "public/locales/{{ns}}-{{locale}}.json"
       }
     ],
