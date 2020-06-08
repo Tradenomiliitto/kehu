@@ -1,1 +1,4 @@
-[{ "value": "fi", "label": "Suomi" }, { "value": "en", "label": "English" }]
+[
+  { "value": "fi", "longValue": "fi_FI", "label": "Suomi" },
+  { "value": "en", "longValue": "en_US", "label": "English" }
+]

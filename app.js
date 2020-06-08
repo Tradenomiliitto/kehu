@@ -19,6 +19,7 @@ const i18next = require("i18next");
 const i18nextMiddleware = require("i18next-express-middleware");
 const i18nextBackend = require("i18next-node-fs-backend");
 const languages = require("./languages.json");
+const { getLongLanguage } = require("./utils/LongLanguage");
 
 // Following packages are not required in production and importing them
 // will throw an error if devDependencies are not installed
@@ -133,6 +134,7 @@ app.use((req, res, next) => {
   res.locals.pageUrl = process.env.HOME_URL + req.originalUrl;
   res.locals.env = process.env;
   res.locals.language = req.language;
+  res.locals.longLanguage = getLongLanguage(req.language);
   res.locals.languages = languages;
   res.locals.pathWithoutLanguage = req.url;
   next();

@@ -14,7 +14,7 @@ export default function DateGivenField({ value, handleChange, disabled }) {
         className="DateGivenField"
         dateFormat="D. MMMM YYYY"
         dropdownMode="scroll"
-        locale="fi-FI"
+        locale={i18n.getLongLanguage()}
         disabled={disabled}
         selected={value}
         onChange={handleChange}

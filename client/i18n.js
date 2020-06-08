@@ -3,6 +3,7 @@ import { initReactI18next } from "react-i18next";
 import backend from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 import languages from "../languages.json";
+import { getLongLanguage } from "../utils/LongLanguage";
 
 const langWhitelist = languages.map(lang => lang.value);
 
@@ -35,5 +36,10 @@ i18n
       useSuspense: false
     }
   });
+
+// Add custom function to get long version of the language (e.g. fi --> fi_FI)
+i18n.getLongLanguage = function() {
+  return getLongLanguage(i18n.language);
+};
 
 export default i18n;
