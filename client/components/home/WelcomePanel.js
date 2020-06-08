@@ -36,12 +36,6 @@ export default function WelcomePanel() {
         <div className="col col-xs-12">
           <p className="Welcome-text">
             {t(
-              "home.welcome.text-4",
-              "Mikäli olet rekisteröitynyt Facebookin tai Googlen kautta, käythän lisäämässä oman sähköpostisi omaan profiiliisi, jotta muiden lähettämien kehujen vastaanottaminen olisi mahdollisimman vaivatonta."
-            )}
-          </p>
-          <p className="Welcome-text">
-            {t(
               "home.welcome.text-1",
               "Huomioithan, että voit jatkossa liittää Kehu-tiliisi myös muita käytössäsi olevia sähköpostiosoitteita. Kehujen lähettämisen yhteydessä toimitetaan vastaanottajalle aina myös sähköposti, josta löytyy ohjaus osoitteen liittämiseen omaan tiliin. Tämä tarkoittaa myös, että sinun ei tarvitse tietää, mitä sähköpostiosoitetta esimerkiksi kollegasi käyttää Kehu-tilillään, sillä kaikki vastaanotetut kehut on mahdollista liittää samalle tilille."
             )}
