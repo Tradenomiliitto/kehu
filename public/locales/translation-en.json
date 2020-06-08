@@ -123,7 +123,7 @@
   },
   "report": {
     "kehu": "KEHU",
-    "kehu_plural": "",
+    "kehu_plural": "KEHUS",
     "load-report": {
       "close": "Close",
       "download": "Save",
@@ -134,8 +134,8 @@
       "select-kehus": "Select Kehus"
     },
     "load-report-btn": "Download report",
-    "number-of-kehus-title": "Kehus received",
-    "number-of-sent-kehus-title": "Kehus sent",
+    "number-of-kehus-title": "You have received",
+    "number-of-sent-kehus-title": "You have sent",
     "select-kehus-title": "Select Kehus",
     "situations-title": "Most complimented situations",
     "skills-title": "Most complimented skills",

@@ -14,6 +14,14 @@
     "text": "SOS code word {{status}}. Go back to previous page or {{link}}navigate to the front page{{end-link}}.",
     "title": "Nothing to praise can't be found here."
   },
+  "footer": {
+    "blog": "Blog",
+    "contact-details": "Contact",
+    "info": "Info",
+    "privacy-policy": "Privacy policy",
+    "terms": "Terms of Service",
+    "tradenomiliitto": "Union of Professional Business Graduates"
+  },
   "frontpage": {
     "create-account-btn": "Create account",
     "readblog-btn": "Read blog",

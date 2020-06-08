@@ -25,15 +25,15 @@ mixin partner-logo (partner)
 
           ul.Footer-links
             li
-              a.Footer-link(href=`/${language}/blogi`) Blogi
+              a.Footer-link(href=`/${language}/blogi`) #{t('footer.blog', 'Blogi')}
             li
-              a.Footer-link(href=`/${language}/info`) Info
+              a.Footer-link(href=`/${language}/info`) #{t('footer.info', 'Info')}
             li
-              a.Footer-link(href=`/${language}/kayttoehdot`) Käyttöehdot
+              a.Footer-link(href=`/${language}/kayttoehdot`) #{t('footer.terms', 'Käyttöehdot')}
             li
-              a.Footer-link(href=`/${language}/rekisteriseloste`) Rekisteriseloste
+              a.Footer-link(href=`/${language}/rekisteriseloste`) #{t('footer.privacy-policy', 'Rekisteriseloste')}
             li
-              a.Footer-link(href="https://www.tral.fi/yhteystiedot/") Yhteystiedot
+              a.Footer-link(href="https://www.tral.fi/yhteystiedot/") #{t('footer.contact-details', 'Yhteystiedot')}
 
 script(src='//cdn.auth0.com/js/lock/11.7.2/lock.min.js')
 - var link1 = `<a href="${env.HOME_URL}/${language}/rekisteriseloste" target="_blank" rel="noopener noreferrer">`
