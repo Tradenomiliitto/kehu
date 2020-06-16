@@ -51,7 +51,7 @@
       "kehu": "Kehu",
       "name": "Name",
       "receiver": "Receiver",
-      "sender": "Sender",
+      "sender": "Giver",
       "situation": "Situation",
       "skills": "Skills",
       "time": "Date"
@@ -83,14 +83,14 @@
       "success": "Kehu added successfully!"
     },
     "close-btn": "Close",
-    "ready-btn": "Ready",
+    "ready-btn": "Done",
     "send-kehu": {
       "error": "Unfortunately the sending of Kehu failed. Error occurred: {{error}}",
       "modify-kehu-btn": "Edit Kehu",
       "preview-and-submit-btn": "Preview and send",
       "preview-receiver": "Will be sent to receiver",
       "receiver-email": "Receiver e-mail",
-      "receiver-email-placeholder": "Receiver e-mail",
+      "receiver-email-placeholder": "E-mail",
       "receiver-name": "Receiver name",
       "receiver-name-placeholder": "Name",
       "send-kehu-btn": "Send Kehu",
