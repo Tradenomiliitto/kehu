@@ -301,7 +301,7 @@ export class ReportPanel extends Component {
     }
   }
 
-  printReport() {
+  printReport = () => {
     const { t } = this.props;
     const input = document.getElementById("PrintableReport");
     html2canvas(input, {
@@ -320,7 +320,7 @@ export class ReportPanel extends Component {
       pdf.addImage(canvas, "JPEG", 0, 0, width, height);
       pdf.save(t("report.load-report.filename", "kehu-raportti.pdf"));
     });
-  }
+  };
 
   countReportStatisticsForSelectedKehus() {
     const {
