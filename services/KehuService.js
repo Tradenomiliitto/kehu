@@ -352,15 +352,19 @@ async function excelReport(userId, i18n) {
   // Join arrays to fit in a single spreadsheet cell
   kehus.forEach(kehu => {
     if (kehu.role) {
-      kehu.Kehuja = kehu.role.role;
+      kehu[i18n.t("excel-report.headers.sender")] = kehu.role.role;
     }
     delete kehu.role;
     if (isArray(kehu.tags)) {
-      kehu.Taidot = kehu.tags.map(t => t.text).join(", ");
+      kehu[i18n.t("excel-report.headers.skills")] = kehu.tags
+        .map(t => t.text)
+        .join(", ");
     }
     delete kehu.tags;
     if (isArray(kehu.situations)) {
-      kehu.Tilanne = kehu.situations.map(t => t.text).join(", ");
+      kehu[i18n.t("excel-report.headers.situation")] = kehu.situations
+        .map(t => t.text)
+        .join(", ");
     }
     delete kehu.situations;
   });
@@ -384,7 +388,7 @@ async function excelReport(userId, i18n) {
   // Join arrays to fit in a single spreadsheet cell
   sent_kehus.forEach(kehu => {
     if (kehu.role) {
-      kehu.Kehuja = kehu.role.role;
+      kehu[i18n.t("excel-report.headers.sender")] = kehu.role.role;
     }
     delete kehu.role;
   });
