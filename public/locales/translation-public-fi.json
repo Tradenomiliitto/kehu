@@ -14,6 +14,24 @@
     "text": "SOS koodisana {{status}}. Palaa takaisin edelliselle sivulle tai {{link}}navigoi etusivullemme{{end-link}}.",
     "title": "Täältä ei löydy mitään kehuttavaa"
   },
+  "excel-report": {
+    "received-kehus-sheet": "Saadut Kehut",
+    "sent-kehus-sheet": "Lähetetyt Kehut",
+    "headers": {
+      "kehu": "Kehu",
+      "name": "Nimi",
+      "receiver": "Vastaanottaja",
+      "sender": "Kehuja",
+      "situation": "Tilanne",
+      "skills": "Taidot",
+      "time": "Aika",
+      "stars": "Tähdet",
+      "comment": "Kommentti"
+    },
+    "title-received-kehus": "Saadut kehut",
+    "title-sent-kehus": "Lähetetyt kehut",
+    "toggle-view": "Vaihda näkymää"
+  },
   "footer": {
     "blog": "Blogi",
     "contact-details": "Yhteystiedot",

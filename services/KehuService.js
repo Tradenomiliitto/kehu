@@ -335,15 +335,15 @@ function parseArray(array) {
     .map(text => ({ text }));
 }
 
-async function excelReport(userId) {
+async function excelReport(userId, i18n) {
   // Fetch and format received Kehus
   const kehus = await Kehu.query()
     .select(
-      "date_given as Aika",
-      "giver_name as Nimi",
-      "text as Kehu",
-      "comment as Kommentti",
-      "importance as Tähdet"
+      "date_given as " + i18n.t("excel-report.headers.time"),
+      "giver_name as " + i18n.t("excel-report.headers.name"),
+      "text as " + i18n.t("excel-report.headers.kehu"),
+      "comment as " + i18n.t("excel-report.headers.comment"),
+      "importance as " + i18n.t("excel-report.headers.stars")
     )
     .where("owner_id", userId)
     .eager("[role, situations, tags]")
@@ -368,9 +368,9 @@ async function excelReport(userId) {
   // Fetch and format sent Kehus
   const sent_kehus = await Kehu.query()
     .select(
-      "date_given as Aika",
-      "receiver_name as Vastaanottaja",
-      "text as Kehu"
+      "date_given as " + i18n.t("excel-report.headers.time"),
+      "receiver_name as " + i18n.t("excel-report.headers.receiver"),
+      "text as " + i18n.t("excel-report.headers.kehu")
     )
     .where(function() {
       this.where("giver_id", userId).andWhere("owner_id", "<>", userId);
@@ -391,32 +391,44 @@ async function excelReport(userId) {
 
   // Create new sheets from json, define column orders and widths
   const wb = XLSX.utils.book_new();
-  wb.SheetNames.push("Saadut kehut");
-  wb.Sheets["Saadut kehut"] = XLSX.utils.json_to_sheet(kehus, {
+  wb.SheetNames.push(i18n.t("excel-report.received-kehus-sheet"));
+  wb.Sheets[
+    i18n.t("excel-report.received-kehus-sheet")
+  ] = XLSX.utils.json_to_sheet(kehus, {
     header: [
-      "Aika",
-      "Kehuja",
-      "Nimi",
-      "Kehu",
-      "Tilanne",
-      "Taidot",
-      "Tähdet",
-      "Kommentti"
+      i18n.t("excel-report.headers.time"),
+      i18n.t("excel-report.headers.sender"),
+      i18n.t("excel-report.headers.name"),
+      i18n.t("excel-report.headers.kehu"),
+      i18n.t("excel-report.headers.situation"),
+      i18n.t("excel-report.headers.skills"),
+      i18n.t("excel-report.headers.stars"),
+      i18n.t("excel-report.headers.comment")
     ]
   });
-  wb.Sheets["Saadut kehut"]["!cols"] = [10, 10, 20, 50, 30, 30, 8, 50].map(
-    width => ({
-      width
-    })
-  );
-
-  wb.SheetNames.push("Lähetetyt kehut");
-  wb.Sheets["Lähetetyt kehut"] = XLSX.utils.json_to_sheet(sent_kehus, {
-    header: ["Aika", "Kehuja", "Vastaanottaja", "Kehu"]
-  });
-  wb.Sheets["Lähetetyt kehut"]["!cols"] = [10, 10, 35, 60].map(width => ({
+  const receivedColsWidths = [10, 10, 20, 50, 30, 30, 8, 50].map(width => ({
     width
   }));
+  wb.Sheets[i18n.t("excel-report.received-kehus-sheet")][
+    "!cols"
+  ] = receivedColsWidths;
+
+  wb.SheetNames.push(i18n.t("excel-report.sent-kehus-sheet"));
+  wb.Sheets[i18n.t("excel-report.sent-kehus-sheet")] = XLSX.utils.json_to_sheet(
+    sent_kehus,
+    {
+      header: [
+        i18n.t("excel-report.headers.time"),
+        i18n.t("excel-report.headers.sender"),
+        i18n.t("excel-report.headers.receiver"),
+        i18n.t("excel-report.headers.kehu")
+      ]
+    }
+  );
+  const sentColsWidths = [10, 10, 35, 60].map(width => ({
+    width
+  }));
+  wb.Sheets[i18n.t("excel-report.sent-kehus-sheet")]["!cols"] = sentColsWidths;
 
   return XLSX.write(wb, {
     type: "buffer",

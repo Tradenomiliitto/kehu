@@ -23,7 +23,7 @@ export class KehusPanel extends Component {
   }
 
   render() {
-    const { t } = this.props;
+    const { t, i18n } = this.props;
     const titleText = this.state.showSentKehus
       ? t("kehus.title-sent-kehus", "Lähetetyt Kehut")
       : t("kehus.title-received-kehus", "Saadut Kehut");
@@ -41,7 +41,11 @@ export class KehusPanel extends Component {
                     {t("kehus.toggle-view", "Vaihda näkymää")}
                   </span>
                   {this.renderToggleButton()}
-                  <a href="/api/v1/kehut/kehu-raportti.xlsx">
+                  <a
+                    href={
+                      "/api/v1/kehut/kehu-raportti.xlsx?lang=" + i18n.language
+                    }
+                  >
                     <img
                       src="/images/excel-icon.svg"
                       className="KehusPanelHeader-download-report"

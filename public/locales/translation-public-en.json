@@ -14,6 +14,24 @@
     "text": "SOS code word {{status}}. Go back to previous page or {{link}}navigate to the front page{{end-link}}.",
     "title": "Nothing to praise can't be found here."
   },
+  "excel-report": {
+    "received-kehus-sheet": "Received Kehus",
+    "sent-kehus-sheet": "Sent Kehus",
+    "headers": {
+      "kehu": "Kehu",
+      "name": "Name",
+      "receiver": "Receiver",
+      "sender": "Giver",
+      "situation": "Situation",
+      "skills": "Skills",
+      "time": "Date",
+      "stars": "Stars",
+      "comment": "Comment"
+    },
+    "title-received-kehus": "Saadut kehut",
+    "title-sent-kehus": "Lähetetyt kehut",
+    "toggle-view": "Vaihda näkymää"
+  },
   "footer": {
     "blog": "Blog",
     "contact-details": "Contact",
