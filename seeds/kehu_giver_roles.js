@@ -1,4 +1,4 @@
-exports.seed = function(knex, Promise) {
+exports.seed = function(knex) {
   return knex("Roles").then(function() {
     return knex("Roles").insert([
       { id: 1, role: "Pomo" },

@@ -1,4 +1,4 @@
-exports.up = async function(knex, Promise) {
+exports.up = async function(knex) {
   /**
    * 1. Select id as kehu_id, situation from Kehus
    * 2. Insert {text: situation} to Situations, get situation_id
@@ -24,7 +24,7 @@ exports.up = async function(knex, Promise) {
   return Promise.all(promises);
 };
 
-exports.down = async function(knex, Promise) {
+exports.down = async function(knex) {
   /**
    * 1. Select text from Situations, kehu_id from Kehus
    * 2. Insert {situation} to Kehus
