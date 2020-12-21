@@ -36,16 +36,15 @@ export class Header extends Component {
       <header className="Header">
         <div className="container">
           <div className="row">
-            <div className="col col-md-12 col-lg-4">
+            <div className="col col-md-12 col-lg-2">
               <Link to="/" onClick={this.closeMenu}>
                 <img src="/images/kehu-logo.png" className="Header-logo" />
               </Link>
               <button className="Header-menuButton" onClick={this.toggleMenu}>
                 <img src="/images/icon-menu.png" />
               </button>
-              <LanguageSelector />
             </div>
-            <div className="col col-md-12 col-lg-8">
+            <div className="col col-md-12 col-lg-10">
               <div className="Header-menuContainer">
                 <menu className={menuClass}>
                   <li className="Header-menuItem">
@@ -71,6 +70,7 @@ export class Header extends Component {
                     "/kehut",
                     t("header.kehut-link", "Kehut")
                   )}
+                  <LanguageSelector device="mobile" />
                   <li className="Header-menuItem">
                     <Link to="/profiili" onClick={this.closeMenu}>
                       {profile && profile.first_name}
@@ -80,6 +80,7 @@ export class Header extends Component {
                       />
                     </Link>
                   </li>
+                  <LanguageSelector device="desktop" />
                 </menu>
               </div>
             </div>

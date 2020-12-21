@@ -27,6 +27,8 @@ $element-height: 362px;
 }
 
 .PrintableModal-overlay {
+  position: relative;
+  z-index: 2;
   background-color: rgba(0, 0, 0, 0.4);
   height: 100%;
   padding: 0;
