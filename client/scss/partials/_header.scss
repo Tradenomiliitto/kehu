@@ -43,10 +43,10 @@ $header-height: 66px;
   margin: 0 -0.9375rem;
   position: relative;
   z-index: 5;
+  float: right;
 
   @include mq(lg) {
     box-shadow: none;
-    float: right;
     z-index: initial;
   }
 }
@@ -69,7 +69,7 @@ $header-height: 66px;
 }
 
 .Header-menuItem {
-  padding: 0.5rem 1rem;
+  padding: 1rem 2rem;
 
   @include mq(lg) {
     display: inline;
@@ -77,7 +77,8 @@ $header-height: 66px;
     padding: 0 1rem;
   }
 
-  > a {
+  > a,
+  &.Header-languageSelect {
     color: $secondary;
     font-weight: 500;
     transition: $button-transition;
@@ -101,4 +102,51 @@ $header-height: 66px;
 .Header-login {
   line-height: initial;
   width: 177px;
+}
+
+.Header-language--mobile {
+  @include mq(lg) {
+    display: none;
+  }
+}
+
+.Header-language--desktop {
+  @include mq($until: lg) {
+    display: none !important;
+  }
+}
+
+.Header-languageSelect {
+  cursor: pointer;
+
+  &.Header-language--desktop {
+    border-left-style: solid;
+    line-height: 2rem;
+    border-left-color: #bebebe;
+    border-left-width: 2px;
+    padding-left: 0.8rem;
+  }
+}
+
+.Header-language--hidden {
+  display: none !important;
+}
+
+.Header-languageDropdown {
+  position: absolute;
+  display: inline-block;
+  right: 0;
+  top: 3rem;
+  width: 5rem;
+
+  > a.Header-languageItem {
+    line-height: initial;
+    display: list-item;
+    padding: 0.5rem 0.5rem 0.5rem 0;
+  }
+}
+
+.Header-languageSelect.Header-language--desktop {
+  display: inline-block;
+  width: 5rem;
 }

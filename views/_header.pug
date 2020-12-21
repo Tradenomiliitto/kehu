@@ -24,16 +24,32 @@ mixin header-content
               li.Header-menuItem
                 a(href=`/${language}/kehut`)
                   | #{t('navbar.kehus', 'Kehut')}
+            else
+              li.Header-menuItem
+                a(href=`/${language}/blogi`) #{t('navbar.blog')}
+            //- Mobile language select
+            li.Header-menuItem.Header-languageSelect.Header-language--mobile
+              | #{t('navbar.change-language')}&nbsp;&blacktriangleright;
+            li.Header-menuItem.Header-languageSelect.Header-language--mobile.Header-language--hidden
+              | #{t('navbar.change-language')}&nbsp;&blacktriangledown;
+            each lang in languages
+              li.Header-menuItem.Header-languageItem.Header-language--mobile.Header-language--hidden
+                a(href=`/${lang.value + pathWithoutLanguage}`) #{lang.value.toUpperCase()}
+
+            if user
               li.Header-menuItem
                 a(href=`/${language}/profiili`)
                   != user.first_name
                   img.Header-profileImage(src=user.picture)
             else
               li.Header-menuItem
-                a(href=`/${language}/blogi`) #{t('navbar.blog')}
-              li.Header-menuItem
                 button.Button.Button--rounded.Header-login.login-js.login-nw #{t('navbar.login', 'Kirjaudu')}
-
+            //- Desktop language select
+            li.Header-menuItem.Header-languageSelect.Header-language--desktop #{language.toUpperCase()}&nbsp;&blacktriangledown;
+              div.Header-languageDropdown.Header-language--desktop.Header-menuItem
+                each lang in languages
+                  if lang.value !== language
+                      a.Header-languageItem.Header-language--hidden(href=`/${lang.value + pathWithoutLanguage}`) #{lang.value.toUpperCase()}
 if user
   header.Header
     +header-content()
@@ -45,6 +61,9 @@ script.
   var menu = document.querySelector('.Header-menu');
   var menuButton = document.querySelector('.menu-button-js');
   var menuLinks = document.querySelectorAll('.menu-link-js');
+  var languageSelects = document.querySelectorAll('.Header-languageSelect');
+  var languageSelectsMobile = document.querySelectorAll('.Header-languageSelect.Header-language--mobile');
+  var languageItems = document.querySelectorAll('.Header-languageItem');
 
   menuButton.addEventListener('click', function (e) {
     e.preventDefault();
@@ -55,5 +74,16 @@ script.
     link.addEventListener('click', function (e) {
       e.preventDefault();
       menu.classList.remove('Header-menu--open');
+    });
+  });
+
+  languageSelects.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      languageSelectsMobile.forEach(function (languageSelect) {
+        languageSelect.classList.toggle('Header-language--hidden');
+      });
+      languageItems.forEach(function (languageItem) {
+        languageItem.classList.toggle('Header-language--hidden');
+      });
     });
   });
