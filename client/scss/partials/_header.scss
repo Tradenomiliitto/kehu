@@ -102,18 +102,3 @@ $header-height: 66px;
   line-height: initial;
   width: 177px;
 }
-
-.Header-selectLanguage {
-  display: inline-block;
-  width: 7em;
-  margin-left: 1em;
-  top: 10px;
-  select {
-    background-color: transparent;
-    border: 0;
-    box-shadow: none;
-    &:hover {
-      border: 0;
-    }
-  }
-}
