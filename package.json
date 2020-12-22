@@ -9,6 +9,7 @@
     "migrate:latest": "npx knex migrate:latest",
     "start": "node ./bin/www",
     "start:dev": "nodemon ./bin/www & npm run build:dev",
+    "start:debug": "nodemon --inspect=0.0.0.0:9229 ./bin/www & npm run build:dev",
     "test": "npx nightwatch && npx jest",
     "jest:watch": "jest --watch"
   },
