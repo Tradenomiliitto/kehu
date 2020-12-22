@@ -43,7 +43,7 @@ export class KehusPanel extends Component {
                   {this.renderToggleButton()}
                   <a
                     href={
-                      "/api/v1/kehut/kehu-raportti.xlsx?lang=" + i18n.language
+                      "/api/v1/kehut/kehu-raportti.xlsx?lng=" + i18n.language
                     }
                   >
                     <img
