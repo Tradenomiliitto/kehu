@@ -11,7 +11,6 @@ const SituationService = require("../../services/SituationService");
 const TagService = require("../../services/TagService");
 const UserService = require("../../services/UserService");
 const FeedService = require("../../services/FeedService");
-const { defaults } = require("../../config");
 const { updateProfileSchema } = require("../../utils/ValidationSchemas");
 const logger = require("../../logger");
 
@@ -39,22 +38,29 @@ async function getItems(userId, serviceMethod, defaults) {
     return getUniqueItems(shuffleArray(items)).slice(0, MAX_ITEMS);
   }
 
-  const itemsWithDefaults = getUniqueItems([...items, ...defaults]);
+  const itemsWithDefaults = getUniqueItems([
+    ...items,
+    ...defaults.map(d => ({ text: d }))
+  ]);
   return itemsWithDefaults.slice(0, MAX_ITEMS);
 }
 
 router.get("/", async (req, res) => {
+  if (req.query.lng) {
+    await req.i18n.changeLanguage(req.query.lng);
+  }
+
   const contacts = await UserService.getContacts(req.user.id);
   const roles = await RoleService.getRoles();
   const situations = await getItems(
     req.user.id,
     SituationService.getUserSituations,
-    defaults.situations
+    req.t("default-config.situations", { returnObjects: true })
   );
   const tags = await getItems(
     req.user.id,
     TagService.getUserTags,
-    defaults.tags
+    req.t("default-config.tags", { returnObjects: true })
   );
   const profile = req.user;
   const feed = await FeedService.getFeedItems(req.user.id);

@@ -41,10 +41,27 @@ export class App extends Component {
     kehuToEdit: PropTypes.object
   };
 
-  componentDidMount() {
-    if (!this.props.profileLoaded) {
-      this.props.getProfile();
+  state = {
+    loadingProfile: false
+  };
+
+  // Load profile if not loaded or loading already and translations are ready
+  static getDerivedStateFromProps(props, state) {
+    if (!props.profileLoaded && !state.loadingProfile && props.tReady) {
+      props.getProfile(props.i18n.language);
+      return {
+        loadingProfile: true
+      };
     }
+    if (state.loadingProfile && props.profileLoaded)
+      return {
+        loadingProfile: false
+      };
+
+    return null;
+  }
+
+  componentDidMount() {
     if (!this.props.kehusLoaded) {
       this.props.getKehus();
     }

@@ -7,6 +7,7 @@ import languages from "../../languages.json";
 
 const LanguageSelector = ({ device }) => {
   const [t, i18n] = useTranslation();
+  const dispatch = useDispatch();
 
   // Find correct language
   let language = languages.find(lang => lang.value === i18n.language);
@@ -20,6 +21,8 @@ const LanguageSelector = ({ device }) => {
     e.preventDefault();
     setIsOpen(false);
     i18n.changeLanguage(newLanguage);
+    // Profile contains localized default tags and situations so need to reload
+    dispatch(getProfile(newLanguage));
   };
 
   if (device == null) device = "desktop";
