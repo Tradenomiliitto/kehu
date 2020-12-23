@@ -42,29 +42,28 @@ export class App extends Component {
   };
 
   state = {
-    loadingProfile: false
+    loading: false
   };
 
-  // Load profile if not loaded or loading already and translations are ready
+  // Load profile and kehus after translations are ready
   static getDerivedStateFromProps(props, state) {
-    if (!props.profileLoaded && !state.loadingProfile && props.tReady) {
-      props.getProfile(props.i18n.language);
+    if (
+      props.tReady &&
+      !state.loading &&
+      (!props.profileLoaded || !props.kehusLoaded)
+    ) {
+      props.getProfile();
+      props.getKehus();
       return {
         loadingProfile: true
       };
     }
-    if (state.loadingProfile && props.profileLoaded)
+    if (state.loading && props.profileLoaded && props.kehusLoaded)
       return {
         loadingProfile: false
       };
 
     return null;
-  }
-
-  componentDidMount() {
-    if (!this.props.kehusLoaded) {
-      this.props.getKehus();
-    }
   }
 
   render() {
