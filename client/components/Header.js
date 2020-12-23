@@ -70,7 +70,10 @@ export class Header extends Component {
                     "/kehut",
                     t("header.kehut-link", "Kehut")
                   )}
-                  <LanguageSelector device="mobile" />
+                  <LanguageSelector
+                    device="mobile"
+                    closeMenu={this.toggleMenu}
+                  />
                   <li className="Header-menuItem">
                     <Link to="/profiili" onClick={this.closeMenu}>
                       {profile && profile.first_name}
@@ -80,7 +83,10 @@ export class Header extends Component {
                       />
                     </Link>
                   </li>
-                  <LanguageSelector device="desktop" />
+                  <LanguageSelector
+                    device="desktop"
+                    closeMenu={this.toggleMenu}
+                  />
                 </menu>
               </div>
             </div>

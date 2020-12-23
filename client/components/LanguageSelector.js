@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { getProfile } from "../redux/profile";
+import { getKehus } from "../redux/kehu";
 import PropTypes from "prop-types";
 import languages from "../../languages.json";
 
-const LanguageSelector = ({ device }) => {
+const LanguageSelector = ({ device, closeMenu }) => {
   const [t, i18n] = useTranslation();
   const dispatch = useDispatch();
 
@@ -20,9 +21,13 @@ const LanguageSelector = ({ device }) => {
   const changeLanguage = (e, newLanguage) => {
     e.preventDefault();
     setIsOpen(false);
-    i18n.changeLanguage(newLanguage);
-    // Profile contains localized default tags and situations so need to reload
-    dispatch(getProfile(newLanguage));
+    closeMenu();
+    i18n.changeLanguage(newLanguage, () => {
+      // Profile contains localized default tags and situations and kehus
+      // localized roles so they need to be reloaded
+      dispatch(getProfile());
+      dispatch(getKehus());
+    });
   };
 
   if (device == null) device = "desktop";
