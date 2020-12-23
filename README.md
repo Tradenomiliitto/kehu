@@ -78,6 +78,15 @@ There is QA environment running at https://beta.mykehu.fi and production environ
 
 `develop` branch matches the code deployed on QA, and `master` matches the code deployed on production.
 
+Add remotes with heroku-cli
+
+```bash
+$ heroku git:remote --app=kehu-beta --remote=heroku-beta
+$ heroku git:remote --app=kehu --remote=heroku-prod
+```
+
+Then deploy by pushing to the remote
+
 ```
 $ git push heroku-beta develop:master
 $ git push heroku-prod master
