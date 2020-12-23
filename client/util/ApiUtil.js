@@ -1,3 +1,5 @@
+import i18n from "../i18n";
+
 export function get(url) {
   return kehuFetch(url, {
     method: "GET",
@@ -62,6 +64,7 @@ export function put(url, body) {
 }
 
 function kehuFetch(endpoint, opts = { headers: {} }) {
+  opts.headers["Accept-Language"] = i18n.language;
   opts.headers["CSRF-Token"] = document
     .querySelector('meta[name="csrf-token"]')
     .getAttribute("content");

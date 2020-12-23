@@ -98,7 +98,7 @@ i18next
     },
     detection: {
       // order and from where user language should be detected
-      order: ["path", "localStorage", "navigator"],
+      order: ["path", "querystring", "header", "localStorage", "navigator"],
 
       // only detect languages that are in the whitelist
       checkWhitelist: true

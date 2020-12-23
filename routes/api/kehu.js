@@ -98,9 +98,6 @@ router.delete("/:id", async (req, res) => {
 
 router.get("/kehu-raportti.xlsx", async (req, res) => {
   try {
-    if (req.query.lng) {
-      await req.i18n.changeLanguage(req.query.lng);
-    }
     const xlsxBuffer = await KehuService.excelReport(req.user.id, req.i18n);
     res.status(200).send(xlsxBuffer);
   } catch (err) {

@@ -46,10 +46,6 @@ async function getItems(userId, serviceMethod, defaults) {
 }
 
 router.get("/", async (req, res) => {
-  if (req.query.lng) {
-    await req.i18n.changeLanguage(req.query.lng);
-  }
-
   const contacts = await UserService.getContacts(req.user.id);
   const roles = await RoleService.getRoles();
   const situations = await getItems(

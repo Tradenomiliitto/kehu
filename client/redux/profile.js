@@ -24,11 +24,10 @@ export const initialState = {
   updateProfileError: null
 };
 
-export function getProfile(lng) {
+export function getProfile() {
   return async dispatch => {
     try {
-      lng = lng ? "?lng=" + lng : "";
-      const payload = await get("/profiili" + lng);
+      const payload = await get("/profiili");
       dispatch({ type: PROFILE_LOADED, payload });
     } catch (e) {
       dispatch({ type: PROFILE_ERROR, payload: e.message });
