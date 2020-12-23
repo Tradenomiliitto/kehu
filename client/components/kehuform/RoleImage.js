@@ -28,7 +28,7 @@ class RoleImage extends Component {
     const { id, roles } = this.props;
     return roles
       .find(r => r.id === id)
-      .role.toLowerCase()
+      .imageId.toLowerCase()
       .replace(/ä/g, "a")
       .replace(/ö/g, "o")
       .replace(/ /g, "-");
