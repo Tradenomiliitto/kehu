@@ -43,7 +43,18 @@
       "tutkimus",
       "verkostoituminen",
       "viestintä"
-    ]
+    ],
+    "roles": {
+      "1": "Pomo",
+      "2": "Alainen",
+      "3": "Kollega",
+      "4": "Asiakas",
+      "5": "Lähipiiri",
+      "6": "Kaveri",
+      "7": "Opettaja",
+      "8": "Minä itse",
+      "9": "Muu"
+    }
   },
   "blog": {
     "browse-by-tags": "Selaa postauksia aihepiireittäin:",

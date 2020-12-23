@@ -8,8 +8,8 @@ if (!process.env.SENDGRID_API_KEY || !process.env.HOME_URL) {
   throw new Error("Set SENDGRID_API_KEY and HOME_URL.");
 }
 
-async function sendEmailToUnkownUser(receiver, claim_id, kehu_id) {
-  const kehu = await getKehu(kehu_id);
+async function sendEmailToUnkownUser(receiver, claim_id, kehu_id, t) {
+  const kehu = await getKehu(kehu_id, t);
   const msg = {
     to: receiver.receiver_email,
     from: "Kehu <noreply@mykehu.fi>",
@@ -29,8 +29,8 @@ async function sendEmailToUnkownUser(receiver, claim_id, kehu_id) {
   sgMail.send(msg);
 }
 
-async function sendEmailToKnownUser(user, kehu_id) {
-  const kehu = await getKehu(kehu_id);
+async function sendEmailToKnownUser(user, kehu_id, t) {
+  const kehu = await getKehu(kehu_id, t);
   const msg = {
     to: user.email,
     from: "Kehu <noreply@mykehu.fi>",
@@ -49,8 +49,9 @@ async function sendEmailToKnownUser(user, kehu_id) {
   sgMail.send(msg);
 }
 
-async function getKehu(kehu_id) {
+async function getKehu(kehu_id, t) {
   return await Kehu.query()
+    .context({ t })
     .findById(kehu_id)
     .eager("[role, situations, tags]")
     .first();

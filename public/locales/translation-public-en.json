@@ -43,7 +43,18 @@
       "research",
       "networking",
       "communication"
-    ]
+    ],
+    "roles": {
+      "1": "Supervisor",
+      "2": "Subordinate",
+      "3": "Colleague",
+      "4": "Customer",
+      "5": "Close ones",
+      "6": "Friend",
+      "7": "Teacher",
+      "8": "Me",
+      "9": "Someone else"
+    }
   },
   "blog": {
     "browse-by-tags": "Browse blogs by tags:",

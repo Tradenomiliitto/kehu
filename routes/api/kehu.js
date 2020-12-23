@@ -10,7 +10,7 @@ const KehuService = require("../../services/KehuService");
 
 router.get("/", async (req, res) => {
   try {
-    const kehus = await KehuService.getKehus(req.user.id);
+    const kehus = await KehuService.getKehus(req.user.id, req.t);
     const sent_kehus = await KehuService.getSentKehus(req.user.id);
     res.json({ kehus, sent_kehus });
   } catch (err) {
@@ -22,7 +22,7 @@ router.post("/", checkSchema(addKehuSchema), async (req, res) => {
   try {
     const validations = validationResult(req);
     if (validations.isEmpty()) {
-      const kehu = await KehuService.createKehu(req.body);
+      const kehu = await KehuService.createKehu(req.body, req.t);
       res.json({ kehu });
     } else {
       res.status(422).json({ errors: validations.array() });
@@ -36,7 +36,7 @@ router.post("/laheta", checkSchema(sendKehuSchema), async (req, res) => {
   try {
     const validations = validationResult(req);
     if (validations.isEmpty()) {
-      const kehu = await KehuService.sendKehu(req.body);
+      const kehu = await KehuService.sendKehu(req.body, req.t);
       res.json({ kehu });
     } else {
       res.status(422).json({ errors: validations.array() });
@@ -52,7 +52,7 @@ router.get("/lisaa/:claim_id", async (req, res) => {
       req.user.id,
       req.params.claim_id
     );
-    const kehu = await KehuService.getKehu(req.user.id, claimedKehu.id);
+    const kehu = await KehuService.getKehu(req.user.id, claimedKehu.id, req.t);
     res.json({ kehu });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -75,7 +75,8 @@ router.put("/:id", selectKehuSchema, async (req, res) => {
       const kehu = await KehuService.updateKehu(
         req.user.id,
         req.params.id,
-        req.body
+        req.body,
+        req.t
       );
       res.json({ kehu });
     } else {

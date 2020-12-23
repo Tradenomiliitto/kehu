@@ -47,7 +47,7 @@ async function getItems(userId, serviceMethod, defaults) {
 
 router.get("/", async (req, res) => {
   const contacts = await UserService.getContacts(req.user.id);
-  const roles = await RoleService.getRoles();
+  const roles = await RoleService.getRoles(req.t);
   const situations = await getItems(
     req.user.id,
     SituationService.getUserSituations,
@@ -59,7 +59,7 @@ router.get("/", async (req, res) => {
     req.t("default-config.tags", { returnObjects: true })
   );
   const profile = req.user;
-  const feed = await FeedService.getFeedItems(req.user.id);
+  const feed = await FeedService.getFeedItems(req.user.id, req.t);
   res.json({ contacts, feed, profile, roles, situations, tags });
 });
 

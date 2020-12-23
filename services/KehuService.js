@@ -12,9 +12,10 @@ const {
 const { raw } = require("objection");
 const logger = require("../logger");
 
-async function getKehus(user_id) {
+async function getKehus(user_id, t) {
   logger.info(`Fetching kehus for user ${user_id}`);
   return await Kehu.query()
+    .context({ t })
     .where("owner_id", user_id)
     .eager("[role, situations, tags]")
     .orderBy("date_given", "desc");
@@ -40,9 +41,10 @@ async function getSentKehus(user_id) {
     .orderBy("date_given", "desc");
 }
 
-async function getKehu(user_id, kehu_id) {
+async function getKehu(user_id, kehu_id, t) {
   logger.info(`Fetching kehu ${kehu_id} for user ${user_id}`);
   return await Kehu.query()
+    .context({ t })
     .where("owner_id", user_id)
     .andWhere("id", kehu_id)
     .eager("[role, situations, tags]")
@@ -137,7 +139,7 @@ async function createOrRelateSituations(kehu, situationsFromData) {
   );
 }
 
-async function createKehu(data) {
+async function createKehu(data, t) {
   const knex = Kehu.knex();
   let trx;
 
@@ -152,6 +154,7 @@ async function createKehu(data) {
     await trx.commit();
     logger.info(`Created kehu ${kehu.id} for user ${data.owner_id}`);
     return await Kehu.query()
+      .context({ t })
       .findById(kehu.id)
       .eager("[role, situations, tags]")
       .first();
@@ -163,7 +166,7 @@ async function createKehu(data) {
   }
 }
 
-async function sendKehu(data) {
+async function sendKehu(data, t) {
   const knex = Kehu.knex();
   let trx;
 
@@ -190,14 +193,15 @@ async function sendKehu(data) {
     logger.info(`User ${data.giver_id} sent kehu ${kehu.id}`);
 
     if (user) {
-      await sendEmailToKnownUser(user, kehu.id);
+      await sendEmailToKnownUser(user, kehu.id, t);
       logger.info(`Email sent to user ${user.id}`);
     } else {
-      await sendEmailToUnkownUser(data, claim_id, kehu.id);
+      await sendEmailToUnkownUser(data, claim_id, kehu.id, t);
       logger.info(`Email sent to unknown user`);
     }
 
     return await Kehu.query()
+      .context({ t })
       .findById(kehu.id)
       .eager("[role]")
       .first();
@@ -225,7 +229,7 @@ async function claimKehu(user_id, claim_id) {
   return kehu;
 }
 
-async function updateKehu(user_id, kehu_id, data) {
+async function updateKehu(user_id, kehu_id, data, t) {
   const knex = Kehu.knex();
   let trx;
 
@@ -255,6 +259,7 @@ async function updateKehu(user_id, kehu_id, data) {
     await trx.commit();
     logger.info(`Updated kehu ${kehu_id} for user ${user_id}`);
     return await Kehu.query()
+      .context({ t })
       .findById(kehu.id)
       .eager("[role, situations, tags]")
       .first();

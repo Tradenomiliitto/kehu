@@ -3,8 +3,9 @@ const { raw } = require("objection");
 const Kehu = require("../models/Kehu");
 const logger = require("../logger");
 
-async function getKehus(user_id) {
+async function getKehus(user_id, t) {
   return await Kehu.query()
+    .context({ t })
     .limit(5)
     .where("owner_id", user_id)
     .eager("[role, situations, tags, giver]")
@@ -41,10 +42,10 @@ function sortKehus(a, b) {
   return aMoment.isAfter(bMoment) ? -1 : 1;
 }
 
-async function getFeedItems(user_id) {
+async function getFeedItems(user_id, t) {
   logger.info(`Fetching feed items for user ${user_id}`);
   try {
-    const kehus = await getKehus(user_id);
+    const kehus = await getKehus(user_id, t);
     const sentKehus = await getSentKehus(user_id);
     return [...kehus, ...sentKehus].sort(sortKehus).slice(0, 5);
   } catch (e) {

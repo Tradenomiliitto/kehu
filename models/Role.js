@@ -1,3 +1,4 @@
+const i18n = require("i18next");
 const Model = require("objection").Model;
 const Kehu = require("./Kehu");
 
@@ -36,6 +37,15 @@ class Role extends Model {
 
   $beforeUpdate() {
     this.updated_at = new Date().toISOString();
+  }
+
+  $afterFind({ t }) {
+    const translatedRoles =
+      typeof t === "function"
+        ? t("default-config.roles", { returnObjects: true })
+        : {};
+    this.imageId = this.role;
+    if (this.id in translatedRoles) this.role = translatedRoles[this.id];
   }
 }
 
