@@ -19,14 +19,16 @@ mixin header-content
               li.Header-menuItem
                 a(href=`/${language}/raportit`)
                   | #{t('navbar.report', 'Raportit')}
-              li.Header-menuItem
-                a(href=`/${language}/blogi`) #{t('navbar.blog', 'Blogi')}
+              if language === 'fi'
+                li.Header-menuItem
+                  a(href=`/${language}/blogi`) #{t('navbar.blog', 'Blogi')}
               li.Header-menuItem
                 a(href=`/${language}/kehut`)
                   | #{t('navbar.kehus', 'Kehut')}
             else
-              li.Header-menuItem
-                a(href=`/${language}/blogi`) #{t('navbar.blog')}
+              if language === 'fi'
+                li.Header-menuItem
+                  a(href=`/${language}/blogi`) #{t('navbar.blog')}
             //- Mobile language select
             li.Header-menuItem.Header-languageSelect.Header-language--mobile
               | #{t('navbar.change-language')}&nbsp;&blacktriangleright;

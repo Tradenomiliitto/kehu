@@ -24,8 +24,9 @@ mixin partner-logo (partner)
             +partner-logo('yty')
 
           ul.Footer-links
-            li
-              a.Footer-link(href=`/${language}/blogi`) #{t('footer.blog', 'Blogi')}
+            if language === 'fi'
+              li
+                a.Footer-link(href=`/${language}/blogi`) #{t('footer.blog', 'Blogi')}
             li
               a.Footer-link(href=`/${language}/info`) #{t('footer.info', 'Info')}
             li

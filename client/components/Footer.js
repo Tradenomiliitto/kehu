@@ -39,11 +39,13 @@ export default function Footer() {
                 {partnerLogo("yty")}
               </div>
               <ul className="Footer-links">
-                <li>
-                  <a className="Footer-link" href={`/${i18n.language}/blogi`}>
-                    {t("footer.blog", "Blogi")}
-                  </a>
-                </li>
+                {i18n.language === "fi" && (
+                  <li>
+                    <a className="Footer-link" href={`/${i18n.language}/blogi`}>
+                      {t("footer.blog", "Blogi")}
+                    </a>
+                  </li>
+                )}
                 <li>
                   <a className="Footer-link" href={`/${i18n.language}/info`}>
                     {t("footer.info", "Info")}

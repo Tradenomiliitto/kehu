@@ -61,11 +61,13 @@ export class Header extends Component {
                     "/raportit",
                     t("header.report-link", "Raportit")
                   )}
-                  <li className="Header-menuItem">
-                    <a href={`/${i18n.language}/blogi`}>
-                      {t("header.blog-link", "Blogi")}
-                    </a>
-                  </li>
+                  {i18n.language === "fi" && (
+                    <li className="Header-menuItem">
+                      <a href={`/${i18n.language}/blogi`}>
+                        {t("header.blog-link", "Blogi")}
+                      </a>
+                    </li>
+                  )}
                   {this.renderMenuItem(
                     "/kehut",
                     t("header.kehut-link", "Kehut")
