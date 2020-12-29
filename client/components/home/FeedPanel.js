@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withTranslation } from "react-i18next";
-import { LangLink as Link } from "../../util/LangLink";
+import { LangLink } from "../../util/LangLink";
 import KehuItem from "./KehuItem";
 import SentKehuItem from "./SentKehuItem";
 
@@ -18,9 +18,9 @@ export class FeedPanel extends Component {
           {t("home.feed.title", "Viimeaikainen toiminta")}
         </h1>
         {this.renderItems()}
-        <Link to="/kehut" className="Button Feed-link">
+        <LangLink to="/kehut" className="Button Feed-link">
           {t("home.feed.show-all-btn", "Kaikki Kehut")}
-        </Link>
+        </LangLink>
       </div>
     );
   }
@@ -28,9 +28,17 @@ export class FeedPanel extends Component {
   renderItems() {
     return this.props.items.map((it, i) => {
       if (it.id) {
-        return <KehuItem key={i} kehu={it} />;
+        return (
+          <LangLink to="/kehut" className="FeedItem-plainLink" key={i}>
+            <KehuItem kehu={it} />
+          </LangLink>
+        );
       }
-      return <SentKehuItem key={i} kehu={it} />;
+      return (
+        <LangLink to="/kehut?sent" className="FeedItem-plainLink" key={i}>
+          <SentKehuItem kehu={it} />
+        </LangLink>
+      );
     });
   }
 }

@@ -22,6 +22,15 @@ export class KehusPanel extends Component {
     };
   }
 
+  componentDidMount() {
+    if (this.props.location.search === "?sent") {
+      this.setState(() => ({ showSentKehus: true }));
+      this.props.history.push({
+        search: null
+      });
+    }
+  }
+
   render() {
     const { t, i18n } = this.props;
     const titleText = this.state.showSentKehus

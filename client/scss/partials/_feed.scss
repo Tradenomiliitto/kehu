@@ -50,3 +50,14 @@ $imageDim: 78px;
   font-weight: 500;
   padding-left: calc(#{$imageDim} + 1rem);
 }
+
+.FeedItem-plainLink {
+  &,
+  &:hover,
+  &:link,
+  &:active,
+  &:visited {
+    color: inherit;
+    text-decoration: inherit;
+  }
+}
