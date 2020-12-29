@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { withTranslation } from "react-i18next";
-import { LangLink as Link } from "./util/LangLink";
+import { LangLink } from "./util/LangLink";
 import { claimKehu } from "./redux/kehu";
 import Spinner from "./components/Spinner";
 import ErrorPanel from "./components/ErrorPanel";
