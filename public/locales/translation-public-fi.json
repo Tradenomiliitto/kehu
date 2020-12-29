@@ -72,6 +72,7 @@
     "title": "Täältä ei löydy mitään kehuttavaa"
   },
   "excel-report": {
+    "filename": "kehu-raportti.xlsx",
     "received-kehus-sheet": "Saadut Kehut",
     "sent-kehus-sheet": "Lähetetyt Kehut",
     "headers": {

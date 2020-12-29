@@ -41,11 +41,7 @@ export class KehusPanel extends Component {
                     {t("kehus.toggle-view", "Vaihda näkymää")}
                   </span>
                   {this.renderToggleButton()}
-                  <a
-                    href={
-                      "/api/v1/kehut/kehu-raportti.xlsx?lng=" + i18n.language
-                    }
-                  >
+                  <a href={"/api/v1/kehut/report?lng=" + i18n.language}>
                     <img
                       src="/images/excel-icon.svg"
                       className="KehusPanelHeader-download-report"

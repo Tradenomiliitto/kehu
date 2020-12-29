@@ -7,6 +7,7 @@ const {
   updateReceivedKehuSchema
 } = require("../../utils/ValidationSchemas");
 const KehuService = require("../../services/KehuService");
+const logger = require("../../logger");
 
 router.get("/", async (req, res) => {
   try {
@@ -97,11 +98,21 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-router.get("/kehu-raportti.xlsx", async (req, res) => {
+router.get("/report", async (req, res) => {
   try {
     const xlsxBuffer = await KehuService.excelReport(req.user.id, req.i18n);
-    res.status(200).send(xlsxBuffer);
+    const fileName = req.t("excel-report.filename");
+
+    res.writeHead(200, [
+      [
+        "Content-Type",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      ],
+      ["Content-Disposition", "attachment; filename=" + fileName]
+    ]);
+    res.end(Buffer.from(xlsxBuffer, "base64"));
   } catch (err) {
+    logger.error(err);
     res.status(500).json({ error: err.message });
   }
 });

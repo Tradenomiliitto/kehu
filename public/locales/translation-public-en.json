@@ -72,6 +72,7 @@
     "title": "Nothing to praise can't be found here."
   },
   "excel-report": {
+    "filename": "kehu-report.xlsx",
     "received-kehus-sheet": "Received Kehus",
     "sent-kehus-sheet": "Sent Kehus",
     "headers": {
