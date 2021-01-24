@@ -68,7 +68,7 @@ ${browser.globals.GENERIC_USER_2_EMAIL}`
     browser.assert.elementPresent(".kehu-row-nw");
     browser.click(".trash-red-nw").acceptAlert();
     browser.waitForElementNotPresent(".kehu-row-nw");
-    browser.assert.elementNotPresent(".kehu-row-nw");
+    browser.assert.not.elementPresent(".kehu-row-nw");
   },
 
   after: function(browser) {

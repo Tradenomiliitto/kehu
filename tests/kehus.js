@@ -40,7 +40,7 @@ module.exports = {
     expectText(browser, ".kehu-giver-name-nw", GIVER_NAME);
     expectTags(browser, [TAG1, TAG2, SITUATION1, SITUATION2]);
     browser.assert.elementPresent(".stars-important-nw:nth-of-type(3)");
-    browser.assert.elementNotPresent(".stars-important-nw:nth-of-type(4)");
+    browser.assert.not.elementPresent(".stars-important-nw:nth-of-type(4)");
     expectCloseButton(browser);
   },
   EditKehu: function(browser) {
@@ -71,7 +71,7 @@ module.exports = {
     browser.assert.elementPresent(".kehu-row-nw");
     browser.click(".trash-red-nw").acceptAlert();
     browser.waitForElementNotPresent(".kehu-row-nw");
-    browser.assert.elementNotPresent(".kehu-row-nw");
+    browser.assert.not.elementPresent(".kehu-row-nw");
   },
   ValidateKehu: function(browser) {
     browser
