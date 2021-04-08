@@ -17,6 +17,10 @@ const TAG2 = "Tag2";
 
 module.exports = {
   before: function(browser) {
+    // Login with GenericUser2 first to make sure user exists when sending the
+    // kehu (for new database the user doesn't exist)
+    loginWithGenericUser2(browser);
+    logout(browser);
     loginWithGenericUser(browser);
   },
 
