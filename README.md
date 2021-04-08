@@ -31,7 +31,11 @@ The public section of the app uses [i18next-http-middleware](https://github.com/
 
 #### Testing
 
-Unit tests are run with [Jest](https://jestjs.io) and e2e tests with [Nightwatch.js](https://nightwatchjs.org).
+Unit tests are run with [Jest](https://jestjs.io). The unit test files are located within the source code files and
+they follow the `*.test.js` naming convention.
+
+E2e tests are run with [Nightwatch.js](https://nightwatchjs.org) and the test files are in `tests` folder.
+Use `npx nightwatch --headless` to run tests in headless mode.
 
 ### Local Development
 
