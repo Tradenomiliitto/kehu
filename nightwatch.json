@@ -14,7 +14,7 @@
   "test_settings": {
     "default": {
       "exclude": "tests/lib/*.js",
-      "launch_url": "http://localhost:3000",
+      "launch_url": "http://localhost:3000/fi",
       "screenshots": {
         "enabled": true,
         "on_failure": true,

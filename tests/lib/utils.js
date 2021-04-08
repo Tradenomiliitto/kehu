@@ -38,11 +38,11 @@ function addTag(browser, id, text) {
 
 function navigateToKehuPage(browser) {
   browser
-    .waitForElementVisible('a[href="/kehut"]')
-    .click('a[href="/kehut"]')
+    .waitForElementVisible('a[href="/fi/kehut"]')
+    .click('a[href="/fi/kehut"]')
     .waitForElementVisible(".kehus-title-nw")
     .expect.element(".kehus-title-nw")
-    .text.to.equal("Saadut Kehut");
+    .text.to.equal("Saadut kehut");
 }
 
 function expectText(browser, selector, text) {
