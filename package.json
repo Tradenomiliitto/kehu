@@ -70,7 +70,7 @@
     "webpack": "4.44.2",
     "webpack-cli": "3.3.11",
     "winston": "3.2.1",
-    "xlsx": "0.15.4"
+    "xlsx": "0.16.9"
   },
   "devDependencies": {
     "@babel/core": "7.4.5",
