@@ -15,6 +15,7 @@ describe("client:ClaimKehuPanel", () => {
         isKehuClaimed={false}
         claimKehu={claimKehuStub}
         match={match}
+        t={key => key}
       />
     );
   });

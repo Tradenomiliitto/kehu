@@ -50,6 +50,7 @@ describe("client:components:kehuform:AddKehuForm", () => {
           roles={roles}
           situations={situations}
           tags={tags}
+          t={key => key}
         />
       );
     });
@@ -104,6 +105,7 @@ describe("client:components:kehuform:AddKehuForm", () => {
           roles={roles}
           situations={situations}
           tags={tags}
+          t={key => key}
         />
       );
     });
@@ -154,6 +156,7 @@ describe("client:components:kehuform:AddKehuForm", () => {
           roles={roles}
           situations={situations}
           tags={tags}
+          t={key => key}
         />
       );
     });
@@ -185,6 +188,7 @@ describe("client:components:kehuform:AddKehuForm", () => {
           roles={roles}
           situations={situations}
           tags={tags}
+          t={key => key}
         />
       );
     });
@@ -195,11 +199,7 @@ describe("client:components:kehuform:AddKehuForm", () => {
           .find("ErrorPanel")
           .first()
           .prop("message")
-      ).toEqual(
-        `Valitettavasti Kehun lisääminen epäonnistui. Seuraava virhe tapahtui: ${
-          otherError.message
-        }.`
-      );
+      ).toEqual(`modals.add-kehu.error`);
     });
   });
 

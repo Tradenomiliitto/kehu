@@ -8,7 +8,15 @@ describe("client:components:KehusPanel", () => {
   const roles = [];
 
   beforeEach(() => {
-    component = shallow(<KehusPanel kehus={[]} roles={roles} />);
+    component = shallow(
+      <KehusPanel
+        kehus={[]}
+        roles={roles}
+        t={key => key}
+        i18n={{}}
+        location={{ search: "" }}
+      />
+    );
   });
 
   it("does not render ErrorPanel", () => {
@@ -26,11 +34,7 @@ describe("client:components:KehusPanel", () => {
           .find("ErrorPanel")
           .first()
           .prop("message")
-      ).toEqual(
-        `Valitettavasti Kehun poistaminen epäonnistui. Seuraava virhe tapahtui: ${
-          error.message
-        }.`
-      );
+      ).toEqual(`kehus.remove-kehu-error`);
     });
   });
 });

@@ -23,6 +23,7 @@ describe("client:components:kehus:KehuRow", () => {
         kehu={kehu}
         removeKehu={removeKehuStub}
         openEditKehuModal={openEditKehuModalStub}
+        t={key => key}
       />
     );
   });

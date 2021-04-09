@@ -117,7 +117,10 @@ describe("client:App", () => {
       profileLoaded,
       kehusLoaded,
       getProfile: getProfileStub,
-      getKehus: getKehusStub
+      getKehus: getKehusStub,
+      tReady: true,
+      t: key => key,
+      i18n: {}
     };
   }
 });

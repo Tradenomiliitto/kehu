@@ -1,4 +1,4 @@
-import FeedPanel from "./FeedPanel";
+import { FeedPanel } from "./FeedPanel";
 import KehuItem from "./KehuItem";
 import SentKehuItem from "./SentKehuItem";
 
@@ -13,7 +13,7 @@ describe("client:components:home:FeedPanel", () => {
   ];
 
   beforeEach(() => {
-    component = shallow(<FeedPanel items={items} />);
+    component = shallow(<FeedPanel items={items} t={key => key} />);
   });
 
   it("renders KehuItem for all kehus", () => {

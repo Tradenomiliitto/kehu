@@ -1,4 +1,4 @@
-import ImportanceSelectPanel from "./ImportanceSelectPanel";
+import { ImportanceSelectPanel } from "./ImportanceSelectPanel";
 
 describe("client:components:kehuform:ImportanceSelectPanel", () => {
   let component;
@@ -8,7 +8,11 @@ describe("client:components:kehuform:ImportanceSelectPanel", () => {
   beforeEach(() => {
     handleClickStub = jest.fn();
     component = shallow(
-      <ImportanceSelectPanel handleClick={handleClickStub} value={value} />
+      <ImportanceSelectPanel
+        handleClick={handleClickStub}
+        value={value}
+        t={key => key}
+      />
     );
   });
 
