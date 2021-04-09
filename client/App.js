@@ -42,28 +42,48 @@ export class App extends Component {
   };
 
   state = {
-    loading: false
+    loading: true,
+    loadingProfile: false,
+    loadingKehus: false
   };
 
-  // Load profile and kehus after translations are ready
-  static getDerivedStateFromProps(props, state) {
-    if (
-      props.tReady &&
-      !state.loading &&
-      (!props.profileLoaded || !props.kehusLoaded)
-    ) {
-      props.getProfile();
-      props.getKehus();
-      return {
-        loadingProfile: true
-      };
-    }
-    if (state.loading && props.profileLoaded && props.kehusLoaded)
-      return {
-        loadingProfile: false
-      };
+  componentDidMount() {
+    this.loadProfileAndKehus();
+  }
 
-    return null;
+  componentDidUpdate() {
+    this.loadProfileAndKehus();
+  }
+
+  loadProfileAndKehus() {
+    // Load profile and kehus only after translations are ready
+    if (!this.props.tReady) return;
+
+    if (!this.props.profileLoaded) {
+      if (!this.state.loadingProfile) {
+        this.props.getProfile();
+        this.setState({ loadingProfile: true });
+      }
+    } else {
+      if (this.state.loadingProfile) this.setState({ loadingProfile: false });
+    }
+
+    if (!this.props.kehusLoaded) {
+      if (!this.state.loadingKehus) {
+        this.props.getKehus();
+        this.setState({ loadingKehus: true });
+      }
+    } else {
+      if (this.state.loadingKehus) this.setState({ loadingKehus: false });
+    }
+
+    if (
+      this.props.profileLoaded &&
+      this.props.kehusLoaded &&
+      this.state.loading
+    ) {
+      this.setState({ loading: false });
+    }
   }
 
   render() {
@@ -75,11 +95,7 @@ export class App extends Component {
   }
 
   defineContent() {
-    if (
-      !this.props.profileLoaded ||
-      !this.props.kehusLoaded ||
-      !this.props.tReady
-    ) {
+    if (this.state.loading) {
       return <Spinner />;
     }
 
