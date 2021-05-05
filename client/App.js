@@ -24,6 +24,7 @@ import ProfilePanel from "./ProfilePanel";
 import ReportPanel from "./ReportPanel";
 import Spinner from "./components/Spinner";
 import { handlePageView } from "./util/AnalyticsUtil";
+import { supportedLanguages } from "./i18n";
 
 const history = createBrowserHistory();
 history.listen(handlePageView);
@@ -116,10 +117,10 @@ export class App extends Component {
             <Route exact path={`${lng}/profiili`} component={ProfilePanel} />
             <Route exact path={`${lng}/raportit`} component={ReportPanel} />
             <Route
-              path="/:lang/*"
-              render={props => lngRedirect(lng, props.match)}
+              render={props =>
+                lngRedirect(this.props.i18n.language, props.location.pathname)
+              }
             />
-            <Redirect to={lng} />
           </Switch>
           {this.renderPortal()}
         </div>
@@ -214,7 +215,25 @@ export default () => (
   </Provider>
 );
 
-function lngRedirect(language, match) {
-  // match.params[0] contains the url after language prefix
-  return <Redirect to={language + "/" + match.params[0]} />;
+function lngRedirect(currentLng, pathname) {
+  // Get language from path, e.g. '/fi/kehut' --> pathLng === 'fi'
+  const pathLng = pathname.split("/")[1];
+
+  // Language is correct but because none of the earlier Routes caught this the
+  // route is unknown. Express renders 404 page for invalid urls so user entered
+  // url shouldn't end up here --> Only way to get here is invalid react-router
+  // redirect
+  if (currentLng === pathLng) {
+    return <Redirect to="/" />;
+  }
+
+  // Url has valid language but it's different than current language. Replace
+  // language with current current language and redirect
+  if (supportedLanguages.includes(pathLng)) {
+    return <Redirect to={pathname.replace(pathLng, currentLng)} />;
+  }
+
+  // Url has no valid language prefix --> add current language and keep rest of
+  // the path (this redirect is used e.g. when adding a kehu from email)
+  return <Redirect to={"/" + currentLng + pathname} />;
 }

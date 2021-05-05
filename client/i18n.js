@@ -5,7 +5,7 @@ import LanguageDetector from "i18next-browser-languagedetector";
 import languages from "../languages.json";
 import { getLongLanguage } from "../utils/LongLanguage";
 
-const langWhitelist = languages.map(lang => lang.value);
+export const supportedLanguages = languages.map(lang => lang.value);
 
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next
@@ -13,7 +13,7 @@ i18n
   .use(backend) // backend to fetch localizations
   .init({
     fallbackLng: "fi",
-    whitelist: langWhitelist,
+    whitelist: supportedLanguages,
 
     interpolation: {
       escapeValue: false // react already safes from xss
