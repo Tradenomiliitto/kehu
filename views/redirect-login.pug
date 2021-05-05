@@ -7,8 +7,8 @@ block content
     p #{t('login.redirect-to-login', 'Uudelleenohjataan kirjautumiseen...')}
 
   include _footer
-- var link1 = `<a href="${env.HOME_URL}/${language}/rekisteriseloste" target="_blank" rel="noopener noreferrer">`
-- var link2 = `<a href="${env.HOME_URL}/${language}/kayttoehdot" target="_blank" rel="noopener noreferrer">`
+  - var link1 = `<a href="${env.HOME_URL}/${language}/rekisteriseloste" target="_blank" rel="noopener noreferrer">`
+  - var link2 = `<a href="${env.HOME_URL}/${language}/kayttoehdot" target="_blank" rel="noopener noreferrer">`
   script.
     (function () {
       var settings = {
