@@ -17,7 +17,7 @@
     "@contentful/rich-text-html-renderer": "13.1.0",
     "@sendgrid/mail": "6.4.0",
     "auth0": "2.31.0",
-    "chart.js": "2.8.0",
+    "chart.js": "2.9.4",
     "chartjs-plugin-labels": "1.1.0",
     "classnames": "2.2.6",
     "cloudinary": "1.18.1",
