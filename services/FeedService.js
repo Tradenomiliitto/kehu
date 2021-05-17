@@ -13,6 +13,14 @@ async function getKehus(user_id, t) {
     })
     .orderBy("date_given", "desc");
 
+  // Mark all unseen kehus as seen
+  const markKehusSeen = await Kehu.query()
+    .where("owner_id", user_id)
+    .andWhere("date_owner_saw", null)
+    .patch({ date_owner_saw: new Date().toISOString() });
+
+  if (markKehusSeen > 0) logger.info(`Marked ${markKehusSeen} kehus seen`);
+
   // Show new kehu badge if kehu has never been seen or has been seen in the
   // last 30 minutes
   for (const kehu of kehus) {
