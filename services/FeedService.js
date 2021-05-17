@@ -4,15 +4,24 @@ const Kehu = require("../models/Kehu");
 const logger = require("../logger");
 
 async function getKehus(user_id, t) {
-  return await Kehu.query()
+  const kehus = await Kehu.query()
     .context({ t })
-    .limit(5)
     .where("owner_id", user_id)
     .eager("[role, situations, tags, giver]")
     .modifyEager("giver", builder => {
       builder.select("picture");
     })
     .orderBy("date_given", "desc");
+
+  // Show new kehu badge if kehu has never been seen or has been seen in the
+  // last 30 minutes
+  for (const kehu of kehus) {
+    const seenDate = Date.parse(kehu.date_owner_saw);
+    kehu.isNewKehu =
+      kehu.date_owner_saw == null ||
+      (!isNaN(seenDate) && new Date().getTime() - seenDate < 30 * 60 * 1000);
+  }
+  return kehus;
 }
 
 async function getSentKehus(user_id) {
@@ -47,7 +56,11 @@ async function getFeedItems(user_id, t) {
   try {
     const kehus = await getKehus(user_id, t);
     const sentKehus = await getSentKehus(user_id);
-    return [...kehus, ...sentKehus].sort(sortKehus).slice(0, 5);
+    // Return top 5 kehus but always return all new kehus even if not fitting
+    // in top 5
+    return [...kehus, ...sentKehus]
+      .sort(sortKehus)
+      .filter((kehu, idx) => idx < 5 || kehu.isNewKehu);
   } catch (e) {
     logger.error(e);
   }

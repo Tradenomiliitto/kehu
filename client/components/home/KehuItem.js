@@ -13,14 +13,20 @@ export class KehuItem extends Component {
   };
 
   render() {
-    const { kehu } = this.props;
+    const { kehu, t } = this.props;
     const imageSrc = this.createImageSrc(kehu);
     const classNames = cn({
       FeedItem: true,
       "FeedItem--noImage": !imageSrc
     });
+
     return (
       <div className={classNames}>
+        {kehu.isNewKehu && (
+          <div className="new-kehu-ribbon">
+            {t("home.feed.new-kehu-ribbon")}
+          </div>
+        )}
         {this.renderImage(kehu, imageSrc)}
         <span className="FeedItem-date">
           {moment(kehu.date_given).format("D.M.YYYY")}

@@ -25,6 +25,9 @@ $imageDim: 78px;
       padding-left: 0;
     }
   }
+  // These are required for the new-kehu-ribbon
+  overflow: hidden;
+  position: relative;
 }
 
 .FeedItem-image {

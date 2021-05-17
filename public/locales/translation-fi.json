@@ -20,6 +20,7 @@
     "add-new-kehu-text": "Älä pidä kehujasi vakan alla! Tallenna Kehu-pankkiisi kuulemasi kehu tai piristä kollegaa lähettämällä Kehu!",
     "add-new-kehu-title": "Lisää uusi Kehu",
     "feed": {
+      "new-kehu-ribbon": "UUSI",
       "show-all-btn": "Kaikki Kehut",
       "title": "Viimeaikainen toiminta"
     },
