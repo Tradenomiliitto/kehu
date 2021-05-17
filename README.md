@@ -37,6 +37,14 @@ they follow the `*.test.js` naming convention.
 E2e tests are run with [Nightwatch.js](https://nightwatchjs.org) and the test files are in `tests` folder.
 Use `npx nightwatch --headless` to run tests in headless mode.
 
+Note: e2e tests use Chrome and Chromedriver and their versions has to match. Check Chrome's version and install matching Chromedriver if not already installed:
+
+```bash
+$ google-chrome --version
+Google Chrome 90.0.4430.212
+$ npm install chromedriver@90
+```
+
 ### Local Development
 
 Setup environment variables by copying .env-template and fill in needed variables.
