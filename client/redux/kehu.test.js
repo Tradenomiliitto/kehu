@@ -31,6 +31,7 @@ import thunk from "redux-thunk";
 import configureMockStore from "redux-mock-store";
 import * as ApiUtil from "../util/ApiUtil";
 import { RESET_REPORTS } from "./report";
+import { FEED_LOADED, FEED_ERROR } from "./profile";
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -300,6 +301,7 @@ describe("client:redux:kehu", () => {
         const response = { response: 1 };
 
         ApiUtil.post = jest.fn(() => new Promise(res => res(response)));
+        ApiUtil.get = jest.fn(() => new Promise(res => res(response)));
 
         // addKehu function requires full state
         const state = { kehu: { ...initialState } };
@@ -307,19 +309,13 @@ describe("client:redux:kehu", () => {
         const expectedActions = [
           { type: ADD_KEHU },
           { type: ADD_KEHU_SUCCESS, payload: response },
-          {
-            type: RESET_REPORTS,
-            payload: {
-              kehus: state.kehu.kehus,
-              // Note: redux-mock-store does not update the Redux store so
-              // sent_kehus is still equal to original state value
-              sent_kehus: state.kehu.sentKehus
-            }
-          }
+          { type: RESET_REPORTS, payload: { kehus: state.kehu.kehus } },
+          { type: FEED_LOADED, payload: response }
         ];
 
         store.dispatch(addKehu(data)).then(() => {
           expect(ApiUtil.post).toBeCalledWith("/kehut", data);
+          expect(ApiUtil.get).toBeCalledWith("/profiili/feed");
           expect(store.getActions()).toEqual(expectedActions);
           done();
         });
@@ -351,17 +347,20 @@ describe("client:redux:kehu", () => {
         const response = { response: 1 };
 
         ApiUtil.put = jest.fn(() => new Promise(res => res(response)));
+        ApiUtil.get = jest.fn(() => new Promise(res => res(response)));
 
         const state = { kehu: { ...initialState, kehus: [{ kehu: 1 }] } };
         const store = mockStore(state);
         const expectedActions = [
           { type: UPDATE_KEHU },
           { type: UPDATE_KEHU_SUCCESS, payload: response },
-          { type: RESET_REPORTS, payload: { kehus: state.kehu.kehus } }
+          { type: RESET_REPORTS, payload: { kehus: state.kehu.kehus } },
+          { type: FEED_LOADED, payload: response }
         ];
 
         store.dispatch(updateKehu(kehuId, data)).then(() => {
           expect(ApiUtil.put).toBeCalledWith(`/kehut/${kehuId}`, data);
+          expect(ApiUtil.get).toBeCalledWith("/profiili/feed");
           expect(store.getActions()).toEqual(expectedActions);
           done();
         });
@@ -393,17 +392,20 @@ describe("client:redux:kehu", () => {
         const response = { response: 1 };
 
         ApiUtil.del = jest.fn(() => new Promise(res => res(response)));
+        ApiUtil.get = jest.fn(() => new Promise(res => res(response)));
 
         const state = { kehu: { ...initialState, kehus: [{ kehu: 1 }] } };
         const store = mockStore(state);
         const expectedActions = [
           { type: REMOVE_KEHU },
           { type: REMOVE_KEHU_SUCCESS, payload: kehuId },
-          { type: RESET_REPORTS, payload: { kehus: state.kehu.kehus } }
+          { type: RESET_REPORTS, payload: { kehus: state.kehu.kehus } },
+          { type: FEED_LOADED, payload: response }
         ];
 
         store.dispatch(removeKehu(kehuId)).then(() => {
           expect(ApiUtil.del).toBeCalledWith(`/kehut/${kehuId}`);
+          expect(ApiUtil.get).toBeCalledWith("/profiili/feed");
           expect(store.getActions()).toEqual(expectedActions);
           done();
         });
@@ -434,6 +436,7 @@ describe("client:redux:kehu", () => {
         const response = { response: 1 };
 
         ApiUtil.post = jest.fn(() => new Promise(res => res(response)));
+        ApiUtil.get = jest.fn(() => new Promise(res => res(response)));
 
         // sendKehu function requires full state
         const state = { kehu: { ...initialState } };
@@ -449,11 +452,13 @@ describe("client:redux:kehu", () => {
               // sent_kehus is still equal to original state value
               sent_kehus: state.kehu.sentKehus
             }
-          }
+          },
+          { type: FEED_LOADED, payload: response }
         ];
 
         store.dispatch(sendKehu(data)).then(() => {
           expect(ApiUtil.post).toBeCalledWith("/kehut/laheta", data);
+          expect(ApiUtil.get).toBeCalledWith("/profiili/feed");
           expect(store.getActions()).toEqual(expectedActions);
           done();
         });
@@ -485,14 +490,18 @@ describe("client:redux:kehu", () => {
 
         ApiUtil.get = jest.fn(() => new Promise(res => res(response)));
 
-        const store = mockStore(initialState);
+        const state = { kehu: { ...initialState } };
+        const store = mockStore(state);
         const expectedActions = [
           { type: CLAIM_KEHU },
-          { type: CLAIM_KEHU_SUCCESS, payload: response }
+          { type: CLAIM_KEHU_SUCCESS, payload: response },
+          { type: RESET_REPORTS, payload: { kehus: state.kehu.kehus } },
+          { type: FEED_LOADED, payload: response }
         ];
 
         store.dispatch(claimKehu(id)).then(() => {
-          expect(ApiUtil.get).toBeCalledWith(`/kehut/lisaa/${id}`);
+          expect(ApiUtil.get).nthCalledWith(1, `/kehut/lisaa/${id}`);
+          //expect(ApiUtil.get).nthCalledWith(2, "/profiili/feed");
           expect(store.getActions()).toEqual(expectedActions);
           done();
         });

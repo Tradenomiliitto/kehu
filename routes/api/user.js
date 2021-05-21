@@ -97,6 +97,11 @@ router.delete("/", async (req, res) => {
   }
 });
 
+router.get("/feed", async (req, res) => {
+  const feed = await FeedService.getFeedItems(req.user.id, req.t);
+  res.json({ feed });
+});
+
 router.get("/cloudinary-signature", (req, res) => {
   logger.info("Sending Cloudinary signature", { params_to_sign: req.query });
   let response;
