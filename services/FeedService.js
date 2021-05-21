@@ -22,12 +22,13 @@ async function getKehus(user_id, t) {
   if (markKehusSeen > 0) logger.info(`Marked ${markKehusSeen} kehus seen`);
 
   // Show new kehu badge if kehu has never been seen or has been seen in the
-  // last 30 minutes
+  // last 5 seconds (this is to show the badge even if user makes double-click
+  // when logging in)
   for (const kehu of kehus) {
     const seenDate = Date.parse(kehu.date_owner_saw);
     kehu.isNewKehu =
       kehu.date_owner_saw == null ||
-      (!isNaN(seenDate) && new Date().getTime() - seenDate < 30 * 60 * 1000);
+      (!isNaN(seenDate) && new Date().getTime() - seenDate < 5 * 1000);
   }
   return kehus;
 }
