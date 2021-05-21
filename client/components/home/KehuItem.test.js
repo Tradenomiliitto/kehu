@@ -56,6 +56,15 @@ describe("client:components:home:KehuItem", () => {
     });
   });
 
+  describe("when kehu is new", () => {
+    it("show the new kehu badge", () => {
+      component.setProps({ kehu: { ...kehu, isNewKehu: true } });
+      expect(component.find(".new-kehu-ribbon").text()).toEqual(
+        "home.feed.new-kehu-ribbon"
+      );
+    });
+  });
+
   describe("when received kehu", () => {
     it("renders correct info and shows sender image", () => {
       component.setProps({ kehu: { ...kehu, receiver_email: "some@email" } });
@@ -80,6 +89,7 @@ describe("client:components:home:KehuItem", () => {
         tags[1].text
       )}`;
       expect(component.find(".FeedItem-info").text()).toEqual(expectedInfo);
+      expect(component.find(".new-kehu-ribbon").exists()).toBeFalsy();
     });
   });
 
