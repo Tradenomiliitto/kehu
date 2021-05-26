@@ -1,6 +1,8 @@
 .idea
 *.sqlite
 /public/main*
+/public/chunk-?.js
+/public/chunk-?.js.map
 /public/public*
 /public/*.bundle*
 /public/*.woff

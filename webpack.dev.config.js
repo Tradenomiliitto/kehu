@@ -26,6 +26,7 @@ module.exports = {
   output: {
     libraryTarget: "umd",
     filename: "[name].js",
+    chunkFilename: "chunk-[id].js",
     path: path.resolve(__dirname, "public"),
     globalObject: "this",
     hotUpdateChunkFilename: ".hot/[id].[hash].hot-update.js",
