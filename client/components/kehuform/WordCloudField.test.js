@@ -1,4 +1,4 @@
-import WordCloudField from "./WordCloudField";
+import { WordCloudField } from "./WordCloudField";
 
 describe("client:components:kehuform:WordCloudField", () => {
   let component;
@@ -25,6 +25,7 @@ describe("client:components:kehuform:WordCloudField", () => {
         label={label}
         placeholder={placeholder}
         values={initValues}
+        t={key => key}
       />
     );
   });

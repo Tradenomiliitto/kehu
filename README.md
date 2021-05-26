@@ -31,7 +31,19 @@ The public section of the app uses [i18next-http-middleware](https://github.com/
 
 #### Testing
 
-Unit tests are run with [Jest](https://jestjs.io) and e2e tests with [Nightwatch.js](https://nightwatchjs.org).
+Unit tests are run with [Jest](https://jestjs.io). The unit test files are located within the source code files and
+they follow the `*.test.js` naming convention.
+
+E2e tests are run with [Nightwatch.js](https://nightwatchjs.org) and the test files are in `tests` folder.
+Use `npx nightwatch --headless` to run tests in headless mode.
+
+Note: e2e tests use Chrome and Chromedriver and their versions has to match. Check Chrome's version and install matching Chromedriver if not already installed:
+
+```bash
+$ google-chrome --version
+Google Chrome 90.0.4430.212
+$ npm install chromedriver@90
+```
 
 ### Local Development
 

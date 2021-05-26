@@ -1,6 +1,7 @@
 import moment from "moment";
 import { get, del, post, put } from "../util/ApiUtil";
 import { RESET_REPORTS } from "./report";
+import { updateFeed } from "./profile";
 
 export const ADD_KEHU = "kehu/ADD_KEHU";
 export const ADD_KEHU_SUCCESS = "kehu/ADD_KEHU_SUCCESS";
@@ -48,11 +49,9 @@ export function addKehu(data) {
       dispatch({ type: ADD_KEHU_SUCCESS, payload: kehu });
       dispatch({
         type: RESET_REPORTS,
-        payload: {
-          kehus: getState().kehu.kehus,
-          sent_kehus: getState().kehu.sentKehus
-        }
+        payload: { kehus: getState().kehu.kehus }
       });
+      dispatch(updateFeed());
     } catch (e) {
       dispatch({ type: ADD_KEHU_ERROR, payload: e });
     }
@@ -69,6 +68,7 @@ export function updateKehu(id, data) {
         type: RESET_REPORTS,
         payload: { kehus: getState().kehu.kehus }
       });
+      dispatch(updateFeed());
     } catch (e) {
       dispatch({ type: UPDATE_KEHU_ERROR, payload: e });
     }
@@ -85,6 +85,7 @@ export function removeKehu(id) {
         type: RESET_REPORTS,
         payload: { kehus: getState().kehu.kehus }
       });
+      dispatch(updateFeed());
     } catch (e) {
       dispatch({ type: REMOVE_KEHU_ERROR, payload: e });
     }
@@ -116,6 +117,7 @@ export function sendKehu(data) {
           sent_kehus: getState().kehu.sentKehus
         }
       });
+      dispatch(updateFeed());
     } catch (e) {
       dispatch({ type: SEND_KEHU_ERROR, payload: e });
     }
@@ -123,11 +125,16 @@ export function sendKehu(data) {
 }
 
 export function claimKehu(id) {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     try {
       dispatch({ type: CLAIM_KEHU });
       const kehu = await get(`/kehut/lisaa/${id}`);
       dispatch({ type: CLAIM_KEHU_SUCCESS, payload: kehu });
+      dispatch({
+        type: RESET_REPORTS,
+        payload: { kehus: getState().kehu.kehus }
+      });
+      dispatch(updateFeed());
     } catch (e) {
       dispatch({ type: CLAIM_KEHU_ERROR, payload: e });
     }

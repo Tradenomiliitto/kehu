@@ -11,7 +11,9 @@ describe("client:components:home:SentKehuItem", () => {
   };
 
   beforeEach(() => {
-    component = shallow(<SentKehuItem kehu={kehu} roles={roles} />);
+    component = shallow(
+      <SentKehuItem kehu={kehu} roles={roles} t={key => key} />
+    );
   });
 
   it("renders date", () => {
@@ -25,14 +27,14 @@ describe("client:components:home:SentKehuItem", () => {
   });
 
   it("renders correct info", () => {
-    const expectedInfo = `Lähetetty kehu: ${kehu.receiver_name}`;
+    const expectedInfo = `kehus-sent-kehu: ${kehu.receiver_name}`;
     expect(component.find(".FeedItem-info").text()).toEqual(expectedInfo);
   });
 
   describe("when role is given", () => {
     it("renders correct info", () => {
       component.setProps({ kehu: { ...kehu, role_id: 6 } });
-      const expectedInfo = `Lähetetty kehu: ${kehu.receiver_name}, ${
+      const expectedInfo = `kehus-sent-kehu: ${kehu.receiver_name}, ${
         roles[1].role
       }`;
       expect(component.find(".FeedItem-info").text()).toEqual(expectedInfo);

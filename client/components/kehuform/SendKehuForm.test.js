@@ -36,6 +36,7 @@ describe("client:components:kehuform:SendKehuForm", () => {
         roles={roles}
         situations={situations}
         tags={tags}
+        t={key => key}
       />
     );
   });
@@ -108,6 +109,7 @@ describe("client:components:kehuform:SendKehuForm", () => {
           roles={roles}
           situations={situations}
           tags={tags}
+          t={key => key}
         />
       );
     });
@@ -139,6 +141,7 @@ describe("client:components:kehuform:SendKehuForm", () => {
           roles={roles}
           situations={situations}
           tags={tags}
+          t={key => key}
         />
       );
     });
@@ -149,11 +152,7 @@ describe("client:components:kehuform:SendKehuForm", () => {
           .find("ErrorPanel")
           .first()
           .prop("message")
-      ).toEqual(
-        `Valitettavasti Kehun lähettäminen epäonnistui. Seuraava virhe tapahtui: ${
-          otherError.message
-        }.`
-      );
+      ).toEqual(`modals.send-kehu.error`);
     });
   });
 

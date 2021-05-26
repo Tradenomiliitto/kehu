@@ -1,4 +1,6 @@
 import { HomePanel } from "./HomePanel";
+import FeedPanel from "./components/home/FeedPanel";
+import WelcomePanel from "./components/home/WelcomePanel";
 
 describe("client:Homepanel", () => {
   let component;
@@ -28,11 +30,11 @@ describe("client:Homepanel", () => {
     });
 
     it("renders Welcome element", () => {
-      expect(component.find("WelcomePanel").exists()).toBeTruthy();
+      expect(component.find(WelcomePanel).exists()).toBeTruthy();
     });
 
     it("noes not render FeedPanel", () => {
-      expect(component.find("FeedPanel").exists()).toBeFalsy();
+      expect(component.find(FeedPanel).exists()).toBeFalsy();
     });
   });
 
@@ -71,8 +73,8 @@ describe("client:Homepanel", () => {
   describe("when user has Kehus", () => {
     it("does not render Welcome element", () => {
       component.setProps({ hasKehus: true });
-      expect(component.find("WelcomePanel").exists()).toBeFalsy();
-      expect(component.find("FeedPanel").exists()).toBeTruthy();
+      expect(component.find(WelcomePanel).exists()).toBeFalsy();
+      expect(component.find(FeedPanel).exists()).toBeTruthy();
     });
   });
 
@@ -88,7 +90,9 @@ describe("client:Homepanel", () => {
       hasKehus: false,
       tags: [{ text: "Test" }, { text: "Tag" }],
       toggleAddKehuFormModal: toggleAddKehuFormModalStub,
-      toggleSendKehuFormModal: toggleSendKehuFormModalStub
+      toggleSendKehuFormModal: toggleSendKehuFormModalStub,
+      t: key => key,
+      i18n: {}
     };
   }
 });

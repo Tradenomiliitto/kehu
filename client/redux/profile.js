@@ -2,6 +2,8 @@ import { del, get, put } from "../util/ApiUtil";
 
 export const PROFILE_LOADED = "profile/PROFILE_LOADED";
 export const PROFILE_ERROR = "profile/PROFILE_ERROR";
+export const FEED_LOADED = "profile/FEED_LOADED";
+export const FEED_ERROR = "profile/FEED_ERROR";
 
 export const UPDATE_PROFILE = "profile/UPDATE_PROFILE";
 export const UPDATE_PROFILE_SUCCESS = "profile/UPDATE_PROFILE_SUCCESS";
@@ -31,6 +33,17 @@ export function getProfile() {
       dispatch({ type: PROFILE_LOADED, payload });
     } catch (e) {
       dispatch({ type: PROFILE_ERROR, payload: e.message });
+    }
+  };
+}
+
+export function updateFeed() {
+  return async dispatch => {
+    try {
+      const payload = await get("/profiili/feed");
+      dispatch({ type: FEED_LOADED, payload });
+    } catch (e) {
+      dispatch({ type: FEED_ERROR, payload: e.message });
     }
   };
 }
@@ -79,7 +92,16 @@ export default function reducer(state = initialState, action = {}) {
         error: action.payload,
         profileLoaded: true
       };
-
+    case FEED_LOADED:
+      return {
+        ...state,
+        feedItems: action.payload.feed
+      };
+    case FEED_ERROR:
+      return {
+        ...state,
+        error: action.payload
+      };
     case UPDATE_PROFILE:
       return {
         ...state,
