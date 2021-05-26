@@ -52,7 +52,6 @@ app.set("view engine", "pug");
 if (!isProd) {
   app.use(
     require("webpack-dev-middleware")(compiler, {
-      noInfo: true,
       publicPath: webpackConfig.output.publicPath
     })
   );

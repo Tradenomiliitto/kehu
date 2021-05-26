@@ -6,13 +6,6 @@ const TerserPlugin = require("terser-webpack-plugin");
 
 // Include env vars from system (required for Heroku deployment)
 const dotenv = new Dotenv({ systemvars: true });
-// Remove env vars not starting with REACT_APP_ to prevent accidentally
-// including confidential information
-Object.keys(dotenv.definitions).forEach(key => {
-  if (!key.startsWith("process.env.REACT_APP_")) {
-    delete dotenv.definitions[key];
-  }
-});
 
 module.exports = {
   mode: "production",
@@ -45,17 +38,30 @@ module.exports = {
         use: [
           MiniCssExtractPlugin.loader,
           "css-loader",
-          "sass-loader",
-          "resolve-url-loader"
+          {
+            loader: "resolve-url-loader",
+            options: { root: path.resolve(__dirname, "public") }
+          },
+          "sass-loader"
         ]
       },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: "url-loader?limit=10000&mimetype=application/font-woff"
+        loader: "url-loader",
+        options: {
+          limit: 10000,
+          mimetype: "application/font-woff"
+        }
       },
       {
-        test: /\.(ttf|eot|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: "file-loader"
+        // Images are not imported in React app but provided as strings so we
+        // cannot include then in Webpack bundle
+        test: /\.(ttf|eot|svg|otf|png)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: "file-loader",
+        options: {
+          name: "/images/[name].[ext]",
+          emitFile: false
+        }
       }
     ]
   },
