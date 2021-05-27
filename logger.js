@@ -27,12 +27,10 @@ const myFormat = printf(info => {
   }${stack != null ? `\n${stack}` : ""}`;
 });
 
-if (process.env.NODE_ENV !== "production") {
-  logger.add(
-    new winston.transports.Console({
-      format: combine(timestamp({ format: "HH:mm:ss" }), colorize(), myFormat)
-    })
-  );
-}
+logger.add(
+  new winston.transports.Console({
+    format: combine(timestamp({ format: "HH:mm:ss" }), colorize(), myFormat)
+  })
+);
 
 module.exports = logger;
