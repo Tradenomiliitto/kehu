@@ -1,5 +1,5 @@
 import "./scss/app-style.scss";
-import "babel-polyfill";
+import "@babel/polyfill";
 import App from "./App";
 import React from "react";
 import ReactDOM from "react-dom";

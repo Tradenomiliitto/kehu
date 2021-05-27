@@ -1,4 +1,4 @@
-import "babel-polyfill";
+import "@babel/polyfill";
 import React from "react";
 import fetch from "jest-fetch-mock";
 import Enzyme, { shallow } from "enzyme";
