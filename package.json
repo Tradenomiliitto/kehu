@@ -91,10 +91,10 @@
     "enzyme-adapter-react-16": "^1.15.6",
     "file-loader": "^6.2.0",
     "husky": "^2.7.0",
-    "jest": "^24.9.0",
+    "jest": "^27.0.1",
     "jest-canvas-mock": "^2.3.1",
-    "jest-fetch-mock": "^2.1.2",
-    "mockdate": "^2.0.5",
+    "jest-fetch-mock": "^3.0.3",
+    "mockdate": "^3.0.5",
     "nightwatch": "^1.6.4",
     "node-sass": "^6.0.0",
     "password-generator": "^2.3.2",
@@ -122,6 +122,7 @@
     ]
   },
   "jest": {
+    "testEnvironment": "jsdom",
     "setupFiles": [
       "jest-canvas-mock"
     ],
