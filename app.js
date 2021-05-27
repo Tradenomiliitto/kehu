@@ -9,7 +9,8 @@ const passport = require("passport");
 const Knex = require("knex");
 const pg = require("pg");
 const Model = require("objection").Model;
-const Redis = require("connect-redis");
+const redis = require("redis");
+const connectRedis = require("connect-redis");
 const csrf = require("csurf");
 const compression = require("compression");
 const methodOverride = require("method-override");
@@ -28,7 +29,7 @@ const webpackConfig = isProd ? null : require("./webpack.dev.config");
 const compiler = isProd ? null : webpack(webpackConfig);
 
 const log = require("./logger");
-const RedisStore = Redis(session);
+const RedisStore = connectRedis(session);
 const csrfProtection = csrf({ cookie: true });
 const staticify = require("staticify")(path.join(__dirname, "public"));
 
@@ -79,9 +80,7 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    store: new RedisStore({
-      url: process.env.REDIS_URL
-    })
+    store: new RedisStore({ client: redis.createClient(process.env.REDIS_URL) })
   })
 );
 
