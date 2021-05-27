@@ -5,10 +5,11 @@
   "scripts": {
     "build": "npm run build:prod && npm run migrate:latest",
     "build:dev": "npx webpack --env dev",
-    "build:prod": "npx webpack --env prod",
+    "build:prod": "NODE_ENV=production npx webpack --env prod",
     "migrate:latest": "npx knex migrate:latest",
     "start": "node ./bin/www",
     "start:dev": "nodemon ./bin/www",
+    "start:prod": "NODE_ENV=production node ./bin/www",
     "start:debug": "nodemon --inspect=0.0.0.0:9229 ./bin/www",
     "test": "npx nightwatch && npx jest",
     "jest:watch": "jest --watch"
