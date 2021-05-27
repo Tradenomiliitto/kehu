@@ -1,11 +1,7 @@
 const express = require("express");
 const cloudinary = require("cloudinary").v2;
 const router = express.Router();
-const {
-  body,
-  checkSchema,
-  validationResult
-} = require("express-validator/check");
+const { body, checkSchema, validationResult } = require("express-validator");
 const RoleService = require("../../services/RoleService");
 const SituationService = require("../../services/SituationService");
 const TagService = require("../../services/TagService");

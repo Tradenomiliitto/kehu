@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { checkSchema, validationResult } = require("express-validator/check");
+const { checkSchema, validationResult } = require("express-validator");
 const {
   addKehuSchema,
   sendKehuSchema,
