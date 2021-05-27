@@ -40,7 +40,10 @@ const setupRoutes = require("./routes");
 pg.defaults.ssl = isProd;
 const knex = Knex({
   client: "pg",
-  connection: process.env.DATABASE_URL
+  connection: {
+    connectionString: process.env.DATABASE_URL,
+    ssl: { rejectUnauthorized: false }
+  }
 });
 Model.knex(knex);
 
