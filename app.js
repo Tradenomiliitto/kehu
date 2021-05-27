@@ -49,6 +49,13 @@ setupPassport(passport);
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
+// Strip staticify hash before webpack-dev-middleware, otherwise it won't
+// recognize hashed files
+app.use((req, res, next) => {
+  req.url = staticify.stripVersion(req.url);
+  next();
+});
+
 if (!isProd) {
   app.use(
     require("webpack-dev-middleware")(compiler, {
@@ -111,11 +118,6 @@ app.use(
     removeLngFromUrl: true
   })
 );
-
-app.use((req, res, next) => {
-  req.url = req.url.replace(/\/([^\/]+)\.[0-9a-f]+\.(css|js)$/, "/$1.$2");
-  next();
-});
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/", httpsRedirect());
