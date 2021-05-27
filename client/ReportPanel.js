@@ -27,19 +27,19 @@ export class ReportPanel extends Component {
       situations: PropTypes.array.isRequired,
       tags: PropTypes.array.isRequired,
       unselectedKehus: PropTypes.object,
-      unselectedSentKehus: PropTypes.object
+      unselectedSentKehus: PropTypes.object,
     }).isRequired,
     profile: PropTypes.shape({
       first_name: PropTypes.string.isRequired,
-      last_name: PropTypes.string.isRequired
-    }).isRequired
+      last_name: PropTypes.string.isRequired,
+    }).isRequired,
   };
 
   constructor() {
     super();
     this.state = {
       preview: false,
-      isSelectKehusModalVisible: false
+      isSelectKehusModalVisible: false,
     };
   }
 
@@ -116,7 +116,7 @@ export class ReportPanel extends Component {
 
   toggleSelectKehus = () => {
     this.setState({
-      isSelectKehusModalVisible: !this.state.isSelectKehusModalVisible
+      isSelectKehusModalVisible: !this.state.isSelectKehusModalVisible,
     });
   };
 
@@ -153,10 +153,10 @@ export class ReportPanel extends Component {
         // situation and tag arrays have { text, count } objects
         // roles array has {role, count } objects
         // so transformation is required
-        let items = report.roles.map(i => {
+        let items = report.roles.map((i) => {
           return {
             text: i.role,
-            count: i.count
+            count: i.count,
           };
         });
         topRoles = (
@@ -308,12 +308,12 @@ export class ReportPanel extends Component {
       scale: 4, // Pdf quality parameter
       scrollY: 0,
       height: input.clientHeight,
-      width: input.clientWidth
-    }).then(canvas => {
+      width: input.clientWidth,
+    }).then((canvas) => {
       const pdf = new jsPDF({
         orientation: "p",
         unit: "mm",
-        format: "a4"
+        format: "a4",
       });
       const width = pdf.internal.pageSize.getWidth();
       const height = pdf.internal.pageSize.getHeight();
@@ -326,24 +326,24 @@ export class ReportPanel extends Component {
     const {
       kehus,
       sentKehus,
-      report: { unselectedKehus, unselectedSentKehus }
+      report: { unselectedKehus, unselectedSentKehus },
     } = this.props;
 
     const selectedKehus = kehus.filter(
-      kehu => !unselectedKehus.has(String(kehu.id))
+      (kehu) => !unselectedKehus.has(String(kehu.id))
     );
     const selectedSentKehus = sentKehus.filter(
-      kehu => !unselectedSentKehus.has(String(kehu.id))
+      (kehu) => !unselectedSentKehus.has(String(kehu.id))
     );
     return countReportStatistics(selectedKehus, selectedSentKehus);
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   kehus: state.kehu.kehus,
   sentKehus: state.kehu.sentKehus,
   report: state.report,
-  profile: state.profile.profile
+  profile: state.profile.profile,
 });
 
 export default compose(

@@ -6,13 +6,13 @@ import cn from "classnames";
 export class ImportanceSelectPanel extends Component {
   static propTypes = {
     handleClick: PropTypes.func.isRequired,
-    value: PropTypes.number.isRequired
+    value: PropTypes.number.isRequired,
   };
 
   constructor() {
     super();
     this.state = {
-      active: null
+      active: null,
     };
   }
 
@@ -35,7 +35,7 @@ export class ImportanceSelectPanel extends Component {
       const starClass = cn({
         "ImportanceSelector-star": true,
         "ImportanceSelector-star--active": this.isActiveStar(i),
-        "importance-selector-nw": true
+        "importance-selector-nw": true,
       });
       stars.push(
         <span
@@ -51,7 +51,7 @@ export class ImportanceSelectPanel extends Component {
     return stars;
   }
 
-  isActiveStar = number => {
+  isActiveStar = (number) => {
     if (this.state.active) {
       return number <= this.state.active;
     } else {
@@ -67,7 +67,7 @@ export class ImportanceSelectPanel extends Component {
     this.setState({ active: null });
   };
 
-  handleClick = number => {
+  handleClick = (number) => {
     return () => this.props.handleClick(number);
   };
 }

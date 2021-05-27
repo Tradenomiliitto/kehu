@@ -59,7 +59,7 @@ export function toQueryString(obj, urlEncode) {
     var result = [];
 
     path = path || [];
-    Object.keys(x).forEach(function(key) {
+    Object.keys(x).forEach(function (key) {
       if (!x.hasOwnProperty(key)) return;
 
       var newPath = path.slice();
@@ -71,7 +71,7 @@ export function toQueryString(obj, urlEncode) {
       } else {
         vals.push({ path: newPath, val: x[key] });
       }
-      vals.forEach(function(obj) {
+      vals.forEach(function (obj) {
         return result.push(obj);
       });
     });
@@ -83,7 +83,7 @@ export function toQueryString(obj, urlEncode) {
   var parts = flattenObj(obj); // [ { path: [ ...parts ], val: ... }, ... ]
 
   // convert to array notation:
-  parts = parts.map(function(varInfo) {
+  parts = parts.map(function (varInfo) {
     if (varInfo.path.length == 1) varInfo.path = varInfo.path[0];
     else {
       var first = varInfo.path[0];
@@ -95,7 +95,7 @@ export function toQueryString(obj, urlEncode) {
 
   // join the parts to a query-string url-component
   var queryString = parts
-    .map(function(varInfo) {
+    .map(function (varInfo) {
       return varInfo.path + "=" + varInfo.val;
     })
     .join("&");

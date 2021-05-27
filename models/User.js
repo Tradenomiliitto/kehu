@@ -16,8 +16,8 @@ class User extends Model {
         last_name: { type: "string" },
         auth0_id: { type: "string" },
         email: { type: "string" },
-        picture: { type: "string" }
-      }
+        picture: { type: "string" },
+      },
     };
   }
 
@@ -28,17 +28,17 @@ class User extends Model {
         modelClass: Kehu,
         join: {
           from: "Users.id",
-          to: "Kehus.owner_id"
-        }
+          to: "Kehus.owner_id",
+        },
       },
       kehus_given: {
         relation: Model.HasManyRelation,
         modelClass: Kehu,
         join: {
           from: "Users.id",
-          to: "Kehus.giver_id"
-        }
-      }
+          to: "Kehus.giver_id",
+        },
+      },
     };
   }
 

@@ -7,7 +7,7 @@ import { capitalizeText } from "../../util/TextUtil";
 export default class TopItemsPanel extends Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
-    items: PropTypes.array.isRequired
+    items: PropTypes.array.isRequired,
   };
 
   render() {
@@ -22,7 +22,7 @@ export default class TopItemsPanel extends Component {
                 fontWeight: 300,
                 padding: 2,
                 width: "100%",
-                height: "100%"
+                height: "100%",
               }}
               className="TopItemsCloud"
             >
@@ -40,7 +40,7 @@ export default class TopItemsPanel extends Component {
       const classNames = cn({
         "TopItemsCloud-item": true,
         "TopItemsCloud-item--medium": i < 6,
-        "TopItemsCloud-item--large": i === 0 || i === 1
+        "TopItemsCloud-item--large": i === 0 || i === 1,
       });
       return (
         <div key={i} className={classNames}>

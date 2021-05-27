@@ -3,7 +3,7 @@ import { ClaimKehuPanel } from "./ClaimKehuPanel";
 describe("client:ClaimKehuPanel", () => {
   const claim_id = "1432-2353";
   const match = {
-    params: { claim_id }
+    params: { claim_id },
   };
   let component;
   let claimKehuStub;
@@ -15,7 +15,7 @@ describe("client:ClaimKehuPanel", () => {
         isKehuClaimed={false}
         claimKehu={claimKehuStub}
         match={match}
-        t={key => key}
+        t={(key) => key}
       />
     );
   });

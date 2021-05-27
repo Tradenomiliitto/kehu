@@ -10,18 +10,18 @@ function setupPassport(passport) {
       clientID: process.env.AUTH0_CLIENT_ID,
       clientSecret: process.env.AUTH0_CLIENT_SECRET,
       callbackURL: process.env.AUTH0_CALLBACK_URL,
-      state: false
+      state: false,
     },
     (accessToken, refreshToken, extraParams, profile, done) => {
       return done(null, profile);
     }
   );
 
-  passport.serializeUser(function(user, done) {
+  passport.serializeUser(function (user, done) {
     done(null, user);
   });
 
-  passport.deserializeUser(async function(user, done) {
+  passport.deserializeUser(async function (user, done) {
     try {
       const kehuUser = await UserService.findUserByAuth0Id(user.id);
 

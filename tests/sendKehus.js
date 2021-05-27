@@ -5,7 +5,7 @@ const {
   navigateToKehuPage,
   loginWithGenericUser,
   logout,
-  loginWithGenericUser2
+  loginWithGenericUser2,
 } = require("./lib/utils");
 
 const RECEIVER_NAME = "Receiver Name";
@@ -16,7 +16,7 @@ const TAG1 = "Tag1";
 const TAG2 = "Tag2";
 
 module.exports = {
-  before: function(browser) {
+  before: function (browser) {
     // Login with GenericUser2 first to make sure user exists when sending the
     // kehu (for new database the user doesn't exist)
     loginWithGenericUser2(browser);
@@ -24,7 +24,7 @@ module.exports = {
     loginWithGenericUser(browser);
   },
 
-  AddSentKehu: function(browser) {
+  AddSentKehu: function (browser) {
     browser
       .waitForElementVisible(".send-kehu-nw")
       .click(".send-kehu-nw")
@@ -58,14 +58,14 @@ ${browser.globals.GENERIC_USER_2_EMAIL}`
     browser.click(".modal-close-nw");
   },
 
-  CheckSentKehu: function(browser) {
+  CheckSentKehu: function (browser) {
     navigateToKehuPage(browser);
     browser.click(".toggle-view-nw");
     expectText(browser, ".receiver-nw", RECEIVER_NAME);
     expectText(browser, ".text-nw", TEXT);
   },
 
-  ReceiveSentKehu: function(browser) {
+  ReceiveSentKehu: function (browser) {
     logout(browser);
     loginWithGenericUser2(browser);
     navigateToKehuPage(browser);
@@ -75,7 +75,7 @@ ${browser.globals.GENERIC_USER_2_EMAIL}`
     browser.assert.not.elementPresent(".kehu-row-nw");
   },
 
-  after: function(browser) {
+  after: function (browser) {
     browser.closeWindow();
-  }
+  },
 };

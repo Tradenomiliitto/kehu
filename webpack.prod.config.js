@@ -11,7 +11,7 @@ module.exports = {
   mode: "production",
   entry: {
     main: path.resolve(__dirname, "client", "index.js"),
-    public: path.resolve(__dirname, "client", "public.js")
+    public: path.resolve(__dirname, "client", "public.js"),
   },
   devtool: "source-map",
   output: {
@@ -19,10 +19,10 @@ module.exports = {
     filename: "[name].js",
     chunkFilename: "chunk-[id].js",
     path: path.resolve(__dirname, "public"),
-    globalObject: "this"
+    globalObject: "this",
   },
   optimization: {
-    minimizer: [new TerserPlugin()]
+    minimizer: [new TerserPlugin()],
   },
   module: {
     rules: [
@@ -30,8 +30,8 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader"
-        }
+          loader: "babel-loader",
+        },
       },
       {
         test: /\.scss$/,
@@ -40,18 +40,18 @@ module.exports = {
           "css-loader",
           {
             loader: "resolve-url-loader",
-            options: { root: path.resolve(__dirname, "public") }
+            options: { root: path.resolve(__dirname, "public") },
           },
-          "sass-loader"
-        ]
+          "sass-loader",
+        ],
       },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: "url-loader",
         options: {
           limit: 10000,
-          mimetype: "application/font-woff"
-        }
+          mimetype: "application/font-woff",
+        },
       },
       {
         // Images are not imported in React app but provided as strings so we
@@ -60,17 +60,17 @@ module.exports = {
         loader: "file-loader",
         options: {
           name: "/images/[name].[ext]",
-          emitFile: false
-        }
-      }
-    ]
+          emitFile: false,
+        },
+      },
+    ],
   },
   plugins: [
     new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /fi/),
     dotenv,
     new MiniCssExtractPlugin({
       filename: "[name].css",
-      chunkFilename: "[id].css"
-    })
-  ]
+      chunkFilename: "[id].css",
+    }),
+  ],
 };

@@ -1,7 +1,7 @@
 const { loginWithNewUser, logout } = require("./lib/utils");
 
 module.exports = {
-  Registration: function(browser) {
+  Registration: function (browser) {
     const { NEW_USER_EMAIL, NEW_USER_PASSWORD } = browser.globals;
     browser
       .url(browser.launchUrl)
@@ -22,7 +22,7 @@ module.exports = {
     logout(browser);
   },
 
-  Login: function(browser) {
+  Login: function (browser) {
     loginWithNewUser(browser);
 
     browser.expect.element(".add-kehu-nw").text.to.equal("Lisää Kehu");
@@ -30,7 +30,7 @@ module.exports = {
     logout(browser);
   },
 
-  after: function(browser) {
+  after: function (browser) {
     browser.closeWindow();
-  }
+  },
 };

@@ -8,7 +8,7 @@ const { findSituationWithText } = require("./SituationService");
 const { findUserByEmail } = require("./UserService");
 const {
   sendEmailToUnkownUser,
-  sendEmailToKnownUser
+  sendEmailToKnownUser,
 } = require("./EmailService");
 const { raw } = require("objection");
 const logger = require("../logger");
@@ -33,10 +33,10 @@ async function getSentKehus(user_id) {
       "receiver_name",
       "text"
     )
-    .where(function() {
+    .where(function () {
       this.where("giver_id", user_id).andWhere("owner_id", "<>", user_id);
     })
-    .orWhere(function() {
+    .orWhere(function () {
       this.where("giver_id", user_id).andWhere(raw("claim_id IS NOT NULL"));
     })
     .orderBy("date_given", "desc");
@@ -55,14 +55,12 @@ async function getKehu(user_id, kehu_id, t) {
 async function unrelateTags(kehu, tags) {
   const oldTags = kehu.tags;
   const tagsToUnrelate = oldTags.filter(
-    tag => -1 === tags.findIndex(tagFromData => tag.text === tagFromData.text)
+    (tag) =>
+      -1 === tags.findIndex((tagFromData) => tag.text === tagFromData.text)
   );
   return await Promise.all(
-    tagsToUnrelate.map(tag =>
-      kehu
-        .$relatedQuery("tags")
-        .unrelate()
-        .where("id", tag.id)
+    tagsToUnrelate.map((tag) =>
+      kehu.$relatedQuery("tags").unrelate().where("id", tag.id)
     )
   );
 }
@@ -70,18 +68,15 @@ async function unrelateTags(kehu, tags) {
 async function unrelateSituations(kehu, situations) {
   const oldSituations = kehu.situations;
   const situationsToUnrelate = oldSituations.filter(
-    situation =>
+    (situation) =>
       -1 ===
       situations.findIndex(
-        situationFromData => situation.text === situationFromData.text
+        (situationFromData) => situation.text === situationFromData.text
       )
   );
   return await Promise.all(
-    situationsToUnrelate.map(situation =>
-      kehu
-        .$relatedQuery("situations")
-        .unrelate()
-        .where("id", situation.id)
+    situationsToUnrelate.map((situation) =>
+      kehu.$relatedQuery("situations").unrelate().where("id", situation.id)
     )
   );
 }
@@ -94,12 +89,12 @@ async function createOrRelateTags(kehu, tagsFromData) {
     tagsToRelate = tagsFromData;
   } else {
     tagsToRelate = tagsFromData.filter(
-      tag => -1 === oldTags.findIndex(oldTag => tag.text === oldTag.text)
+      (tag) => -1 === oldTags.findIndex((oldTag) => tag.text === oldTag.text)
     );
   }
 
   return await Promise.all(
-    tagsToRelate.map(async tag => {
+    tagsToRelate.map(async (tag) => {
       const existingTag = await findTagWithText(tag.text);
       if (existingTag) {
         return await kehu.$relatedQuery("tags").relate(existingTag.id);
@@ -118,16 +113,16 @@ async function createOrRelateSituations(kehu, situationsFromData) {
     situationsToRelate = situationsFromData;
   } else {
     situationsToRelate = situationsFromData.filter(
-      situation =>
+      (situation) =>
         -1 ===
         oldSituations.findIndex(
-          oldSituation => situation.text === oldSituation.text
+          (oldSituation) => situation.text === oldSituation.text
         )
     );
   }
 
   return await Promise.all(
-    situationsToRelate.map(async situation => {
+    situationsToRelate.map(async (situation) => {
       const existingSituation = await findSituationWithText(situation.text);
       if (existingSituation) {
         return await kehu
@@ -309,7 +304,7 @@ function parseKehu(data) {
     receiver_name,
     receiver_email,
     role_id,
-    text
+    text,
   } = data;
   return {
     claim_id,
@@ -322,7 +317,7 @@ function parseKehu(data) {
     receiver_name,
     receiver_email,
     role_id,
-    text
+    text,
   };
 }
 
@@ -336,9 +331,9 @@ function parseSituations(data) {
 
 function parseArray(array) {
   return array
-    .map(item => item.trim().toLowerCase())
-    .filter(item => !!item)
-    .map(text => ({ text }));
+    .map((item) => item.trim().toLowerCase())
+    .filter((item) => !!item)
+    .map((text) => ({ text }));
 }
 
 async function excelReport(userId, i18n) {
@@ -356,20 +351,20 @@ async function excelReport(userId, i18n) {
     .orderBy("date_given", "desc");
 
   // Join arrays to fit in a single spreadsheet cell
-  kehus.forEach(kehu => {
+  kehus.forEach((kehu) => {
     if (kehu.role) {
       kehu[i18n.t("excel-report.headers.sender")] = kehu.role.role;
     }
     delete kehu.role;
     if (isArray(kehu.tags)) {
       kehu[i18n.t("excel-report.headers.skills")] = kehu.tags
-        .map(t => t.text)
+        .map((t) => t.text)
         .join(", ");
     }
     delete kehu.tags;
     if (isArray(kehu.situations)) {
       kehu[i18n.t("excel-report.headers.situation")] = kehu.situations
-        .map(t => t.text)
+        .map((t) => t.text)
         .join(", ");
     }
     delete kehu.situations;
@@ -382,17 +377,17 @@ async function excelReport(userId, i18n) {
       "receiver_name as " + i18n.t("excel-report.headers.receiver"),
       "text as " + i18n.t("excel-report.headers.kehu")
     )
-    .where(function() {
+    .where(function () {
       this.where("giver_id", userId).andWhere("owner_id", "<>", userId);
     })
-    .orWhere(function() {
+    .orWhere(function () {
       this.where("giver_id", userId).andWhere(raw("claim_id IS NOT NULL"));
     })
     .withGraphFetched("[role]")
     .orderBy("date_given", "desc");
 
   // Join arrays to fit in a single spreadsheet cell
-  sent_kehus.forEach(kehu => {
+  sent_kehus.forEach((kehu) => {
     if (kehu.role) {
       kehu[i18n.t("excel-report.headers.sender")] = kehu.role.role;
     }
@@ -402,26 +397,24 @@ async function excelReport(userId, i18n) {
   // Create new sheets from json, define column orders and widths
   const wb = XLSX.utils.book_new();
   wb.SheetNames.push(i18n.t("excel-report.received-kehus-sheet"));
-  wb.Sheets[
-    i18n.t("excel-report.received-kehus-sheet")
-  ] = XLSX.utils.json_to_sheet(kehus, {
-    header: [
-      i18n.t("excel-report.headers.time"),
-      i18n.t("excel-report.headers.sender"),
-      i18n.t("excel-report.headers.name"),
-      i18n.t("excel-report.headers.kehu"),
-      i18n.t("excel-report.headers.situation"),
-      i18n.t("excel-report.headers.skills"),
-      i18n.t("excel-report.headers.stars"),
-      i18n.t("excel-report.headers.comment")
-    ]
-  });
-  const receivedColsWidths = [10, 10, 20, 50, 30, 30, 8, 50].map(width => ({
-    width
+  wb.Sheets[i18n.t("excel-report.received-kehus-sheet")] =
+    XLSX.utils.json_to_sheet(kehus, {
+      header: [
+        i18n.t("excel-report.headers.time"),
+        i18n.t("excel-report.headers.sender"),
+        i18n.t("excel-report.headers.name"),
+        i18n.t("excel-report.headers.kehu"),
+        i18n.t("excel-report.headers.situation"),
+        i18n.t("excel-report.headers.skills"),
+        i18n.t("excel-report.headers.stars"),
+        i18n.t("excel-report.headers.comment"),
+      ],
+    });
+  const receivedColsWidths = [10, 10, 20, 50, 30, 30, 8, 50].map((width) => ({
+    width,
   }));
-  wb.Sheets[i18n.t("excel-report.received-kehus-sheet")][
-    "!cols"
-  ] = receivedColsWidths;
+  wb.Sheets[i18n.t("excel-report.received-kehus-sheet")]["!cols"] =
+    receivedColsWidths;
 
   wb.SheetNames.push(i18n.t("excel-report.sent-kehus-sheet"));
   wb.Sheets[i18n.t("excel-report.sent-kehus-sheet")] = XLSX.utils.json_to_sheet(
@@ -431,19 +424,19 @@ async function excelReport(userId, i18n) {
         i18n.t("excel-report.headers.time"),
         i18n.t("excel-report.headers.sender"),
         i18n.t("excel-report.headers.receiver"),
-        i18n.t("excel-report.headers.kehu")
-      ]
+        i18n.t("excel-report.headers.kehu"),
+      ],
     }
   );
-  const sentColsWidths = [10, 10, 35, 60].map(width => ({
-    width
+  const sentColsWidths = [10, 10, 35, 60].map((width) => ({
+    width,
   }));
   wb.Sheets[i18n.t("excel-report.sent-kehus-sheet")]["!cols"] = sentColsWidths;
 
   return XLSX.write(wb, {
     type: "buffer",
     bookType: "xlsx",
-    compression: true
+    compression: true,
   });
 }
 
@@ -461,5 +454,5 @@ module.exports = {
   updateKehu,
   deleteKehu,
   sendKehu,
-  claimKehu
+  claimKehu,
 };

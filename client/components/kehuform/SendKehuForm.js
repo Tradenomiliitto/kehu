@@ -25,11 +25,11 @@ export class SendKehuForm extends Component {
       id: PropTypes.number.isRequired,
       first_name: PropTypes.string.isRequired,
       last_name: PropTypes.string.isRequired,
-      picture: PropTypes.string.isRequired
+      picture: PropTypes.string.isRequired,
     }).isRequired,
     roles: PropTypes.array.isRequired,
     situations: PropTypes.array.isRequired,
-    tags: PropTypes.array.isRequired
+    tags: PropTypes.array.isRequired,
   };
 
   constructor(props) {
@@ -44,7 +44,7 @@ export class SendKehuForm extends Component {
       text: "",
       date_given: moment(),
       tags: [],
-      situations: []
+      situations: [],
     };
   }
 
@@ -113,7 +113,7 @@ export class SendKehuForm extends Component {
     const { giver_name, role_id } = this.state;
     const { roles } = this.props;
     if (role_id) {
-      const role = roles.find(r => r.id === role_id);
+      const role = roles.find((r) => r.id === role_id);
       return `${giver_name}, ${role.role.toLowerCase()}`;
     }
     return giver_name;
@@ -138,7 +138,7 @@ export class SendKehuForm extends Component {
       date_given,
       tags,
       situations,
-      role_id
+      role_id,
     } = this.state;
     const { t, contacts, roles, profile } = this.props;
     return (
@@ -228,20 +228,20 @@ export class SendKehuForm extends Component {
     if (error && error.message) {
       const message = t("modals.send-kehu.error", {
         error: error.message,
-        defaultValue: `Valitettavasti Kehun lähettäminen epäonnistui. Seuraava virhe tapahtui: {{error}}`
+        defaultValue: `Valitettavasti Kehun lähettäminen epäonnistui. Seuraava virhe tapahtui: {{error}}`,
       });
       return <ErrorPanel message={message} />;
     }
   }
 
-  handleChangeWithEvent = field => {
+  handleChangeWithEvent = (field) => {
     return ({ target: { value } }) => {
       this.setState({ [field]: value });
     };
   };
 
-  handleChangeWithValue = field => {
-    return value => {
+  handleChangeWithValue = (field) => {
+    return (value) => {
       this.setState({ [field]: value });
     };
   };
@@ -250,42 +250,39 @@ export class SendKehuForm extends Component {
     this.setState({ receiver_name, receiver_email });
   };
 
-  handleRoleChange = role_id => {
+  handleRoleChange = (role_id) => {
     this.setState({ role_id });
   };
 
-  togglePreview = ev => {
+  togglePreview = (ev) => {
     ev.preventDefault();
-    this.setState(state => ({ preview: !state.preview }));
+    this.setState((state) => ({ preview: !state.preview }));
   };
 
   sendKehu = () => {
     const formData = {
       ...this.state,
-      date_given: moment(this.state.date_given).format()
+      date_given: moment(this.state.date_given).format(),
     };
     delete formData.preview;
     this.props.sendKehu(formData);
   };
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   contacts: state.profile.contacts,
   error: state.kehu.error,
   profile: state.profile.profile,
   roles: state.profile.roles,
   situations: state.profile.situations,
-  tags: state.profile.tags
+  tags: state.profile.tags,
 });
 
 const mapDispatchToProps = {
-  sendKehu
+  sendKehu,
 };
 
 export default compose(
   withTranslation(),
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )
+  connect(mapStateToProps, mapDispatchToProps)
 )(SendKehuForm);

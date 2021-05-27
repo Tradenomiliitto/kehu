@@ -7,7 +7,7 @@ import { LangLink as Link } from "../util/LangLink";
 import { connect } from "react-redux";
 import {
   toggleAddKehuFormModal,
-  toggleSendKehuFormModal
+  toggleSendKehuFormModal,
 } from "../redux/portal";
 import LanguageSelector from "./LanguageSelector";
 
@@ -15,20 +15,20 @@ export class Header extends Component {
   static propTypes = {
     profile: PropTypes.object.isRequired,
     toggleAddKehuFormModal: PropTypes.func.isRequired,
-    toggleSendKehuFormModal: PropTypes.func.isRequired
+    toggleSendKehuFormModal: PropTypes.func.isRequired,
   };
 
   constructor() {
     super();
     this.state = {
-      menuOpen: false
+      menuOpen: false,
     };
   }
 
   render() {
     const menuClass = cn({
       "Header-menu": true,
-      "Header-menu--open": this.state.menuOpen
+      "Header-menu--open": this.state.menuOpen,
     });
     const { t, i18n, profile } = this.props;
 
@@ -108,20 +108,20 @@ export class Header extends Component {
     );
   }
 
-  openAddKehuFormModal = ev => {
+  openAddKehuFormModal = (ev) => {
     ev.preventDefault();
     this.props.toggleAddKehuFormModal();
     this.closeMenu();
   };
 
-  openSendKehuFormModal = ev => {
+  openSendKehuFormModal = (ev) => {
     ev.preventDefault();
     this.props.toggleSendKehuFormModal();
     this.closeMenu();
   };
 
   toggleMenu = () => {
-    this.setState(state => ({ menuOpen: !state.menuOpen }));
+    this.setState((state) => ({ menuOpen: !state.menuOpen }));
   };
 
   closeMenu = () => {
@@ -129,14 +129,11 @@ export class Header extends Component {
   };
 }
 
-const mapStateToProps = state => ({
-  profile: state.profile.profile
+const mapStateToProps = (state) => ({
+  profile: state.profile.profile,
 });
 
 export default compose(
   withTranslation(),
-  connect(
-    mapStateToProps,
-    { toggleAddKehuFormModal, toggleSendKehuFormModal }
-  )
+  connect(mapStateToProps, { toggleAddKehuFormModal, toggleSendKehuFormModal })
 )(Header);

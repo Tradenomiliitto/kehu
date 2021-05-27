@@ -11,7 +11,7 @@ const LanguageSelector = ({ device, closeMenu }) => {
   const dispatch = useDispatch();
 
   // Find correct language
-  let language = languages.find(lang => lang.value === i18n.language);
+  let language = languages.find((lang) => lang.value === i18n.language);
   if (language == null) language = languages[0];
 
   const [isOpen, setIsOpen] = useState(false);
@@ -82,10 +82,10 @@ function languageToggleLabel(
 function languageList(languages, device, activeLanguage, changeLanguage) {
   if (device === "desktop") {
     // Active language not shown in desktop dropdown
-    languages = languages.filter(lang => lang.value !== activeLanguage);
+    languages = languages.filter((lang) => lang.value !== activeLanguage);
     return (
       <div className="Header-languageDropdown Header-language--desktop Header-menuItem">
-        {languages.map(lang => (
+        {languages.map((lang) => (
           <LanguageLink
             lng={lang.value}
             clickHandler={changeLanguage}
@@ -96,7 +96,7 @@ function languageList(languages, device, activeLanguage, changeLanguage) {
     );
   } else {
     // Mobile
-    return languages.map(lang => (
+    return languages.map((lang) => (
       <li
         key={"lngList" + lang.value}
         className="Header-menuItem Header-languageItem Header-language--mobile"
@@ -111,7 +111,7 @@ function LanguageLink({ lng, clickHandler }) {
   return (
     <a
       className="Header-languageItem"
-      onClick={e => clickHandler(e, lng)}
+      onClick={(e) => clickHandler(e, lng)}
       href={`/${lng}/`}
     >
       {lng.toUpperCase()}
@@ -120,7 +120,7 @@ function LanguageLink({ lng, clickHandler }) {
 }
 
 LanguageSelector.propTypes = {
-  device: PropTypes.oneOf(["mobile", "desktop"])
+  device: PropTypes.oneOf(["mobile", "desktop"]),
 };
 
 export default LanguageSelector;

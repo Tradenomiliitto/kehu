@@ -6,7 +6,7 @@ import { withTranslation } from "react-i18next";
 export class KehuCountPanel extends Component {
   static propTypes = {
     number: PropTypes.number.isRequired,
-    text: PropTypes.string.isRequired
+    text: PropTypes.string.isRequired,
   };
 
   render() {

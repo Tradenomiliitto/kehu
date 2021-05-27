@@ -5,7 +5,7 @@ import LanguageDetector from "i18next-browser-languagedetector";
 import languages from "../languages.json";
 import { getLongLanguage } from "../utils/LongLanguage";
 
-export const supportedLanguages = languages.map(lang => lang.value);
+export const supportedLanguages = languages.map((lang) => lang.value);
 
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next
@@ -16,7 +16,7 @@ i18n
     whitelist: supportedLanguages,
 
     interpolation: {
-      escapeValue: false // react already safes from xss
+      escapeValue: false, // react already safes from xss
     },
 
     detection: {
@@ -24,7 +24,7 @@ i18n
       order: ["path", "localStorage", "navigator"],
 
       // only detect languages that are in the whitelist
-      checkWhitelist: true
+      checkWhitelist: true,
     },
 
     // Serve translation files from /locales
@@ -33,12 +33,12 @@ i18n
     // We already have a <Spinner /> element in App.js when loading Kehus,
     // let's use that
     react: {
-      useSuspense: false
-    }
+      useSuspense: false,
+    },
   });
 
 // Add custom function to get long version of the language (e.g. fi --> fi_FI)
-i18n.getLongLanguage = function() {
+i18n.getLongLanguage = function () {
   return getLongLanguage(i18n.language);
 };
 

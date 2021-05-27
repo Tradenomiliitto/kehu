@@ -7,7 +7,7 @@ export const OPEN_EDIT_KEHU_MODAL = "portal/OPEN_EDIT_KEHU_MODAL";
 export const initialState = {
   addKehuPortalVisible: false,
   sendKehuPortalVisible: false,
-  kehu: null
+  kehu: null,
 };
 
 export function toggleAddKehuFormModal() {
@@ -27,22 +27,22 @@ export default function reducer(state = initialState, action = {}) {
     case TOGGLE_ADD_KEHU_FORM_MODAL:
       return {
         ...state,
-        addKehuPortalVisible: !state.addKehuPortalVisible
+        addKehuPortalVisible: !state.addKehuPortalVisible,
       };
     case TOGGLE_SEND_KEHU_FORM_MODAL:
       return {
         ...state,
-        sendKehuPortalVisible: !state.sendKehuPortalVisible
+        sendKehuPortalVisible: !state.sendKehuPortalVisible,
       };
     case OPEN_EDIT_KEHU_MODAL:
       return {
         ...state,
         addKehuPortalVisible: true,
-        kehu: action.payload
+        kehu: action.payload,
       };
     case RESET_KEHU_FORM:
       return {
-        ...initialState
+        ...initialState,
       };
     default:
       return state;

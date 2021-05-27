@@ -11,13 +11,13 @@ export class SentKehuRow extends Component {
     kehu: PropTypes.object.isRequired,
     roles: PropTypes.array.isRequired,
     isKehuSelection: PropTypes.bool,
-    unselectedSentKehus: PropTypes.object
+    unselectedSentKehus: PropTypes.object,
   };
 
   constructor() {
     super();
     this.state = {
-      open: false
+      open: false,
     };
   }
 
@@ -46,17 +46,17 @@ export class SentKehuRow extends Component {
 
   renderRoleName() {
     const { kehu, roles } = this.props;
-    const role = roles.find(role => role.id === kehu.role_id);
+    const role = roles.find((role) => role.id === kehu.role_id);
     if (role) {
       return role.role;
     }
   }
 
   toggleState = () => {
-    this.setState(state => ({ open: !state.open }));
+    this.setState((state) => ({ open: !state.open }));
   };
 
-  handeSelectKehuClick = ev => {
+  handeSelectKehuClick = (ev) => {
     ev.stopPropagation();
     const id = ev.target.name;
     const isChecked = ev.target.checked;
@@ -64,12 +64,9 @@ export class SentKehuRow extends Component {
   };
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   unselectedSentKehus: state.report.unselectedSentKehus,
-  profile: state.profile.profile
+  profile: state.profile.profile,
 });
 
-export default connect(
-  mapStateToProps,
-  { selectSentKehu }
-)(SentKehuRow);
+export default connect(mapStateToProps, { selectSentKehu })(SentKehuRow);

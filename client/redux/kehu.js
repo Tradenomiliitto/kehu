@@ -38,7 +38,7 @@ export const initialState = {
   sentKehus: [],
   kehusLoaded: false,
   sendKehuSuccess: false,
-  claimKehuSuccess: false
+  claimKehuSuccess: false,
 };
 
 export function addKehu(data) {
@@ -49,7 +49,7 @@ export function addKehu(data) {
       dispatch({ type: ADD_KEHU_SUCCESS, payload: kehu });
       dispatch({
         type: RESET_REPORTS,
-        payload: { kehus: getState().kehu.kehus }
+        payload: { kehus: getState().kehu.kehus },
       });
       dispatch(updateFeed());
     } catch (e) {
@@ -66,7 +66,7 @@ export function updateKehu(id, data) {
       dispatch({ type: UPDATE_KEHU_SUCCESS, payload: kehu });
       dispatch({
         type: RESET_REPORTS,
-        payload: { kehus: getState().kehu.kehus }
+        payload: { kehus: getState().kehu.kehus },
       });
       dispatch(updateFeed());
     } catch (e) {
@@ -83,7 +83,7 @@ export function removeKehu(id) {
       dispatch({ type: REMOVE_KEHU_SUCCESS, payload: id });
       dispatch({
         type: RESET_REPORTS,
-        payload: { kehus: getState().kehu.kehus }
+        payload: { kehus: getState().kehu.kehus },
       });
       dispatch(updateFeed());
     } catch (e) {
@@ -93,7 +93,7 @@ export function removeKehu(id) {
 }
 
 export function getKehus() {
-  return async dispatch => {
+  return async (dispatch) => {
     try {
       dispatch({ type: GET_KEHUS });
       const payload = await get("/kehut");
@@ -114,8 +114,8 @@ export function sendKehu(data) {
         type: RESET_REPORTS,
         payload: {
           kehus: getState().kehu.kehus,
-          sent_kehus: getState().kehu.sentKehus
-        }
+          sent_kehus: getState().kehu.sentKehus,
+        },
       });
       dispatch(updateFeed());
     } catch (e) {
@@ -132,7 +132,7 @@ export function claimKehu(id) {
       dispatch({ type: CLAIM_KEHU_SUCCESS, payload: kehu });
       dispatch({
         type: RESET_REPORTS,
-        payload: { kehus: getState().kehu.kehus }
+        payload: { kehus: getState().kehu.kehus },
       });
       dispatch(updateFeed());
     } catch (e) {
@@ -154,11 +154,11 @@ function addKehuToState(kehus, kehu) {
 }
 
 function updateKehuInState(kehus, kehu) {
-  return kehus.map(k => (k.id === kehu.id ? kehu : k));
+  return kehus.map((k) => (k.id === kehu.id ? kehu : k));
 }
 
 function removeKehuFromState(kehus, removedId) {
-  return kehus.filter(k => k.id !== removedId);
+  return kehus.filter((k) => k.id !== removedId);
 }
 
 export default function reducer(state = initialState, action = {}) {
@@ -171,7 +171,7 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         loading: true,
-        error: null
+        error: null,
       };
 
     case ADD_KEHU_SUCCESS:
@@ -180,7 +180,7 @@ export default function reducer(state = initialState, action = {}) {
         loading: false,
         error: null,
         savedKehu: action.payload.kehu,
-        kehus: addKehuToState(state.kehus, action.payload.kehu)
+        kehus: addKehuToState(state.kehus, action.payload.kehu),
       };
     case UPDATE_KEHU_SUCCESS:
       return {
@@ -188,7 +188,7 @@ export default function reducer(state = initialState, action = {}) {
         loading: false,
         error: null,
         savedKehu: action.payload.kehu,
-        kehus: updateKehuInState(state.kehus, action.payload.kehu)
+        kehus: updateKehuInState(state.kehus, action.payload.kehu),
       };
 
     case ADD_KEHU_ERROR:
@@ -198,7 +198,7 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         loading: false,
-        error: action.payload
+        error: action.payload,
       };
 
     case RESET_KEHU_FORM:
@@ -208,7 +208,7 @@ export default function reducer(state = initialState, action = {}) {
         error: null,
         savedKehu: null,
         sendKehuSuccess: false,
-        claimKehuSuccess: false
+        claimKehuSuccess: false,
       };
 
     case REMOVE_KEHU:
@@ -216,14 +216,14 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         loading: true,
         removeKehuError: null,
-        error: null
+        error: null,
       };
 
     case REMOVE_KEHU_ERROR:
       return {
         ...state,
         loading: false,
-        removeKehuError: action.payload
+        removeKehuError: action.payload,
       };
 
     case REMOVE_KEHU_SUCCESS:
@@ -232,7 +232,7 @@ export default function reducer(state = initialState, action = {}) {
         kehus: removeKehuFromState(state.kehus, action.payload),
         loading: false,
         error: null,
-        removeKehuError: null
+        removeKehuError: null,
       };
 
     case SEND_KEHU_SUCCESS:
@@ -241,7 +241,7 @@ export default function reducer(state = initialState, action = {}) {
         loading: false,
         error: null,
         sendKehuSuccess: true,
-        sentKehus: addKehuToState(state.sentKehus, action.payload.kehu)
+        sentKehus: addKehuToState(state.sentKehus, action.payload.kehu),
       };
 
     case CLAIM_KEHU_SUCCESS:
@@ -250,7 +250,7 @@ export default function reducer(state = initialState, action = {}) {
         loading: false,
         error: null,
         claimKehuSuccess: true,
-        kehus: addKehuToState(state.kehus, action.payload.kehu)
+        kehus: addKehuToState(state.kehus, action.payload.kehu),
       };
 
     case GET_KEHUS_SUCCESS:
@@ -259,14 +259,14 @@ export default function reducer(state = initialState, action = {}) {
         loading: false,
         kehus: action.payload.kehus,
         sentKehus: action.payload.sent_kehus,
-        kehusLoaded: true
+        kehusLoaded: true,
       };
     case GET_KEHUS_ERROR:
       return {
         ...state,
         loading: false,
         error: action.payload,
-        kehusLoaded: true
+        kehusLoaded: true,
       };
 
     default:

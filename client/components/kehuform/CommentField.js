@@ -6,13 +6,13 @@ import cn from "classnames";
 export class CommentField extends Component {
   static propTypes = {
     value: PropTypes.string.isRequired,
-    handleChange: PropTypes.func.isRequired
+    handleChange: PropTypes.func.isRequired,
   };
 
   constructor() {
     super();
     this.state = {
-      open: false
+      open: false,
     };
   }
 
@@ -20,7 +20,7 @@ export class CommentField extends Component {
     const { t, value, handleChange } = this.props;
     const classNames = cn({
       CommentField: true,
-      "CommentField--open": this.state.open
+      "CommentField--open": this.state.open,
     });
     const icon = this.state.open ? "secondary" : "gray";
 
@@ -51,9 +51,9 @@ export class CommentField extends Component {
     );
   }
 
-  handleClick = ev => {
+  handleClick = (ev) => {
     ev.preventDefault();
-    this.setState(state => ({ open: !state.open }));
+    this.setState((state) => ({ open: !state.open }));
   };
 }
 

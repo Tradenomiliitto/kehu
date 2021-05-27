@@ -14,7 +14,7 @@ export default class TopTagsChart {
       options: {
         color: COLORS,
         legend: {
-          display: false
+          display: false,
         },
         maintainAspectRatio: false,
         plugins: {
@@ -23,14 +23,14 @@ export default class TopTagsChart {
             fontSize: 14,
             fontColor: "#000",
             fontFamily: '"Work Sans", Arial, sans-serif',
-            position: "border"
-          }
+            position: "border",
+          },
         },
         responsive: true,
         tooltips: {
-          enabled: false
-        }
-      }
+          enabled: false,
+        },
+      },
     });
   }
 
@@ -38,11 +38,11 @@ export default class TopTagsChart {
     return {
       datasets: [
         {
-          data: tags.map(t => t.count),
-          backgroundColor: COLORS
-        }
+          data: tags.map((t) => t.count),
+          backgroundColor: COLORS,
+        },
       ],
-      labels: tags.map((t, i) => (i < 5 ? t.text : "")).map(capitalizeText)
+      labels: tags.map((t, i) => (i < 5 ? t.text : "")).map(capitalizeText),
     };
   }
 

@@ -12,13 +12,13 @@ export class KehusPanel extends Component {
     error: PropTypes.object,
     kehus: PropTypes.array.isRequired,
     roles: PropTypes.array.isRequired,
-    sentKehus: PropTypes.array
+    sentKehus: PropTypes.array,
   };
 
   constructor() {
     super();
     this.state = {
-      showSentKehus: false
+      showSentKehus: false,
     };
   }
 
@@ -26,7 +26,7 @@ export class KehusPanel extends Component {
     if (this.props.location.search === "?sent") {
       this.setState(() => ({ showSentKehus: true }));
       this.props.history.push({
-        search: null
+        search: null,
       });
     }
   }
@@ -82,9 +82,9 @@ export class KehusPanel extends Component {
     );
   }
 
-  toggleKehusView = ev => {
+  toggleKehusView = (ev) => {
     ev.target.blur();
-    this.setState(state => ({ showSentKehus: !state.showSentKehus }));
+    this.setState((state) => ({ showSentKehus: !state.showSentKehus }));
   };
 
   renderErrors() {
@@ -93,7 +93,7 @@ export class KehusPanel extends Component {
       const message = t("kehus.remove-kehu-error", {
         error: error.message,
         defaultValue:
-          "Valitettavasti Kehun poistaminen epäonnistui. Seuraava virhe tapahtui: {{error}}"
+          "Valitettavasti Kehun poistaminen epäonnistui. Seuraava virhe tapahtui: {{error}}",
       });
       return <ErrorPanel message={message} />;
     }
@@ -110,17 +110,14 @@ export class KehusPanel extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   kehus: state.kehu.kehus,
   error: state.kehu.removeKehuError,
   roles: state.profile.roles,
-  sentKehus: state.kehu.sentKehus
+  sentKehus: state.kehu.sentKehus,
 });
 
 export default compose(
   withTranslation(),
-  connect(
-    mapStateToProps,
-    null
-  )
+  connect(mapStateToProps, null)
 )(KehusPanel);

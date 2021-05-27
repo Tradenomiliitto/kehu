@@ -6,19 +6,21 @@ describe("client:components:home:KehuItem", () => {
   let component;
   const roles = [
     { id: 1, role: "client", imageId: "client" },
-    { id: 6, role: "client", imageId: "client" }
+    { id: 6, role: "client", imageId: "client" },
   ];
   const kehu = {
     date_given: "2019-02-10",
     text: "text",
     giver_name: "name",
     giver: {
-      picture: "pic-src"
-    }
+      picture: "pic-src",
+    },
   };
 
   beforeEach(() => {
-    component = shallow(<KehuItem kehu={kehu} roles={roles} t={key => key} />);
+    component = shallow(
+      <KehuItem kehu={kehu} roles={roles} t={(key) => key} />
+    );
   });
 
   it("renders date", () => {
@@ -81,7 +83,7 @@ describe("client:components:home:KehuItem", () => {
       const role = { id: 1, role: "client" };
       const tags = [{ text: "client" }, { text: "customer" }];
       component.setProps({
-        kehu: { ...kehu, tags, role, receiver_email: "some@email" }
+        kehu: { ...kehu, tags, role, receiver_email: "some@email" },
       });
       const expectedInfo = `kehus.kehu-received ${kehu.giver_name}, ${
         role.role

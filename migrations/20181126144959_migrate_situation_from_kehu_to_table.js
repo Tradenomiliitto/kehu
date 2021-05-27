@@ -1,4 +1,4 @@
-exports.up = async function(knex) {
+exports.up = async function (knex) {
   /**
    * 1. Select id as kehu_id, situation from Kehus
    * 2. Insert {text: situation} to Situations, get situation_id
@@ -9,14 +9,14 @@ exports.up = async function(knex) {
     .from("Kehus")
     .whereNotNull("situation");
   const promises = [];
-  kehus.forEach(async kehu => {
+  kehus.forEach(async (kehu) => {
     const situation = await knex("Situations")
       .returning("id")
       .insert({ text: kehu.situation });
     promises.push(
       await knex("Kehus_Situations").insert({
         kehu_id: kehu.id,
-        situation_id: situation[0]
+        situation_id: situation[0],
       })
     );
   });
@@ -24,7 +24,7 @@ exports.up = async function(knex) {
   return Promise.all(promises);
 };
 
-exports.down = async function(knex) {
+exports.down = async function (knex) {
   /**
    * 1. Select text from Situations, kehu_id from Kehus
    * 2. Insert {situation} to Kehus
@@ -42,7 +42,7 @@ exports.down = async function(knex) {
     .leftOuterJoin("Kehus", "Kehus_Situations.kehu_id", "Kehus.id");
 
   const promises = [];
-  situations.forEach(async situation => {
+  situations.forEach(async (situation) => {
     promises.push(
       await knex("Kehus")
         .where("id", situation.kehu_id)

@@ -10,7 +10,7 @@ const rootReducer = combineReducers({
   kehu,
   portal,
   profile,
-  report
+  report,
 });
 
 export default createStore(rootReducer, applyMiddleware(thunk, logger));

@@ -13,27 +13,20 @@ export class WordCloudField extends PureComponent {
     label: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
       .isRequired,
     placeholder: PropTypes.string.isRequired,
-    values: PropTypes.array.isRequired
+    values: PropTypes.array.isRequired,
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      inputValue: ""
+      inputValue: "",
     };
   }
 
   render() {
     const { inputValue } = this.state;
-    const {
-      t,
-      className,
-      cloudItems,
-      id,
-      label,
-      placeholder,
-      values
-    } = this.props;
+    const { t, className, cloudItems, id, label, placeholder, values } =
+      this.props;
     return (
       <div className={`Form-group ${className}Container`}>
         <label htmlFor={id} className="label-js">
@@ -67,7 +60,7 @@ export class WordCloudField extends PureComponent {
 
   renderItems() {
     const { id } = this.props;
-    return this.props.values.map(item => {
+    return this.props.values.map((item) => {
       return (
         <div className="WordCloudValue item-js" key={item}>
           {capitalizeText(item)}
@@ -86,23 +79,23 @@ export class WordCloudField extends PureComponent {
     this.setState({ inputValue: value });
   };
 
-  handleKeyPress = ev => {
+  handleKeyPress = (ev) => {
     if (ev.key === "Enter") {
       this.handleAddClick(ev);
     }
   };
 
-  handleWordCloudClick = text => {
+  handleWordCloudClick = (text) => {
     const { values } = this.props;
     const items = values.includes(text)
-      ? values.filter(it => it !== text)
+      ? values.filter((it) => it !== text)
       : [...new Set([...this.props.values, text])];
     this.setState({ inputValue: "" }, () => {
       this.props.handleChange(items);
     });
   };
 
-  handleAddClick = ev => {
+  handleAddClick = (ev) => {
     ev.preventDefault();
 
     if (!this.state.inputValue) {
@@ -115,10 +108,10 @@ export class WordCloudField extends PureComponent {
     });
   };
 
-  handleRemoveClick = item => {
-    return ev => {
+  handleRemoveClick = (item) => {
+    return (ev) => {
       ev.preventDefault();
-      const items = this.props.values.filter(it => it !== item);
+      const items = this.props.values.filter((it) => it !== item);
       this.props.handleChange(items);
     };
   };

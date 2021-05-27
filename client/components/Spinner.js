@@ -4,7 +4,7 @@ import MDSpinner from "react-md-spinner";
 
 export default class Spinner extends Component {
   static propTypes = {
-    options: PropTypes.object
+    options: PropTypes.object,
   };
 
   render() {
@@ -13,7 +13,7 @@ export default class Spinner extends Component {
       color1: "#ff96ac",
       color2: "#3b5f5f",
       color3: "#ff96ac",
-      color4: "#3b5f5f"
+      color4: "#3b5f5f",
     };
     const props = Object.assign({}, defaultOptions, this.props.options);
     return (

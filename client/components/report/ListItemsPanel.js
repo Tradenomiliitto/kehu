@@ -5,7 +5,7 @@ import { capitalizeText } from "../../util/TextUtil";
 export default class ListItemsPanel extends Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
-    items: PropTypes.array.isRequired
+    items: PropTypes.array.isRequired,
   };
 
   render() {

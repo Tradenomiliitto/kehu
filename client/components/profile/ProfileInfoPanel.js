@@ -4,7 +4,7 @@ import { withTranslation } from "react-i18next";
 
 export class ProfileInfoPanel extends Component {
   static propTypes = {
-    profile: PropTypes.object.isRequired
+    profile: PropTypes.object.isRequired,
   };
 
   render() {

@@ -4,7 +4,7 @@ const {
   expectTags,
   expectText,
   navigateToKehuPage,
-  loginWithGenericUser
+  loginWithGenericUser,
 } = require("./lib/utils");
 
 const TEXT = "This is kehu text";
@@ -17,10 +17,10 @@ const TAG2 = "Tag2";
 const TAG3 = "Tag3";
 
 module.exports = {
-  before: function(browser) {
+  before: function (browser) {
     loginWithGenericUser(browser);
   },
-  AddKehu: function(browser) {
+  AddKehu: function (browser) {
     browser
       .waitForElementVisible(".add-kehu-nw")
       .click(".add-kehu-nw")
@@ -43,7 +43,7 @@ module.exports = {
     browser.assert.not.elementPresent(".stars-important-nw:nth-of-type(4)");
     expectCloseButton(browser);
   },
-  EditKehu: function(browser) {
+  EditKehu: function (browser) {
     const newKehuText = TEXT + " and something else.";
     navigateToKehuPage(browser);
     browser
@@ -66,14 +66,14 @@ module.exports = {
     expectTags(browser, [TAG3, SITUATION3]);
     expectCloseButton(browser);
   },
-  RemoveKehu: function(browser) {
+  RemoveKehu: function (browser) {
     navigateToKehuPage(browser);
     browser.assert.elementPresent(".kehu-row-nw");
     browser.click(".trash-red-nw").acceptAlert();
     browser.waitForElementNotPresent(".kehu-row-nw");
     browser.assert.not.elementPresent(".kehu-row-nw");
   },
-  ValidateKehu: function(browser) {
+  ValidateKehu: function (browser) {
     browser
       .url(browser.launch_url)
       .waitForElementVisible(".add-kehu-nw")
@@ -86,7 +86,7 @@ module.exports = {
       .element(".error-nw:nth-of-type(2)")
       .text.to.equal("Teksti on pakollinen tieto.");
   },
-  after: function(browser) {
+  after: function (browser) {
     browser.closeWindow();
-  }
+  },
 };

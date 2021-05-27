@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 export default class ErrorPanel extends Component {
   static propTypes = {
-    message: PropTypes.string.isRequired
+    message: PropTypes.string.isRequired,
   };
 
   constructor() {

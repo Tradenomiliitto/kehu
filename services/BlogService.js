@@ -4,14 +4,14 @@ const { parsePosts, filterPostsByTag } = require("../utils/BlogUtils");
 
 async function getPost(slug) {
   const posts = await getPosts();
-  return posts.find(post => post.slug === slug);
+  return posts.find((post) => post.slug === slug);
 }
 
 async function getPosts(tag) {
   try {
     const entries = await client.getEntries({
       content_type: "blog",
-      order: "sys.createdAt"
+      order: "sys.createdAt",
     });
     return filterPostsByTag(parsePosts(entries), tag);
   } catch (e) {
@@ -21,5 +21,5 @@ async function getPosts(tag) {
 
 module.exports = {
   getPost,
-  getPosts
+  getPosts,
 };

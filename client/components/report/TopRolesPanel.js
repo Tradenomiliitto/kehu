@@ -5,13 +5,13 @@ import cn from "classnames";
 
 export class TopRolesPanel extends Component {
   static propTypes = {
-    roles: PropTypes.array.isRequired
+    roles: PropTypes.array.isRequired,
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      animate: false
+      animate: false,
     };
     this.MAX_COUNT = this.calculateMaxHeight(this.props.roles);
   }
@@ -101,15 +101,15 @@ export class TopRolesPanel extends Component {
     const columnWidth = `${100 / this.props.roles.length}%`;
     const classNames = cn({
       "TopRole-column": true,
-      "TopRole-column--animate": this.state.animate
+      "TopRole-column--animate": this.state.animate,
     });
-    return this.props.roles.map(role => {
+    return this.props.roles.map((role) => {
       return (
         <div key={role.role} className="TopRole" style={{ width: columnWidth }}>
           <div
             className={classNames}
             style={{
-              height: this.calculateColumnHeight(role)
+              height: this.calculateColumnHeight(role),
             }}
           >
             &nbsp;

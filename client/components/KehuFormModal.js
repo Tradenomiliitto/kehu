@@ -11,12 +11,12 @@ export class KehuFormModal extends Component {
     resetKehuFormState: PropTypes.func.isRequired,
     hasCloseCross: PropTypes.bool,
     hasCloseButton: PropTypes.bool,
-    closeModal: PropTypes.func
+    closeModal: PropTypes.func,
   };
 
   static defaultProps = {
     hasCloseCross: true,
-    hasCloseButton: false
+    hasCloseButton: false,
   };
 
   render() {
@@ -64,8 +64,5 @@ export class KehuFormModal extends Component {
 
 export default compose(
   withTranslation(),
-  connect(
-    null,
-    { resetKehuFormState }
-  )
+  connect(null, { resetKehuFormState })
 )(KehuFormModal);

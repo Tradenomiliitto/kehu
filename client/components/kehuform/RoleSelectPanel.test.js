@@ -3,7 +3,10 @@ import RoleSelectPanel from "./RoleSelectPanel";
 describe("client:components:kehuform:RoleSelectPanel", () => {
   let component;
   let handleClickStub;
-  const roles = [{ id: 1, role: "role1" }, { id: 8, role: "role2" }];
+  const roles = [
+    { id: 1, role: "role1" },
+    { id: 8, role: "role2" },
+  ];
 
   beforeEach(() => {
     handleClickStub = jest.fn();

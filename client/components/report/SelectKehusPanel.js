@@ -12,7 +12,7 @@ export class KehusPanel extends Component {
     error: PropTypes.object,
     kehus: PropTypes.array.isRequired,
     roles: PropTypes.array.isRequired,
-    sentKehus: PropTypes.array
+    sentKehus: PropTypes.array,
   };
 
   constructor() {
@@ -48,13 +48,10 @@ export class KehusPanel extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   kehus: state.kehu.kehus,
   roles: state.profile.roles,
-  sentKehus: state.kehu.sentKehus
+  sentKehus: state.kehu.sentKehus,
 });
 
-export default connect(
-  mapStateToProps,
-  null
-)(KehusPanel);
+export default connect(mapStateToProps, null)(KehusPanel);

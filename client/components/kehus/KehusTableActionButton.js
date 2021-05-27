@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 export default class KehusTableActionButton extends Component {
   static propTypes = {
     icon: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired
+    onClick: PropTypes.func.isRequired,
   };
 
   render() {

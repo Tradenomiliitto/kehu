@@ -8,7 +8,7 @@ async function getKehus(user_id, t) {
     .context({ t })
     .where("owner_id", user_id)
     .withGraphFetched("[role, situations, tags, giver]")
-    .modifyGraph("giver", builder => {
+    .modifyGraph("giver", (builder) => {
       builder.select("picture");
     })
     .orderBy("date_given", "desc");
@@ -45,10 +45,10 @@ async function getSentKehus(user_id) {
     )
     .join("Users", "Kehus.giver_id", "=", "Users.id")
     .limit(5)
-    .where(function() {
+    .where(function () {
       this.where("giver_id", user_id).andWhere("owner_id", "<>", user_id);
     })
-    .orWhere(function() {
+    .orWhere(function () {
       this.where("giver_id", user_id).andWhere(raw("claim_id IS NOT NULL"));
     })
     .orderBy("date_given", "desc");
@@ -76,5 +76,5 @@ async function getFeedItems(user_id, t) {
 }
 
 module.exports = {
-  getFeedItems
+  getFeedItems,
 };

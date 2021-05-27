@@ -42,8 +42,8 @@ const knex = Knex({
   client: "pg",
   connection: {
     connectionString: process.env.DATABASE_URL,
-    ssl: { rejectUnauthorized: false }
-  }
+    ssl: { rejectUnauthorized: false },
+  },
 });
 Model.knex(knex);
 
@@ -63,7 +63,7 @@ app.use((req, res, next) => {
 if (!isProd) {
   app.use(
     require("webpack-dev-middleware")(compiler, {
-      publicPath: webpackConfig.output.publicPath
+      publicPath: webpackConfig.output.publicPath,
     })
   );
   app.use(require("webpack-hot-middleware")(compiler));
@@ -83,13 +83,15 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    store: new RedisStore({ client: redis.createClient(process.env.REDIS_URL) })
+    store: new RedisStore({
+      client: redis.createClient(process.env.REDIS_URL),
+    }),
   })
 );
 
 app.use(staticify.middleware);
 
-const langWhitelist = languages.map(lang => lang.value);
+const langWhitelist = languages.map((lang) => lang.value);
 
 i18next
   .use(i18nextBackend)
@@ -102,22 +104,22 @@ i18next
     defaultNS: "translation-public", // Default namespace (if not defined)
 
     backend: {
-      loadPath: __dirname + "/public/locales/{{ns}}-{{lng}}.json"
+      loadPath: __dirname + "/public/locales/{{ns}}-{{lng}}.json",
     },
     detection: {
       // order and from where user language should be detected
       order: ["path", "querystring", "header", "localStorage", "navigator"],
 
       // only detect languages that are in the whitelist
-      checkWhitelist: true
+      checkWhitelist: true,
     },
     interpolation: {
-      escapeValue: false // pug already safe from xss
-    }
+      escapeValue: false, // pug already safe from xss
+    },
   });
 app.use(
   i18nextMiddleware.handle(i18next, {
-    removeLngFromUrl: true
+    removeLngFromUrl: true,
   })
 );
 
@@ -146,11 +148,11 @@ app.use((req, res, next) => {
 setupLocals(app, staticify.getVersionedPath);
 setupRoutes(app);
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
 
@@ -161,7 +163,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render("error", {
     user: req.user,
-    env: process.env
+    env: process.env,
   });
 });
 

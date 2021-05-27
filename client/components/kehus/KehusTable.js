@@ -5,7 +5,7 @@ import KehuRow from "./KehuRow";
 
 export class KehusTable extends Component {
   static propTypes = {
-    kehus: PropTypes.array.isRequired
+    kehus: PropTypes.array.isRequired,
   };
 
   render() {
@@ -52,7 +52,7 @@ export class KehusTable extends Component {
   }
 
   renderStars() {
-    return Array.from(Array(5).keys()).map(i => (
+    return Array.from(Array(5).keys()).map((i) => (
       <img
         key={i}
         src="/images/icon-star-secondary.png"
@@ -62,7 +62,7 @@ export class KehusTable extends Component {
   }
 
   renderRows() {
-    return this.props.kehus.map(kehu => (
+    return this.props.kehus.map((kehu) => (
       <KehuRow
         key={kehu.id}
         kehu={kehu}

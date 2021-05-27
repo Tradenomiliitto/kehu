@@ -8,7 +8,7 @@ export default class WordCloud extends PureComponent {
   static propTypes = {
     cloudItems: PropTypes.array.isRequired,
     handleClick: PropTypes.func.isRequired,
-    values: PropTypes.array.isRequired
+    values: PropTypes.array.isRequired,
   };
 
   render() {
@@ -21,7 +21,7 @@ export default class WordCloud extends PureComponent {
               fontWeight: 300,
               padding: 1,
               width: "100%",
-              height: "100%"
+              height: "100%",
             }}
             random={() => {}}
             className="WordCloud"
@@ -40,7 +40,7 @@ export default class WordCloud extends PureComponent {
         "WordCloud-item": true,
         "WordCloud-item--active": values.includes(item.text.toLowerCase()),
         "WordCloud-item--medium": i % 3 === 0 && i % 5 !== 0,
-        "WordCloud-item--large": i % 3 === 0 && i % 5 === 0
+        "WordCloud-item--large": i % 3 === 0 && i % 5 === 0,
       });
       return (
         <div
@@ -54,7 +54,7 @@ export default class WordCloud extends PureComponent {
     });
   }
 
-  handleItemClick = text => {
+  handleItemClick = (text) => {
     return () => this.props.handleClick(text);
   };
 }

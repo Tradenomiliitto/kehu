@@ -14,7 +14,7 @@ const MAX_ITEMS = 15;
 
 function getUniqueItems(array) {
   return array.reduce((acc, item) => {
-    if (acc.findIndex(it => it.text === item.text) === -1) {
+    if (acc.findIndex((it) => it.text === item.text) === -1) {
       acc.push(item);
     }
     return acc;
@@ -22,7 +22,7 @@ function getUniqueItems(array) {
 }
 
 function shuffleArray(array) {
-  return array.sort(function() {
+  return array.sort(function () {
     return 0.5 - Math.random();
   });
 }
@@ -36,7 +36,7 @@ async function getItems(userId, serviceMethod, defaults) {
 
   const itemsWithDefaults = getUniqueItems([
     ...items,
-    ...defaults.map(d => ({ text: d }))
+    ...defaults.map((d) => ({ text: d })),
   ]);
   return itemsWithDefaults.slice(0, MAX_ITEMS);
 }
@@ -113,7 +113,7 @@ router.get("/cloudinary-signature", (req, res) => {
     );
   } catch (e) {
     logger.info("Unable to generate Cloudinary signature", {
-      errorMessage: e.message
+      errorMessage: e.message,
     });
     response = "Error generating Cloudinary signature";
   }

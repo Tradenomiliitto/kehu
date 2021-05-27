@@ -6,11 +6,11 @@ const logger = winston.createLogger({
   format: combine(errors({ stack: true }), winston.format.json()),
   transports: [
     new winston.transports.File({ filename: "error.log", level: "error" }),
-    new winston.transports.File({ filename: "combined.log" })
-  ]
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
-const myFormat = printf(info => {
+const myFormat = printf((info) => {
   let { level, message, timestamp, stack, ...rest } = info;
   let error = info.error || info.err;
   if (error instanceof Error) {
@@ -29,7 +29,7 @@ const myFormat = printf(info => {
 
 logger.add(
   new winston.transports.Console({
-    format: combine(timestamp({ format: "HH:mm:ss" }), colorize(), myFormat)
+    format: combine(timestamp({ format: "HH:mm:ss" }), colorize(), myFormat),
   })
 );
 

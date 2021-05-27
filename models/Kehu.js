@@ -22,8 +22,8 @@ class Kehu extends Model {
         receiver_name: { type: "string" },
         receiver_email: { type: "string" },
         role_id: { type: ["integer", "null"] },
-        text: { type: "string" }
-      }
+        text: { type: "string" },
+      },
     };
   }
 
@@ -36,10 +36,10 @@ class Kehu extends Model {
           from: "Kehus.id",
           through: {
             from: "Kehus_Tags.kehu_id",
-            to: "Kehus_Tags.tag_id"
+            to: "Kehus_Tags.tag_id",
           },
-          to: "Tags.id"
-        }
+          to: "Tags.id",
+        },
       },
       situations: {
         relation: Model.ManyToManyRelation,
@@ -48,35 +48,35 @@ class Kehu extends Model {
           from: "Kehus.id",
           through: {
             from: "Kehus_Situations.kehu_id",
-            to: "Kehus_Situations.situation_id"
+            to: "Kehus_Situations.situation_id",
           },
-          to: "Situations.id"
-        }
+          to: "Situations.id",
+        },
       },
       giver: {
         relation: Model.BelongsToOneRelation,
         modelClass: `${__dirname}/User`,
         join: {
           from: "Users.id",
-          to: "Kehus.giver_id"
-        }
+          to: "Kehus.giver_id",
+        },
       },
       owner: {
         relation: Model.BelongsToOneRelation,
         modelClass: `${__dirname}/User`,
         join: {
           from: "Users.id",
-          to: "Kehus.owner_id"
-        }
+          to: "Kehus.owner_id",
+        },
       },
       role: {
         relation: Model.BelongsToOneRelation,
         modelClass: `${__dirname}/Role`,
         join: {
           from: "Roles.id",
-          to: "Kehus.role_id"
-        }
-      }
+          to: "Kehus.role_id",
+        },
+      },
     };
   }
 

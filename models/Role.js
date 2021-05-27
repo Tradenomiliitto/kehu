@@ -13,8 +13,8 @@ class Role extends Model {
       required: ["text"],
       properties: {
         id: { type: "integer" },
-        role: { type: "string" }
-      }
+        role: { type: "string" },
+      },
     };
   }
 
@@ -25,9 +25,9 @@ class Role extends Model {
         modelClass: Kehu,
         join: {
           from: "Roles.id",
-          to: "Kehus.role_id"
-        }
-      }
+          to: "Kehus.role_id",
+        },
+      },
     };
   }
 

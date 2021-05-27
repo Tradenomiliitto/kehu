@@ -82,17 +82,17 @@ describe("client:Homepanel", () => {
     return {
       history: {
         location: {
-          search
+          search,
         },
-        replace: replaceStub
+        replace: replaceStub,
       },
       feedItems: [{ item: 1 }, { item: 2 }],
       hasKehus: false,
       tags: [{ text: "Test" }, { text: "Tag" }],
       toggleAddKehuFormModal: toggleAddKehuFormModalStub,
       toggleSendKehuFormModal: toggleSendKehuFormModalStub,
-      t: key => key,
-      i18n: {}
+      t: (key) => key,
+      i18n: {},
     };
   }
 });

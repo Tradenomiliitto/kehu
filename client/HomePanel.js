@@ -6,7 +6,7 @@ import { withTranslation } from "react-i18next";
 import { LangLink as Link } from "./util/LangLink";
 import {
   toggleAddKehuFormModal,
-  toggleSendKehuFormModal
+  toggleSendKehuFormModal,
 } from "./redux/portal";
 import WelcomePanel from "./components/home/WelcomePanel";
 import FeedPanel from "./components/home/FeedPanel";
@@ -16,15 +16,15 @@ export class HomePanel extends Component {
   static propTypes = {
     history: PropTypes.shape({
       location: PropTypes.shape({
-        search: PropTypes.string
+        search: PropTypes.string,
       }).isRequired,
-      replace: PropTypes.func.isRequired
+      replace: PropTypes.func.isRequired,
     }).isRequired,
     feedItems: PropTypes.array.isRequired,
     hasKehus: PropTypes.bool.isRequired,
     tags: PropTypes.array.isRequired,
     toggleAddKehuFormModal: PropTypes.func.isRequired,
-    toggleSendKehuFormModal: PropTypes.func.isRequired
+    toggleSendKehuFormModal: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
@@ -177,21 +177,18 @@ export class HomePanel extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   feedItems: state.profile.feedItems,
   hasKehus: state.report.numberOfKehus > 0,
-  tags: state.report.tags.slice(0, 5)
+  tags: state.report.tags.slice(0, 5),
 });
 
 const mapActionsToProps = {
   toggleAddKehuFormModal,
-  toggleSendKehuFormModal
+  toggleSendKehuFormModal,
 };
 
 export default compose(
   withTranslation(),
-  connect(
-    mapStateToProps,
-    mapActionsToProps
-  )
+  connect(mapStateToProps, mapActionsToProps)
 )(HomePanel);

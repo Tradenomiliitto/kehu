@@ -10,7 +10,7 @@ describe("client:util:ApiUtil", () => {
   beforeEach(() => {
     getAttributeStub = jest.fn(() => token);
     global.document.querySelector = jest.fn(() => ({
-      getAttribute: getAttributeStub
+      getAttribute: getAttributeStub,
     }));
   });
 
@@ -19,10 +19,10 @@ describe("client:util:ApiUtil", () => {
       const jsonResponse = { response: 1 };
       const response = {
         status: 200,
-        json: () => new Promise(resolve => resolve(jsonResponse))
+        json: () => new Promise((resolve) => resolve(jsonResponse)),
       };
       fetch = jest.fn(() => {
-        return new Promise(resolve => resolve(response));
+        return new Promise((resolve) => resolve(response));
       });
 
       const res = await get(url, body);
@@ -33,9 +33,9 @@ describe("client:util:ApiUtil", () => {
         headers: {
           Accept: "application/json",
           "content-type": "application/json",
-          "CSRF-Token": token
+          "CSRF-Token": token,
         },
-        credentials: "same-origin"
+        credentials: "same-origin",
       });
       expect(res).toEqual(jsonResponse);
     });
@@ -44,10 +44,10 @@ describe("client:util:ApiUtil", () => {
   describe("del", () => {
     it("calls api with given url", async () => {
       const response = {
-        status: 203
+        status: 203,
       };
       fetch = jest.fn(() => {
-        return new Promise(resolve => resolve(response));
+        return new Promise((resolve) => resolve(response));
       });
 
       await del(url);
@@ -58,9 +58,9 @@ describe("client:util:ApiUtil", () => {
         headers: {
           Accept: "application/json",
           "content-type": "application/json",
-          "CSRF-Token": token
+          "CSRF-Token": token,
         },
-        credentials: "same-origin"
+        credentials: "same-origin",
       });
     });
   });
@@ -70,10 +70,10 @@ describe("client:util:ApiUtil", () => {
       const jsonResponse = { response: 1 };
       const response = {
         status: 200,
-        json: () => new Promise(resolve => resolve(jsonResponse))
+        json: () => new Promise((resolve) => resolve(jsonResponse)),
       };
       fetch = jest.fn(() => {
-        return new Promise(resolve => resolve(response));
+        return new Promise((resolve) => resolve(response));
       });
 
       const res = await post(url, body);
@@ -84,10 +84,10 @@ describe("client:util:ApiUtil", () => {
         headers: {
           Accept: "application/json",
           "content-type": "application/json",
-          "CSRF-Token": token
+          "CSRF-Token": token,
         },
         credentials: "same-origin",
-        body: JSON.stringify(body)
+        body: JSON.stringify(body),
       });
       expect(res).toEqual(jsonResponse);
     });
@@ -98,10 +98,10 @@ describe("client:util:ApiUtil", () => {
       const jsonResponse = { response: 1 };
       const response = {
         status: 200,
-        json: () => new Promise(resolve => resolve(jsonResponse))
+        json: () => new Promise((resolve) => resolve(jsonResponse)),
       };
       fetch = jest.fn(() => {
-        return new Promise(resolve => resolve(response));
+        return new Promise((resolve) => resolve(response));
       });
 
       const res = await put(url, body);
@@ -112,10 +112,10 @@ describe("client:util:ApiUtil", () => {
         headers: {
           Accept: "application/json",
           "content-type": "application/json",
-          "CSRF-Token": token
+          "CSRF-Token": token,
         },
         credentials: "same-origin",
-        body: JSON.stringify(body)
+        body: JSON.stringify(body),
       });
       expect(res).toEqual(jsonResponse);
     });
@@ -124,15 +124,15 @@ describe("client:util:ApiUtil", () => {
   describe("when status is not successful", () => {
     it("throws an error", async () => {
       const statusText = "error status";
-      const response = new Promise(resolve =>
+      const response = new Promise((resolve) =>
         resolve({
           status: 400,
           statusText,
-          json: () => new Promise(resolve => resolve({ error: "error" }))
+          json: () => new Promise((resolve) => resolve({ error: "error" })),
         })
       );
       fetch = jest.fn(() => {
-        return new Promise(resolve => resolve(response));
+        return new Promise((resolve) => resolve(response));
       });
 
       expect(post(url, body)).rejects.toEqual(new Error(statusText));

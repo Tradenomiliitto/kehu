@@ -23,8 +23,8 @@ async function sendEmailToUnkownUser(receiver, claim_id, kehu_id, t) {
       sender: await getSender(kehu),
       situations: getItems(kehu.situations),
       tags: getItems(kehu.tags),
-      text: kehu.text
-    }
+      text: kehu.text,
+    },
   };
   sgMail.send(msg);
 }
@@ -43,8 +43,8 @@ async function sendEmailToKnownUser(user, kehu_id, t) {
       sender: await getSender(kehu),
       situations: getItems(kehu.situations),
       tags: getItems(kehu.tags),
-      text: kehu.text
-    }
+      text: kehu.text,
+    },
   };
   sgMail.send(msg);
 }
@@ -59,7 +59,7 @@ async function getKehu(kehu_id, t) {
 
 function getItems(items) {
   if (items && items.length) {
-    return items.map(it => it.text).join(", ");
+    return items.map((it) => it.text).join(", ");
   }
   return "";
 }
@@ -73,5 +73,5 @@ async function getSender(kehu) {
 
 module.exports = {
   sendEmailToKnownUser,
-  sendEmailToUnkownUser
+  sendEmailToUnkownUser,
 };

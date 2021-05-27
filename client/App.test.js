@@ -119,8 +119,8 @@ describe("client:App", () => {
       getProfile: getProfileStub,
       getKehus: getKehusStub,
       tReady: true,
-      t: key => key,
-      i18n: {}
+      t: (key) => key,
+      i18n: {},
     };
   }
 });

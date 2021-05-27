@@ -1,11 +1,11 @@
-exports.up = function(knex) {
+exports.up = function (knex) {
   return knex.schema
-    .createTable("Situations", function(table) {
+    .createTable("Situations", function (table) {
       table.increments("id").primary();
       table.string("text");
       table.timestamps();
     })
-    .createTable("Kehus_Situations", function(table) {
+    .createTable("Kehus_Situations", function (table) {
       table
         .integer("kehu_id")
         .unsigned()
@@ -22,7 +22,7 @@ exports.up = function(knex) {
     });
 };
 
-exports.down = function(knex) {
+exports.down = function (knex) {
   return knex.schema
     .dropTableIfExists("Kehus_Situations")
     .dropTableIfExists("Situations");

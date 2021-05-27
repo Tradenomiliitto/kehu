@@ -11,9 +11,9 @@ module.exports = {
   entry: {
     main: [
       "webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000",
-      path.resolve(__dirname, "client", "index.js")
+      path.resolve(__dirname, "client", "index.js"),
     ],
-    public: path.resolve(__dirname, "client", "public.js")
+    public: path.resolve(__dirname, "client", "public.js"),
   },
   devtool: "source-map",
   output: {
@@ -23,7 +23,7 @@ module.exports = {
     path: path.resolve(__dirname, "public"),
     globalObject: "this",
     hotUpdateChunkFilename: ".hot/[id].[fullhash].hot-update.js",
-    hotUpdateMainFilename: ".hot/[runtime].[fullhash].hot-update.json"
+    hotUpdateMainFilename: ".hot/[runtime].[fullhash].hot-update.json",
   },
   module: {
     rules: [
@@ -31,8 +31,8 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader"
-        }
+          loader: "babel-loader",
+        },
       },
       {
         test: /\.scss$/,
@@ -41,18 +41,18 @@ module.exports = {
           "css-loader",
           {
             loader: "resolve-url-loader",
-            options: { root: path.resolve(__dirname, "public") }
+            options: { root: path.resolve(__dirname, "public") },
           },
-          "sass-loader"
-        ]
+          "sass-loader",
+        ],
       },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: "url-loader",
         options: {
           limit: 10000,
-          mimetype: "application/font-woff"
-        }
+          mimetype: "application/font-woff",
+        },
       },
       {
         // Images are not imported in React app but provided as strings so we
@@ -61,17 +61,17 @@ module.exports = {
         loader: "file-loader",
         options: {
           name: "/images/[name].[ext]",
-          emitFile: false
-        }
-      }
-    ]
+          emitFile: false,
+        },
+      },
+    ],
   },
   plugins: [
     new MiniCssExtractPlugin({
       filename: "[name].css",
-      chunkFilename: "[id].css"
+      chunkFilename: "[id].css",
     }),
     dotenv,
-    new webpack.HotModuleReplacementPlugin()
-  ]
+    new webpack.HotModuleReplacementPlugin(),
+  ],
 };

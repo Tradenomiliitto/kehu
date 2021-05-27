@@ -15,9 +15,9 @@ export class ClaimKehuPanel extends Component {
     error: PropTypes.object,
     match: PropTypes.shape({
       params: PropTypes.shape({
-        claim_id: PropTypes.string.isRequired
-      }).isRequired
-    }).isRequired
+        claim_id: PropTypes.string.isRequired,
+      }).isRequired,
+    }).isRequired,
   };
 
   componentDidMount() {
@@ -68,19 +68,16 @@ export class ClaimKehuPanel extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isKehuClaimed: !!state.kehu.claimKehuSuccess,
-  error: state.kehu.error
+  error: state.kehu.error,
 });
 
 const mapActionsToProps = {
-  claimKehu
+  claimKehu,
 };
 
 export default compose(
   withTranslation(),
-  connect(
-    mapStateToProps,
-    mapActionsToProps
-  )
+  connect(mapStateToProps, mapActionsToProps)
 )(ClaimKehuPanel);

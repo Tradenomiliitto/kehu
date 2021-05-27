@@ -12,8 +12,8 @@ class Situation extends Model {
       required: ["text"],
       properties: {
         id: { type: "integer" },
-        text: { type: "string" }
-      }
+        text: { type: "string" },
+      },
     };
   }
 
@@ -26,11 +26,11 @@ class Situation extends Model {
           from: "Situations.id",
           through: {
             from: "Kehus_Situations.kehu_id",
-            to: "Kehus_Situations.tag_id"
+            to: "Kehus_Situations.tag_id",
           },
-          to: "Kehus.id"
-        }
-      }
+          to: "Kehus.id",
+        },
+      },
     };
   }
 

@@ -8,7 +8,7 @@ import moment from "moment";
 export class SentKehuItem extends Component {
   static propTypes = {
     kehu: PropTypes.object.isRequired,
-    roles: PropTypes.array.isRequired
+    roles: PropTypes.array.isRequired,
   };
 
   render() {
@@ -33,7 +33,7 @@ export class SentKehuItem extends Component {
     let text = this.props.t("kehus-sent-kehu", "Lähetetty kehu") + ": ";
 
     if (kehu.role_id) {
-      const role = this.props.roles.find(r => r.id === kehu.role_id);
+      const role = this.props.roles.find((r) => r.id === kehu.role_id);
       text += `${kehu.receiver_name}, ${role.role}`;
     } else {
       text += kehu.receiver_name;
@@ -43,14 +43,11 @@ export class SentKehuItem extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  roles: state.profile.roles
+const mapStateToProps = (state) => ({
+  roles: state.profile.roles,
 });
 
 export default compose(
   withTranslation(),
-  connect(
-    mapStateToProps,
-    null
-  )
+  connect(mapStateToProps, null)
 )(SentKehuItem);

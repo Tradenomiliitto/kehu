@@ -4,7 +4,7 @@ const { checkSchema, validationResult } = require("express-validator");
 const {
   addKehuSchema,
   sendKehuSchema,
-  updateReceivedKehuSchema
+  updateReceivedKehuSchema,
 } = require("../../utils/ValidationSchemas");
 const KehuService = require("../../services/KehuService");
 const logger = require("../../logger");
@@ -106,9 +106,9 @@ router.get("/report", async (req, res) => {
     res.writeHead(200, [
       [
         "Content-Type",
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
       ],
-      ["Content-Disposition", "attachment; filename=" + fileName]
+      ["Content-Disposition", "attachment; filename=" + fileName],
     ]);
     res.end(Buffer.from(xlsxBuffer, "base64"));
   } catch (err) {

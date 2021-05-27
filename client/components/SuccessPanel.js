@@ -4,13 +4,13 @@ import PropTypes from "prop-types";
 export default class SuccessPanel extends Component {
   static propTypes = {
     message: PropTypes.string.isRequired,
-    hideAfter: PropTypes.number
+    hideAfter: PropTypes.number,
   };
 
   constructor() {
     super();
     this.state = {
-      hidden: false
+      hidden: false,
     };
   }
 

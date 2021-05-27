@@ -5,7 +5,7 @@ export default function InputField({
   label,
   placeholder,
   value,
-  handleChange
+  handleChange,
 }) {
   return (
     <div className="Form-group">

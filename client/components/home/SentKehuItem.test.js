@@ -3,16 +3,19 @@ import moment from "moment";
 
 describe("client:components:home:SentKehuItem", () => {
   let component;
-  const roles = [{ id: 1, role: "client" }, { id: 6, role: "client" }];
+  const roles = [
+    { id: 1, role: "client" },
+    { id: 6, role: "client" },
+  ];
   const kehu = {
     date_given: "2019-02-10",
     text: "text",
-    receiver_name: "name"
+    receiver_name: "name",
   };
 
   beforeEach(() => {
     component = shallow(
-      <SentKehuItem kehu={kehu} roles={roles} t={key => key} />
+      <SentKehuItem kehu={kehu} roles={roles} t={(key) => key} />
     );
   });
 
@@ -34,9 +37,7 @@ describe("client:components:home:SentKehuItem", () => {
   describe("when role is given", () => {
     it("renders correct info", () => {
       component.setProps({ kehu: { ...kehu, role_id: 6 } });
-      const expectedInfo = `kehus-sent-kehu: ${kehu.receiver_name}, ${
-        roles[1].role
-      }`;
+      const expectedInfo = `kehus-sent-kehu: ${kehu.receiver_name}, ${roles[1].role}`;
       expect(component.find(".FeedItem-info").text()).toEqual(expectedInfo);
     });
   });

@@ -11,7 +11,7 @@ import { capitalizeText } from "../../util/TextUtil";
 export class KehuSuccessPanel extends Component {
   static propTypes = {
     kehu: PropTypes.object.isRequired,
-    resetKehuFormState: PropTypes.func.isRequired
+    resetKehuFormState: PropTypes.func.isRequired,
   };
 
   render() {
@@ -57,7 +57,7 @@ export class KehuSuccessPanel extends Component {
 
   renderTagsAndSituations() {
     const {
-      kehu: { tags, situations }
+      kehu: { tags, situations },
     } = this.props;
     return [...tags, ...situations].map((it, i) => {
       return (
@@ -70,7 +70,7 @@ export class KehuSuccessPanel extends Component {
 
   renderStars() {
     const {
-      kehu: { importance }
+      kehu: { importance },
     } = this.props;
     const stars = [];
 
@@ -105,13 +105,10 @@ export class KehuSuccessPanel extends Component {
 }
 
 const mapDispatchToProps = {
-  resetKehuFormState
+  resetKehuFormState,
 };
 
 export default compose(
   withTranslation(),
-  connect(
-    null,
-    mapDispatchToProps
-  )
+  connect(null, mapDispatchToProps)
 )(KehuSuccessPanel);

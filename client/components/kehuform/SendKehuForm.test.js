@@ -9,17 +9,17 @@ describe("client:components:kehuform:SendKehuForm", () => {
     id: 1,
     first_name: "First",
     last_name: "Last",
-    picture: "picture.jpg"
+    picture: "picture.jpg",
   };
   const error1 = { msg: "error 1" };
   const error2 = { msg: "error 2" };
   const validationErrors = {
     responseJson: {
-      errors: [error1, error2]
-    }
+      errors: [error1, error2],
+    },
   };
   const otherError = {
-    message: "Random error"
+    message: "Random error",
   };
   const roles = [{ id: 1, role: "role1" }];
   const situations = [{ text: "situation" }];
@@ -36,7 +36,7 @@ describe("client:components:kehuform:SendKehuForm", () => {
         roles={roles}
         situations={situations}
         tags={tags}
-        t={key => key}
+        t={(key) => key}
       />
     );
   });
@@ -52,7 +52,7 @@ describe("client:components:kehuform:SendKehuForm", () => {
       text: "",
       date_given: moment(),
       tags: [],
-      situations: []
+      situations: [],
     });
   });
 
@@ -92,7 +92,7 @@ describe("client:components:kehuform:SendKehuForm", () => {
           text: "",
           date_given: moment().format(),
           tags: [],
-          situations: []
+          situations: [],
         });
       });
     });
@@ -109,24 +109,18 @@ describe("client:components:kehuform:SendKehuForm", () => {
           roles={roles}
           situations={situations}
           tags={tags}
-          t={key => key}
+          t={(key) => key}
         />
       );
     });
 
     it("renders ErrorPanel for each error", () => {
-      expect(
-        component
-          .find("ErrorPanel")
-          .first()
-          .prop("message")
-      ).toEqual(error1.msg);
-      expect(
-        component
-          .find("ErrorPanel")
-          .last()
-          .prop("message")
-      ).toEqual(error2.msg);
+      expect(component.find("ErrorPanel").first().prop("message")).toEqual(
+        error1.msg
+      );
+      expect(component.find("ErrorPanel").last().prop("message")).toEqual(
+        error2.msg
+      );
     });
   });
 
@@ -141,18 +135,15 @@ describe("client:components:kehuform:SendKehuForm", () => {
           roles={roles}
           situations={situations}
           tags={tags}
-          t={key => key}
+          t={(key) => key}
         />
       );
     });
 
     it("renders ErrorPanel", () => {
-      expect(
-        component
-          .find("ErrorPanel")
-          .first()
-          .prop("message")
-      ).toEqual(`modals.send-kehu.error`);
+      expect(component.find("ErrorPanel").first().prop("message")).toEqual(
+        `modals.send-kehu.error`
+      );
     });
   });
 

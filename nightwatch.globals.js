@@ -8,5 +8,5 @@ module.exports = {
   GENERIC_USER_PASSWORD: process.env.TEST_USER_PASSWORD,
   GENERIC_USER_2_EMAIL: process.env.TEST_USER_2_EMAIL,
   GENERIC_USER_2_PASSWORD: process.env.TEST_USER_2_PASSWORD,
-  waitForConditionTimeout: 5000
+  waitForConditionTimeout: 5000,
 };

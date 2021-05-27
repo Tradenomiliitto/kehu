@@ -9,11 +9,11 @@ describe("client:components:home:FeedPanel", () => {
     { name: "name" },
     { id: 2 },
     { name: "other" },
-    { id: 3 }
+    { id: 3 },
   ];
 
   beforeEach(() => {
-    component = shallow(<FeedPanel items={items} t={key => key} />);
+    component = shallow(<FeedPanel items={items} t={(key) => key} />);
   });
 
   it("renders KehuItem for all kehus", () => {

@@ -8,7 +8,7 @@ const logger = require("../logger");
 // https://github.com/contentful/rich-text/issues/61
 const richTextOptions = {
   renderNode: {
-    [BLOCKS.EMBEDDED_ASSET]: node => {
+    [BLOCKS.EMBEDDED_ASSET]: (node) => {
       try {
         let { title, description, file } = node.data.target.fields;
         const mimeType = file.contentType;
@@ -31,8 +31,8 @@ const richTextOptions = {
           ? "Error rendering asset"
           : "";
       }
-    }
-  }
+    },
+  },
 };
 
 function parseSimilarPost(post) {
@@ -40,12 +40,12 @@ function parseSimilarPost(post) {
     author: post.fields.author,
     excerpt: post.fields.excerpt,
     image: {
-      url: post.fields.header.fields.file.url
+      url: post.fields.header.fields.file.url,
     },
     published: moment(post.sys.createdAt).format("D.M.YYYY"),
     slug: post.fields.url,
     tags: post.fields.tags,
-    title: post.fields.title
+    title: post.fields.title,
   };
 }
 
@@ -58,7 +58,7 @@ function getSimilarPosts(post, posts) {
     if (acc.length === 2) {
       return acc;
     }
-    posts.forEach(p => {
+    posts.forEach((p) => {
       if (
         acc.length < 2 &&
         p.fields.tags &&
@@ -79,7 +79,7 @@ function parsePost(posts, post, index) {
     content: documentToHtmlString(post.fields.content, richTextOptions),
     excerpt: post.fields.excerpt,
     image: {
-      url: ((post.fields.header.fields || {}).file || {}).url
+      url: ((post.fields.header.fields || {}).file || {}).url,
     },
     nextPost: posts[index - 1] ? posts[index - 1].fields.url : null,
     prevPost: posts[index + 1] ? posts[index + 1].fields.url : null,
@@ -87,7 +87,7 @@ function parsePost(posts, post, index) {
     similarPosts: getSimilarPosts(post, posts),
     slug: post.fields.url,
     tags: post.fields.tags || [],
-    title: post.fields.title
+    title: post.fields.title,
   };
 }
 
@@ -99,12 +99,19 @@ function filterPostsByTag(posts, tag) {
   if (!tag) {
     return posts;
   }
-  return posts.filter(post => post.tags.includes(tag));
+  return posts.filter((post) => post.tags.includes(tag));
 }
 
 function getUniqueTags(posts) {
   if (posts && posts.length) {
-    return [...new Set([].concat.apply([], posts.map(p => p.tags)))];
+    return [
+      ...new Set(
+        [].concat.apply(
+          [],
+          posts.map((p) => p.tags)
+        )
+      ),
+    ];
   }
   return [];
 }
@@ -112,5 +119,5 @@ function getUniqueTags(posts) {
 module.exports = {
   filterPostsByTag,
   getUniqueTags,
-  parsePosts
+  parsePosts,
 };

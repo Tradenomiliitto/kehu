@@ -18,13 +18,13 @@ export class KehuRow extends Component {
     removeKehu: PropTypes.func.isRequired,
     openEditKehuModal: PropTypes.func.isRequired,
     isKehuSelection: PropTypes.bool,
-    unselectedKehus: PropTypes.object
+    unselectedKehus: PropTypes.object,
   };
 
   constructor() {
     super();
     this.state = {
-      open: false
+      open: false,
     };
   }
 
@@ -34,7 +34,7 @@ export class KehuRow extends Component {
     const text = open ? kehu.text : truncateText(kehu.text, 200);
     const tagsClasses = cn({
       "KehusTable-cell--tags": true,
-      "KehusTable-cell--tagsOpen": open
+      "KehusTable-cell--tagsOpen": open,
     });
     return (
       <tr className="KehusTable-row kehu-row-nw" onClick={this.toggleState}>
@@ -87,7 +87,7 @@ export class KehuRow extends Component {
 
   renderStars() {
     const {
-      kehu: { importance }
+      kehu: { importance },
     } = this.props;
     const stars = [];
 
@@ -115,20 +115,20 @@ export class KehuRow extends Component {
   }
 
   toggleState = () => {
-    this.setState(state => ({ open: !state.open }));
+    this.setState((state) => ({ open: !state.open }));
   };
 
-  handleEditClick = ev => {
+  handleEditClick = (ev) => {
     ev.stopPropagation();
     this.props.openEditKehuModal(this.props.kehu);
   };
 
-  handleRemoveClick = ev => {
+  handleRemoveClick = (ev) => {
     const { t } = this.props;
     ev.stopPropagation();
     const {
       kehu: { id },
-      removeKehu
+      removeKehu,
     } = this.props;
     if (
       confirm(t("kehus.confirm-removal", "Haluatko varmasti poistaa Kehun?"))
@@ -137,7 +137,7 @@ export class KehuRow extends Component {
     }
   };
 
-  handeSelectKehuClick = ev => {
+  handeSelectKehuClick = (ev) => {
     ev.stopPropagation();
     const id = ev.target.name;
     const isChecked = ev.target.checked;
@@ -145,18 +145,15 @@ export class KehuRow extends Component {
   };
 }
 
-const mapStateToProps = state => ({
-  unselectedKehus: state.report.unselectedKehus
+const mapStateToProps = (state) => ({
+  unselectedKehus: state.report.unselectedKehus,
 });
 
 export default compose(
   withTranslation(),
-  connect(
-    mapStateToProps,
-    {
-      removeKehu,
-      openEditKehuModal,
-      selectKehu
-    }
-  )
+  connect(mapStateToProps, {
+    removeKehu,
+    openEditKehuModal,
+    selectKehu,
+  })
 )(KehuRow);

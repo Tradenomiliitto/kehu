@@ -13,7 +13,7 @@ router.get("/:slug", async (req, res, next) => {
   }
 
   res.render("blog-post", {
-    post
+    post,
   });
 });
 
@@ -22,7 +22,7 @@ router.get("/", async (req, res) => {
   const tags = getUniqueTags(posts);
   res.render("blog", {
     posts,
-    tags
+    tags,
   });
 });
 

@@ -29,11 +29,7 @@ function logout(browser) {
 }
 
 function addTag(browser, id, text) {
-  browser
-    .pause(100)
-    .setValue(`#${id}`, text)
-    .pause(100)
-    .click(`.${id}-add-nw`);
+  browser.pause(100).setValue(`#${id}`, text).pause(100).click(`.${id}-add-nw`);
 }
 
 function navigateToKehuPage(browser) {
@@ -50,7 +46,7 @@ function expectText(browser, selector, text) {
 }
 
 function expectTags(browser, tags) {
-  tags.forEach(tag => {
+  tags.forEach((tag) => {
     browser.expect.element(".kehu-tags-nw").text.to.contain(tag);
   });
 }
@@ -69,5 +65,5 @@ module.exports = {
   loginWithNewUser,
   loginWithGenericUser,
   loginWithGenericUser2,
-  logout
+  logout,
 };

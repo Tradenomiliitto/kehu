@@ -3,7 +3,7 @@ import { KehusPanel } from "./KehusPanel";
 describe("client:components:KehusPanel", () => {
   let component;
   const error = {
-    message: "Random error"
+    message: "Random error",
   };
   const roles = [];
 
@@ -12,7 +12,7 @@ describe("client:components:KehusPanel", () => {
       <KehusPanel
         kehus={[]}
         roles={roles}
-        t={key => key}
+        t={(key) => key}
         i18n={{}}
         location={{ search: "" }}
       />
@@ -29,12 +29,9 @@ describe("client:components:KehusPanel", () => {
     });
 
     it("renders error panel", () => {
-      expect(
-        component
-          .find("ErrorPanel")
-          .first()
-          .prop("message")
-      ).toEqual(`kehus.remove-kehu-error`);
+      expect(component.find("ErrorPanel").first().prop("message")).toEqual(
+        `kehus.remove-kehu-error`
+      );
     });
   });
 });

@@ -4,7 +4,7 @@ import reducer, {
   toggleAddKehuFormModal,
   OPEN_EDIT_KEHU_MODAL,
   openEditKehuModal,
-  TOGGLE_SEND_KEHU_FORM_MODAL
+  TOGGLE_SEND_KEHU_FORM_MODAL,
 } from "./portal";
 import { RESET_KEHU_FORM } from "./kehu";
 
@@ -35,7 +35,7 @@ describe("client:redux:portal", () => {
       const expectedState = {
         ...initialState,
         addKehuPortalVisible: true,
-        kehu
+        kehu,
       };
       expect(reducer(state, action)).toEqual(expectedState);
     });
@@ -44,7 +44,7 @@ describe("client:redux:portal", () => {
       const state = {
         addKehuPortalVisible: true,
         sendKehuPortalVisible: true,
-        kehu: { id: 1 }
+        kehu: { id: 1 },
       };
       const action = { type: RESET_KEHU_FORM };
       const expectedState = { ...initialState };

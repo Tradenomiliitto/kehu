@@ -11,7 +11,7 @@ describe("client:components:kehuform:ImportanceSelectPanel", () => {
       <ImportanceSelectPanel
         handleClick={handleClickStub}
         value={value}
-        t={key => key}
+        t={(key) => key}
       />
     );
   });
@@ -25,20 +25,14 @@ describe("client:components:kehuform:ImportanceSelectPanel", () => {
 
   describe("when star is clicked", () => {
     it("calls callback with star number", () => {
-      component
-        .find(".ImportanceSelector-star")
-        .at(3)
-        .simulate("click");
+      component.find(".ImportanceSelector-star").at(3).simulate("click");
       expect(handleClickStub).toHaveBeenCalledWith(4);
     });
   });
 
   describe("when star is hovered", () => {
     beforeEach(() => {
-      component
-        .find(".ImportanceSelector-star")
-        .at(3)
-        .simulate("mouseOver");
+      component.find(".ImportanceSelector-star").at(3).simulate("mouseOver");
     });
 
     it("sets all stars before active", () => {
@@ -49,10 +43,7 @@ describe("client:components:kehuform:ImportanceSelectPanel", () => {
 
     describe("when star is not hovered any more", () => {
       beforeEach(() => {
-        component
-          .find(".ImportanceSelector-star")
-          .at(3)
-          .simulate("mouseOut");
+        component.find(".ImportanceSelector-star").at(3).simulate("mouseOut");
       });
 
       it(`renders ${value} active stars`, () => {

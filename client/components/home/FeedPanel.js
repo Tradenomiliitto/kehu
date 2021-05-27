@@ -7,7 +7,7 @@ import SentKehuItem from "./SentKehuItem";
 
 export class FeedPanel extends Component {
   static propTypes = {
-    items: PropTypes.array.isRequired
+    items: PropTypes.array.isRequired,
   };
 
   render() {

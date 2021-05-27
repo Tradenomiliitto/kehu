@@ -25,7 +25,7 @@ describe("client:components:kehuform:WordCloudField", () => {
         label={label}
         placeholder={placeholder}
         values={initValues}
-        t={key => key}
+        t={(key) => key}
       />
     );
   });
@@ -39,7 +39,7 @@ describe("client:components:kehuform:WordCloudField", () => {
       className: `WordCloudField ${className}Field input-js`,
       id,
       name: id,
-      placeholder
+      placeholder,
     });
   });
 

@@ -14,5 +14,5 @@ function setupLocals(app, getVersionedPath) {
 }
 
 module.exports = {
-  setupLocals
+  setupLocals,
 };

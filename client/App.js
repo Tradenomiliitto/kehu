@@ -39,13 +39,13 @@ export class App extends Component {
     successfullySentKehu: PropTypes.bool,
     getProfile: PropTypes.func.isRequired,
     getKehus: PropTypes.func.isRequired,
-    kehuToEdit: PropTypes.object
+    kehuToEdit: PropTypes.object,
   };
 
   state = {
     loading: true,
     loadingProfile: false,
-    loadingKehus: false
+    loadingKehus: false,
   };
 
   componentDidMount() {
@@ -117,7 +117,7 @@ export class App extends Component {
             <Route exact path={`${lng}/profiili`} component={ProfilePanel} />
             <Route exact path={`${lng}/raportit`} component={ReportPanel} />
             <Route
-              render={props =>
+              render={(props) =>
                 lngRedirect(this.props.i18n.language, props.location.pathname)
               }
             />
@@ -184,27 +184,24 @@ export class App extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isAddKehuPortalVisible: state.portal.addKehuPortalVisible,
   isSendKehuPortalVisible: state.portal.sendKehuPortalVisible,
   successfullySavedKehu: state.kehu.savedKehu,
   successfullySentKehu: state.kehu.sendKehuSuccess,
   kehusLoaded: state.kehu.kehusLoaded,
   profileLoaded: state.profile.profileLoaded,
-  kehuToEdit: state.portal.kehu
+  kehuToEdit: state.portal.kehu,
 });
 
 const mapDispatchToProps = {
   getProfile,
-  getKehus
+  getKehus,
 };
 
 const AppContainer = compose(
   withTranslation(),
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )
+  connect(mapStateToProps, mapDispatchToProps)
 )(App);
 
 const HotApp = hot(module)(AppContainer);

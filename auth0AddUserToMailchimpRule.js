@@ -6,7 +6,7 @@ async function addUserToMailchimp(user, context, callback) {
 
   const auth = {
     username: "kehu",
-    password: configuration.MAILCHIMP_APIKEY
+    password: configuration.MAILCHIMP_APIKEY,
   };
 
   // Short-circuit if the user signed up already or is using a refresh token
@@ -30,15 +30,15 @@ async function addUserToMailchimp(user, context, callback) {
         timestamp_signup: new Date()
           .toISOString()
           .replace("T", " ")
-          .substring(0, 19)
+          .substring(0, 19),
       },
       { auth }
     )
-    .then(res => {
+    .then((res) => {
       console.log(`User ${user.email} added to Mailchimp`);
       console.log((res || {}).data);
     })
-    .catch(err => {
+    .catch((err) => {
       console.log("Error when adding user to Mailchimp: " + err.message);
       console.log(((err || {}).response || {}).data);
     });
@@ -64,7 +64,7 @@ const body = {
     state: "",
     zip: "00520",
     country: "FI",
-    phone: ""
+    phone: "",
   },
   permission_reminder:
     "Saat tämän viestin, sillä olet rekisteröitynyt KEHU-verkkopalveluun.",
@@ -72,9 +72,9 @@ const body = {
     from_name: "Tradenomiliitto TRAL",
     from_email: "tiedotus@tral.fi",
     subject: "",
-    language: "en"
+    language: "en",
   },
-  email_type_option: false
+  email_type_option: false,
 };
 
 // Response
@@ -90,7 +90,7 @@ const response = {
     state: "",
     zip: "00520",
     country: "FI",
-    phone: ""
+    phone: "",
   },
   permission_reminder:
     "Saat tämän viestin, sillä olet rekisteröitynyt KEHU-verkkopalveluun.",
@@ -99,7 +99,7 @@ const response = {
     from_name: "Tradenomiliitto TRAL",
     from_email: "tiedotus@tral.fi",
     subject: "",
-    language: "en"
+    language: "en",
   },
   notify_on_subscribe: "",
   notify_on_unsubscribe: "",
@@ -131,7 +131,7 @@ const response = {
     open_rate: 0,
     click_rate: 0,
     last_sub_date: "",
-    last_unsub_date: ""
+    last_unsub_date: "",
   },
   _links: [
     {
@@ -139,7 +139,7 @@ const response = {
       href: "https://us16.api.mailchimp.com/3.0/lists/30c4f35bc7",
       method: "GET",
       targetSchema:
-        "https://us16.api.mailchimp.com/schema/3.0/Definitions/Lists/Response.json"
+        "https://us16.api.mailchimp.com/schema/3.0/Definitions/Lists/Response.json",
     },
     {
       rel: "parent",
@@ -148,7 +148,7 @@ const response = {
       targetSchema:
         "https://us16.api.mailchimp.com/schema/3.0/Definitions/Lists/CollectionResponse.json",
       schema:
-        "https://us16.api.mailchimp.com/schema/3.0/CollectionLinks/Lists.json"
+        "https://us16.api.mailchimp.com/schema/3.0/CollectionLinks/Lists.json",
     },
     {
       rel: "update",
@@ -157,7 +157,7 @@ const response = {
       targetSchema:
         "https://us16.api.mailchimp.com/schema/3.0/Definitions/Lists/Response.json",
       schema:
-        "https://us16.api.mailchimp.com/schema/3.0/Definitions/Lists/PATCH.json"
+        "https://us16.api.mailchimp.com/schema/3.0/Definitions/Lists/PATCH.json",
     },
     {
       rel: "batch-sub-unsub-members",
@@ -166,12 +166,12 @@ const response = {
       targetSchema:
         "https://us16.api.mailchimp.com/schema/3.0/Definitions/Lists/BatchPOST-Response.json",
       schema:
-        "https://us16.api.mailchimp.com/schema/3.0/Definitions/Lists/BatchPOST.json"
+        "https://us16.api.mailchimp.com/schema/3.0/Definitions/Lists/BatchPOST.json",
     },
     {
       rel: "delete",
       href: "https://us16.api.mailchimp.com/3.0/lists/30c4f35bc7",
-      method: "DELETE"
+      method: "DELETE",
     },
     {
       rel: "abuse-reports",
@@ -180,41 +180,39 @@ const response = {
       targetSchema:
         "https://us16.api.mailchimp.com/schema/3.0/Definitions/Lists/Abuse/CollectionResponse.json",
       schema:
-        "https://us16.api.mailchimp.com/schema/3.0/CollectionLinks/Lists/Abuse.json"
+        "https://us16.api.mailchimp.com/schema/3.0/CollectionLinks/Lists/Abuse.json",
     },
     {
       rel: "activity",
       href: "https://us16.api.mailchimp.com/3.0/lists/30c4f35bc7/activity",
       method: "GET",
       targetSchema:
-        "https://us16.api.mailchimp.com/schema/3.0/Definitions/Lists/Activity/Response.json"
+        "https://us16.api.mailchimp.com/schema/3.0/Definitions/Lists/Activity/Response.json",
     },
     {
       rel: "clients",
       href: "https://us16.api.mailchimp.com/3.0/lists/30c4f35bc7/clients",
       method: "GET",
       targetSchema:
-        "https://us16.api.mailchimp.com/schema/3.0/Definitions/Lists/Clients/Response.json"
+        "https://us16.api.mailchimp.com/schema/3.0/Definitions/Lists/Clients/Response.json",
     },
     {
       rel: "growth-history",
-      href:
-        "https://us16.api.mailchimp.com/3.0/lists/30c4f35bc7/growth-history",
+      href: "https://us16.api.mailchimp.com/3.0/lists/30c4f35bc7/growth-history",
       method: "GET",
       targetSchema:
         "https://us16.api.mailchimp.com/schema/3.0/Definitions/Lists/Growth/CollectionResponse.json",
       schema:
-        "https://us16.api.mailchimp.com/schema/3.0/CollectionLinks/Lists/Growth.json"
+        "https://us16.api.mailchimp.com/schema/3.0/CollectionLinks/Lists/Growth.json",
     },
     {
       rel: "interest-categories",
-      href:
-        "https://us16.api.mailchimp.com/3.0/lists/30c4f35bc7/interest-categories",
+      href: "https://us16.api.mailchimp.com/3.0/lists/30c4f35bc7/interest-categories",
       method: "GET",
       targetSchema:
         "https://us16.api.mailchimp.com/schema/3.0/Definitions/Lists/InterestCategories/CollectionResponse.json",
       schema:
-        "https://us16.api.mailchimp.com/schema/3.0/CollectionLinks/Lists/InterestCategories.json"
+        "https://us16.api.mailchimp.com/schema/3.0/CollectionLinks/Lists/InterestCategories.json",
     },
     {
       rel: "members",
@@ -223,7 +221,7 @@ const response = {
       targetSchema:
         "https://us16.api.mailchimp.com/schema/3.0/Definitions/Lists/Members/CollectionResponse.json",
       schema:
-        "https://us16.api.mailchimp.com/schema/3.0/CollectionLinks/Lists/Members.json"
+        "https://us16.api.mailchimp.com/schema/3.0/CollectionLinks/Lists/Members.json",
     },
     {
       rel: "merge-fields",
@@ -232,7 +230,7 @@ const response = {
       targetSchema:
         "https://us16.api.mailchimp.com/schema/3.0/Definitions/Lists/MergeFields/CollectionResponse.json",
       schema:
-        "https://us16.api.mailchimp.com/schema/3.0/CollectionLinks/Lists/MergeFields.json"
+        "https://us16.api.mailchimp.com/schema/3.0/CollectionLinks/Lists/MergeFields.json",
     },
     {
       rel: "segments",
@@ -241,7 +239,7 @@ const response = {
       targetSchema:
         "https://us16.api.mailchimp.com/schema/3.0/Definitions/Lists/Segments/CollectionResponse.json",
       schema:
-        "https://us16.api.mailchimp.com/schema/3.0/CollectionLinks/Lists/Segments.json"
+        "https://us16.api.mailchimp.com/schema/3.0/CollectionLinks/Lists/Segments.json",
     },
     {
       rel: "webhooks",
@@ -250,7 +248,7 @@ const response = {
       targetSchema:
         "https://us16.api.mailchimp.com/schema/3.0/Definitions/Lists/Webhooks/CollectionResponse.json",
       schema:
-        "https://us16.api.mailchimp.com/schema/3.0/CollectionLinks/Lists/Webhooks.json"
+        "https://us16.api.mailchimp.com/schema/3.0/CollectionLinks/Lists/Webhooks.json",
     },
     {
       rel: "signup-forms",
@@ -259,7 +257,7 @@ const response = {
       targetSchema:
         "https://us16.api.mailchimp.com/schema/3.0/Definitions/Lists/SignupForms/CollectionResponse.json",
       schema:
-        "https://us16.api.mailchimp.com/schema/3.0/CollectionLinks/Lists/SignupForms.json"
+        "https://us16.api.mailchimp.com/schema/3.0/CollectionLinks/Lists/SignupForms.json",
     },
     {
       rel: "locations",
@@ -268,7 +266,7 @@ const response = {
       targetSchema:
         "https://us16.api.mailchimp.com/schema/3.0/Definitions/Lists/Locations/CollectionResponse.json",
       schema:
-        "https://us16.api.mailchimp.com/schema/3.0/CollectionLinks/Lists/Locations.json"
-    }
-  ]
+        "https://us16.api.mailchimp.com/schema/3.0/CollectionLinks/Lists/Locations.json",
+    },
+  ],
 };

@@ -23,7 +23,7 @@ module.exports = function setupRoutes(app) {
   app.get(CLIENT_ROUTES, (req, res) => {
     if (req.user) {
       res.render("app", {
-        csrfToken: req.csrfToken()
+        csrfToken: req.csrfToken(),
       });
     } else {
       res.redirect("/");
@@ -49,7 +49,7 @@ module.exports = function setupRoutes(app) {
   app.get("/", async (req, res) => {
     if (req.user) {
       res.render("app", {
-        csrfToken: req.csrfToken()
+        csrfToken: req.csrfToken(),
       });
     } else {
       res.render("index", {});

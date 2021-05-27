@@ -14,14 +14,14 @@ export class ProfilePanel extends Component {
   static propTypes = {
     deleteProfile: PropTypes.func.isRequired,
     updateProfile: PropTypes.func.isRequired,
-    profile: PropTypes.object.isRequired
+    profile: PropTypes.object.isRequired,
   };
 
   constructor() {
     super();
     this.state = {
       isEditing: false,
-      success: false
+      success: false,
     };
   }
 
@@ -79,9 +79,7 @@ export class ProfilePanel extends Component {
                           {t("profile.change-password-btn", "Vaihda salasana")}
                         </a>
                         <a
-                          href={`/profiili/kirjaudu-ulos?redirectLanguage=${
-                            this.props.i18n.language
-                          }`}
+                          href={`/profiili/kirjaudu-ulos?redirectLanguage=${this.props.i18n.language}`}
                           className="Button ProfileActionLink"
                         >
                           {t("profile.logout-btn", "Kirjaudu ulos")}
@@ -159,9 +157,9 @@ export class ProfilePanel extends Component {
             error: "#ff5f83",
             inProgress: "#0078FF",
             complete: "#DBFFE5",
-            sourceBg: "#EDF1F1"
-          }
-        }
+            sourceBg: "#EDF1F1",
+          },
+        },
       },
       async (error, result) => {
         // Update profile picture if upload was succesful
@@ -182,15 +180,15 @@ export class ProfilePanel extends Component {
   handleSuccess = () => {
     this.setState({
       success: true,
-      isEditing: false
+      isEditing: false,
     });
   };
 
   toggleEdit = () => {
-    this.setState(state => ({ isEditing: !state.isEditing }));
+    this.setState((state) => ({ isEditing: !state.isEditing }));
   };
 
-  resetPassword = ev => {
+  resetPassword = (ev) => {
     ev.preventDefault();
     window.PASSWORD_RESET_LOCK.show();
   };
@@ -201,7 +199,7 @@ export class ProfilePanel extends Component {
       this.props.t("profile.confirm-profile-deletion", {
         newline: "\n\n",
         defaultValue:
-          "Oletko varma, että haluat poistaa käyttäjätunnuksen?{{newline}}Valitsemalla kyllä sekä profiili että tallennetut kehut poistetaan, eikä sitä voi enää peruuttaa."
+          "Oletko varma, että haluat poistaa käyttäjätunnuksen?{{newline}}Valitsemalla kyllä sekä profiili että tallennetut kehut poistetaan, eikä sitä voi enää peruuttaa.",
       }) +
       "\n";
 
@@ -211,17 +209,14 @@ export class ProfilePanel extends Component {
   };
 }
 
-const mapStateToProps = state => ({
-  profile: state.profile.profile
+const mapStateToProps = (state) => ({
+  profile: state.profile.profile,
 });
 
 export default compose(
   withTranslation(),
-  connect(
-    mapStateToProps,
-    {
-      deleteProfile,
-      updateProfile
-    }
-  )
+  connect(mapStateToProps, {
+    deleteProfile,
+    updateProfile,
+  })
 )(ProfilePanel);

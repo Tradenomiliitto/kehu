@@ -23,11 +23,11 @@ export const initialState = {
   roles: [],
   situations: [],
   tags: [],
-  updateProfileError: null
+  updateProfileError: null,
 };
 
 export function getProfile() {
-  return async dispatch => {
+  return async (dispatch) => {
     try {
       const payload = await get("/profiili");
       dispatch({ type: PROFILE_LOADED, payload });
@@ -38,7 +38,7 @@ export function getProfile() {
 }
 
 export function updateFeed() {
-  return async dispatch => {
+  return async (dispatch) => {
     try {
       const payload = await get("/profiili/feed");
       dispatch({ type: FEED_LOADED, payload });
@@ -49,7 +49,7 @@ export function updateFeed() {
 }
 
 export function updateProfile(data, pictureOnly = false) {
-  return async dispatch => {
+  return async (dispatch) => {
     try {
       dispatch({ type: UPDATE_PROFILE });
       const url = pictureOnly ? "/profiili/kuva" : "/profiili";
@@ -62,7 +62,7 @@ export function updateProfile(data, pictureOnly = false) {
 }
 
 export function deleteProfile() {
-  return async dispatch => {
+  return async (dispatch) => {
     try {
       dispatch({ type: DELETE_PROFILE });
       await del("/profiili");
@@ -84,48 +84,48 @@ export default function reducer(state = initialState, action = {}) {
         feedItems: action.payload.feed,
         roles: action.payload.roles,
         situations: action.payload.situations,
-        tags: action.payload.tags
+        tags: action.payload.tags,
       };
     case PROFILE_ERROR:
       return {
         ...state,
         error: action.payload,
-        profileLoaded: true
+        profileLoaded: true,
       };
     case FEED_LOADED:
       return {
         ...state,
-        feedItems: action.payload.feed
+        feedItems: action.payload.feed,
       };
     case FEED_ERROR:
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
       };
     case UPDATE_PROFILE:
       return {
         ...state,
         loading: true,
-        updateProfileError: null
+        updateProfileError: null,
       };
     case UPDATE_PROFILE_SUCCESS:
       return {
         ...state,
         loading: false,
-        profile: action.payload
+        profile: action.payload,
       };
     case UPDATE_PROFILE_ERROR:
       return {
         ...state,
         loading: false,
-        updateProfileError: action.payload
+        updateProfileError: action.payload,
       };
 
     case DELETE_PROFILE:
       return {
         ...state,
         loading: true,
-        deleteProfileError: null
+        deleteProfileError: null,
       };
     case DELETE_PROFILE_SUCCESS:
       setTimeout(() => {
@@ -133,13 +133,13 @@ export default function reducer(state = initialState, action = {}) {
       }, 1000);
       return {
         ...state,
-        loading: false
+        loading: false,
       };
     case DELETE_PROFILE_ERROR:
       return {
         ...state,
         loading: false,
-        deleteProfileError: action.payload
+        deleteProfileError: action.payload,
       };
 
     default:

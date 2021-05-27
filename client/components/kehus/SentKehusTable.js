@@ -6,7 +6,7 @@ import SentKehuRow from "./SentKehuRow";
 export class SentKehusTable extends Component {
   static propTypes = {
     kehus: PropTypes.array.isRequired,
-    roles: PropTypes.array.isRequired
+    roles: PropTypes.array.isRequired,
   };
 
   render() {

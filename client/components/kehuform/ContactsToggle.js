@@ -5,20 +5,20 @@ import cn from "classnames";
 export default class ContactsToggle extends Component {
   static propTypes = {
     contacts: PropTypes.array.isRequired,
-    handleSelect: PropTypes.func.isRequired
+    handleSelect: PropTypes.func.isRequired,
   };
 
   constructor() {
     super();
     this.state = {
-      open: false
+      open: false,
     };
   }
 
   render() {
     const classNames = cn({
       Contacts: true,
-      "Contacts--open": this.state.open
+      "Contacts--open": this.state.open,
     });
 
     return (
@@ -45,13 +45,13 @@ export default class ContactsToggle extends Component {
     ));
   }
 
-  toggleContacts = ev => {
+  toggleContacts = (ev) => {
     ev.preventDefault();
     this.toggleState();
   };
 
   handleClick = (name, email) => {
-    return ev => {
+    return (ev) => {
       ev.preventDefault();
       this.props.handleSelect(name, email);
       this.toggleState();
@@ -59,6 +59,6 @@ export default class ContactsToggle extends Component {
   };
 
   toggleState = () => {
-    this.setState(state => ({ open: !state.open }));
+    this.setState((state) => ({ open: !state.open }));
   };
 }

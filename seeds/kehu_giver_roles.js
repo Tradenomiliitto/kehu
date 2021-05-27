@@ -1,5 +1,5 @@
-exports.seed = function(knex) {
-  return knex("Roles").then(function() {
+exports.seed = function (knex) {
+  return knex("Roles").then(function () {
     return knex("Roles").insert([
       { id: 1, role: "Pomo" },
       { id: 2, role: "Alainen" },
@@ -9,7 +9,7 @@ exports.seed = function(knex) {
       { id: 6, role: "Kaveri" },
       { id: 7, role: "Opettaja" },
       { id: 8, role: "Minä itse" },
-      { id: 9, role: "Muu" }
+      { id: 9, role: "Muu" },
     ]);
   });
 };

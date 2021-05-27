@@ -12,7 +12,7 @@ $spacing-base: 1.5rem !default;
 $spacing-reset: true !default;
 $spacers: (
   nospace: 0,
-  space: 30px
+  space: 30px,
 ) !default;
 
 // Headings
@@ -46,7 +46,7 @@ $mq-breakpoints: (
   sm: 400px,
   md: 680px,
   lg: 960px,
-  xl: 1200px
+  xl: 1200px,
 ) !default;
 
 $mq-breakpoints-list: map-keys($mq-breakpoints) !default;

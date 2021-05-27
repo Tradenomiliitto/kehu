@@ -12,7 +12,7 @@ import reducer, {
   DELETE_PROFILE,
   DELETE_PROFILE_ERROR,
   DELETE_PROFILE_SUCCESS,
-  deleteProfile
+  deleteProfile,
 } from "./profile";
 import * as ApiUtil from "../util/ApiUtil";
 
@@ -36,7 +36,7 @@ describe("client:redux:profile", () => {
         roles: [{ id: 1 }],
         situations: [newSituation],
         tags: [newTag],
-        feed: [feedItem]
+        feed: [feedItem],
       };
       const action = { type: PROFILE_LOADED, payload };
       const expectedState = {
@@ -47,7 +47,7 @@ describe("client:redux:profile", () => {
         roles: payload.roles,
         situations: payload.situations,
         tags: payload.tags,
-        feedItems: payload.feed
+        feedItems: payload.feed,
       };
       expect(reducer(state, action)).toEqual(expectedState);
     });
@@ -66,7 +66,7 @@ describe("client:redux:profile", () => {
       const expectedState = {
         ...state,
         loading: true,
-        updateProfileError: null
+        updateProfileError: null,
       };
       expect(reducer(state, action)).toEqual(expectedState);
     });
@@ -86,7 +86,7 @@ describe("client:redux:profile", () => {
       const expectedState = {
         ...state,
         loading: false,
-        updateProfileError: action.payload
+        updateProfileError: action.payload,
       };
       expect(reducer(state, action)).toEqual(expectedState);
     });
@@ -97,7 +97,7 @@ describe("client:redux:profile", () => {
       const expectedState = {
         ...state,
         loading: true,
-        deleteProfileError: null
+        deleteProfileError: null,
       };
       expect(reducer(state, action)).toEqual(expectedState);
     });
@@ -116,7 +116,7 @@ describe("client:redux:profile", () => {
       const expectedState = {
         ...state,
         loading: false,
-        deleteProfileError: action.payload
+        deleteProfileError: action.payload,
       };
       expect(reducer(state, action)).toEqual(expectedState);
     });
@@ -125,9 +125,9 @@ describe("client:redux:profile", () => {
   describe("actions", () => {
     describe("getProfile", () => {
       describe("when call succeeds", () => {
-        it("dispatches user profile", done => {
+        it("dispatches user profile", (done) => {
           const response = { profile: { user: 1 }, roles: [{ id: 1 }] };
-          ApiUtil.get = jest.fn(() => new Promise(res => res(response)));
+          ApiUtil.get = jest.fn(() => new Promise((res) => res(response)));
 
           const store = mockStore(initialState);
           const expectedActions = [{ type: PROFILE_LOADED, payload: response }];
@@ -141,13 +141,13 @@ describe("client:redux:profile", () => {
       });
 
       describe("when call fails", () => {
-        it("dispatches error", done => {
+        it("dispatches error", (done) => {
           const error = new Error("network error");
           ApiUtil.get = jest.fn(() => new Promise((res, rej) => rej(error)));
 
           const store = mockStore(initialState);
           const expectedActions = [
-            { type: PROFILE_ERROR, payload: error.message }
+            { type: PROFILE_ERROR, payload: error.message },
           ];
 
           store.dispatch(getProfile()).then(() => {
@@ -160,16 +160,16 @@ describe("client:redux:profile", () => {
     });
 
     describe("updateProfile", () => {
-      it("when updating succeeds", done => {
+      it("when updating succeeds", (done) => {
         const data = { form: 1 };
         const response = { response: 1 };
 
-        ApiUtil.put = jest.fn(() => new Promise(res => res(response)));
+        ApiUtil.put = jest.fn(() => new Promise((res) => res(response)));
 
         const store = mockStore({ profile: initialState });
         const expectedActions = [
           { type: UPDATE_PROFILE },
-          { type: UPDATE_PROFILE_SUCCESS, payload: response }
+          { type: UPDATE_PROFILE_SUCCESS, payload: response },
         ];
 
         store.dispatch(updateProfile(data)).then(() => {
@@ -179,7 +179,7 @@ describe("client:redux:profile", () => {
         });
       });
 
-      it("when updating fails", done => {
+      it("when updating fails", (done) => {
         const data = { form: 1 };
         const error = new Error("network error");
         ApiUtil.put = jest.fn(() => new Promise((res, rej) => rej(error)));
@@ -187,7 +187,7 @@ describe("client:redux:profile", () => {
         const store = mockStore(initialState);
         const expectedActions = [
           { type: UPDATE_PROFILE },
-          { type: UPDATE_PROFILE_ERROR, payload: error }
+          { type: UPDATE_PROFILE_ERROR, payload: error },
         ];
 
         store.dispatch(updateProfile(data)).then(() => {
@@ -199,15 +199,15 @@ describe("client:redux:profile", () => {
     });
 
     describe("deleteProfile", () => {
-      it("when deleting succeeds", done => {
+      it("when deleting succeeds", (done) => {
         const response = { success: true };
 
-        ApiUtil.del = jest.fn(() => new Promise(res => res(response)));
+        ApiUtil.del = jest.fn(() => new Promise((res) => res(response)));
 
         const store = mockStore({ profile: initialState });
         const expectedActions = [
           { type: DELETE_PROFILE },
-          { type: DELETE_PROFILE_SUCCESS }
+          { type: DELETE_PROFILE_SUCCESS },
         ];
 
         store.dispatch(deleteProfile()).then(() => {
@@ -217,14 +217,14 @@ describe("client:redux:profile", () => {
         });
       });
 
-      it("when updating fails", done => {
+      it("when updating fails", (done) => {
         const error = new Error("network error");
         ApiUtil.del = jest.fn(() => new Promise((res, rej) => rej(error)));
 
         const store = mockStore(initialState);
         const expectedActions = [
           { type: DELETE_PROFILE },
-          { type: DELETE_PROFILE_ERROR, payload: error }
+          { type: DELETE_PROFILE_ERROR, payload: error },
         ];
 
         store.dispatch(deleteProfile()).then(() => {

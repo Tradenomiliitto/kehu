@@ -21,9 +21,7 @@ async function updateProfilePicture(user_id, picture) {
 
 async function updateProfile(user_id, data) {
   logger.info(`Updating user ${user_id}.`);
-  const user = await User.query()
-    .where("id", user_id)
-    .first();
+  const user = await User.query().where("id", user_id).first();
   try {
     if (canAuth0EmailBeUpdated(user)) {
       await Auth0.updateUser(
@@ -34,8 +32,8 @@ async function updateProfile(user_id, data) {
           connection: "Username-Password-Authentication",
           user_metadata: {
             first_name: data.first_name,
-            last_name: data.last_name
-          }
+            last_name: data.last_name,
+          },
         }
       );
       await Auth0.sendEmailVerification({ user_id: user.auth0_id });
@@ -45,8 +43,8 @@ async function updateProfile(user_id, data) {
         {
           user_metadata: {
             first_name: data.first_name,
-            last_name: data.last_name
-          }
+            last_name: data.last_name,
+          },
         }
       );
     }
@@ -60,9 +58,7 @@ async function updateProfile(user_id, data) {
 async function findUserByAuth0Id(auth0_id) {
   try {
     logger.info("Finding user with auth0_id", auth0_id);
-    return await User.query()
-      .where("auth0_id", auth0_id)
-      .first();
+    return await User.query().where("auth0_id", auth0_id).first();
   } catch (error) {
     logger.error(error.message);
   }
@@ -71,9 +67,7 @@ async function findUserByAuth0Id(auth0_id) {
 async function findUserByEmail(email) {
   try {
     logger.info("Finding user with email", email);
-    let user = await User.query()
-      .where("email", email)
-      .first();
+    let user = await User.query().where("email", email).first();
     if (user) {
       return user;
     }
@@ -83,9 +77,7 @@ async function findUserByEmail(email) {
       .andWhere(raw("owner_id IS NOT NULL"))
       .first();
     if (kehu && kehu.owner_id) {
-      return await User.query()
-        .where("id", kehu.owner_id)
-        .first();
+      return await User.query().where("id", kehu.owner_id).first();
     }
   } catch (error) {
     logger.error(error.message);
@@ -95,10 +87,10 @@ async function findUserByEmail(email) {
 async function getContacts(user_id) {
   return await Kehu.query()
     .select("receiver_name as name", "receiver_email as email")
-    .where(function() {
+    .where(function () {
       this.where("giver_id", user_id).andWhere("owner_id", "<>", user_id);
     })
-    .orWhere(function() {
+    .orWhere(function () {
       this.where("giver_id", user_id).andWhere(raw("claim_id IS NOT NULL"));
     })
     .groupBy("name", "email");
@@ -119,7 +111,7 @@ function parseUser(user) {
       : user.family_name,
     auth0_id: user.user_id,
     email: user.email || "",
-    picture: user.picture_large ? user.picture_large : user.picture
+    picture: user.picture_large ? user.picture_large : user.picture,
   };
 }
 
@@ -138,30 +130,24 @@ async function deleteKehusForUser(user_id) {
   const patch = Kehu.fromJson({ giver_id: null }, { skipValidation: true });
   await Kehu.query()
     .patch(patch)
-    .where(function() {
+    .where(function () {
       this.where("giver_id", user_id).andWhere("owner_id", "<>", user_id);
     })
-    .orWhere(function() {
+    .orWhere(function () {
       this.where("giver_id", user_id).andWhere(raw("claim_id IS NOT NULL"));
     });
   logger.info(`Deleting all user's kehus...`);
-  return await Kehu.query()
-    .delete()
-    .where("owner_id", user_id);
+  return await Kehu.query().delete().where("owner_id", user_id);
 }
 
 async function deleteProfile(user_id) {
   logger.info(`Deleting user: ${user_id}`);
   await deleteKehusForUser(user_id);
-  const user = await User.query()
-    .where("id", user_id)
-    .first();
+  const user = await User.query().where("id", user_id).first();
   logger.info(`Deleting Auth0 data...`);
   await Auth0.deleteUser({ id: user.auth0_id });
   logger.info(`Deleting user data...`);
-  await User.query()
-    .delete()
-    .where("id", user_id);
+  await User.query().delete().where("id", user_id);
   logger.info(`User ${user_id} deleted.`);
 }
 
@@ -173,5 +159,5 @@ module.exports = {
   getContacts,
   parseUser,
   updateProfile,
-  updateProfilePicture
+  updateProfilePicture,
 };

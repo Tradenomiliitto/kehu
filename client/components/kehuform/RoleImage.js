@@ -7,7 +7,7 @@ class RoleImage extends Component {
     className: PropTypes.string,
     id: PropTypes.number.isRequired,
     roles: PropTypes.array.isRequired,
-    selectedId: PropTypes.number
+    selectedId: PropTypes.number,
   };
 
   render() {
@@ -27,7 +27,7 @@ class RoleImage extends Component {
   sanitizeRole() {
     const { id, roles } = this.props;
     return roles
-      .find(r => r.id === id)
+      .find((r) => r.id === id)
       .imageId.toLowerCase()
       .replace(/ä/g, "a")
       .replace(/ö/g, "o")
@@ -45,11 +45,8 @@ class RoleImage extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  roles: state.profile.roles
+const mapStateToProps = (state) => ({
+  roles: state.profile.roles,
 });
 
-export default connect(
-  mapStateToProps,
-  null
-)(RoleImage);
+export default connect(mapStateToProps, null)(RoleImage);

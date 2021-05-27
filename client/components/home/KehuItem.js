@@ -9,7 +9,7 @@ import { capitalizeText } from "../../util/TextUtil";
 
 export class KehuItem extends Component {
   static propTypes = {
-    kehu: PropTypes.object.isRequired
+    kehu: PropTypes.object.isRequired,
   };
 
   render() {
@@ -17,7 +17,7 @@ export class KehuItem extends Component {
     const imageSrc = this.createImageSrc(kehu);
     const classNames = cn({
       FeedItem: true,
-      "FeedItem--noImage": !imageSrc
+      "FeedItem--noImage": !imageSrc,
     });
 
     return (
@@ -55,7 +55,7 @@ export class KehuItem extends Component {
   sanitizeRole(id) {
     const { roles } = this.props;
     return roles
-      .find(r => r.id === id)
+      .find((r) => r.id === id)
       .imageId.toLowerCase()
       .replace(/ä/g, "a")
       .replace(/ö/g, "o")
@@ -78,7 +78,7 @@ export class KehuItem extends Component {
 
     if (kehu.tags && kehu.tags.length) {
       text += `. ${t("kehus.skills", "Asiasanat")}: ${kehu.tags
-        .map(t => t.text)
+        .map((t) => t.text)
         .map(capitalizeText)
         .join(", ")}`;
     }
@@ -87,14 +87,11 @@ export class KehuItem extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  roles: state.profile.roles
+const mapStateToProps = (state) => ({
+  roles: state.profile.roles,
 });
 
 export default compose(
   withTranslation(),
-  connect(
-    mapStateToProps,
-    null
-  )
+  connect(mapStateToProps, null)
 )(KehuItem);

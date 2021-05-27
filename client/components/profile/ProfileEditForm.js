@@ -13,7 +13,7 @@ export class ProfileEditForm extends Component {
     loading: PropTypes.bool.isRequired,
     profile: PropTypes.object.isRequired,
     updateProfile: PropTypes.func.isRequired,
-    onSuccess: PropTypes.func.isRequired
+    onSuccess: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -21,7 +21,7 @@ export class ProfileEditForm extends Component {
     this.state = {
       first_name: props.profile.first_name,
       last_name: props.profile.last_name,
-      email: props.profile.email
+      email: props.profile.email,
     };
   }
 
@@ -80,37 +80,34 @@ export class ProfileEditForm extends Component {
       const message = t("profile.update-error", {
         error,
         defaultValue:
-          "Valitettavasti profiilin päivitys epäonnistui. Tapahtui seuraava virhe: {{error}}"
+          "Valitettavasti profiilin päivitys epäonnistui. Tapahtui seuraava virhe: {{error}}",
       });
       return <ErrorPanel message={message} />;
     }
   }
 
-  handleChange = field => {
+  handleChange = (field) => {
     return ({ target: { value } }) => {
       this.setState({ [field]: value });
     };
   };
 
-  handleSubmit = ev => {
+  handleSubmit = (ev) => {
     ev.preventDefault();
     this.props.updateProfile(this.state);
   };
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   error: state.profile.updateProfileError,
-  loading: state.profile.loading
+  loading: state.profile.loading,
 });
 
 const mapActionsToProps = {
-  updateProfile
+  updateProfile,
 };
 
 export default compose(
   withTranslation(),
-  connect(
-    mapStateToProps,
-    mapActionsToProps
-  )
+  connect(mapStateToProps, mapActionsToProps)
 )(ProfileEditForm);

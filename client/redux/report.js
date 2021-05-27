@@ -10,7 +10,7 @@ export const initialState = {
   situations: [],
   tags: [],
   unselectedKehus: new Set(),
-  unselectedSentKehus: new Set()
+  unselectedSentKehus: new Set(),
 };
 
 function sortItems(a, b) {
@@ -25,8 +25,8 @@ function sortItems(a, b) {
 
 function reduceItems(property, acc, kehu) {
   if (kehu[property]) {
-    kehu[property].forEach(item => {
-      const index = acc.findIndex(it => it.text === item.text);
+    kehu[property].forEach((item) => {
+      const index = acc.findIndex((it) => it.text === item.text);
       if (index === -1) {
         acc.push({ text: item.text, count: 1 });
       } else {
@@ -41,7 +41,7 @@ function countRoles(kehus) {
   return kehus
     .reduce((acc, kehu) => {
       const index = kehu.role
-        ? acc.findIndex(it => it.role === kehu.role.role)
+        ? acc.findIndex((it) => it.role === kehu.role.role)
         : -1;
       if (index === -1 && kehu.role) {
         acc.push({ role: kehu.role.role, count: 1 });
@@ -63,7 +63,7 @@ function countSituations(kehus) {
 
 function addToRoles(roles, kehu) {
   const index = kehu.role
-    ? roles.findIndex(role => role.role === kehu.role.role)
+    ? roles.findIndex((role) => role.role === kehu.role.role)
     : -1;
   if (index === -1 && kehu.role) {
     roles.push({ role: kehu.role.role, count: 1 });
@@ -83,7 +83,7 @@ export function countReportStatistics(
     numberOfSentKehus: sent_kehus ? sent_kehus.length : numberOfSentKehus,
     roles: countRoles(kehus),
     tags: countTags(kehus),
-    situations: countSituations(kehus)
+    situations: countSituations(kehus),
   };
 }
 
@@ -97,20 +97,20 @@ export default function reducer(state = initialState, action = {}) {
           action.payload.kehus,
           action.payload.sent_kehus,
           state.numberOfSentKehus
-        )
+        ),
       };
 
     case SEND_KEHU_SUCCESS:
       return {
         ...state,
-        numberOfSentKehus: state.numberOfSentKehus + 1
+        numberOfSentKehus: state.numberOfSentKehus + 1,
       };
 
     case ADD_KEHU_SUCCESS:
       return {
         ...state,
         numberOfKehus: state.numberOfKehus + 1,
-        roles: addToRoles(state.roles, action.payload.kehu)
+        roles: addToRoles(state.roles, action.payload.kehu),
       };
 
     case SELECT_KEHU:
@@ -123,7 +123,7 @@ export default function reducer(state = initialState, action = {}) {
       }
       return {
         ...state,
-        [selection]: unselectedKehus
+        [selection]: unselectedKehus,
       };
 
     default:

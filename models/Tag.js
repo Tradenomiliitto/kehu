@@ -12,8 +12,8 @@ class Tag extends Model {
       required: ["text"],
       properties: {
         id: { type: "integer" },
-        text: { type: "string" }
-      }
+        text: { type: "string" },
+      },
     };
   }
 
@@ -26,11 +26,11 @@ class Tag extends Model {
           from: "Tags.id",
           through: {
             from: "Kehus_Tags.kehu_id",
-            to: "Kehus_Tags.tag_id"
+            to: "Kehus_Tags.tag_id",
           },
-          to: "Kehus.id"
-        }
-      }
+          to: "Kehus.id",
+        },
+      },
     };
   }
 

@@ -25,7 +25,7 @@ import reducer, {
   CLAIM_KEHU,
   CLAIM_KEHU_SUCCESS,
   CLAIM_KEHU_ERROR,
-  claimKehu
+  claimKehu,
 } from "./kehu";
 import thunk from "redux-thunk";
 import configureMockStore from "redux-mock-store";
@@ -53,13 +53,13 @@ describe("client:redux:kehu", () => {
       const kehus = [
         { id: 1, date_given: "2019-01-02" },
         { id: 2, date_given: "2019-01-03" },
-        { id: 3, date_given: "2019-01-04" }
+        { id: 3, date_given: "2019-01-04" },
       ];
       const state = {
         ...initialState,
         loading: true,
         error: new Error(),
-        kehus
+        kehus,
       };
       const kehu = { id: 4, date_given: "2019-01-01" };
       const action = { type: ADD_KEHU_SUCCESS, payload: { kehu } };
@@ -68,7 +68,7 @@ describe("client:redux:kehu", () => {
         loading: false,
         savedKehu: kehu,
         error: null,
-        kehus: [...kehus.reverse(), kehu]
+        kehus: [...kehus.reverse(), kehu],
       };
       expect(reducer(state, action)).toEqual(expectedState);
     });
@@ -95,18 +95,18 @@ describe("client:redux:kehu", () => {
         ...initialState,
         loading: true,
         error: new Error(),
-        kehus
+        kehus,
       };
       const action = {
         type: UPDATE_KEHU_SUCCESS,
-        payload: { kehu: updatedKehu }
+        payload: { kehu: updatedKehu },
       };
       const expectedState = {
         ...state,
         loading: false,
         savedKehu: updatedKehu,
         error: null,
-        kehus: [{ id: 1 }, updatedKehu, { id: 3 }]
+        kehus: [{ id: 1 }, updatedKehu, { id: 3 }],
       };
       expect(reducer(state, action)).toEqual(expectedState);
     });
@@ -126,7 +126,7 @@ describe("client:redux:kehu", () => {
         error: true,
         savedKehu: {},
         sendKehuSuccess: true,
-        claimKehuSuccess: true
+        claimKehuSuccess: true,
       };
       const action = { type: RESET_KEHU_FORM };
       const expectedState = {
@@ -135,7 +135,7 @@ describe("client:redux:kehu", () => {
         error: null,
         savedKehu: null,
         sendKehuSuccess: false,
-        claimKehuSuccess: false
+        claimKehuSuccess: false,
       };
       expect(reducer(state, action)).toEqual(expectedState);
     });
@@ -155,14 +155,14 @@ describe("client:redux:kehu", () => {
         ...initialState,
         loading: true,
         removeKehuError: new Error(),
-        kehus
+        kehus,
       };
       const action = { type: REMOVE_KEHU_SUCCESS, payload: kehuId };
       const expectedState = {
         ...state,
         loading: false,
         kehus: expectedKehus,
-        removeKehuError: null
+        removeKehuError: null,
       };
       expect(reducer(state, action)).toEqual(expectedState);
     });
@@ -173,14 +173,14 @@ describe("client:redux:kehu", () => {
         ...initialState,
         loading: true,
         removeKehuError: null,
-        kehus
+        kehus,
       };
       const error = new Error("kehu error");
       const action = { type: REMOVE_KEHU_ERROR, payload: error };
       const expectedState = {
         ...state,
         loading: false,
-        removeKehuError: error
+        removeKehuError: error,
       };
       expect(reducer(state, action)).toEqual(expectedState);
     });
@@ -196,7 +196,7 @@ describe("client:redux:kehu", () => {
       const state = { ...state, loading: true };
       const payload = {
         kehus: [{ id: 1 }, { id: 2 }],
-        sent_kehus: [{ id: 3 }, { id: 4 }]
+        sent_kehus: [{ id: 3 }, { id: 4 }],
       };
       const action = { type: GET_KEHUS_SUCCESS, payload };
       const expectedState = {
@@ -204,7 +204,7 @@ describe("client:redux:kehu", () => {
         loading: false,
         kehus: payload.kehus,
         sentKehus: payload.sent_kehus,
-        kehusLoaded: true
+        kehusLoaded: true,
       };
       expect(reducer(state, action)).toEqual(expectedState);
     });
@@ -217,7 +217,7 @@ describe("client:redux:kehu", () => {
         ...state,
         loading: false,
         error,
-        kehusLoaded: true
+        kehusLoaded: true,
       };
       expect(reducer(state, action)).toEqual(expectedState);
     });
@@ -232,13 +232,13 @@ describe("client:redux:kehu", () => {
     it("on SEND_KEHU_SUCCESS", () => {
       const sentKehus = [
         { id: 1, date_given: "2019-01-01" },
-        { id: 2, date_given: "2019-01-03" }
+        { id: 2, date_given: "2019-01-03" },
       ];
       const state = {
         ...initialState,
         loading: true,
         error: new Error(),
-        sentKehus
+        sentKehus,
       };
       const kehu = { id: 3, date_given: "2019-01-02" };
       const action = { type: SEND_KEHU_SUCCESS, payload: { kehu } };
@@ -247,7 +247,7 @@ describe("client:redux:kehu", () => {
         loading: false,
         error: null,
         sendKehuSuccess: true,
-        sentKehus: [sentKehus[1], kehu, sentKehus[0]]
+        sentKehus: [sentKehus[1], kehu, sentKehus[0]],
       };
       expect(reducer(state, action)).toEqual(expectedState);
     });
@@ -271,7 +271,7 @@ describe("client:redux:kehu", () => {
       const state = {
         ...initialState,
         loading: true,
-        error: new Error()
+        error: new Error(),
       };
       const kehu = { id: 3 };
       const action = { type: CLAIM_KEHU_SUCCESS, payload: { kehu } };
@@ -280,7 +280,7 @@ describe("client:redux:kehu", () => {
         loading: false,
         error: null,
         claimKehuSuccess: true,
-        kehus: [kehu]
+        kehus: [kehu],
       };
       expect(reducer(state, action)).toEqual(expectedState);
     });
@@ -296,12 +296,12 @@ describe("client:redux:kehu", () => {
 
   describe("actions", () => {
     describe("addKehu", () => {
-      it("when adding succeeds", done => {
+      it("when adding succeeds", (done) => {
         const data = { form: 1 };
         const response = { response: 1 };
 
-        ApiUtil.post = jest.fn(() => new Promise(res => res(response)));
-        ApiUtil.get = jest.fn(() => new Promise(res => res(response)));
+        ApiUtil.post = jest.fn(() => new Promise((res) => res(response)));
+        ApiUtil.get = jest.fn(() => new Promise((res) => res(response)));
 
         // addKehu function requires full state
         const state = { kehu: { ...initialState } };
@@ -310,7 +310,7 @@ describe("client:redux:kehu", () => {
           { type: ADD_KEHU },
           { type: ADD_KEHU_SUCCESS, payload: response },
           { type: RESET_REPORTS, payload: { kehus: state.kehu.kehus } },
-          { type: FEED_LOADED, payload: response }
+          { type: FEED_LOADED, payload: response },
         ];
 
         store.dispatch(addKehu(data)).then(() => {
@@ -321,7 +321,7 @@ describe("client:redux:kehu", () => {
         });
       });
 
-      it("when adding fails", done => {
+      it("when adding fails", (done) => {
         const data = { form: 1 };
         const error = new Error("network error");
         ApiUtil.post = jest.fn(() => new Promise((res, rej) => rej(error)));
@@ -329,7 +329,7 @@ describe("client:redux:kehu", () => {
         const store = mockStore(initialState);
         const expectedActions = [
           { type: ADD_KEHU },
-          { type: ADD_KEHU_ERROR, payload: error }
+          { type: ADD_KEHU_ERROR, payload: error },
         ];
 
         store.dispatch(addKehu(data)).then(() => {
@@ -341,13 +341,13 @@ describe("client:redux:kehu", () => {
     });
 
     describe("updateKehu", () => {
-      it("when updating succeeds", done => {
+      it("when updating succeeds", (done) => {
         const kehuId = 3;
         const data = { form: 1 };
         const response = { response: 1 };
 
-        ApiUtil.put = jest.fn(() => new Promise(res => res(response)));
-        ApiUtil.get = jest.fn(() => new Promise(res => res(response)));
+        ApiUtil.put = jest.fn(() => new Promise((res) => res(response)));
+        ApiUtil.get = jest.fn(() => new Promise((res) => res(response)));
 
         const state = { kehu: { ...initialState, kehus: [{ kehu: 1 }] } };
         const store = mockStore(state);
@@ -355,7 +355,7 @@ describe("client:redux:kehu", () => {
           { type: UPDATE_KEHU },
           { type: UPDATE_KEHU_SUCCESS, payload: response },
           { type: RESET_REPORTS, payload: { kehus: state.kehu.kehus } },
-          { type: FEED_LOADED, payload: response }
+          { type: FEED_LOADED, payload: response },
         ];
 
         store.dispatch(updateKehu(kehuId, data)).then(() => {
@@ -366,7 +366,7 @@ describe("client:redux:kehu", () => {
         });
       });
 
-      it("when updating fails", done => {
+      it("when updating fails", (done) => {
         const kehuId = 3;
         const data = { form: 1 };
         const error = new Error("network error");
@@ -375,7 +375,7 @@ describe("client:redux:kehu", () => {
         const store = mockStore(initialState);
         const expectedActions = [
           { type: UPDATE_KEHU },
-          { type: UPDATE_KEHU_ERROR, payload: error }
+          { type: UPDATE_KEHU_ERROR, payload: error },
         ];
 
         store.dispatch(updateKehu(kehuId, data)).then(() => {
@@ -387,12 +387,12 @@ describe("client:redux:kehu", () => {
     });
 
     describe("removeKehu", () => {
-      it("when removing succeeds", done => {
+      it("when removing succeeds", (done) => {
         const kehuId = 1;
         const response = { response: 1 };
 
-        ApiUtil.del = jest.fn(() => new Promise(res => res(response)));
-        ApiUtil.get = jest.fn(() => new Promise(res => res(response)));
+        ApiUtil.del = jest.fn(() => new Promise((res) => res(response)));
+        ApiUtil.get = jest.fn(() => new Promise((res) => res(response)));
 
         const state = { kehu: { ...initialState, kehus: [{ kehu: 1 }] } };
         const store = mockStore(state);
@@ -400,7 +400,7 @@ describe("client:redux:kehu", () => {
           { type: REMOVE_KEHU },
           { type: REMOVE_KEHU_SUCCESS, payload: kehuId },
           { type: RESET_REPORTS, payload: { kehus: state.kehu.kehus } },
-          { type: FEED_LOADED, payload: response }
+          { type: FEED_LOADED, payload: response },
         ];
 
         store.dispatch(removeKehu(kehuId)).then(() => {
@@ -411,7 +411,7 @@ describe("client:redux:kehu", () => {
         });
       });
 
-      it("when removing fails", done => {
+      it("when removing fails", (done) => {
         const kehuId = 1;
         const error = new Error("network error");
         ApiUtil.del = jest.fn(() => new Promise((res, rej) => rej(error)));
@@ -419,7 +419,7 @@ describe("client:redux:kehu", () => {
         const store = mockStore(initialState);
         const expectedActions = [
           { type: REMOVE_KEHU },
-          { type: REMOVE_KEHU_ERROR, payload: error }
+          { type: REMOVE_KEHU_ERROR, payload: error },
         ];
 
         store.dispatch(removeKehu(kehuId)).then(() => {
@@ -431,12 +431,12 @@ describe("client:redux:kehu", () => {
     });
 
     describe("sendKehu", () => {
-      it("when sending succeeds", done => {
+      it("when sending succeeds", (done) => {
         const data = { form: 1 };
         const response = { response: 1 };
 
-        ApiUtil.post = jest.fn(() => new Promise(res => res(response)));
-        ApiUtil.get = jest.fn(() => new Promise(res => res(response)));
+        ApiUtil.post = jest.fn(() => new Promise((res) => res(response)));
+        ApiUtil.get = jest.fn(() => new Promise((res) => res(response)));
 
         // sendKehu function requires full state
         const state = { kehu: { ...initialState } };
@@ -450,10 +450,10 @@ describe("client:redux:kehu", () => {
               kehus: state.kehu.kehus,
               // Note: redux-mock-store does not update the Redux store so
               // sent_kehus is still equal to original state value
-              sent_kehus: state.kehu.sentKehus
-            }
+              sent_kehus: state.kehu.sentKehus,
+            },
           },
-          { type: FEED_LOADED, payload: response }
+          { type: FEED_LOADED, payload: response },
         ];
 
         store.dispatch(sendKehu(data)).then(() => {
@@ -464,7 +464,7 @@ describe("client:redux:kehu", () => {
         });
       });
 
-      it("when sending fails", done => {
+      it("when sending fails", (done) => {
         const data = { form: 1 };
         const error = new Error("network error");
         ApiUtil.post = jest.fn(() => new Promise((res, rej) => rej(error)));
@@ -472,7 +472,7 @@ describe("client:redux:kehu", () => {
         const store = mockStore(initialState);
         const expectedActions = [
           { type: SEND_KEHU },
-          { type: SEND_KEHU_ERROR, payload: error }
+          { type: SEND_KEHU_ERROR, payload: error },
         ];
 
         store.dispatch(sendKehu(data)).then(() => {
@@ -484,11 +484,11 @@ describe("client:redux:kehu", () => {
     });
 
     describe("claimKehu", () => {
-      it("when claiming succeeds", done => {
+      it("when claiming succeeds", (done) => {
         const id = "132-405";
         const response = { response: 1 };
 
-        ApiUtil.get = jest.fn(() => new Promise(res => res(response)));
+        ApiUtil.get = jest.fn(() => new Promise((res) => res(response)));
 
         const state = { kehu: { ...initialState } };
         const store = mockStore(state);
@@ -496,7 +496,7 @@ describe("client:redux:kehu", () => {
           { type: CLAIM_KEHU },
           { type: CLAIM_KEHU_SUCCESS, payload: response },
           { type: RESET_REPORTS, payload: { kehus: state.kehu.kehus } },
-          { type: FEED_LOADED, payload: response }
+          { type: FEED_LOADED, payload: response },
         ];
 
         store.dispatch(claimKehu(id)).then(() => {
@@ -507,7 +507,7 @@ describe("client:redux:kehu", () => {
         });
       });
 
-      it("when claiming fails", done => {
+      it("when claiming fails", (done) => {
         const id = "132-405";
         const error = new Error("network error");
         ApiUtil.get = jest.fn(() => new Promise((res, rej) => rej(error)));
@@ -515,7 +515,7 @@ describe("client:redux:kehu", () => {
         const store = mockStore(initialState);
         const expectedActions = [
           { type: CLAIM_KEHU },
-          { type: CLAIM_KEHU_ERROR, payload: error }
+          { type: CLAIM_KEHU_ERROR, payload: error },
         ];
 
         store.dispatch(claimKehu(id)).then(() => {
@@ -533,14 +533,14 @@ describe("client:redux:kehu", () => {
     });
 
     describe("getKehus", () => {
-      it("when fetching succeeds", done => {
+      it("when fetching succeeds", (done) => {
         const response = [{ id: 1 }, { id: 2 }];
-        ApiUtil.get = jest.fn(() => new Promise(res => res(response)));
+        ApiUtil.get = jest.fn(() => new Promise((res) => res(response)));
 
         const store = mockStore(initialState);
         const expectedActions = [
           { type: GET_KEHUS },
-          { type: GET_KEHUS_SUCCESS, payload: response }
+          { type: GET_KEHUS_SUCCESS, payload: response },
         ];
 
         store.dispatch(getKehus()).then(() => {
@@ -550,14 +550,14 @@ describe("client:redux:kehu", () => {
         });
       });
 
-      it("when fetching fails", done => {
+      it("when fetching fails", (done) => {
         const error = new Error("network error");
         ApiUtil.get = jest.fn(() => new Promise((res, rej) => rej(error)));
 
         const store = mockStore(initialState);
         const expectedActions = [
           { type: GET_KEHUS },
-          { type: GET_KEHUS_ERROR, payload: error }
+          { type: GET_KEHUS_ERROR, payload: error },
         ];
 
         store.dispatch(getKehus()).then(() => {

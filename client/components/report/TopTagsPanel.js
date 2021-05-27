@@ -5,7 +5,7 @@ import TopTagsChart from "./TopTagsChart";
 export default class TopTagsPanel extends Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
-    tags: PropTypes.array.isRequired
+    tags: PropTypes.array.isRequired,
   };
 
   componentDidMount() {
@@ -23,7 +23,7 @@ export default class TopTagsPanel extends Component {
         <div className="TopTagsPanel-wrapper">
           <canvas
             className="TopTagsPanel-canvas"
-            ref={ref => (this.canvas = ref)}
+            ref={(ref) => (this.canvas = ref)}
           />
         </div>
       </div>

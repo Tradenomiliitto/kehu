@@ -18,17 +18,17 @@ describe("client:components:kehuform:AddKehuForm", () => {
     importance: 3,
     tags: [{ text: "tag1" }],
     situations: [{ text: "situation1" }],
-    comment: "comment"
+    comment: "comment",
   };
   const error1 = { msg: "error 1" };
   const error2 = { msg: "error 2" };
   const validationError = {
     responseJson: {
-      errors: [error1, error2]
-    }
+      errors: [error1, error2],
+    },
   };
   const otherError = {
-    message: "Random error"
+    message: "Random error",
   };
   const roles = [{ id: 1, role: "role1" }];
   const situations = [{ text: "situation" }];
@@ -50,7 +50,7 @@ describe("client:components:kehuform:AddKehuForm", () => {
           roles={roles}
           situations={situations}
           tags={tags}
-          t={key => key}
+          t={(key) => key}
         />
       );
     });
@@ -66,7 +66,7 @@ describe("client:components:kehuform:AddKehuForm", () => {
         tags: [],
         situations: [],
         importance: 0,
-        comment: ""
+        comment: "",
       });
     });
 
@@ -87,7 +87,7 @@ describe("client:components:kehuform:AddKehuForm", () => {
           tags: [],
           situations: [],
           importance: 0,
-          comment: ""
+          comment: "",
         });
         expect(updateKehuStub).not.toHaveBeenCalled();
       });
@@ -105,7 +105,7 @@ describe("client:components:kehuform:AddKehuForm", () => {
           roles={roles}
           situations={situations}
           tags={tags}
-          t={key => key}
+          t={(key) => key}
         />
       );
     });
@@ -118,10 +118,10 @@ describe("client:components:kehuform:AddKehuForm", () => {
         role_id: kehu.role_id,
         text: kehu.text,
         date_given: moment(kehu.date_given),
-        tags: kehu.tags.map(t => t.text),
-        situations: kehu.situations.map(s => s.text),
+        tags: kehu.tags.map((t) => t.text),
+        situations: kehu.situations.map((s) => s.text),
         importance: kehu.importance,
-        comment: kehu.comment
+        comment: kehu.comment,
       });
     });
 
@@ -135,10 +135,10 @@ describe("client:components:kehuform:AddKehuForm", () => {
           role_id: kehu.role_id,
           text: kehu.text,
           date_given: moment(kehu.date_given).format(),
-          tags: kehu.tags.map(t => t.text),
-          situations: kehu.situations.map(s => s.text),
+          tags: kehu.tags.map((t) => t.text),
+          situations: kehu.situations.map((s) => s.text),
           importance: kehu.importance,
-          comment: kehu.comment
+          comment: kehu.comment,
         });
         expect(addKehuStub).not.toHaveBeenCalled();
       });
@@ -156,24 +156,18 @@ describe("client:components:kehuform:AddKehuForm", () => {
           roles={roles}
           situations={situations}
           tags={tags}
-          t={key => key}
+          t={(key) => key}
         />
       );
     });
 
     it("renders ErrorPanel for each error", () => {
-      expect(
-        component
-          .find("ErrorPanel")
-          .first()
-          .prop("message")
-      ).toEqual(error1.msg);
-      expect(
-        component
-          .find("ErrorPanel")
-          .last()
-          .prop("message")
-      ).toEqual(error2.msg);
+      expect(component.find("ErrorPanel").first().prop("message")).toEqual(
+        error1.msg
+      );
+      expect(component.find("ErrorPanel").last().prop("message")).toEqual(
+        error2.msg
+      );
     });
   });
 
@@ -188,18 +182,15 @@ describe("client:components:kehuform:AddKehuForm", () => {
           roles={roles}
           situations={situations}
           tags={tags}
-          t={key => key}
+          t={(key) => key}
         />
       );
     });
 
     it("renders ErrorPanel", () => {
-      expect(
-        component
-          .find("ErrorPanel")
-          .first()
-          .prop("message")
-      ).toEqual(`modals.add-kehu.error`);
+      expect(component.find("ErrorPanel").first().prop("message")).toEqual(
+        `modals.add-kehu.error`
+      );
     });
   });
 
