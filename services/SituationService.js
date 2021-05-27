@@ -10,7 +10,7 @@ async function findSituationWithText(text) {
 async function getUserSituations(user_id) {
   const kehus = await Kehu.query()
     .where("owner_id", user_id)
-    .eager("situations");
+    .withGraphFetched("situations");
   return kehus
     .map(k => k.situations)
     .reduce((acc, val) => acc.concat(val), [])

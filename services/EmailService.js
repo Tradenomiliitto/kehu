@@ -53,7 +53,7 @@ async function getKehu(kehu_id, t) {
   return await Kehu.query()
     .context({ t })
     .findById(kehu_id)
-    .eager("[role, situations, tags]")
+    .withGraphFetched("[role, situations, tags]")
     .first();
 }
 

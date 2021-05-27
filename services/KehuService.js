@@ -1,4 +1,5 @@
 const { transaction } = require("objection");
+//const { v4: uuidv4 } = require('uuid');
 const uuidv4 = require("uuid/v4");
 const XLSX = require("xlsx");
 const Kehu = require("../models/Kehu");
@@ -17,7 +18,7 @@ async function getKehus(user_id, t) {
   return await Kehu.query()
     .context({ t })
     .where("owner_id", user_id)
-    .eager("[role, situations, tags]")
+    .withGraphFetched("[role, situations, tags]")
     .orderBy("date_given", "desc");
 }
 
@@ -47,7 +48,7 @@ async function getKehu(user_id, kehu_id, t) {
     .context({ t })
     .where("owner_id", user_id)
     .andWhere("id", kehu_id)
-    .eager("[role, situations, tags]")
+    .withGraphFetched("[role, situations, tags]")
     .first();
 }
 
@@ -156,7 +157,7 @@ async function createKehu(data, t) {
     return await Kehu.query()
       .context({ t })
       .findById(kehu.id)
-      .eager("[role, situations, tags]")
+      .withGraphFetched("[role, situations, tags]")
       .first();
   } catch (error) {
     logger.error(`Creating Kehu failed. Rolling back..`);
@@ -203,7 +204,7 @@ async function sendKehu(data, t) {
     return await Kehu.query()
       .context({ t })
       .findById(kehu.id)
-      .eager("[role]")
+      .withGraphFetched("[role]")
       .first();
   } catch (error) {
     logger.error(`Sending Kehu failed. Rolling back..`);
@@ -249,7 +250,7 @@ async function updateKehu(user_id, kehu_id, data, t) {
     const tagsFromData = parseTags(data);
     const situationsFromData = parseSituations(data);
     const kehu = await Kehu.query()
-      .eager("[situations, tags]")
+      .withGraphFetched("[situations, tags]")
       .where("id", kehu_id)
       .first();
     await unrelateTags(kehu, tagsFromData);
@@ -261,7 +262,7 @@ async function updateKehu(user_id, kehu_id, data, t) {
     return await Kehu.query()
       .context({ t })
       .findById(kehu.id)
-      .eager("[role, situations, tags]")
+      .withGraphFetched("[role, situations, tags]")
       .first();
   } catch (error) {
     logger.error(`Updating Kehu with tags failed. Rolling back..`);
@@ -351,7 +352,7 @@ async function excelReport(userId, i18n) {
       "importance as " + i18n.t("excel-report.headers.stars")
     )
     .where("owner_id", userId)
-    .eager("[role, situations, tags]")
+    .withGraphFetched("[role, situations, tags]")
     .orderBy("date_given", "desc");
 
   // Join arrays to fit in a single spreadsheet cell
@@ -387,7 +388,7 @@ async function excelReport(userId, i18n) {
     .orWhere(function() {
       this.where("giver_id", userId).andWhere(raw("claim_id IS NOT NULL"));
     })
-    .eager("[role]")
+    .withGraphFetched("[role]")
     .orderBy("date_given", "desc");
 
   // Join arrays to fit in a single spreadsheet cell

@@ -10,7 +10,7 @@ async function findTagWithText(text) {
 async function getUserTags(user_id) {
   const kehus = await Kehu.query()
     .where("owner_id", user_id)
-    .eager("tags");
+    .withGraphFetched("tags");
   return kehus
     .map(k => k.tags)
     .reduce((acc, val) => acc.concat(val), [])

@@ -7,8 +7,8 @@ async function getKehus(user_id, t) {
   const kehus = await Kehu.query()
     .context({ t })
     .where("owner_id", user_id)
-    .eager("[role, situations, tags, giver]")
-    .modifyEager("giver", builder => {
+    .withGraphFetched("[role, situations, tags, giver]")
+    .modifyGraph("giver", builder => {
       builder.select("picture");
     })
     .orderBy("date_given", "desc");
