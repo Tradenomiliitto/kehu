@@ -27,12 +27,12 @@ $element-height: 362px;
 }
 
 .PrintableModal-overlay {
-  position: relative;
-  z-index: 2;
   background-color: rgba(0, 0, 0, 0.4);
   height: 100%;
   padding: 0;
+  position: relative;
   width: 100%;
+  z-index: 2;
 }
 
 .PrintableContainer {
@@ -75,45 +75,45 @@ $element-height: 362px;
   }
 
   .element--verticalPadding {
-    padding-top: 10px;
     padding-bottom: 10px;
+    padding-top: 10px;
   }
 
   .PrintableReport__Header {
-    height: 155px;
     background: $white-bg;
+    height: 155px;
     margin-top: 12px;
   }
 
   .PrintableReport__Footer {
+    background: $green;
     height: 100px;
     margin-top: 10px;
-    background: $green;
 
     .Footer__kehu {
-      width: 100px;
       color: $white;
-      font-weight: 300;
-      top: 28px;
-      left: 50px;
-      position: relative;
-      font-size: 0.7rem;
-      line-height: 1.6rem;
       float: left;
+      font-size: 0.7rem;
+      font-weight: 300;
+      left: 50px;
+      line-height: 1.6rem;
+      position: relative;
+      top: 28px;
+      width: 100px;
     }
 
     .Footer__tral-logo {
-      width: 150px;
-      position: relative;
-      right: 47px;
       bottom: 28px;
       float: right;
+      position: relative;
+      right: 47px;
+      width: 150px;
     }
   }
 
   .KehuCount {
-    padding-top: 2rem;
     height: 300px;
+    padding-top: 2rem;
     text-align: left;
   }
 
@@ -136,20 +136,20 @@ $element-height: 362px;
   }
 
   .TopRoles-image {
-    width: 100px;
-    position: absolute;
-    float: right;
     bottom: 40px;
+    float: right;
+    position: absolute;
     right: 40px;
+    width: 100px;
   }
 
   .Thumb-image {
     float: right;
     position: absolute;
-    z-index: 0;
-    width: 40%;
-    top: 100px;
     right: -10px;
+    top: 100px;
+    width: 40%;
+    z-index: 0;
   }
 
   .KehuCount-bottom {
@@ -162,18 +162,18 @@ $element-height: 362px;
     }
 
     .KehuCount-text {
-      width: 50%;
-      font-size: 1.5rem;
       display: inline-block;
+      font-size: 1.5rem;
       vertical-align: top;
+      width: 50%;
     }
 
     .KehuCount-count {
-      top: -2px;
-      right: -5px;
       position: absolute;
-      width: 200px;
+      right: -5px;
       text-align: center;
+      top: -2px;
+      width: 200px;
     }
 
     .KehuCount-bottom {
@@ -185,8 +185,8 @@ $element-height: 362px;
   .element--combined {
     .TopTagsPanel {
       height: auto;
-      padding-top: 5px;
       margin-top: -50px;
+      padding-top: 5px;
     }
 
     .TopTagsPanel-title {
@@ -207,26 +207,27 @@ $element-height: 362px;
   }
 
   .ReportTitle {
+    color: $pink;
     font-size: 4rem;
     font-weight: 500;
-    color: $pink;
   }
 
   .ReportSubtitle {
     font-size: 0.75rem;
-    padding-left: 5px;
     margin-top: -4px;
+    padding-left: 5px;
   }
 
   .ReportUsername {
-    padding-top: 20px;
     font-size: 1rem;
     font-weight: 500;
+    padding-top: 20px;
     text-align: right;
   }
 
   .ReportDate {
     @extend .ReportSubtitle;
+
     text-align: right;
   }
 
@@ -240,8 +241,8 @@ $element-height: 362px;
 }
 
 .html2canvas-container {
-  width: 3000px !important;
   height: 5000px !important;
+  width: 3000px !important;
 }
 
 .ReportElement {
@@ -336,18 +337,18 @@ $element-height: 362px;
 }
 
 .TopRole-column {
-  bottom: 0;
   background: $pink;
-  background: -moz-linear-gradient(top, $pink 1%, $bg-pink 100%);
-  background: -webkit-linear-gradient(top, $pink 1%, $bg-pink 100%);
+  background: linear-gradient(top, $pink 1%, $bg-pink 100%);
+  background: linear-gradient(top, $pink 1%, $bg-pink 100%);
   background: linear-gradient(to bottom, $pink 1%, $bg-pink 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$pink', endColorstr='$bg-pink',GradientType=0 );
+  bottom: 0;
+  filter: progid:dximagetransform.microsoft.gradient( startcolorstr='$pink', endcolorstr='$bg-pink',gradienttype=0 );
   left: 1rem;
   max-height: 0;
+  max-width: 2rem;
   position: absolute;
   transition: max-height 1s ease-out;
   width: 67%;
-  max-width: 2rem;
 
   &--animate {
     max-height: 100%;
@@ -422,8 +423,8 @@ $element-height: 362px;
 }
 
 .ListItems-container {
-  font-weight: 300;
   font-size: 1.2rem;
-  position: relative;
+  font-weight: 300;
   left: -18px;
+  position: relative;
 }

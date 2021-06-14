@@ -5,22 +5,22 @@
   justify-content: center;
 
   &--padding {
-    padding-top: 1rem;
     padding-bottom: 1rem;
+    padding-top: 1rem;
 
     @include mq(sm) {
-      padding-top: 2rem;
       padding-bottom: 2rem;
+      padding-top: 2rem;
     }
 
     @include mq(md) {
-      padding-top: 4rem;
       padding-bottom: 4rem;
+      padding-top: 4rem;
     }
 
     @include mq(lg) {
-      padding-top: 6rem;
       padding-bottom: 6rem;
+      padding-top: 6rem;
     }
   }
 }
@@ -35,8 +35,8 @@
 
 .HeroSection {
   background-image: url(/images/hero-section-mobile.svg);
-  background-repeat: no-repeat;
   background-position: center;
+  background-repeat: no-repeat;
   background-size: contain;
   height: calc(100vh - #{$header-height});
 
@@ -53,8 +53,8 @@
   padding-top: 10%;
 
   @include mq(lg) {
-    background-repeat: no-repeat;
     background-position: right bottom;
+    background-repeat: no-repeat;
   }
 }
 
@@ -109,8 +109,8 @@
 .LandingSection6 {
   @include mq(xl) {
     background-image: url(/images/landing-section-6-image.png);
-    background-repeat: no-repeat;
     background-position: right;
+    background-repeat: no-repeat;
     background-size: contain;
   }
 }

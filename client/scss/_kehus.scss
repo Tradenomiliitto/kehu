@@ -8,9 +8,9 @@
 
 .KehusPanelHeader-title {
   color: $secondary;
+  display: block;
   font-size: 2.625rem;
   font-weight: normal;
-  display: block;
 
   @include mq(md) {
     display: inline-block;
@@ -18,8 +18,8 @@
 }
 
 .KehusPanelHeader-text {
-  margin: 0 0 1rem 0;
   display: block;
+  margin: 0 0 1rem;
 
   @include mq(450px) {
     display: inline;
@@ -66,8 +66,8 @@
 
 .KehusTable-head {
   color: $secondary;
-  font-weight: 500;
   font-size: 0.875rem;
+  font-weight: 500;
 }
 
 .KehusTable-row {
@@ -146,9 +146,9 @@
 
 .KehusPanelHeader-download-report {
   float: right;
-  width: 3em;
-  margin-left: 1em;
   margin-bottom: 1em;
+  margin-left: 1em;
+  width: 3em;
 
   @include mq($until: 730px) {
     margin-left: 2em;

@@ -29,13 +29,13 @@
 }
 
 .RoleSelector-button {
-  margin: 0.25rem;
   background-color: $white;
   border: 1px solid $secondary;
   border-radius: 3px;
   color: $secondary;
   cursor: pointer;
   font-size: 0.75rem;
+  margin: 0.25rem;
   outline: 0;
   padding: 10px 4px 4px;
   transition: $button-transition;
@@ -74,23 +74,23 @@
   height: 220px;
   position: relative;
 
-  &:before,
-  &:after {
+  &::before,
+  &::after {
     background-image: url("/images/quote-marks.svg");
     background-repeat: no-repeat;
     content: "";
     display: block;
-    position: absolute;
     height: 12px;
+    position: absolute;
     width: 12px;
   }
 
-  &:before {
-    top: 1rem;
+  &::before {
     left: 1rem;
+    top: 1rem;
   }
 
-  &:after {
+  &::after {
     bottom: 3rem;
     right: 1rem;
   }
@@ -189,8 +189,8 @@
 .WordCloudValue-removeButton {
   background: transparent;
   border: 0;
-  cursor: pointer;
   color: #ae8991;
+  cursor: pointer;
   left: 2px;
   position: relative;
   top: 1px;
@@ -252,8 +252,8 @@
 .CommentField-button {
   background: transparent;
   border: none;
-  cursor: pointer;
   color: $darkish-grey;
+  cursor: pointer;
   font-weight: 300;
   position: absolute;
   top: 0;

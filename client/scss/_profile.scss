@@ -10,9 +10,9 @@
 }
 
 .ProfilePanel-title {
+  color: $secondary;
   font-size: 42px;
   font-weight: 400;
-  color: $secondary;
 }
 
 .ProfilePicture {
@@ -77,8 +77,9 @@
 
 .ProfileEditButton {
   @extend .KehusTableActionButton;
-  right: 1rem;
+
   position: absolute;
+  right: 1rem;
   top: 0;
 }
 

@@ -29,22 +29,22 @@ $header-height: 66px;
   float: right;
   margin-top: 16px;
 
-  > img {
-    height: 16px;
-  }
-
   @include mq(lg) {
     display: none;
+  }
+
+  > img {
+    height: 16px;
   }
 }
 
 .Header-menuContainer {
   background-color: $lighter-grey;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.14);
+  float: right;
   margin: 0 -0.9375rem;
   position: relative;
   z-index: 5;
-  float: right;
 
   @include mq(lg) {
     box-shadow: none;
@@ -59,12 +59,12 @@ $header-height: 66px;
   overflow: hidden;
   padding: 0;
 
-  &--open {
+  @include mq(lg) {
+    box-shadow: none;
     max-height: 100%;
   }
 
-  @include mq(lg) {
-    box-shadow: none;
+  &--open {
     max-height: 100%;
   }
 }
@@ -94,9 +94,9 @@ $header-height: 66px;
 .Header-profileImage {
   border-radius: 20px;
   bottom: 4px;
+  margin-left: 0.5rem;
   max-height: 40px;
   max-width: 40px;
-  margin-left: 0.5rem;
   position: relative;
 }
 
@@ -121,10 +121,10 @@ $header-height: 66px;
   cursor: pointer;
 
   &.Header-language--desktop {
-    border-left-style: solid;
-    line-height: 2rem;
     border-left-color: #bebebe;
+    border-left-style: solid;
     border-left-width: 2px;
+    line-height: 2rem;
     padding-left: 0.8rem;
   }
 }
@@ -135,20 +135,19 @@ $header-height: 66px;
 
 .Header-languageDropdown {
   background-color: $lighter-grey;
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  top: 3rem;
+  width: 5rem;
 
   .Header--white & {
     background-color: initial;
   }
 
-  position: absolute;
-  display: inline-block;
-  right: 0;
-  top: 3rem;
-  width: 5rem;
-
   > a.Header-languageItem {
-    line-height: initial;
     display: list-item;
+    line-height: initial;
     padding: 0.5rem 0.5rem 0.5rem 0;
   }
 }

@@ -28,8 +28,8 @@ $footer-height: 245px;
 
 .Footer-partners {
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
+  justify-content: center;
   margin-bottom: 1rem;
 }
 
@@ -57,7 +57,7 @@ $footer-height: 245px;
   transition: $button-transition;
 
   &:hover {
-    text-decoration: none;
     color: darken($white, 10%);
+    text-decoration: none;
   }
 }

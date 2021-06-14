@@ -337,7 +337,7 @@ $mq-media-type: all !default;
   $show-breakpoints: $mq-show-breakpoints,
   $breakpoints: $mq-breakpoints
 ) {
-  body:before {
+  body::before {
     background-color: #fcf8e3;
     border-bottom: 1px solid #fbeed5;
     border-left: 1px solid #fbeed5;

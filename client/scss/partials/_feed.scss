@@ -15,9 +15,12 @@ $imageDim: 78px;
 .FeedItem {
   background-color: $white;
   box-shadow: 0 2px 11px 0 rgba(0, 0, 0, 0.16);
-  padding: 1rem 2rem 1rem 1rem;
   margin-bottom: 1rem;
   min-height: calc(2rem + #{$imageDim});
+  // These are required for the new-kehu-ribbon
+  overflow: hidden;
+  padding: 1rem 2rem 1rem 1rem;
+  position: relative;
 
   &--noImage {
     .FeedItem-text,
@@ -25,9 +28,6 @@ $imageDim: 78px;
       padding-left: 0;
     }
   }
-  // These are required for the new-kehu-ribbon
-  overflow: hidden;
-  position: relative;
 }
 
 .FeedItem-image {

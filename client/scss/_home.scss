@@ -42,6 +42,7 @@
 
 .Welcome-title {
   @extend .HomeButtons-title;
+
   margin-bottom: 1.5rem;
 }
 
@@ -57,9 +58,9 @@
 }
 
 .SidebarElement-title {
+  color: $secondary;
   font-size: 1.125rem;
   font-weight: 500;
-  color: $secondary;
 }
 
 .SidebarElement-text {

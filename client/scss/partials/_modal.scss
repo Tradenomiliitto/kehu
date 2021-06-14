@@ -7,12 +7,12 @@
 }
 
 .Modal-overlay {
-  position: relative;
-  z-index: 2;
   background-color: rgba(0, 0, 0, 0.4);
   height: 100%;
   padding: 0;
+  position: relative;
   width: 100%;
+  z-index: 2;
 
   @include mq(lg) {
     padding: 2rem 0;
