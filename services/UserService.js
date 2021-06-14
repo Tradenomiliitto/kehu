@@ -19,6 +19,16 @@ async function updateProfilePicture(user_id, picture) {
   }
 }
 
+async function updateAuth0Id(id, newAuth0Id) {
+  logger.info(`Updating Auth0 ID for user ${id}.`);
+  try {
+    return await User.query().patchAndFetchById(id, { auth0_id: newAuth0Id });
+  } catch (e) {
+    console.error(e.message);
+    throw e;
+  }
+}
+
 async function updateProfile(user_id, data) {
   logger.info(`Updating user ${user_id}.`);
   const user = await User.query().where("id", user_id).first();
@@ -57,7 +67,7 @@ async function updateProfile(user_id, data) {
 
 async function findUserByAuth0Id(auth0_id) {
   try {
-    logger.info("Finding user with auth0_id", auth0_id);
+    logger.debug("Finding user with auth0_id", auth0_id);
     return await User.query().where("auth0_id", auth0_id).first();
   } catch (error) {
     logger.error(error.message);
@@ -160,4 +170,5 @@ module.exports = {
   parseUser,
   updateProfile,
   updateProfilePicture,
+  updateAuth0Id,
 };
