@@ -2,7 +2,7 @@ const winston = require("winston");
 const { colorize, combine, timestamp, printf, errors } = winston.format;
 
 const logger = winston.createLogger({
-  level: "info",
+  level: process.env.LOG_LEVEL || "info",
   format: combine(errors({ stack: true }), winston.format.json()),
   transports: [
     new winston.transports.File({ filename: "error.log", level: "error" }),
