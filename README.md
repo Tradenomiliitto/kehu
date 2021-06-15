@@ -59,11 +59,15 @@ Install dependencies:
 $ npm install
 ```
 
-Run migrations and seeds:
+Run migrations and seeds OR restore from existing database dump (see below how to download dump from Heroku):
 
-```
+```bash
+# Option 1: Initialize empty database
 $ npx knex migrate:latest
 $ npx knex seed:run
+
+# Option 2: Restore database dump
+$ pg_restore --verbose --clean --no-acl --no-owner -h localhost -U YOUR_USERNAME -d DATABASE_NAME latest.dump
 ```
 
 Run [nodemon](https://nodemon.io) server for Express backend and Webpack for frontend in watch mode:
@@ -102,6 +106,21 @@ Then deploy by pushing to the remote
 ```
 $ git push heroku-beta develop:master
 $ git push heroku-prod master
+```
+
+### Heroku database backups
+
+Use the following commands to view, create and download database dumps from Heroku
+
+```bash
+# View existing backups
+$ heroku pg:backups --app kehu
+
+# Create a new backup
+$ heroku pg:backups:capture --app kehu
+
+# Download latest backup
+heroku pg:backups:download --app kehu
 ```
 
 ### License
