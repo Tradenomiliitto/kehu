@@ -2,7 +2,7 @@
 
 Kehu is a social web service for members of the trade union Tradenomiliitto. It is up and running at https://www.mykehu.fi
 
-#### Frontend
+### Frontend
 
 You can find JavaScript and SCSS under /client directory, from where they are build and bundled with webpack.
 
@@ -12,7 +12,7 @@ Frontend is build using old school React and Redux. No CRA, TS or other gimmicks
 
 JavaScript for public section of the application is included in related pug template files, such as [\_header.pug](views/_header.pug).
 
-#### Backend
+### Backend
 
 Kehu backend is build with Express and uses PostgreSQL database for storing model data and Redis for storing user sessions. You need them both
 to run the application. NodeJS backend accesses database through [Objection.js](https://vincit.github.io/objection.js/) ORM (build on top of [Knex](https://knexjs.org)).
@@ -21,7 +21,7 @@ User management and authentication are handled using Auth0 with Passport library
 
 Blog content is managed with Contentful headless CMS.
 
-#### Localization
+### Localization
 
 [i18next](https://www.i18next.com/) internationalization framework is used for localization. Localization files are stored in _public/locales_ directory.
 
@@ -29,7 +29,7 @@ In the private SPA section of the app [react-i18next](https://react.i18next.com/
 
 The public section of the app uses [i18next-http-middleware](https://github.com/i18next/i18next-http-middleware) and the translation keys are extracted from the pug-files either manually or using a helper script `extract-i18n-pug.sh` which creates a _dummy.js_ file. If that file is imported in _client/index.js_ file then Babel plugin extracts those keys as well.
 
-#### Testing
+### Testing
 
 Unit tests are run with [Jest](https://jestjs.io). The unit test files are located within the source code files and
 they follow the `*.test.js` naming convention.
@@ -45,7 +45,7 @@ Google Chrome 90.0.4430.212
 $ npm install chromedriver@90
 ```
 
-### Local Development
+## Local Development
 
 Setup environment variables by copying .env-template and fill in needed variables.
 
@@ -83,7 +83,7 @@ $ npm run test
 $ npm run jest:watch
 ```
 
-### Deployment
+## Deployment
 
 Prettier is run on precommit hook for all staged files.
 
@@ -108,7 +108,7 @@ $ git push heroku-beta develop:master
 $ git push heroku-prod master
 ```
 
-### Heroku database backups
+## Heroku database backups
 
 Use the following commands to view, create and download database dumps from Heroku
 
@@ -123,7 +123,21 @@ $ heroku pg:backups:capture --app kehu
 heroku pg:backups:download --app kehu
 ```
 
-### License
+## Database models
+
+### Kehus
+
+There are four different ways to create Kehus:
+
+| How Kehu was created                          | giver_id  | giver_name                      | owner_id           | receiver_name                    | receiver_email                         | claim_id | group_id   | is_public                        |
+| --------------------------------------------- | --------- | ------------------------------- | ------------------ | -------------------------------- | -------------------------------------- | -------- | ---------- | -------------------------------- |
+| User adds a Kehu to himself                   | `user_id` | user input when adding the Kehu | `user_id`          | NULL                             | NULL                                   | NULL     | NULL       | NULL                             |
+| User sends a Kehu to an existing Kehu user    | `user_id` | `user_name`                     | `receiver_user_id` | user input when sending the Kehu | email found from user database         | NULL     | NULL       | NULL                             |
+| User sends a Kehu to a new Kehu user          | `user_id` | `user_name`                     | NULL               | user input when sending the Kehu | email **NOT** found from user database | uuidv4   | NULL       | NULL                             |
+| User sends a Kehu to a user in a common group | `user_id` | `user_name`                     | `receiver_user_id` | `receiver_name`                  | `receiver_email`                       | NULL     | `group_id` | `true/false` based on user input |
+| User sends a Kehu to a whole group            | `user_id` | `user_name`                     | NULL               | `group_name`                     | NULL                                   | NULL     | `group_id` | `true`                           |
+
+## License
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 

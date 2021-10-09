@@ -14,12 +14,24 @@ class Kehu extends Model {
         claim_id: { type: ["string", "null"] },
         comment: { type: "string" },
         date_given: { type: "string" },
+        // Giver (i.e. sender) of the Kehu. Sent Kehus page lists all
+        // Kehus user has sent EXCEPT when the receiver is the user itself (this
+        // is the case when user adds a Kehu themselves)
         giver_id: { type: "integer" },
+        // Giver name is shown to the owner in Received Kehus page. When sending
+        // a Kehu it's the user's name, when adding a Kehu it's what user wrote
         giver_name: { type: "string" },
         date_owner_saw: { type: ["string", "null"] },
         importance: { type: "integer", minimum: 0, maximum: 5 },
+        // Owner (i.e. receiver) of the Kehu. Received Kehus page lists all
+        // Kehus user owns
         owner_id: { type: "integer" },
+        // Receiver name is not visible to the owner but is visible in Sent
+        // Kehus for the sender. When sending a Kehu the value is what user
+        // wrote when sending it, when adding a Kehu the value is NULL
         receiver_name: { type: "string" },
+        // Receiver email is not visible to anyone. Value is NULL when adding
+        // a Kehu
         receiver_email: { type: "string" },
         role_id: { type: ["integer", "null"] },
         text: { type: "string" },
