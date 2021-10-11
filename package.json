@@ -88,7 +88,7 @@
     "babel-jest": "^27.0.2",
     "babel-loader": "^8.2.2",
     "babel-plugin-i18next-extract": "^0.8.3",
-    "chromedriver": "^90.0.1",
+    "chromedriver": "^92.0.2",
     "css-loader": "^5.2.6",
     "dotenv-webpack": "^7.0.3",
     "enzyme": "^3.11.0",
