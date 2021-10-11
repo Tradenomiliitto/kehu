@@ -85,7 +85,7 @@ export class ProfilePanel extends Component {
                           {t("profile.logout-btn", "Kirjaudu ulos")}
                         </a>
                         <button
-                          className="Button Button--inverse ProfileActionLink ProfileDeleteLink"
+                          className="Button Button--inverse ProfileActionLink ProfileDeleteLink delete-profile-nw"
                           onClick={this.handleDeleteButtonClick}
                         >
                           {t("profile.delete-profile", "Poista käyttäjätunnus")}

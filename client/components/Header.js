@@ -76,7 +76,7 @@ export class Header extends Component {
                     device="mobile"
                     closeMenu={this.toggleMenu}
                   />
-                  <li className="Header-menuItem">
+                  <li className="Header-menuItem profile-nw">
                     <Link to="/profiili" onClick={this.closeMenu}>
                       {profile && profile.first_name}
                       <img
