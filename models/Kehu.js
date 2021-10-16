@@ -35,6 +35,8 @@ class Kehu extends Model {
         receiver_email: { type: "string" },
         role_id: { type: ["integer", "null"] },
         text: { type: "string" },
+        group_id: { type: "integer" },
+        is_public: { type: "boolean" },
       },
     };
   }
@@ -87,6 +89,22 @@ class Kehu extends Model {
         join: {
           from: "Roles.id",
           to: "Kehus.role_id",
+        },
+      },
+      group: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: `${__dirname}/Group`,
+        join: {
+          from: "Groups.id",
+          to: "Kehus.group_id",
+        },
+      },
+      likes: {
+        relation: Model.HasManyRelation,
+        modelClass: `${__dirname}/Like`,
+        join: {
+          from: "Kehus.id",
+          to: "Likes.kehu_id",
         },
       },
     };
