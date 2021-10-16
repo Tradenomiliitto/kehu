@@ -108,7 +108,9 @@ $ git push heroku-beta develop:master
 $ git push heroku-prod master
 ```
 
-## Heroku database backups
+## Database backups
+
+### Heroku
 
 Use the following commands to view, create and download database dumps from Heroku
 
@@ -120,10 +122,31 @@ $ heroku pg:backups --app kehu
 $ heroku pg:backups:capture --app kehu
 
 # Download latest backup
-heroku pg:backups:download --app kehu
+$ heroku pg:backups:download --app kehu
+```
+
+### Local
+
+Export local database using Postgres custom compressed format
+
+```bash
+$ pg_dump --host=localhost --username=YOUR_USERNAME --format=custom DATABASE_NAME > kehudb_`date +%Y%m%d`.dump
+```
+
+### Import backup
+
+```bash
+$ pg_restore --verbose --clean --no-acl --no-owner -h localhost -U YOUR_USERNAME -d DATABASE_NAME latest.dump
 ```
 
 ## Database models
+
+### Migrations
+
+- See completed and pending migrations `npx knex migrate:list`
+- Create a new migration `npx knex migrate:make migration_name`
+- Run pending migrations `npx knex migrate:latest`
+- Undo last migration `npx knex migrate:down`
 
 ### Kehus
 
