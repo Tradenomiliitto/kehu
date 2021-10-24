@@ -4,7 +4,9 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { withTranslation } from "react-i18next";
 
-export class ReportPanel extends Component {
+import CreateGroupForm from "./components/groups/CreateGroupForm";
+
+export class GroupsPanel extends Component {
   static propTypes = {
     // i18n props
     t: PropTypes.func.isRequired,
@@ -16,6 +18,15 @@ export class ReportPanel extends Component {
       isCreateNewGroupVisible: false,
     };
   }
+
+  closeCreateGroupModal = () => {
+    this.setState({ isCreateNewGroupVisible: false });
+  };
+
+  openCreateGroupModal = (ev) => {
+    ev.preventDefault();
+    this.setState({ isCreateNewGroupVisible: true });
+  };
 
   render() {
     const { t } = this.props;
@@ -40,13 +51,19 @@ export class ReportPanel extends Component {
                     "Luo ensimmäinen yhteisösi nyt ja kutsu kehurinki koolle!"
                   )}
                 </p>
-                <button className="Button GroupsPanel-addGroupButton">
+                <button
+                  className="Button GroupsPanel-addGroupButton"
+                  onClick={this.openCreateGroupModal}
+                >
                   {t("groups.new-group-button", "Luo uusi yhteisö")}
                 </button>
               </div>
             </div>
           </div>
         </div>
+        {this.state.isCreateNewGroupVisible && (
+          <CreateGroupForm closeModal={this.closeCreateGroupModal} />
+        )}
       </div>
     );
   }
@@ -59,4 +76,4 @@ const mapStateToProps = (state) => ({
 export default compose(
   withTranslation(),
   connect(mapStateToProps)
-)(ReportPanel);
+)(GroupsPanel);
