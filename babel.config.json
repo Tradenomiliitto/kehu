@@ -1,14 +1,14 @@
 {
   "presets": ["@babel/preset-env", "@babel/preset-react"],
   "plugins": [
-    [
+    /*[
       "i18next-extract",
       {
         "locales": ["fi", "en"],
         "useI18nextDefaultValue": ["fi"],
         "outputPath": "public/locales/{{ns}}-{{locale}}.json"
       }
-    ],
+    ],*/
     "@babel/plugin-proposal-class-properties",
     "@babel/plugin-proposal-export-default-from",
     "react-hot-loader/babel"

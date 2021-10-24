@@ -2,7 +2,7 @@
 
 Kehu is a social web service for members of the trade union Tradenomiliitto. It is up and running at https://www.mykehu.fi
 
-### Frontend
+## Frontend
 
 You can find JavaScript and SCSS under /client directory, from where they are build and bundled with webpack.
 
@@ -12,7 +12,7 @@ Frontend is build using old school React and Redux. No CRA, TS or other gimmicks
 
 JavaScript for public section of the application is included in related pug template files, such as [\_header.pug](views/_header.pug).
 
-### Backend
+## Backend
 
 Kehu backend is build with Express and uses PostgreSQL database for storing model data and Redis for storing user sessions. You need them both
 to run the application. NodeJS backend accesses database through [Objection.js](https://vincit.github.io/objection.js/) ORM (build on top of [Knex](https://knexjs.org)).
@@ -21,15 +21,19 @@ User management and authentication are handled using Auth0 with Passport library
 
 Blog content is managed with Contentful headless CMS.
 
-### Localization
+## Localization
 
 [i18next](https://www.i18next.com/) internationalization framework is used for localization. Localization files are stored in _public/locales_ directory.
 
-In the private SPA section of the app [react-i18next](https://react.i18next.com/) is used and the localizations are extracted from the code using Babel plugin [babel-plugin-i18next-extract](https://i18next-extract.netlify.app/). The plugin is configured in _.babelrc_ file.
+In the private SPA section of the app [react-i18next](https://react.i18next.com/) is used and the localizations are extracted from the code using Babel plugin [babel-plugin-i18next-extract](https://i18next-extract.netlify.app/). Translation default values (i.e. `t("translation key", "default translation")`) are extracted to Finnish translations. The plugin is configured in _babel.config.json_ file and by default it is commented off since otherwise any change to default translation requires manual change in translation file. The best practise is
+
+- Finalize part of the application.
+- Uncomment plugin, run in and comment plugin again.
+- Finnish translations now match the code. Manually translate other languages.
 
 The public section of the app uses [i18next-http-middleware](https://github.com/i18next/i18next-http-middleware) and the translation keys are extracted from the pug-files either manually or using a helper script `extract-i18n-pug.sh` which creates a _dummy.js_ file. If that file is imported in _client/index.js_ file then Babel plugin extracts those keys as well.
 
-### Testing
+## Testing
 
 Unit tests are run with [Jest](https://jestjs.io). The unit test files are located within the source code files and
 they follow the `*.test.js` naming convention.
