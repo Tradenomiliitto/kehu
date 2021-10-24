@@ -21,3 +21,26 @@
 .GroupsPanel-addGroupButton {
   margin: 1rem;
 }
+
+.InviteMembersField-disclaimer {
+  font-size: x-small;
+}
+
+.InviteMembersField-input {
+  @extend .WordCloudField;
+}
+
+.InviteMembersField-addedEmail {
+  @extend .WordCloudValue;
+  display: block;
+  width: fit-content;
+}
+
+.InviteMembersField-removeEmailBtn {
+  @extend .WordCloudValue-removeButton;
+}
+
+.InviteMembersField-incorrectEmail {
+  color: red;
+  font-size: smaller;
+}

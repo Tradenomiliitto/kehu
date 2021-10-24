@@ -13,6 +13,7 @@ export default function GroupNameField({ value, handleChange }) {
         id="group_name"
         name="group_name"
         type="text"
+        required
         placeholder={t("modals.create-group.group-name-placeholder", "Nimi")}
         value={value}
         onChange={handleChange}

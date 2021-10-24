@@ -10,6 +10,8 @@ import KehuFormModal from "../KehuFormModal";
 import ErrorPanel from "../ErrorPanel";
 import { sendKehu } from "../../redux/kehu";
 import GroupNameField from "./GroupNameField";
+import GroupDescriptionField from "./GroupDescriptionField";
+import InviteMembersField from "./InviteMembersField";
 
 export class CreateGroupForm extends Component {
   static propTypes = {
@@ -24,6 +26,8 @@ export class CreateGroupForm extends Component {
     this.state = {
       preview: false,
       groupName: "",
+      groupDescription: "",
+      membersToInvite: [],
     };
   }
 
@@ -42,7 +46,7 @@ export class CreateGroupForm extends Component {
   }
 
   renderForm() {
-    const { groupName } = this.state;
+    const { groupName, groupDescription, membersToInvite } = this.state;
     const { t } = this.props;
     return (
       <form className="Form form-js" onSubmit={this.togglePreview}>
@@ -50,6 +54,14 @@ export class CreateGroupForm extends Component {
         <GroupNameField
           value={groupName}
           handleChange={this.handleChangeWithEvent("groupName")}
+        />
+        <GroupDescriptionField
+          value={groupDescription}
+          handleChange={this.handleChangeWithEvent("groupDescription")}
+        />
+        <InviteMembersField
+          value={membersToInvite}
+          handleChange={this.handleChangeWithValue("membersToInvite")}
         />
         <input
           type="submit"
