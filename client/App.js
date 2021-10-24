@@ -206,11 +206,13 @@ const AppContainer = compose(
 
 const HotApp = hot(module)(AppContainer);
 
-export default () => (
-  <Provider store={store}>
-    <HotApp />
-  </Provider>
-);
+export default function ProviderApp() {
+  return (
+    <Provider store={store}>
+      <HotApp />
+    </Provider>
+  );
+}
 
 function lngRedirect(currentLng, pathname) {
   // Get language from path, e.g. '/fi/kehut' --> pathLng === 'fi'
