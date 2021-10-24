@@ -55,6 +55,10 @@ module.exports = {
         // This is because e.g. `export default withTranslation()(FeedPanel);`
         // is imported as FeedPanel.
         "import/no-named-as-default": "off",
+        // Need to create alt texts and translations before this can be enabled
+        "jsx-a11y/alt-text": "off",
+        // Link tags are styled as button, needs refractoring
+        "jsx-a11y/anchor-is-valid": "off",
       },
     },
   ],
