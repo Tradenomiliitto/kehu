@@ -51,6 +51,10 @@ module.exports = {
       rules: {
         "react/jsx-uses-vars": "warn",
         "react/jsx-uses-react": "warn",
+        // Disable rule because named export is commonly used as default export.
+        // This is because e.g. `export default withTranslation()(FeedPanel);`
+        // is imported as FeedPanel.
+        "import/no-named-as-default": "off",
       },
     },
   ],
