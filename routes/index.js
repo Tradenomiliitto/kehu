@@ -5,7 +5,13 @@ const kehuApi = require("./api/kehu");
 const { ensureAuthenticated } = require("../utils/Middlewares");
 
 // Allowed routes which are redirected to React app
-const CLIENT_ROUTES = ["/kehut", "/kehut/lisaa/*", "/profiili", "/raportit"];
+const CLIENT_ROUTES = [
+  "/kehut",
+  "/kehut/lisaa/*",
+  "/profiili",
+  "/raportit",
+  "/yhteisot",
+];
 
 module.exports = function setupRoutes(app) {
   app.use("/api/v1/profiili", ensureAuthenticated, userApi);

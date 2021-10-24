@@ -22,6 +22,7 @@ import ClaimKehuPanel from "./ClaimKehuPanel";
 import KehusPanel from "./KehusPanel";
 import ProfilePanel from "./ProfilePanel";
 import ReportPanel from "./ReportPanel";
+import GroupsPanel from "./GroupsPanel";
 import Spinner from "./components/Spinner";
 import { handlePageView } from "./util/AnalyticsUtil";
 import { supportedLanguages } from "./i18n";
@@ -120,6 +121,7 @@ export class App extends Component {
             <Route exact path={`${lng}/kehut`} component={KehusPanel} />
             <Route exact path={`${lng}/profiili`} component={ProfilePanel} />
             <Route exact path={`${lng}/raportit`} component={ReportPanel} />
+            <Route exact path={`${lng}/yhteisot`} component={GroupsPanel} />
             <Route
               render={(props) =>
                 lngRedirect(this.props.i18n.language, props.location.pathname)

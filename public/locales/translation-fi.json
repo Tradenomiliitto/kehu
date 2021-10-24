@@ -7,10 +7,19 @@
     "terms": "Käyttöehdot",
     "tradenomiliitto": "Tradenomiliitto"
   },
+  "groups": {
+    "new-group-button": "Luo uusi yhteisö",
+    "no-groups": {
+      "text-1": "Yhteisöt ovat Kehun työkalu tiimeille, kavereille ja muille porukoille. Yhteisön sisällä voitte kehua toisianne julkisesti tai yksityisesti sekä kehua koko porukkaa.",
+      "text-2": "Luo ensimmäinen yhteisösi nyt ja kutsu kehurinki koolle!",
+      "title": "Et kuulu vielä Kehu-yhteisöön"
+    }
+  },
   "header": {
     "add-kehu-link": "Lisää Kehu",
     "blog-link": "Blogi",
     "change-language": "Vaihda kieltä",
+    "groups-link": "Yhteisöni",
     "kehut-link": "Kehut",
     "report-link": "Raportit",
     "send-kehu-link": "Lähetä Kehu"

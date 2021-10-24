@@ -1,0 +1,23 @@
+.GroupsPanel-title {
+  color: $secondary;
+  font-size: 2rem;
+  font-weight: normal;
+  margin-bottom: 1.5rem;
+}
+
+.GroupsPanel-dashedBox {
+  text-align: center;
+  border: 2px dashed $medium-grey;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  padding: 40px 30px 40px 30px;
+}
+
+.GroupsPanel-emptyText {
+  margin: auto;
+  max-width: 700px;
+}
+
+.GroupsPanel-addGroupButton {
+  margin: 1rem;
+}

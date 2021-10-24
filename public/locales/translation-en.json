@@ -7,10 +7,19 @@
     "terms": "Terms of Service",
     "tradenomiliitto": "Union of Professional Business Graduates"
   },
+  "groups": {
+    "new-group-button": "",
+    "no-groups": {
+      "text-1": "",
+      "text-2": "",
+      "title": ""
+    }
+  },
   "header": {
     "add-kehu-link": "Add Kehu",
     "blog-link": "Blog",
     "change-language": "Change language",
+    "groups-link": "My communities",
     "kehut-link": "Your Kehus",
     "report-link": "Kehu report",
     "send-kehu-link": "Send Kehu"

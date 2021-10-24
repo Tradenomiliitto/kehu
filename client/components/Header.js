@@ -61,6 +61,10 @@ export class Header extends Component {
                     </a>
                   </li>
                   {this.renderMenuItem(
+                    "/yhteisot",
+                    t("header.groups-link", "Yhteisöni")
+                  )}
+                  {this.renderMenuItem(
                     "/raportit",
                     t("header.report-link", "Raportit")
                   )}
