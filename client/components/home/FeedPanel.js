@@ -8,6 +8,8 @@ import SentKehuItem from "./SentKehuItem";
 export class FeedPanel extends Component {
   static propTypes = {
     items: PropTypes.array.isRequired,
+    // i18n props
+    t: PropTypes.func.isRequired,
   };
 
   render() {

@@ -15,6 +15,7 @@ describe("client:components:KehuFormModal", () => {
         title={title}
         toggleModal={toggleModalStub}
         resetKehuFormState={resetKehuFormStateStub}
+        t={(key) => key}
       >
         {childComponent}
       </KehuFormModal>

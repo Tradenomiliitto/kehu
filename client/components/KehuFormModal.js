@@ -8,10 +8,13 @@ import { resetKehuFormState } from "../redux/kehu";
 export class KehuFormModal extends Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
+    children: PropTypes.node.isRequired,
     resetKehuFormState: PropTypes.func.isRequired,
     hasCloseCross: PropTypes.bool,
     hasCloseButton: PropTypes.bool,
     closeModal: PropTypes.func,
+    // i18n props
+    t: PropTypes.func.isRequired,
   };
 
   static defaultProps = {

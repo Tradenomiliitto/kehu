@@ -16,6 +16,9 @@ export class Header extends Component {
     profile: PropTypes.object.isRequired,
     toggleAddKehuFormModal: PropTypes.func.isRequired,
     toggleSendKehuFormModal: PropTypes.func.isRequired,
+    // i18n props
+    t: PropTypes.func.isRequired,
+    i18n: PropTypes.object.isRequired,
   };
 
   constructor() {

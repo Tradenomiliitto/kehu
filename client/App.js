@@ -40,6 +40,10 @@ export class App extends Component {
     getProfile: PropTypes.func.isRequired,
     getKehus: PropTypes.func.isRequired,
     kehuToEdit: PropTypes.object,
+    // i18n props coming from withTranslation()
+    t: PropTypes.func.isRequired,
+    i18n: PropTypes.object.isRequired,
+    tReady: PropTypes.bool,
   };
 
   state = {

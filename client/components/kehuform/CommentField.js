@@ -7,6 +7,8 @@ export class CommentField extends Component {
   static propTypes = {
     value: PropTypes.string.isRequired,
     handleChange: PropTypes.func.isRequired,
+    // i18n props
+    t: PropTypes.func.isRequired,
   };
 
   constructor() {
