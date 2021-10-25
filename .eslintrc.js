@@ -25,6 +25,14 @@ module.exports = {
       },
     },
     {
+      files: "client/**/*.test.js",
+      globals: {
+        React: true,
+        shallow: true,
+        fetch: true,
+      },
+    },
+    {
       files: "client/**/*.js",
       parser: "@babel/eslint-parser",
       parserOptions: {
