@@ -12,6 +12,7 @@ import { sendKehu } from "../../redux/kehu";
 import GroupNameField from "./GroupNameField";
 import GroupDescriptionField from "./GroupDescriptionField";
 import InviteMembersField from "./InviteMembersField";
+import GroupPictureField from "./GroupPictureField";
 
 export class CreateGroupForm extends Component {
   static propTypes = {
@@ -28,6 +29,7 @@ export class CreateGroupForm extends Component {
       groupName: "",
       groupDescription: "",
       membersToInvite: [],
+      groupPictureUrl: "",
     };
   }
 
@@ -62,6 +64,9 @@ export class CreateGroupForm extends Component {
         <InviteMembersField
           value={membersToInvite}
           handleChange={this.handleChangeWithValue("membersToInvite")}
+        />
+        <GroupPictureField
+          setPictureUrl={this.handleChangeWithValue("groupPictureUrl")}
         />
         <input
           type="submit"

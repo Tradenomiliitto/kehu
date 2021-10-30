@@ -44,3 +44,39 @@
   color: red;
   font-size: smaller;
 }
+
+.GroupPicture {
+  display: inline-block;
+  margin-top: 15px;
+  margin-right: 15px;
+  border-radius: 50%;
+  overflow: hidden;
+  height: 100px;
+  width: 100px;
+  border: 1px solid $dark-grey;
+  background-color: #01a78f;
+
+  &.Selected {
+    outline: $dark-pink solid 3.5px;
+    outline-offset: 2px;
+  }
+}
+
+.GroupPicture-image {
+  padding: 15px;
+  height: 100%;
+  width: 100%;
+}
+
+.AddGroupPicture {
+  @extend .GroupPicture;
+  border-style: dashed;
+  border-width: 2px;
+  background-color: $white-bg;
+  font-size: x-small;
+  text-align: center;
+
+  .PlusSign {
+    font-size: large;
+  }
+}
