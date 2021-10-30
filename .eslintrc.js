@@ -50,6 +50,9 @@ module.exports = {
         browser: true,
         jest: true,
       },
+      globals: {
+        cloudinary: true, // Cloudinary widget loaded in app.pug
+      },
       extends: [
         "plugin:import/recommended",
         "plugin:react/recommended", // General React linting
