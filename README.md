@@ -33,6 +33,26 @@ In the private SPA section of the app [react-i18next](https://react.i18next.com/
 
 The public section of the app uses [i18next-http-middleware](https://github.com/i18next/i18next-http-middleware) and the translation keys are extracted from the pug-files either manually or using a helper script `extract-i18n-pug.sh` which creates a _dummy.js_ file. If that file is imported in _client/index.js_ file then Babel plugin extracts those keys as well.
 
+## Image uploads
+
+Profile and group pictures are uploaded to Cloudinary using secure upload with Cloudinary widget. Secure upload requires backend endpoint for signature generation (provided in `profiili/cloudinary-signature`). Uploaded files are processed with uploadPreset provided to widget. Following environment variables are required (first four can be copied directly from Cloudinary dashboard)
+
+- `CLOUDINARY_URL`: cloud_name, api_key and api_secret required for backend connection
+- `CLOUDINARY_SECRET`: secret used to sign uploads
+- `REACT_APP_CLOUDINARY_API_KEY`: account api key
+- `REACT_APP_CLOUDINARY_CLOUD_NAME`: cloud name for uploads
+- `REACT_APP_CLOUDINARY_UPLOAD_PRESET`: upload preset name which contains instructions how uploaded images are processed (resizing etc.), defined in Cloudinary dashboard -> Settings -> Upload -> Upload presets
+
+Following settings are required in the Cloudinary upload preset:
+
+- Overwrite: true
+- Invalidate: true
+- Use filename or externally defined Public ID: true
+- Unique filename: false
+- Delivery type: upload
+- Access mode: public
+- Incoming Transformation: c_crop,g_custom/c_limit,h_512,w_512
+
 ## Testing
 
 Unit tests are run with [Jest](https://jestjs.io). The unit test files are located within the source code files and
