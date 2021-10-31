@@ -1,6 +1,5 @@
 const { transaction } = require("objection");
-//const { v4: uuidv4 } = require('uuid');
-const uuidv4 = require("uuid/v4");
+const { v4: uuidv4 } = require("uuid");
 const XLSX = require("xlsx");
 const Kehu = require("../models/Kehu");
 const { findTagWithText } = require("./TagService");
