@@ -80,7 +80,7 @@ export default function GroupPictureField({ value, handleChange }) {
   async function pictureUploadCb(url) {
     setIsUploadingPicture(false);
     if (url != null) {
-      updateState({ userPictureUrl: url, selectedPicture: -1 });
+      updateState({ url, userPictureUrl: url, selectedPicture: -1 });
     }
   }
 }
@@ -97,19 +97,13 @@ GroupPictureField.propTypes = {
 function GroupPicture({ id, url, handleClick, isSelected }) {
   return (
     <button
-      className={"GroupPicture" + (isSelected ? " Selected" : "")}
+      className={
+        "GroupPicture" +
+        (isSelected ? " Selected" : "") +
+        (id >= 0 ? " GroupPictureHack" : "")
+      }
       type="button"
       onClick={() => handleClick(url, id)}
-      style={
-        /* HACK: remove this when real default group button received
-         */ id >= 0
-          ? {
-              padding: "15px",
-              border: "1px solid $dark-grey",
-              backgroundColor: "#cfcfcf",
-            }
-          : {}
-      }
     >
       <img className="GroupPicture-image" src={url} />
     </button>

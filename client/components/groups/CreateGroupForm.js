@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { compose } from "redux";
-import { withTranslation } from "react-i18next";
+import { withTranslation, useTranslation } from "react-i18next";
 import moment from "moment";
 
 import Portal from "../Portal";
@@ -56,7 +56,7 @@ export class CreateGroupForm extends Component {
       this.state;
     const { t } = this.props;
     return (
-      <form className="Form form-js" onSubmit={this.togglePreview}>
+      <form className="Form" onSubmit={this.togglePreview}>
         {this.renderErrors()}
         <GroupNameField
           value={groupName}
@@ -83,16 +83,35 @@ export class CreateGroupForm extends Component {
     );
   }
 
-  // TODO
   renderPreview() {
-    const { groupName } = this.state;
+    const { groupName, groupDescription, membersToInvite, groupPicture } =
+      this.state;
     const { t } = this.props;
     return (
-      <div className="SendKehuPreview preview-js">
+      <div className="SendKehuPreview">
         {this.renderErrors()}
-        <p className="SendKehuPreview-receiver receiver-nw">
-          Yhteisön nimi: {groupName}
-        </p>
+        <div
+          className={
+            "GroupPicturePreview" +
+            (groupPicture.url.startsWith("/images") ? " GroupPictureHack" : "")
+          }
+        >
+          <img className="GroupPicture-image" src={groupPicture.url} />
+        </div>
+
+        <div className="CreateGroupPreview-GroupName">{groupName}</div>
+        <div className="CreateGroupPreview-GroupDescription">
+          {groupDescription}
+        </div>
+
+        <InvitedMembers membersToInvite={membersToInvite} />
+
+        <div className="CreateGroupPreview-PreviewInfo">
+          {t(
+            "modals.create-group.preview-info",
+            "Kun luot yhteisön sinusta tulee yhteisön admin. Adminina voit myöhemmin lisätä jäseniä yhteisöösi."
+          )}
+        </div>
 
         <div className="SendKehuPreview-buttons">
           <button
@@ -105,7 +124,10 @@ export class CreateGroupForm extends Component {
             className="Button Button--fullWidth submit-send-kehu-nw send-kehu-js"
             onClick={this.createGroup}
           >
-            {t("modals.create-group.create-group-btn", "Luo ryhmä")}
+            {t(
+              "modals.create-group.create-group-btn",
+              "Luo yhteisö ja lähetä kutsut"
+            )}
           </button>
         </div>
       </div>
@@ -170,3 +192,24 @@ export default compose(
   withTranslation(),
   connect(mapStateToProps, mapDispatchToProps)
 )(CreateGroupForm);
+
+function InvitedMembers({ membersToInvite }) {
+  const [t] = useTranslation();
+
+  return (
+    <div className="CreateGroupPreview-InviteMembers">
+      <div className="InviteMembersTitle">
+        {t("modals.create-group.members-to-invite", "Kutsutaan jäsenet:")}
+      </div>
+      {membersToInvite.map((member, idx) => (
+        <div className="MemberEmail" key={idx}>
+          {member}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+InvitedMembers.propTypes = {
+  membersToInvite: PropTypes.arrayOf(PropTypes.string),
+};

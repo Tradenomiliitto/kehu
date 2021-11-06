@@ -80,3 +80,49 @@
     font-size: large;
   }
 }
+
+.GroupPicturePreview {
+  @extend .GroupPicture;
+  display: block;
+  margin: 20px auto 10px auto;
+}
+
+.CreateGroupPreview-GroupName {
+  text-align: center;
+  font-size: larger;
+  font-weight: 500;
+}
+
+.CreateGroupPreview-GroupDescription {
+  text-align: center;
+  font-size: smaller;
+  font-weight: 500;
+}
+
+.CreateGroupPreview-InviteMembers {
+  margin: 20px -1rem;
+  padding: 10px 2rem;
+  background-color: $light-grey;
+
+  .InviteMembersTitle {
+    color: $green;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  .MemberEmail {
+    font-weight: 300;
+  }
+}
+
+.CreateGroupPreview-PreviewInfo {
+  font-size: small;
+  margin: 0 1rem;
+}
+
+/* HACK: remove this when real default group buttons are received*/
+.GroupPictureHack {
+  padding: 15px;
+  border: 1px solid $dark-grey;
+  background-color: #cfcfcf;
+}
