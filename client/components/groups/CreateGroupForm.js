@@ -29,7 +29,11 @@ export class CreateGroupForm extends Component {
       groupName: "",
       groupDescription: "",
       membersToInvite: [],
-      groupPictureUrl: "",
+      groupPicture: {
+        url: "",
+        selectedPicture: null,
+        userPictureUrl: null,
+      },
     };
   }
 
@@ -48,7 +52,8 @@ export class CreateGroupForm extends Component {
   }
 
   renderForm() {
-    const { groupName, groupDescription, membersToInvite } = this.state;
+    const { groupName, groupDescription, membersToInvite, groupPicture } =
+      this.state;
     const { t } = this.props;
     return (
       <form className="Form form-js" onSubmit={this.togglePreview}>
@@ -66,7 +71,8 @@ export class CreateGroupForm extends Component {
           handleChange={this.handleChangeWithValue("membersToInvite")}
         />
         <GroupPictureField
-          setPictureUrl={this.handleChangeWithValue("groupPictureUrl")}
+          value={groupPicture}
+          handleChange={this.handleChangeWithValue("groupPicture")}
         />
         <input
           type="submit"

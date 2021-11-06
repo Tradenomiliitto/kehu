@@ -102,10 +102,7 @@ router.get("/cloudinary-signature", (req, res) => {
   logger.info("Sending Cloudinary signature", { params_to_sign: req.query });
   let response;
   try {
-    // Verify that user is uploading and potentially overwriting their own picture
-    if (req.query.data.public_id !== "profile_" + req.user.auth0_id) {
-      throw new Error("public_id not matching profile");
-    }
+    isPermittedToUploadPicture(req);
 
     response = cloudinary.utils.api_sign_request(
       req.query.data,
@@ -119,6 +116,27 @@ router.get("/cloudinary-signature", (req, res) => {
   }
   res.send(response);
 });
+
+// Throw an error if user is not permitted to upload the picture
+function isPermittedToUploadPicture(req) {
+  const { public_id } = req.query.data;
+  // Everyone is allowed to upload temp_group pictures which are uploaded
+  // before group is created
+  if (public_id.startsWith("temp_group")) return;
+
+  // User can upload and potentially overwrite only their own picture
+  if (
+    public_id.startsWith("profile") &&
+    public_id !== "profile_" + req.user.auth0_id
+  ) {
+    throw new Error("public_id not matching profile");
+  }
+
+  // Only admins can update group pictures
+  if (public_id.startsWith("group")) {
+    // TODO: check that user is admin of the group
+  }
+}
 
 router.put("/kuva", async (req, res) => {
   try {
