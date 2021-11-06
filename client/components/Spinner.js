@@ -5,6 +5,7 @@ import MDSpinner from "react-md-spinner";
 export default class Spinner extends Component {
   static propTypes = {
     options: PropTypes.object,
+    customClassName: PropTypes.string,
   };
 
   render() {
@@ -17,7 +18,7 @@ export default class Spinner extends Component {
     };
     const props = Object.assign({}, defaultOptions, this.props.options);
     return (
-      <div className="Spinner">
+      <div className={this.props.customClassName ?? "Spinner"}>
         <MDSpinner {...props} />
       </div>
     );
