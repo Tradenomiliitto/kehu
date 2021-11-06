@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
+import Spinner from "../Spinner";
 
 import { uploadWidget } from "../../util/uploadWidget";
 
@@ -19,6 +20,7 @@ const DEFAULT_GROUP_PICTURES = [
 
 export default function GroupPictureField({ value, handleChange }) {
   const [t, i18n] = useTranslation();
+  const [isUploadingPicture, setIsUploadingPicture] = useState(false);
   const { selectedPicture, userPictureUrl } = value;
 
   let defaultPictures = [];
@@ -41,16 +43,10 @@ export default function GroupPictureField({ value, handleChange }) {
           "Valitse tai lisää yhteisön profiilikuva"
         )}
       </label>
-      <button
-        className="AddGroupPicture"
-        type="button"
-        onClick={() =>
-          uploadWidget("temp_group_" + uuidv4(), i18n.language, pictureUploadCb)
-        }
-      >
-        <div className="PlusSign">+</div>
-        Lisää kuva
-      </button>
+      <AddGroupPictureButton
+        isUploadingPicture={isUploadingPicture}
+        uploadPicture={uploadPicture}
+      />
       {userPictureUrl && (
         <GroupPicture
           id={-1}
@@ -76,9 +72,15 @@ export default function GroupPictureField({ value, handleChange }) {
     updateState({ url, selectedPicture: key });
   }
 
+  function uploadPicture() {
+    setIsUploadingPicture(true);
+    uploadWidget("temp_group_" + uuidv4(), i18n.language, pictureUploadCb);
+  }
+
   async function pictureUploadCb(url) {
+    setIsUploadingPicture(false);
     if (url != null) {
-      updateState({ userPictureUrl: url });
+      updateState({ userPictureUrl: url, selectedPicture: -1 });
     }
   }
 }
@@ -119,4 +121,26 @@ GroupPicture.propTypes = {
   url: PropTypes.string.isRequired,
   handleClick: PropTypes.func.isRequired,
   isSelected: PropTypes.bool,
+};
+
+function AddGroupPictureButton({ isUploadingPicture, uploadPicture }) {
+  const [t] = useTranslation();
+
+  return (
+    <button className="AddGroupPicture" type="button" onClick={uploadPicture}>
+      {isUploadingPicture ? (
+        <Spinner customClassName="" options={{ size: 40 }} />
+      ) : (
+        <>
+          <div className="PlusSign">+</div>
+          {t("modals.create-group.add-group-picture", "Lisää kuva")}
+        </>
+      )}
+    </button>
+  );
+}
+
+AddGroupPictureButton.propTypes = {
+  isUploadingPicture: PropTypes.bool.isRequired,
+  uploadPicture: PropTypes.func.isRequired,
 };
