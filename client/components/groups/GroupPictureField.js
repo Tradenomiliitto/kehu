@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
-import { v4 as uuidv4 } from "uuid";
 import Spinner from "../Spinner";
 
 import { uploadWidget } from "../../util/uploadWidget";
@@ -12,6 +11,7 @@ export default function GroupPictureField({
   value,
   handleChange,
   errorMessage,
+  userId,
 }) {
   const [t, i18n] = useTranslation();
   const [isUploadingPicture, setIsUploadingPicture] = useState(false);
@@ -71,7 +71,7 @@ export default function GroupPictureField({
 
   function uploadPicture() {
     setIsUploadingPicture(true);
-    uploadWidget("temp_group_" + uuidv4(), i18n.language, pictureUploadCb);
+    uploadWidget("create_group_" + userId, i18n.language, pictureUploadCb);
   }
 
   async function pictureUploadCb(url) {
@@ -90,6 +90,7 @@ GroupPictureField.propTypes = {
   }),
   handleChange: PropTypes.func.isRequired,
   errorMessage: PropTypes.string,
+  userId: PropTypes.string,
 };
 
 function GroupPicture({ id, url, handleClick, isSelected }) {

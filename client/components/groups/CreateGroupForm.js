@@ -18,6 +18,7 @@ export class CreateGroupForm extends Component {
   static propTypes = {
     closeModal: PropTypes.func.isRequired,
     error: PropTypes.object,
+    profile: PropTypes.object.isRequired,
     // i18n props
     t: PropTypes.func.isRequired,
   };
@@ -79,6 +80,7 @@ export class CreateGroupForm extends Component {
           value={groupPicture}
           handleChange={this.handleChangeWithValue("groupPicture")}
           errorMessage={this.state.errors.groupPicture}
+          userId={this.props.profile.auth0_id}
         />
         <input
           type="button"
@@ -218,6 +220,7 @@ export class CreateGroupForm extends Component {
 
 const mapStateToProps = (state) => ({
   error: state.kehu.error,
+  profile: state.profile.profile,
 });
 
 const mapDispatchToProps = {
