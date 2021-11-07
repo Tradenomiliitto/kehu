@@ -15,6 +15,8 @@ export class KehuFormModal extends Component {
     closeModal: PropTypes.func,
     // i18n props
     t: PropTypes.func.isRequired,
+    // Ref for programmable scrolling of the modal
+    contentRef: PropTypes.object,
   };
 
   static defaultProps = {
@@ -23,11 +25,11 @@ export class KehuFormModal extends Component {
   };
 
   render() {
-    const { t } = this.props;
+    const { t, contentRef } = this.props;
     return (
       <div className="Modal">
         <div className="Modal-overlay">
-          <div className="Modal-content">
+          <div className="Modal-content" ref={contentRef}>
             <div className="Modal-header">
               {this.props.hasCloseCross && (
                 <button

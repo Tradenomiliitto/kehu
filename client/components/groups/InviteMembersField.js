@@ -22,6 +22,7 @@ export default function InviteMembersField({ value, handleChange }) {
 
   const addMember = (ev) => {
     ev.preventDefault();
+    ev.currentTarget.blur();
     if (!inputEl.current.checkValidity()) {
       setAddMemberError(
         t("modals.create-group.invalid-email", "Virheellinen sähköposti")
@@ -67,9 +68,7 @@ export default function InviteMembersField({ value, handleChange }) {
         {t("modals.create-group.add-member-btn", "Lisää")}
       </button>
       {addMemberError && (
-        <div className="InviteMembersField-incorrectEmail">
-          {addMemberError}
-        </div>
+        <div className="GroupsPanel-ErrorMessage">{addMemberError}</div>
       )}
       {renderItems(value, handleRemoveClick)}
     </div>

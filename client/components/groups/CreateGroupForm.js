@@ -34,7 +34,10 @@ export class CreateGroupForm extends Component {
         selectedPicture: null,
         userPictureUrl: null,
       },
+      errors: {},
     };
+    // Ref to modal to use scrollTop if validation gives errors
+    this.modalRef = React.createRef();
   }
 
   render() {
@@ -44,6 +47,7 @@ export class CreateGroupForm extends Component {
         <KehuFormModal
           title={t("modals.create-group.title", "Luo yhteisö")}
           closeModal={this.props.closeModal}
+          contentRef={this.modalRef}
         >
           {this.state.preview ? this.renderPreview() : this.renderForm()}
         </KehuFormModal>
@@ -56,11 +60,12 @@ export class CreateGroupForm extends Component {
       this.state;
     const { t } = this.props;
     return (
-      <form className="Form" onSubmit={this.togglePreview}>
+      <form className="Form">
         {this.renderErrors()}
         <GroupNameField
           value={groupName}
           handleChange={this.handleChangeWithEvent("groupName")}
+          errorMessage={this.state.errors.groupName}
         />
         <GroupDescriptionField
           value={groupDescription}
@@ -73,9 +78,11 @@ export class CreateGroupForm extends Component {
         <GroupPictureField
           value={groupPicture}
           handleChange={this.handleChangeWithValue("groupPicture")}
+          errorMessage={this.state.errors.groupPicture}
         />
         <input
-          type="submit"
+          type="button"
+          onClick={this.showPreview}
           className="Button Button--fullWidth"
           value={t("modals.create-group.preview-btn", "Esikatsele")}
         />
@@ -116,7 +123,7 @@ export class CreateGroupForm extends Component {
         <div className="SendKehuPreview-buttons">
           <button
             className="Button Button--fullWidth Button--inverseNoBorders"
-            onClick={this.togglePreview}
+            onClick={this.hidePreview}
           >
             {t("modals.create-group.modify-group-btn", "Muokkaa yhteisöä")}
           </button>
@@ -163,9 +170,16 @@ export class CreateGroupForm extends Component {
     };
   };
 
-  togglePreview = (ev) => {
+  showPreview = (ev) => {
     ev.preventDefault();
-    this.setState((state) => ({ preview: !state.preview }));
+    ev.currentTarget.blur();
+    if (this.validateInput()) this.setState({ preview: true });
+  };
+
+  hidePreview = (ev) => {
+    ev.preventDefault();
+    ev.currentTarget.blur();
+    this.setState({ preview: false });
   };
 
   // TODO
@@ -178,6 +192,33 @@ export class CreateGroupForm extends Component {
     console.log("TODO: luo kehu");
     //this.props.sendKehu(formData);
   };
+
+  validateInput() {
+    const { t } = this.props;
+    const { groupName, groupPicture } = this.state;
+    const errors = {};
+    let isValid = true;
+
+    if (!groupName) {
+      isValid = false;
+      errors.groupName = this.props.t(
+        "modals.create-group.empty-groupname-error",
+        "Yhteisöllä on oltava nimi"
+      );
+      this.modalRef.current.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    if (!groupPicture.url) {
+      isValid = false;
+      errors.groupPicture = t(
+        "modals.create-group.empty-grouppicture-error",
+        "Yhteisölle on valittava kuva"
+      );
+    }
+
+    this.setState({ errors });
+    return isValid;
+  }
 }
 
 const mapStateToProps = (state) => ({

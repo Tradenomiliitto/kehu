@@ -18,7 +18,11 @@ const DEFAULT_GROUP_PICTURES = [
   "/images/role-pomo-active.svg",
 ];
 
-export default function GroupPictureField({ value, handleChange }) {
+export default function GroupPictureField({
+  value,
+  handleChange,
+  errorMessage,
+}) {
   const [t, i18n] = useTranslation();
   const [isUploadingPicture, setIsUploadingPicture] = useState(false);
   const { selectedPicture, userPictureUrl } = value;
@@ -56,6 +60,9 @@ export default function GroupPictureField({ value, handleChange }) {
         />
       )}
       <div className="GroupPictures">{defaultPictures}</div>
+      {errorMessage && (
+        <div className="GroupsPanel-ErrorMessage">{errorMessage}</div>
+      )}
     </div>
   );
 
@@ -92,6 +99,7 @@ GroupPictureField.propTypes = {
     userPictureUrl: PropTypes.string,
   }),
   handleChange: PropTypes.func.isRequired,
+  errorMessage: PropTypes.string,
 };
 
 function GroupPicture({ id, url, handleClick, isSelected }) {
