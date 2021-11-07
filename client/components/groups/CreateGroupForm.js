@@ -97,12 +97,7 @@ export class CreateGroupForm extends Component {
     return (
       <div className="SendKehuPreview">
         {this.renderErrors()}
-        <div
-          className={
-            "GroupPicturePreview" +
-            (groupPicture.url.startsWith("/images") ? " GroupPictureHack" : "")
-          }
-        >
+        <div className="GroupPicturePreview">
           <img className="GroupPicture-image" src={groupPicture.url} />
         </div>
 

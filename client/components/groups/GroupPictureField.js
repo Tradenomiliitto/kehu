@@ -6,17 +6,7 @@ import Spinner from "../Spinner";
 
 import { uploadWidget } from "../../util/uploadWidget";
 
-const DEFAULT_GROUP_PICTURES = [
-  "/images/role-alainen-active.svg",
-  "/images/role-asiakas-active.svg",
-  "/images/role-kaveri-active.svg",
-  "/images/role-kollega-active.svg",
-  "/images/role-lahipiiri-active.svg",
-  "/images/role-mina-itse-active.svg",
-  "/images/role-muu-active.svg",
-  "/images/role-opettaja-active.svg",
-  "/images/role-pomo-active.svg",
-];
+const DEFAULT_GROUP_PICTURES = ["/images/group-default.png"];
 
 export default function GroupPictureField({
   value,
@@ -105,11 +95,7 @@ GroupPictureField.propTypes = {
 function GroupPicture({ id, url, handleClick, isSelected }) {
   return (
     <button
-      className={
-        "GroupPicture" +
-        (isSelected ? " Selected" : "") +
-        (id >= 0 ? " GroupPictureHack" : "")
-      }
+      className={"GroupPicture" + (isSelected ? " Selected" : "")}
       type="button"
       onClick={() => handleClick(url, id)}
     >
