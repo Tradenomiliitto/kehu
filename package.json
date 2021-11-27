@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "npm run build:prod && npm run migrate:latest",
-    "build:dev": "npx webpack --env dev",
+    "build:dev": "npx webpack --env dev --watch",
     "build:prod": "NODE_ENV=production npx webpack --env prod",
     "lint": "eslint --ext js . ; stylelint '**/*.{css,scss}'",
     "lint:fix": "eslint --fix --ext js . ; stylelint --fix '**/*.{css,scss}'",
