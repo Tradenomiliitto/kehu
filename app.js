@@ -36,6 +36,7 @@ const staticify = require("staticify")(path.join(__dirname, "public"));
 const { setupLocals } = require("./utils/ServerUtils");
 const setupPassport = require("./passport");
 const setupRoutes = require("./routes");
+const logger = require("./logger");
 
 pg.defaults.ssl = isProd;
 const knex = Knex({
@@ -60,13 +61,16 @@ app.use((req, res, next) => {
   next();
 });
 
-if (!isProd) {
+if (!isProd && process.env.WEBPACK_HOT_RELOAD) {
+  logger.info("Webpack building frontend... Watch and hot reload enabled.");
   app.use(
     require("webpack-dev-middleware")(compiler, {
       publicPath: webpackConfig.output.publicPath,
     })
   );
   app.use(require("webpack-hot-middleware")(compiler));
+} else {
+  logger.info("Frontend build step skipped, using existing build");
 }
 
 app.disable("x-powered-by");
