@@ -24,7 +24,6 @@ const webpackConfig = isProd ? null : require("./webpack.dev.config");
 const compiler = isProd ? null : webpack(webpackConfig);
 
 const { initializeI18n } = require("./utils/i18n");
-const log = require("./logger");
 const RedisStore = connectRedis(session);
 const csrfProtection = csrf({ cookie: true });
 const staticify = require("staticify")(path.join(__dirname, "public"));
@@ -127,7 +126,7 @@ app.use(function (err, req, res, next) {
   res.locals.error = req.app.get("env") === "development" ? err : {};
 
   if (err.status !== 404) {
-    log.warn("Express error handler", { err });
+    logger.warn("Express error handler", { err });
   }
 
   res.status(err.status || 500);
