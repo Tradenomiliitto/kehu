@@ -131,6 +131,17 @@ app.use(function (err, req, res, next) {
   }
 
   res.status(err.status || 500);
+
+  // Handle errors for ajax requests (provide error in JSON instead of html)
+  if (req.get("Accept") === "application/json") {
+    res.json({
+      message: err.message,
+      // Provide error also in express-validator format so it will be shown to user
+      errors: [{ msg: err.message }],
+    });
+    return;
+  }
+
   res.render("error", {
     user: req.user,
     env: process.env,
