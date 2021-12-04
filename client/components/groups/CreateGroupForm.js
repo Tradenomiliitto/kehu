@@ -3,12 +3,11 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { compose } from "redux";
 import { withTranslation, useTranslation } from "react-i18next";
-import moment from "moment";
 
 import Portal from "../Portal";
 import KehuFormModal from "../KehuFormModal";
 import ErrorPanel from "../ErrorPanel";
-import { sendKehu } from "../../redux/kehu";
+import { createGroup, resetCreateGroupForm } from "../../redux/group";
 import GroupNameField from "./GroupNameField";
 import GroupDescriptionField from "./GroupDescriptionField";
 import InviteMembersField from "./InviteMembersField";
@@ -17,8 +16,12 @@ import GroupPictureField from "./GroupPictureField";
 export class CreateGroupForm extends Component {
   static propTypes = {
     closeModal: PropTypes.func.isRequired,
+    // mapStateToProps
     error: PropTypes.object,
-    profile: PropTypes.object.isRequired,
+    userAuth0Id: PropTypes.string.isRequired,
+    // mapDispatchToProps
+    createGroup: PropTypes.func.isRequired,
+    resetCreateGroupForm: PropTypes.func.isRequired,
     // i18n props
     t: PropTypes.func.isRequired,
   };
@@ -47,7 +50,7 @@ export class CreateGroupForm extends Component {
       <Portal>
         <KehuFormModal
           title={t("modals.create-group.title", "Luo yhteisö")}
-          closeModal={this.props.closeModal}
+          closeModal={this.closeForm}
           contentRef={this.modalRef}
         >
           {this.state.preview ? this.renderPreview() : this.renderForm()}
@@ -80,7 +83,7 @@ export class CreateGroupForm extends Component {
           value={groupPicture}
           handleChange={this.handleChangeWithValue("groupPicture")}
           errorMessage={this.state.errors.groupPicture}
-          userId={this.props.profile.auth0_id}
+          userId={this.props.userAuth0Id}
         />
         <input
           type="button"
@@ -138,7 +141,6 @@ export class CreateGroupForm extends Component {
     );
   }
 
-  // TODO
   renderErrors() {
     const { t, error } = this.props;
     if (error && error.responseJson && error.responseJson.errors) {
@@ -147,9 +149,13 @@ export class CreateGroupForm extends Component {
       ));
     }
     if (error && error.message) {
-      const message = t("modals.send-kehu.error", {
-        error: error.message,
-        defaultValue: `Valitettavasti Kehun lähettäminen epäonnistui. Seuraava virhe tapahtui: {{error}}`,
+      let errMessage = error.message;
+      if (error?.responseJson?.error)
+        errMessage += ": " + error?.responseJson?.error;
+
+      const message = t("modals.create-group.error", {
+        error: errMessage,
+        defaultValue: `Valitettavasti Yhteisön luominen epäonnistui. Seuraava virhe tapahtui: {{error}}`,
       });
       return <ErrorPanel message={message} />;
     }
@@ -167,6 +173,11 @@ export class CreateGroupForm extends Component {
     };
   };
 
+  closeForm = () => {
+    this.props.resetCreateGroupForm();
+    this.props.closeModal();
+  };
+
   showPreview = (ev) => {
     ev.preventDefault();
     ev.currentTarget.blur();
@@ -179,15 +190,15 @@ export class CreateGroupForm extends Component {
     this.setState({ preview: false });
   };
 
-  // TODO
   createGroup = () => {
     const formData = {
-      ...this.state,
-      date_given: moment(this.state.date_given).format(),
+      name: this.state.groupName,
+      description: this.state.groupDescription,
+      picture: this.state.groupPicture.url,
+      members: this.state.membersToInvite,
     };
-    delete formData.preview;
-    console.log("TODO: luo kehu");
-    //this.props.sendKehu(formData);
+    this.props.createGroup(formData);
+    this.closeForm();
   };
 
   validateInput() {
@@ -219,12 +230,13 @@ export class CreateGroupForm extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  error: state.kehu.error,
-  profile: state.profile.profile,
+  error: state.group.error,
+  userAuth0Id: state.profile.profile.auth0_id,
 });
 
 const mapDispatchToProps = {
-  sendKehu,
+  createGroup,
+  resetCreateGroupForm,
 };
 
 export default compose(
