@@ -142,9 +142,35 @@ const updateProfileSchema = {
   },
 };
 
+const createGroupSchema = {
+  name: {
+    isString: true,
+    notEmpty: true,
+    errorMessage: "Ryhmän nimi on pakollinen tieto.",
+    trim: true,
+  },
+  description: {
+    isString: true,
+    optional: true,
+    errorMessage: "Ryhmän kuvaus ei ole pakollinen tieto.",
+    trim: true,
+  },
+  picture: {
+    isString: true,
+    notEmpty: true,
+    errorMessage: "Ryhmän kuva on pakollinen tieto.",
+    trim: true,
+  },
+  members: {
+    isArray: true,
+    errorMessage: "Ryhmän jäsenet ovat pakollinen tieto.",
+  },
+};
+
 module.exports = {
   addKehuSchema,
   sendKehuSchema,
   updateReceivedKehuSchema,
   updateProfileSchema,
+  createGroupSchema,
 };
