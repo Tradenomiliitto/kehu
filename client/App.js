@@ -18,6 +18,7 @@ import KehuSuccessPanel from "./components/kehuform/KehuSuccessPanel";
 import SendKehuSuccessPanel from "./components/kehuform/SendKehuSuccessPanel";
 import { getProfile } from "./redux/profile";
 import { getKehus } from "./redux/kehu";
+import { getGroups } from "./redux/group";
 import ClaimKehuPanel from "./ClaimKehuPanel";
 import KehusPanel from "./KehusPanel";
 import ProfilePanel from "./ProfilePanel";
@@ -41,6 +42,10 @@ export class App extends Component {
     getProfile: PropTypes.func.isRequired,
     getKehus: PropTypes.func.isRequired,
     kehuToEdit: PropTypes.object,
+    groupsLoading: PropTypes.bool.isRequired,
+    groupsLoaded: PropTypes.bool.isRequired,
+    groupsError: PropTypes.object,
+    getGroups: PropTypes.func.isRequired,
     // i18n props coming from withTranslation()
     t: PropTypes.func.isRequired,
     i18n: PropTypes.object.isRequired,
@@ -54,14 +59,19 @@ export class App extends Component {
   };
 
   componentDidMount() {
-    this.loadProfileAndKehus();
+    this.loadProfileAndKehusAndGroups();
   }
 
   componentDidUpdate() {
-    this.loadProfileAndKehus();
+    this.loadProfileAndKehusAndGroups();
   }
 
-  loadProfileAndKehus() {
+  loadProfileAndKehusAndGroups() {
+    const { groupsLoaded, groupsLoading, groupsError } = this.props;
+    if (!groupsLoaded && !groupsLoading && !groupsError) {
+      this.props.getGroups();
+    }
+
     // Load profile and kehus only after translations are ready
     if (!this.props.tReady) return;
 
@@ -86,6 +96,7 @@ export class App extends Component {
     if (
       this.props.profileLoaded &&
       this.props.kehusLoaded &&
+      this.props.groupsLoaded &&
       this.state.loading
     ) {
       this.setState({ loading: false });
@@ -101,6 +112,16 @@ export class App extends Component {
   }
 
   defineContent() {
+    // TODO: Show proper error message and send email to web admin
+    if (!this.props.groupsLoaded && this.props.groupsError) {
+      return (
+        <>
+          Virhe yhteisöiden latauksessa:{" "}
+          {this.props.groupsError.responseJson?.message}
+        </>
+      );
+    }
+
     if (this.state.loading) {
       return <Spinner />;
     }
@@ -198,11 +219,15 @@ const mapStateToProps = (state) => ({
   kehusLoaded: state.kehu.kehusLoaded,
   profileLoaded: state.profile.profileLoaded,
   kehuToEdit: state.portal.kehu,
+  groupsLoading: state.group.loading,
+  groupsLoaded: state.group.groupsLoaded,
+  groupsError: state.group.error,
 });
 
 const mapDispatchToProps = {
   getProfile,
   getKehus,
+  getGroups,
 };
 
 const AppContainer = compose(
