@@ -7,6 +7,7 @@ export const GET_GROUPS_ERROR = "groups/GET_GROUPS_ERROR";
 export const CREATE_GROUP = "group/CREATE_GROUP";
 export const CREATE_GROUP_SUCCESS = "group/CREATE_GROUP_SUCCESS";
 export const CREATE_GROUP_ERROR = "group/CREATE_GROUP_ERROR";
+export const RESET_CREATE_GROUP_FORM = "group/RESET_CREATE_GROUP_FORM";
 
 export const initialState = {
   error: null,
@@ -37,6 +38,10 @@ export function createGroup(data) {
       dispatch({ type: CREATE_GROUP_ERROR, payload: e });
     }
   };
+}
+
+export function resetCreateGroupForm() {
+  return { type: RESET_CREATE_GROUP_FORM };
 }
 
 export default function reducer(state = initialState, action = {}) {
@@ -73,6 +78,13 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         loading: false,
         error: action.payload,
+      };
+
+    case RESET_CREATE_GROUP_FORM:
+      return {
+        ...state,
+        loading: false,
+        error: null,
       };
 
     default:
