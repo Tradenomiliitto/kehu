@@ -1,3 +1,7 @@
+.Groups {
+  margin: 2rem 0;
+}
+
 .GroupsPanel-title {
   color: $secondary;
   font-size: 2rem;
@@ -119,4 +123,44 @@
 .CreateGroupPreview-PreviewInfo {
   font-size: small;
   margin: 0 1rem;
+}
+
+.MyGroups-OneGroup {
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+}
+
+.MyGroups-GroupPicture {
+  @extend .GroupPicture;
+  height: 50px;
+  width: 50px;
+  min-width: 50px;
+  margin-top: 0;
+}
+
+.MyGroups-GroupDetails {
+  display: inline-block;
+  min-width: 0;
+}
+
+.MyGroups-GroupName {
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.MyGroups-GroupInfo {
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.MyGroups-addNewGroupContainer {
+  text-align: center;
+  margin-top: 0.5rem;
+  margin-bottom: -0.5rem;
 }

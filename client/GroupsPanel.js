@@ -1,79 +1,47 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { compose } from "redux";
-import { withTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 
-import CreateGroupForm from "./components/groups/CreateGroupForm";
+import NoGroups from "./components/groups/NoGroups";
+import MyGroups from "./components/groups/MyGroups";
+import FeedPanel from "./components/home/FeedPanel";
 
-export class GroupsPanel extends Component {
-  static propTypes = {
-    // i18n props
-    t: PropTypes.func.isRequired,
-  };
+export function GroupsPanel({ groups, feedItems }) {
+  const [t] = useTranslation();
 
-  constructor() {
-    super();
-    this.state = {
-      isCreateNewGroupVisible: false,
-    };
-  }
+  if (groups.length === 0) return <NoGroups />;
 
-  closeCreateGroupModal = () => {
-    this.setState({ isCreateNewGroupVisible: false });
-  };
-
-  openCreateGroupModal = (ev) => {
-    ev.preventDefault();
-    this.setState({ isCreateNewGroupVisible: true });
-  };
-
-  render() {
-    const { t } = this.props;
-    return (
+  return (
+    <div className="Groups">
       <div className="container">
         <div className="row">
-          <div className="col-xs-10 col-xs-offset-1 col-lg-8 col-lg-offset-2">
-            <div className="GroupsPanel-dashedBox">
-              <h1 className="GroupsPanel-title">
-                {t("groups.no-groups.title", "Et kuulu vielä Kehu-yhteisöön")}
-              </h1>
-              <div className="GroupsPanel-emptyText">
-                <p>
-                  {t(
-                    "groups.no-groups.text-1",
-                    "Yhteisöt ovat Kehun työkalu tiimeille, kavereille ja muille porukoille. Yhteisön sisällä voitte kehua toisianne julkisesti tai yksityisesti sekä kehua koko porukkaa."
-                  )}
-                </p>
-                <p>
-                  {t(
-                    "groups.no-groups.text-2",
-                    "Luo ensimmäinen yhteisösi nyt ja kutsu kehurinki koolle!"
-                  )}
-                </p>
-                <button
-                  className="Button GroupsPanel-addGroupButton"
-                  onClick={this.openCreateGroupModal}
-                >
-                  {t("groups.new-group-button", "Luo uusi yhteisö")}
-                </button>
-              </div>
+          <div className="col col-xs-12 col-md-9">
+            <div className="Card">
+              <h2>Keken tiimi</h2>
+            </div>
+            <FeedPanel items={feedItems} />
+          </div>
+          <div className="col col-xs-12 col-md-3">
+            <MyGroups groups={groups} />
+            <div className="Card">
+              <h3>Jäsenet</h3>
             </div>
           </div>
         </div>
-        {this.state.isCreateNewGroupVisible && (
-          <CreateGroupForm closeModal={this.closeCreateGroupModal} />
-        )}
       </div>
-    );
-  }
+    </div>
+  );
 }
 
+GroupsPanel.propTypes = {
+  groups: PropTypes.arrayOf(PropTypes.object),
+  feedItems: PropTypes.arrayOf(PropTypes.object),
+};
+
 const mapStateToProps = (state) => ({
-  profile: state.profile.profile,
+  groups: state.group.groups,
+  feedItems: state.profile.feedItems,
 });
 
-export default compose(
-  withTranslation(),
-  connect(mapStateToProps)
-)(GroupsPanel);
+export default connect(mapStateToProps)(GroupsPanel);
