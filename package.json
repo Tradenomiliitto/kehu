@@ -55,6 +55,7 @@
     "passport": "^0.4.1",
     "passport-auth0": "^1.4.0",
     "pg": "^8.6.0",
+    "pg-connection-string": "^2.5.0",
     "prop-types": "^15.7.2",
     "pug": "^3.0.2",
     "react": "^16.14.0",

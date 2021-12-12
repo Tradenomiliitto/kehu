@@ -16,6 +16,7 @@ const compression = require("compression");
 const methodOverride = require("method-override");
 const httpsRedirect = require("express-https-redirect");
 const webpack = require("webpack");
+const { parse } = require("pg-connection-string");
 
 // Following packages are not required in production and importing them
 // will throw an error if devDependencies are not installed
@@ -37,7 +38,7 @@ pg.defaults.ssl = isProd;
 const knex = Knex({
   client: "pg",
   connection: {
-    connectionString: process.env.DATABASE_URL,
+    ...parse(process.env.DATABASE_URL),
     ssl: { rejectUnauthorized: false },
   },
 });
