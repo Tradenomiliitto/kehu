@@ -1,14 +1,15 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 import NoGroups from "./components/groups/NoGroups";
 import MyGroups from "./components/groups/MyGroups";
 import FeedPanel from "./components/home/FeedPanel";
 
-export function GroupsPanel({ groups, feedItems }) {
+export default function GroupsPanel() {
   const [t] = useTranslation();
+  const groups = useSelector((state) => state.group.groups);
+  const feedItems = useSelector((state) => state.profile.feedItems);
 
   if (groups.length === 0) return <NoGroups />;
 
@@ -33,15 +34,3 @@ export function GroupsPanel({ groups, feedItems }) {
     </div>
   );
 }
-
-GroupsPanel.propTypes = {
-  groups: PropTypes.arrayOf(PropTypes.object),
-  feedItems: PropTypes.arrayOf(PropTypes.object),
-};
-
-const mapStateToProps = (state) => ({
-  groups: state.group.groups,
-  feedItems: state.profile.feedItems,
-});
-
-export default connect(mapStateToProps)(GroupsPanel);
