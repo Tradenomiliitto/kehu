@@ -33,6 +33,7 @@ Content-Type: application/json
 {
     "name": "The Group",
     "description": "Great group",
-    "picture": "https://group.com",
+    "picture": "https://res.cloudinary.com/hdrk5fx5w/image/upload/v1638771488/folder/picture.jpg",
+    "cloudinaryPublicId": "folder/picture",
     "members": []
 }

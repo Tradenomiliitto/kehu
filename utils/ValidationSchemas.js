@@ -161,6 +161,12 @@ const createGroupSchema = {
     errorMessage: "Ryhmän kuva on pakollinen tieto.",
     trim: true,
   },
+  cloudinaryPublicId: {
+    isString: true,
+    notEmpty: true,
+    optional: true,
+    errorMessage: "Cloudinary-kuvan id on oltava ei-tyhjä merkkijono.",
+  },
   members: {
     isArray: true,
     errorMessage: "Ryhmän jäsenet ovat pakollinen tieto.",
