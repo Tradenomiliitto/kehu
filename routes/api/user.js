@@ -124,12 +124,20 @@ function isPermittedToUploadPicture(req) {
   // group creation picture (when group is created the picture is renamed)
   if (public_id.startsWith("create_group")) {
     if (public_id === "create_group_" + req.user.auth0_id) return;
+    logger.warn(
+      `Unauthorized temporary group picture upload: picture name suffix not matching user id`,
+      { public_id, user_id: req.user.auth0_id }
+    );
     throw new Error("Unauthorized temporary group picture upload");
   }
 
   // User can upload and potentially overwrite only their own picture
   if (public_id.startsWith("profile")) {
-    if (public_id !== "profile_" + req.user.auth0_id) return;
+    if (public_id === "profile_" + req.user.auth0_id) return;
+    logger.warn(
+      `Unauthorized profile picture upload: picture name suffix not matching user id`,
+      { public_id, user_id: req.user.auth0_id }
+    );
     throw new Error("Unauthorized profile picture upload");
   }
 
