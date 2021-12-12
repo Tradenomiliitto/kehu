@@ -165,6 +165,17 @@ $ pg_restore --verbose --clean --no-acl --no-owner -h localhost -U YOUR_USERNAME
 
 ## Database models
 
+Relation mappings in Objection leads easily to circular dependencies (see [require loops](https://vincit.github.io/objection.js/guide/relations.html#require-loops) in documentation for more information). The solution is to use different `modelClass` properties in `static get relationMappings()` getter when defining models so the files are not requiring each other:
+
+```js
+// models/Group.js
+const GroupMember = require("./GroupMember");
+modelClass: GroupMember,
+
+// models/GroupMember.js
+modelClass: `${__dirname}/Group`,
+```
+
 ### Migrations
 
 - See completed and pending migrations `npx knex migrate:list`

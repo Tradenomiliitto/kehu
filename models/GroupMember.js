@@ -1,6 +1,4 @@
 const Model = require("objection").Model;
-const Group = require("./Group");
-const User = require("./User");
 
 class GroupMember extends Model {
   static get tableName() {
@@ -26,7 +24,7 @@ class GroupMember extends Model {
     return {
       user: {
         relation: Model.BelongsToOneRelation,
-        modelClass: User,
+        modelClass: `${__dirname}/User`,
         join: {
           from: "Users.id",
           to: "GroupMembers.user_id",
@@ -34,7 +32,7 @@ class GroupMember extends Model {
       },
       group: {
         relation: Model.BelongsToOneRelation,
-        modelClass: Group,
+        modelClass: `${__dirname}/Group`,
         join: {
           from: "Groups.id",
           to: "GroupMembers.group_id",
