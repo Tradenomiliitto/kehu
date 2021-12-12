@@ -9,10 +9,11 @@ import FeedPanel from "./components/home/FeedPanel";
 export default function GroupsPanel() {
   const [t] = useTranslation();
   const groups = useSelector((state) => state.group.groups);
-  const feedItems = useSelector((state) => state.profile.feedItems);
 
   if (groups.length === 0) return <NoGroups />;
 
+  //console.log(feedItems);
+  const dummyFeedItem = [{ id: 1, text: "TODO", giver_name: "" }];
   return (
     <div className="Groups">
       <div className="container">
@@ -21,12 +22,12 @@ export default function GroupsPanel() {
             <div className="Card">
               <h2>Keken tiimi</h2>
             </div>
-            <FeedPanel items={feedItems} />
+            <FeedPanel items={dummyFeedItem} />
           </div>
           <div className="col col-xs-12 col-md-3">
             <MyGroups groups={groups} />
             <div className="Card">
-              <h3>Jäsenet</h3>
+              <h3>{t("groups.members", "Jäsenet")}</h3>
             </div>
           </div>
         </div>
