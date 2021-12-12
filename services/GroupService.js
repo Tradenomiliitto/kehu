@@ -1,3 +1,5 @@
+const cloudinary = require("cloudinary").v2;
+
 const Group = require("../models/Group");
 const GroupMember = require("../models/GroupMember");
 
@@ -12,11 +14,36 @@ async function getGroups(userId) {
     .where("GroupMembers.user_id", userId);
 }
 
-async function createGroup(userId, { name, description, picture, members }) {
+async function createGroup(
+  userId,
+  { name, description, picture, members, cloudinaryPublicId }
+) {
   try {
-    // TODO: Update picture url
-    const group = await Group.query().insert({ name, description, picture });
-    logger.info(`Created a new group ${name} (id=${group.id})`);
+    let group = await Group.query().insert({ name, description, picture });
+    if (!group) throw new Error("Unable to create a new group");
+    logger.info(`Created a new group "${name}"" (id=${group.id})`);
+
+    // Update Cloudinary public id if custom picture was used
+    if (cloudinaryPublicId) {
+      // Public id also contains the path of the file, only update the name
+      const imagePath = cloudinaryPublicId.split("/");
+      imagePath.pop(); // Remove old name from the path
+      const newPublicId = [...imagePath, `group_${group.id}`].join("/");
+
+      logger.debug(
+        `Updating Cloudinary public id (${cloudinaryPublicId} -> ${newPublicId})`
+      );
+      const res = await cloudinary.uploader.rename(
+        cloudinaryPublicId,
+        newPublicId
+      );
+      // Update picture url in database
+      group = await group
+        .$query()
+        .patch({ picture: res.secure_url })
+        .returning("*");
+    }
+
     const groupAdmin = await GroupMember.query().insert({
       user_id: userId,
       group_id: group.id,
