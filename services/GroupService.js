@@ -6,12 +6,42 @@ const GroupMember = require("../models/GroupMember");
 const { findUserByEmail } = require("./UserService");
 const logger = require("../logger");
 
-async function getGroups(userId) {
+/**
+ * Get user's groups from database.
+ *
+ * @param {number} userId - User whose group(s) are returned
+ * @param {number} [groupId] - Which group is returned. If not defined or null all user's groups are returned
+ * @returns User's group(s)
+ */
+async function getGroups(userId, groupId = null) {
   logger.info(`Fetching groups for user ${userId}`);
-  return await Group.query()
-    .select("Groups.*", "GroupMembers.is_admin", "GroupMembers.joined_at")
-    .join("GroupMembers", "Groups.id", "GroupMembers.group_id")
-    .where("GroupMembers.user_id", userId);
+
+  const groups = Group.query()
+    .alias("g")
+    .select(
+      "g.id",
+      "g.name",
+      "g.description",
+      "g.picture",
+      "m.is_admin",
+      "m.joined_at"
+    )
+    .joinRelated("members as m")
+    .where("m.user_id", userId)
+    .withGraphJoined("members(selectMember).user(selectUser)")
+    .modifiers({
+      selectMember(builder) {
+        builder.select("is_admin");
+      },
+      selectUser(builder) {
+        builder.select("id", "first_name", "last_name", "email", "picture");
+      },
+    });
+
+  // If groupId is specified return only that group
+  if (groupId != null) groups.andWhere("g.id", groupId);
+
+  return groups;
 }
 
 async function createGroup(
