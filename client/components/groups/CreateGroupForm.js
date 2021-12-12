@@ -11,7 +11,7 @@ import { createGroup, resetCreateGroupForm } from "../../redux/group";
 import GroupNameField from "./GroupNameField";
 import GroupDescriptionField from "./GroupDescriptionField";
 import InviteMembersField from "./InviteMembersField";
-import GroupPictureField from "./GroupPictureField";
+import GroupPictureField, { USER_PICTURE } from "./GroupPictureField";
 
 export class CreateGroupForm extends Component {
   static propTypes = {
@@ -37,6 +37,7 @@ export class CreateGroupForm extends Component {
         url: "",
         selectedPicture: null,
         userPictureUrl: null,
+        cloudinaryPublicId: null,
       },
       errors: {},
     };
@@ -197,6 +198,10 @@ export class CreateGroupForm extends Component {
       picture: this.state.groupPicture.url,
       members: this.state.membersToInvite,
     };
+    // Add Cloudinary public id if using custom user picture
+    if (this.state.groupPicture.selectedPicture === USER_PICTURE)
+      formData.cloudinaryPublicId = this.state.groupPicture.cloudinaryPublicId;
+
     this.props.createGroup(formData);
     this.closeForm();
   };

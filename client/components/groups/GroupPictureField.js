@@ -6,6 +6,7 @@ import Spinner from "../Spinner";
 import { uploadWidget } from "../../util/uploadWidget";
 
 const DEFAULT_GROUP_PICTURES = ["/images/group-default.png"];
+export const USER_PICTURE = -1;
 
 export default function GroupPictureField({
   value,
@@ -43,10 +44,10 @@ export default function GroupPictureField({
       />
       {userPictureUrl && (
         <GroupPicture
-          id={-1}
+          id={USER_PICTURE}
           url={userPictureUrl}
           handleClick={handleClick}
-          isSelected={selectedPicture === -1}
+          isSelected={selectedPicture === USER_PICTURE}
         />
       )}
       <div className="GroupPictures">{defaultPictures}</div>
@@ -74,10 +75,15 @@ export default function GroupPictureField({
     uploadWidget("create_group_" + userId, i18n.language, pictureUploadCb);
   }
 
-  async function pictureUploadCb(url) {
+  async function pictureUploadCb(url, publicId) {
     setIsUploadingPicture(false);
     if (url != null) {
-      updateState({ url, userPictureUrl: url, selectedPicture: -1 });
+      updateState({
+        url,
+        userPictureUrl: url,
+        selectedPicture: USER_PICTURE,
+        cloudinaryPublicId: publicId,
+      });
     }
   }
 }

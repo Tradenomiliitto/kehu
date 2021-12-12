@@ -7,8 +7,9 @@ import { toQueryString } from "./TextUtil";
  *                             is overwritten (permission to overwrite is checked in the backend
  *                             cloudinary-signature function)
  * @param {string} language  - Language of the upload widget
- * @param {function} cb(url) - Callback to call after image upload. `url` is either string to public
- *                             url of the uploaded image or null if upload failed
+ * @param {function} cb(url, publicId) - Callback to call after image upload.
+ *                                         - `url` is either string to public url of the uploaded image or null if upload failed
+ *                                         - `publicId` is the picture's Cloudinary public id with full path
  */
 export function uploadWidget(publicId, language, cb) {
   cloudinary.openUploadWidget(
@@ -45,7 +46,7 @@ export function uploadWidget(publicId, language, cb) {
     (error, result) => {
       // Call cb with picture url if succesfull update, otherwise call with null
       if (!error && result && result.event === "success") {
-        return cb(result.info.secure_url);
+        return cb(result.info.secure_url, result.info.public_id);
       }
       return cb(null);
     }
