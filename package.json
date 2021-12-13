@@ -55,6 +55,7 @@
     "passport": "^0.4.1",
     "passport-auth0": "^1.4.0",
     "pg": "^8.6.0",
+    "pg-connection-string": "^2.5.0",
     "prop-types": "^15.7.2",
     "pug": "^3.0.2",
     "react": "^16.14.0",
@@ -64,7 +65,7 @@
     "react-i18next": "^11.11.0",
     "react-md-spinner": "^0.3.0",
     "react-redux": "^7.2.4",
-    "react-router-dom": "^4.3.1",
+    "react-router-dom": "^6.1.1",
     "react-tag-cloud": "^1.3.2",
     "redis": "^3.1.2",
     "redux": "^4.1.0",
@@ -128,8 +129,8 @@
     "webpack-hot-middleware": "^2.25.0"
   },
   "engines": {
-    "node": "16.10.0",
-    "npm": "7.24.0"
+    "node": ">=16",
+    "npm": ">=8"
   },
   "nodemonConfig": {
     "ignore": [
