@@ -49,7 +49,7 @@ async function createGroup(
   { name, description, picture, members, cloudinaryPublicId }
 ) {
   try {
-    let group = await Group.query().insert({ name, description, picture });
+    const group = await Group.query().insert({ name, description, picture });
     if (!group) throw new Error("Unable to create a new group");
     logger.info(`Created a new group "${name}"" (id=${group.id})`);
 
@@ -68,13 +68,10 @@ async function createGroup(
         newPublicId
       );
       // Update picture url in database
-      group = await group
-        .$query()
-        .patch({ picture: res.secure_url })
-        .returning("*");
+      await group.$query().patch({ picture: res.secure_url });
     }
 
-    const groupAdmin = await GroupMember.query().insert({
+    await GroupMember.query().insert({
       user_id: userId,
       group_id: group.id,
       is_admin: true,
@@ -100,8 +97,7 @@ async function createGroup(
       })
     );
 
-    const { is_admin, joined_at } = groupAdmin;
-    return { ...group, is_admin, joined_at };
+    return (await getGroups(userId, group.id))[0];
   } catch (error) {
     logger.error(`Creating Group failed.`);
     logger.error(error.message);
