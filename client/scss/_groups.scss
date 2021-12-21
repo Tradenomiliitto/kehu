@@ -71,6 +71,7 @@
 .GroupPicture-image {
   height: 100%;
   width: 100%;
+  vertical-align: baseline;
 }
 
 .AddGroupPicture {
@@ -255,4 +256,43 @@
   font-weight: bold;
   font-size: 12px;
   margin: 0 1rem 1rem 1rem;
+}
+
+.MyGroups-ActiveGroup {
+  position: relative;
+}
+
+.MyGroups-ActiveGroupPicture {
+  @extend .GroupPicture;
+  height: 150px;
+  width: 150px;
+  min-width: 150px;
+  margin: 0.5rem;
+}
+
+.MyGroups-ActiveGroupDescription {
+  margin-bottom: 0.5rem;
+}
+
+.MyGroups-SendKehuBtn {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+}
+
+.MyGroups-ActiveGroupDetails {
+  display: inline-flex;
+  flex-direction: column;
+  vertical-align: top;
+  margin: 0.5rem 0.5rem 0.5rem 2.5rem;
+}
+
+.MyGroups-ActiveMemberPicture {
+  @extend .MyGroups-MemberPicture;
+  margin-right: -3px;
+}
+
+.MyGroups-ActiveGroupInfo {
+  font-size: 12px;
+  font-weight: bold;
 }

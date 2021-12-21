@@ -5,6 +5,7 @@ import NoGroups from "./components/groups/NoGroups";
 import MyGroups from "./components/groups/MyGroups";
 import FeedPanel from "./components/home/FeedPanel";
 import GroupMembers from "./components/groups/GroupMembers";
+import ActiveGroup from "./components/groups/ActiveGroup";
 
 export default function GroupsPanel() {
   const groups = useSelector((state) => state.group.groups);
@@ -20,9 +21,7 @@ export default function GroupsPanel() {
       <div className="container">
         <div className="row">
           <div className="col col-xs-12 col-md-9">
-            <div className="Card">
-              <h2>{activeGroup.name}</h2>
-            </div>
+            <ActiveGroup group={activeGroup} />
             <FeedPanel items={dummyFeedItem} />
           </div>
           <div className="col col-xs-12 col-md-3">
