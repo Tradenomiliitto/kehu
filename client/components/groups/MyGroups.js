@@ -66,7 +66,7 @@ function OneGroup({ group, isActive }) {
               defaultValue_plural: "{{count}} jäsentä",
             })}
           </div>
-          <div className="MyGroups-GroupInfo">
+          <div className="MyGroups-GroupInfo MyGroups-LatestKehu">
             {t("groups.latest-kehu", "Viimeisin kehu")} x.x.xxxx
           </div>
         </div>

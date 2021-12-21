@@ -172,6 +172,12 @@
   font-weight: bold;
 }
 
+@include mq($from: md, $until: lg) {
+  .MyGroups-LatestKehu {
+    display: none;
+  }
+}
+
 .MyGroups-addNewGroupContainer {
   text-align: center;
   margin-top: 0.5rem;
