@@ -21,7 +21,13 @@ export default function MyGroups({ groups }) {
             </div>
             <div className="MyGroups-GroupDetails">
               <div className="MyGroups-GroupName">{group.name}</div>
-              <div className="MyGroups-GroupInfo">xx jäsentä</div>
+              <div className="MyGroups-GroupInfo">
+                {t("groups.mygroups.member-count", {
+                  count: group.members.length,
+                  defaultValue: "{{count}} jäsen",
+                  defaultValue_plural: "{{count}} jäsentä",
+                })}
+              </div>
               <div className="MyGroups-GroupInfo">Viimeisin kehu x.x.xxxx</div>
             </div>
           </div>
