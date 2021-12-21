@@ -11,6 +11,16 @@ export default function ActiveGroup({ group }) {
   const dispatch = useDispatch();
 
   const admins = group.members.filter((m) => m.is_admin);
+  const adminText = group.is_admin
+    ? t("groups.is-group-admin", "Olet ryhmän admin")
+    : t("groups.admin", {
+        count: admins.length,
+        defaultValue: "Admin",
+        defaultValue_plural: "Adminit",
+      }) +
+      ": " +
+      admins.map((m) => `${m.user.first_name} (${m.user.email})`).join(", ");
+
   return (
     <div className="MyGroups-Card row">
       <div className="col col-xs-12 col-sm-3 ActiveGroup-PictureContainer">
@@ -44,25 +54,24 @@ export default function ActiveGroup({ group }) {
         </div>
 
         <div className="row">
-          <div className="col col-xs-12 col-md-5 ActiveGroup-Info">
-            <div>
-              {t("groups.admin", {
-                count: admins.length,
-                defaultValue: "Admin",
-                defaultValue_plural: "Adminit",
-              })}
-              :{" "}
-              {admins
-                .map((m) => `${m.user.first_name} (${m.user.email})`)
-                .join(", ")}
-            </div>
+          <div
+            className={
+              "ActiveGroup-Info col col-xs-12 col-md-" +
+              (group.is_admin ? "5" : "7")
+            }
+          >
+            <div>{adminText}</div>
           </div>
 
-          <div className="col col-xs-12 col-md-7">
+          <div
+            className={"col col-xs-12 col-md-" + (group.is_admin ? "7" : "5")}
+          >
             <div className="ActiveGroup-Buttons">
-              <button className="Button Button--inverse" disabled>
-                {t("groups.edit-group-btn", "Muokkaa yhteisöä")}
-              </button>
+              {group.is_admin && (
+                <button className="Button Button--inverse" disabled>
+                  {t("groups.edit-group-btn", "Muokkaa yhteisöä")}
+                </button>
+              )}
               <button
                 className="Button"
                 onClick={() => dispatch(toggleSendKehuFormModal())}
