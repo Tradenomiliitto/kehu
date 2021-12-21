@@ -10,7 +10,7 @@
     "lint:fix": "eslint --fix --ext js . ; stylelint --fix '**/*.{css,scss}'",
     "migrate:latest": "npx knex migrate:latest",
     "start": "node ./bin/www",
-    "start:dev": "nodemon ./bin/www",
+    "start:dev": "npx webpack --env dev && nodemon ./bin/www",
     "start:dev+build": "WEBPACK_HOT_RELOAD=true nodemon ./bin/www",
     "start:prod": "NODE_ENV=production node ./bin/www",
     "start:debug": "nodemon --inspect=0.0.0.0:9229 ./bin/www",

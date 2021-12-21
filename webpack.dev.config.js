@@ -6,11 +6,18 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 // Include env vars from system (required for Heroku deployment)
 const dotenv = new Dotenv({ systemvars: true });
 
+// Use hotreload plugin?
+const HOTRELOAD = process.env.WEBPACK_HOT_RELOAD;
+// eslint-disable-next-line no-console
+if (HOTRELOAD) console.log("Using Webpack hot reload");
+
 module.exports = {
   mode: "development",
   entry: {
     main: [
-      "webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000",
+      ...(HOTRELOAD
+        ? ["webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000"]
+        : []),
       path.resolve(__dirname, "client", "index.js"),
     ],
     public: path.resolve(__dirname, "client", "public.js"),
@@ -22,8 +29,12 @@ module.exports = {
     chunkFilename: "chunk-[id].js",
     path: path.resolve(__dirname, "public"),
     globalObject: "this",
-    hotUpdateChunkFilename: ".hot/[id].[fullhash].hot-update.js",
-    hotUpdateMainFilename: ".hot/[runtime].[fullhash].hot-update.json",
+    ...(HOTRELOAD
+      ? {
+          hotUpdateChunkFilename: ".hot/[id].[fullhash].hot-update.js",
+          hotUpdateMainFilename: ".hot/[runtime].[fullhash].hot-update.json",
+        }
+      : {}),
   },
   module: {
     rules: [
@@ -72,6 +83,6 @@ module.exports = {
       chunkFilename: "[id].css",
     }),
     dotenv,
-    new webpack.HotModuleReplacementPlugin(),
+    ...(HOTRELOAD ? [new webpack.HotModuleReplacementPlugin()] : []),
   ],
 };
