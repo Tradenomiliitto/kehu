@@ -1,13 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { useTranslation } from "react-i18next";
 
 import NoGroups from "./components/groups/NoGroups";
 import MyGroups from "./components/groups/MyGroups";
 import FeedPanel from "./components/home/FeedPanel";
+import GroupMembers from "./components/groups/GroupMembers";
 
 export default function GroupsPanel() {
-  const [t] = useTranslation();
   const groups = useSelector((state) => state.group.groups);
   const activeGroupIdx = useSelector((state) => state.group.activeGroupIdx);
 
@@ -28,9 +27,10 @@ export default function GroupsPanel() {
           </div>
           <div className="col col-xs-12 col-md-3">
             <MyGroups groups={groups} activeGroupIdx={activeGroupIdx} />
-            <div className="Card">
-              <h3>{t("groups.members", "Jäsenet")}</h3>
-            </div>
+            <GroupMembers
+              members={activeGroup.members}
+              groupName={activeGroup.name}
+            />
           </div>
         </div>
       </div>
