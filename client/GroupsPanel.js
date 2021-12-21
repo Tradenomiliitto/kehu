@@ -9,10 +9,12 @@ import FeedPanel from "./components/home/FeedPanel";
 export default function GroupsPanel() {
   const [t] = useTranslation();
   const groups = useSelector((state) => state.group.groups);
+  const activeGroupIdx = useSelector((state) => state.group.activeGroupIdx);
 
   if (groups.length === 0) return <NoGroups />;
 
-  //console.log(feedItems);
+  const activeGroup = groups[activeGroupIdx ?? 0];
+
   const dummyFeedItem = [{ id: 1, text: "TODO", giver_name: "" }];
   return (
     <div className="Groups">
@@ -20,12 +22,12 @@ export default function GroupsPanel() {
         <div className="row">
           <div className="col col-xs-12 col-md-9">
             <div className="Card">
-              <h2>Keken tiimi</h2>
+              <h2>{activeGroup.name}</h2>
             </div>
             <FeedPanel items={dummyFeedItem} />
           </div>
           <div className="col col-xs-12 col-md-3">
-            <MyGroups groups={groups} />
+            <MyGroups groups={groups} activeGroupIdx={activeGroupIdx} />
             <div className="Card">
               <h3>{t("groups.members", "Jäsenet")}</h3>
             </div>

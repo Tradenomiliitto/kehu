@@ -125,6 +125,17 @@
   margin: 0 1rem;
 }
 
+.MyGroups-Card {
+  @extend .Card;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.MyGroups-title {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
 .MyGroups-OneGroup {
   height: 80px;
   display: flex;
@@ -145,6 +156,7 @@
 .MyGroups-GroupDetails {
   display: inline-block;
   min-width: 0;
+  flex-grow: 1;
 }
 
 .MyGroups-GroupName {
@@ -163,4 +175,30 @@
   text-align: center;
   margin-top: 0.5rem;
   margin-bottom: -0.5rem;
+}
+
+.MyGroups-GroupButton {
+  width: 100%;
+  background: none;
+  color: inherit;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  text-align: inherit;
+
+  padding: 0 0.5rem;
+
+  &.MyGroups-ActiveGroup {
+    background-color: $lighter-pink;
+  }
+}
+
+.MyGroups-SelectGroupArrow {
+  transform: rotate(-90deg);
+  margin-right: 0.5rem;
+}
+
+.MyGroups-SeparatorLine {
+  margin: 0 0.5rem;
 }
