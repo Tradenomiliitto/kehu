@@ -60,10 +60,7 @@ export default function ActiveGroup({ group }) {
 
           <div className="col col-xs-12 col-md-7">
             <div className="ActiveGroup-Buttons">
-              <button
-                className="Button Button--inverse"
-                onClick={() => dispatch(toggleSendKehuFormModal())}
-              >
+              <button className="Button Button--inverse" disabled>
                 {t("groups.edit-group-btn", "Muokkaa yhteisöä")}
               </button>
               <button
