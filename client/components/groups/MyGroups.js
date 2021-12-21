@@ -13,7 +13,7 @@ export default function MyGroups({ groups, activeGroupIdx }) {
   return (
     <div className="MyGroups-Card">
       <h3 className="MyGroups-title">
-        {t("groups.mygroups.title", "Yhteisöni")}
+        {t("groups.mygroups-title", "Yhteisöni")}
       </h3>
       {groups.map((group, idx) => (
         <React.Fragment key={group.id}>
@@ -60,13 +60,15 @@ function OneGroup({ group, isActive }) {
         <div className="MyGroups-GroupDetails">
           <div className="MyGroups-GroupName">{group.name}</div>
           <div className="MyGroups-GroupInfo">
-            {t("groups.mygroups.member-count", {
+            {t("groups.member-count", {
               count: group.members.length,
               defaultValue: "{{count}} jäsen",
               defaultValue_plural: "{{count}} jäsentä",
             })}
           </div>
-          <div className="MyGroups-GroupInfo">Viimeisin kehu x.x.xxxx</div>
+          <div className="MyGroups-GroupInfo">
+            {t("groups.latest-kehu", "Viimeisin kehu")} x.x.xxxx
+          </div>
         </div>
         {!isActive && (
           <img
