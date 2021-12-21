@@ -71,7 +71,6 @@
 .GroupPicture-image {
   height: 100%;
   width: 100%;
-  vertical-align: baseline;
 }
 
 .AddGroupPicture {
@@ -130,6 +129,7 @@
   @extend .Card;
   padding-left: 0;
   padding-right: 0;
+  margin: 0 0 1rem 0;
 }
 
 .MyGroups-title {
@@ -224,6 +224,7 @@
 
 .MemberPicture-image {
   @extend .GroupPicture-image;
+  vertical-align: baseline;
 }
 
 .MyGroups-MemberDetails {
@@ -258,41 +259,53 @@
   margin: 0 1rem 1rem 1rem;
 }
 
-.MyGroups-ActiveGroup {
-  position: relative;
+.ActiveGroup-PictureContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @include mq($until: sm) {
+    margin-bottom: 1rem;
+  }
 }
 
-.MyGroups-ActiveGroupPicture {
+.ActiveGroup-Picture {
   @extend .GroupPicture;
-  height: 150px;
-  width: 150px;
-  min-width: 150px;
-  margin: 0.5rem;
+  max-width: 165px;
+  width: auto;
+  height: auto;
+  margin: 0;
 }
 
-.MyGroups-ActiveGroupDescription {
+.ActiveGroup-Description {
   margin-bottom: 0.5rem;
 }
 
-.MyGroups-SendKehuBtn {
-  position: absolute;
-  right: 1rem;
-  bottom: 1rem;
+.ActiveGroup-Details {
+  @include mq(sm) {
+    padding-left: 0;
+  }
 }
 
-.MyGroups-ActiveGroupDetails {
-  display: inline-flex;
-  flex-direction: column;
-  vertical-align: top;
-  margin: 0.5rem 0.5rem 0.5rem 2.5rem;
-}
-
-.MyGroups-ActiveMemberPicture {
+.ActiveGroup-MemberPicture {
   @extend .MyGroups-MemberPicture;
   margin-right: -3px;
 }
 
-.MyGroups-ActiveGroupInfo {
+.ActiveGroup-Info {
   font-size: 12px;
   font-weight: bold;
+  overflow-wrap: anywhere;
+  padding-right: 0;
+}
+
+.ActiveGroup-Buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+
+  .Button--inverse {
+    border-radius: 4px;
+    margin-right: 1rem;
+  }
 }
