@@ -57,10 +57,10 @@ module.exports = {
         // Images are not imported in React app but provided as strings so we
         // cannot include then in Webpack bundle
         test: /\.(ttf|eot|svg|otf|png)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: "file-loader",
-        options: {
-          name: "/images/[name].[ext]",
-          emitFile: false,
+        type: "asset/resource",
+        generator: {
+          filename: "images/[name][ext]",
+          emit: false,
         },
       },
     ],
