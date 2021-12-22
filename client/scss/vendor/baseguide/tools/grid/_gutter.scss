@@ -15,7 +15,7 @@
 }
 
 @mixin gutter($gutter, $type) {
-  $gutter: to-rem($gutter / 2);
+  $gutter: to-rem($gutter * 0.5);
 
   @if $type == "inner" {
     padding-left: $gutter;
