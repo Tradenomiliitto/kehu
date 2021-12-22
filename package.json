@@ -128,8 +128,8 @@
     "webpack-hot-middleware": "^2.25.0"
   },
   "engines": {
-    "node": ">=16",
-    "npm": ">=8"
+    "node": "^16",
+    "npm": "^8"
   },
   "nodemonConfig": {
     "ignore": [
