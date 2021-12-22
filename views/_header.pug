@@ -17,6 +17,9 @@ mixin header-content
                 a(href=`/${language}/?q=laheta`)
                   | #{t('navbar.send-kehu', 'Lähetä Kehu')}
               li.Header-menuItem
+                a(href=`/${language}/yhteisot`)
+                  | #{t('navbar.groups', 'Yhteisöni')}
+              li.Header-menuItem
                 a(href=`/${language}/raportit`)
                   | #{t('navbar.report', 'Raportit')}
               if language === 'fi'
