@@ -8,5 +8,7 @@ module.exports = {
     "selector-class-pattern": null,
     "scss/at-extend-no-missing-placeholder": null,
     "color-named": null,
+    "color-function-notation": "legacy", // Scss not supporting the modern notation
+    "alpha-value-notation": "number", // Already used in css files
   },
 };
