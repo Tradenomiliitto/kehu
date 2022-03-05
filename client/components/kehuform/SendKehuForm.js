@@ -30,6 +30,8 @@ export class SendKehuForm extends Component {
     roles: PropTypes.array.isRequired,
     situations: PropTypes.array.isRequired,
     tags: PropTypes.array.isRequired,
+    // i18n prop coming from withTranslation()
+    t: PropTypes.func.isRequired,
   };
 
   constructor(props) {

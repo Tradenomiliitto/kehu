@@ -1,8 +1,9 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import PropTypes from "prop-types";
 
 export default function ReceiverNameField({ value, handleChange, children }) {
-  const [t, i18n] = useTranslation();
+  const [t] = useTranslation();
   return (
     <div className="Form-group">
       <label htmlFor="receiver_name">
@@ -20,3 +21,9 @@ export default function ReceiverNameField({ value, handleChange, children }) {
     </div>
   );
 }
+
+ReceiverNameField.propTypes = {
+  value: PropTypes.string,
+  handleChange: PropTypes.func,
+  children: PropTypes.node.isRequired,
+};
