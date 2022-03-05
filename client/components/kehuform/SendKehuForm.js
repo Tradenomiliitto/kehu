@@ -11,6 +11,7 @@ import TextField from "./TextField";
 import DateGivenField from "./DateGivenField";
 import WordCloudField from "./WordCloudField";
 import ReceiverNameField from "./ReceiverNameField";
+import GroupSelectionField from "./GroupSelectionField";
 import ReceiverEmailField from "./ReceiverEmailField";
 import RoleImage from "./RoleImage";
 import ContactsToggle from "./ContactsToggle";
@@ -40,6 +41,7 @@ export class SendKehuForm extends Component {
       preview: false,
       giver_id: props.profile.id,
       giver_name: `${props.profile.first_name} ${props.profile.last_name}`,
+      group_name: "-",
       receiver_name: "",
       receiver_email: "",
       role_id: null,
@@ -134,6 +136,7 @@ export class SendKehuForm extends Component {
 
   renderForm() {
     const {
+      group_name,
       receiver_name,
       receiver_email,
       text,
@@ -146,6 +149,10 @@ export class SendKehuForm extends Component {
     return (
       <form className="Form form-js" onSubmit={this.togglePreview}>
         {this.renderErrors()}
+        <GroupSelectionField
+          value={group_name}
+          handleChange={this.handleChangeWithEvent("group_name")}
+        />
         <ReceiverNameField
           value={receiver_name}
           handleChange={this.handleChangeWithEvent("receiver_name")}
