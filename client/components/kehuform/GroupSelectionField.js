@@ -24,7 +24,7 @@ export default function GroupSelectionField({ value, handleChange }) {
       />
       <ContactsToggle
         contacts={[{ name: "-" }].concat(groups)}
-        handleSelect={(value) => handleChange({ target: { value } })}
+        handleSelect={handleChange}
       />
     </div>
   );

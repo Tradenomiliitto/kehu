@@ -31,6 +31,7 @@ export class SendKehuForm extends Component {
     roles: PropTypes.array.isRequired,
     situations: PropTypes.array.isRequired,
     tags: PropTypes.array.isRequired,
+    groups: PropTypes.array.isRequired,
     // i18n prop coming from withTranslation()
     t: PropTypes.func.isRequired,
   };
@@ -145,27 +146,42 @@ export class SendKehuForm extends Component {
       situations,
       role_id,
     } = this.state;
-    const { t, contacts, roles, profile } = this.props;
+    const { t, contacts, roles, profile, groups } = this.props;
+
+    const isGroupKehu = group_name !== "-";
+    const activeGroup = isGroupKehu
+      ? groups.find((group) => group.name === group_name)
+      : null;
+    const groupMembers = activeGroup
+      ? activeGroup.members.map((m) => ({
+          name: `${m.user.first_name} ${m.user.last_name}`,
+          email: m.user.email,
+        }))
+      : null;
+
     return (
       <form className="Form form-js" onSubmit={this.togglePreview}>
         {this.renderErrors()}
         <GroupSelectionField
           value={group_name}
-          handleChange={this.handleChangeWithEvent("group_name")}
+          handleChange={this.selectGroup}
         />
         <ReceiverNameField
           value={receiver_name}
           handleChange={this.handleChangeWithEvent("receiver_name")}
+          readOnly={isGroupKehu}
         >
           <ContactsToggle
-            contacts={contacts}
+            contacts={isGroupKehu ? groupMembers : contacts}
             handleSelect={this.selectContact}
           />
         </ReceiverNameField>
-        <ReceiverEmailField
-          value={receiver_email}
-          handleChange={this.handleChangeWithEvent("receiver_email")}
-        />
+        {!isGroupKehu && (
+          <ReceiverEmailField
+            value={receiver_email}
+            handleChange={this.handleChangeWithEvent("receiver_email")}
+          />
+        )}
         <div className="Form-group">
           <label>
             {t("modals.send-kehu.sender-role-selection", "Olen Kehun saajan:")}
@@ -259,6 +275,10 @@ export class SendKehuForm extends Component {
     this.setState({ receiver_name, receiver_email });
   };
 
+  selectGroup = (group_name) => {
+    this.setState({ group_name, receiver_name: "", receiver_email: "" });
+  };
+
   handleRoleChange = (role_id) => {
     this.setState({ role_id });
   };
@@ -285,6 +305,7 @@ const mapStateToProps = (state) => ({
   roles: state.profile.roles,
   situations: state.profile.situations,
   tags: state.profile.tags,
+  groups: state.group.groups,
 });
 
 const mapDispatchToProps = {
