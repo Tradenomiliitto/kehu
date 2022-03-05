@@ -39,7 +39,8 @@ export default class ContactsToggle extends Component {
           className="Contacts-link"
           onClick={this.handleClick(contact.name, contact.email)}
         >
-          {contact.name} - {contact.email}
+          {contact.name}
+          {contact.email && ` - ${contact.email}`}
         </a>
       </li>
     ));
