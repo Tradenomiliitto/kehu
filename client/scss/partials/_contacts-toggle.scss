@@ -14,13 +14,21 @@
   list-style-type: none;
   max-height: 250px;
   overflow: auto;
-  padding: 1rem;
+  padding: 0;
   position: absolute;
   width: 100%;
   z-index: 5;
 
   &--open {
     display: block;
+  }
+
+  li {
+    padding: 0.2rem 1rem;
+  }
+
+  li:nth-child(odd) {
+    background: $light-grey;
   }
 }
 
