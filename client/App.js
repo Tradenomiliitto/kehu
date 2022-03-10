@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { compose } from "redux";
 import { withTranslation } from "react-i18next";
 import { Provider, connect } from "react-redux";
-import { hot } from "react-hot-loader";
 import PropTypes from "prop-types";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
 import { createBrowserHistory } from "history";
@@ -235,12 +234,10 @@ const AppContainer = compose(
   connect(mapStateToProps, mapDispatchToProps)
 )(App);
 
-const HotApp = hot(module)(AppContainer);
-
 export default function ProviderApp() {
   return (
     <Provider store={store}>
-      <HotApp />
+      <AppContainer />
     </Provider>
   );
 }

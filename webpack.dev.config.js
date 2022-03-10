@@ -2,6 +2,7 @@ const path = require("path");
 const webpack = require("webpack");
 const Dotenv = require("dotenv-webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
 // Include env vars from system (required for Heroku deployment)
 const dotenv = new Dotenv({ systemvars: true });
@@ -41,9 +42,18 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-        },
+        use: [
+          {
+            loader: require.resolve("babel-loader"),
+            options: {
+              // Load react-refresh/babel plugin here instead of
+              // babel.config.json to load it only when hotreload is enabled
+              plugins: HOTRELOAD
+                ? [require.resolve("react-refresh/babel")]
+                : [],
+            },
+          },
+        ],
       },
       {
         test: /\.scss$/,
@@ -75,6 +85,11 @@ module.exports = {
       chunkFilename: "[id].css",
     }),
     dotenv,
-    ...(HOTRELOAD ? [new webpack.HotModuleReplacementPlugin()] : []),
+    ...(HOTRELOAD
+      ? [
+          new webpack.HotModuleReplacementPlugin(),
+          new ReactRefreshWebpackPlugin(),
+        ]
+      : []),
   ],
 };
