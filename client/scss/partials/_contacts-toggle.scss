@@ -23,22 +23,22 @@
     display: block;
   }
 
-  li {
-    padding: 0.2rem 1rem;
-  }
-
   li:nth-child(odd) {
     background: $light-grey;
   }
 }
 
 .Contacts-link {
+  background: none;
+  border: 0;
   color: $secondary;
+  cursor: pointer;
   font-size: 0.875rem;
+  padding: 0.2rem 1rem;
+  text-align: left;
+  width: 100%;
 
-  &:hover,
-  &:visited,
-  &:focus {
-    color: $secondary;
+  &:hover {
+    color: $dark-pink;
   }
 }

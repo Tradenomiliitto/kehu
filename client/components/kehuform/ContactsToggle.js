@@ -38,14 +38,13 @@ export default class ContactsToggle extends Component {
   renderContacts() {
     return this.props.contacts.map((contact, i) => (
       <li key={i}>
-        <a
-          href="#"
-          className="Contacts-link"
+        <button
           onClick={this.handleClick(contact.name, contact.email)}
+          className="Contacts-link"
         >
           {contact.name}
           {contact.email && ` - ${contact.email}`}
-        </a>
+        </button>
       </li>
     ));
   }
