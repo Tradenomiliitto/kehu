@@ -10,5 +10,6 @@ module.exports = {
     "color-named": null,
     "color-function-notation": "legacy", // Scss not supporting the modern notation
     "alpha-value-notation": "number", // Already used in css files
+    "max-nesting-depth": 2,
   },
 };
