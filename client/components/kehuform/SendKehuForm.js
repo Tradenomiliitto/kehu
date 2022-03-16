@@ -16,6 +16,7 @@ import ReceiverEmailField from "./ReceiverEmailField";
 import RoleImage from "./RoleImage";
 import ContactsToggle from "./ContactsToggle";
 import { capitalizeText } from "../../util/TextUtil";
+import VisibilitySelection from "./VisibilitySelection";
 
 export class SendKehuForm extends Component {
   static propTypes = {
@@ -45,6 +46,7 @@ export class SendKehuForm extends Component {
       group_name: "-",
       receiver_name: "",
       receiver_email: "",
+      isPrivate: null,
       role_id: null,
       text: "",
       date_given: moment(),
@@ -182,6 +184,12 @@ export class SendKehuForm extends Component {
             handleChange={this.handleChangeWithEvent("receiver_email")}
           />
         )}
+        {isGroupKehu && (
+          <VisibilitySelection
+            isPrivate={this.state.isPrivate}
+            handleChange={this.handleChangeWithValue("isPrivate")}
+          />
+        )}
         <div className="Form-group">
           <label>
             {t("modals.send-kehu.sender-role-selection", "Olen Kehun saajan:")}
@@ -276,7 +284,12 @@ export class SendKehuForm extends Component {
   };
 
   selectGroup = (group_name) => {
-    this.setState({ group_name, receiver_name: "", receiver_email: "" });
+    this.setState({
+      group_name,
+      receiver_name: "",
+      receiver_email: "",
+      isPrivate: null,
+    });
   };
 
   handleRoleChange = (role_id) => {

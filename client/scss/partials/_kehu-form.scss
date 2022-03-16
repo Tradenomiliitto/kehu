@@ -28,7 +28,15 @@
   margin: -0.25rem -0.25rem 1.75rem;
 }
 
-.RoleSelector-button {
+.VisibilitySelector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  margin: 0.25rem -0.25rem 0.5rem;
+}
+
+.RoleSelector-button,
+.VisibilitySelector-button {
   background-color: $white;
   border: 1px solid $secondary;
   border-radius: 3px;
@@ -64,6 +72,10 @@
   height: 70px;
   margin-bottom: 6px;
   width: 70px;
+}
+
+.VisibilitySelector-image {
+  width: 40px;
 }
 
 .KehuTextFieldContainer,
