@@ -13,7 +13,6 @@ import WordCloudField from "./WordCloudField";
 import ReceiverNameField from "./ReceiverNameField";
 import GroupSelectionField from "./GroupSelectionField";
 import ReceiverEmailField from "./ReceiverEmailField";
-import RoleImage from "./RoleImage";
 import ContactsToggle from "./ContactsToggle";
 import { capitalizeText } from "../../util/TextUtil";
 import VisibilitySelection from "./VisibilitySelection";
