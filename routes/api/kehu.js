@@ -40,7 +40,11 @@ router.post("/laheta", checkSchema(sendKehuSchema), async (req, res) => {
       const kehu = await KehuService.sendKehu(req.body, req.t);
       res.json({ kehu });
     } else {
-      res.status(422).json({ errors: validations.array() });
+      res
+        .status(422)
+        // Schema has only one error message for each parameter so we shouln't
+        // return the same message multiple times -> onlyFirstError: true
+        .json({ errors: validations.array({ onlyFirstError: true }) });
     }
   } catch (err) {
     res.status(500).json({ error: err.message });
