@@ -153,11 +153,24 @@ export class SendKehuForm extends Component {
     const activeGroup = isGroupKehu
       ? groups.find((group) => group.name === group_name)
       : null;
+
+    // User can send the kehu to whole group. It a special member in the
+    // receiver list since it's not a real member of the group
+    const groupAsMember = {
+      name: t("modals.send-kehu.whole-group", "Koko yhteisö"),
+      email: null,
+    };
+    const isReceiverGroup =
+      receiver_name === groupAsMember.name &&
+      receiver_email === groupAsMember.email;
+
     const groupMembers = activeGroup
-      ? activeGroup.members.map((m) => ({
-          name: `${m.user.first_name} ${m.user.last_name}`,
-          email: m.user.email,
-        }))
+      ? [groupAsMember].concat(
+          activeGroup.members.map((m) => ({
+            name: `${m.user.first_name} ${m.user.last_name}`,
+            email: m.user.email,
+          }))
+        )
       : null;
 
     return (
@@ -186,6 +199,7 @@ export class SendKehuForm extends Component {
         {isGroupKehu && (
           <VisibilitySelection
             isPrivate={this.state.isPrivate}
+            isReceiverGroup={isReceiverGroup}
             handleChange={this.handleChangeWithValue("isPrivate")}
           />
         )}

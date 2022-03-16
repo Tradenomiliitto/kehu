@@ -48,7 +48,7 @@
   padding: 10px 4px 4px;
   transition: $button-transition;
 
-  &:hover,
+  &:hover:not(.VisibilitySelector-button--frozen),
   &--selected {
     background-color: $light-pink;
     border-color: $pink;
@@ -66,6 +66,10 @@
       color: $secondary;
     }
   }
+}
+
+.VisibilitySelector-button--frozen {
+  opacity: 0.3;
 }
 
 .RoleSelector-image {
