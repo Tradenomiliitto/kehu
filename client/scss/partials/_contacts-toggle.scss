@@ -28,6 +28,11 @@
   }
 }
 
+.GroupSelectionForm .Contacts {
+  // If both dropdowns are open simultaneously this should be on top
+  z-index: 6;
+}
+
 .Contacts-link {
   background: none;
   border: 0;

@@ -15,7 +15,7 @@ export default function GroupSelectionField({ value, handleChange }) {
   }
 
   return (
-    <div className="Form-group">
+    <div className="Form-group GroupSelectionForm">
       <label htmlFor="group_name">
         {t("modals.send-kehu.group-name", "Kehun saajan yhteisö")}:
       </label>
