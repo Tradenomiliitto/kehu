@@ -29,10 +29,10 @@ class Kehu extends Model {
         // Receiver name is not visible to the owner but is visible in Sent
         // Kehus for the sender. When sending a Kehu the value is what user
         // wrote when sending it, when adding a Kehu the value is NULL
-        receiver_name: { type: "string" },
+        receiver_name: { type: ["string", "null"] },
         // Receiver email is not visible to anyone. Value is NULL when adding
         // a Kehu
-        receiver_email: { type: "string" },
+        receiver_email: { type: ["string", "null"] },
         role_id: { type: ["integer", "null"] },
         text: { type: "string" },
         group_id: { type: "integer" },

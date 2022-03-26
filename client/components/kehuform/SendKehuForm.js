@@ -333,6 +333,12 @@ export class SendKehuForm extends Component {
       );
       formData.group_id = activeGroup.id;
       formData.is_public = !this.state.isPrivate;
+
+      // If receiver email is null then the kehu is for the whole group
+      // --> replace the `modals.send-kehu.whole-group` string with the actual
+      // group name
+      if (this.state.receiver_email == null)
+        formData.receiver_name = activeGroup.name;
     }
 
     this.props.sendKehu(formData);
