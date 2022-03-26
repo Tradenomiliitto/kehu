@@ -108,7 +108,10 @@ export function sendKehu(data) {
   return async (dispatch, getState) => {
     try {
       dispatch({ type: SEND_KEHU });
-      const kehu = await post("/kehut/laheta", data);
+      const isGroupKehu = typeof data.group_id === "number";
+      const kehu = isGroupKehu
+        ? await post("/kehut/group", data)
+        : await post("/kehut/laheta", data);
       dispatch({ type: SEND_KEHU_SUCCESS, payload: kehu });
       dispatch({
         type: RESET_REPORTS,

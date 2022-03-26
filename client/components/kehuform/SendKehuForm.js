@@ -316,10 +316,29 @@ export class SendKehuForm extends Component {
 
   sendKehu = () => {
     const formData = {
-      ...this.state,
+      giver_id: this.state.giver_id,
+      giver_name: this.state.giver_name,
+      receiver_name: this.state.receiver_name,
+      receiver_email: this.state.receiver_email,
+      role_id: this.state.role_id,
+      text: this.state.text,
+      tags: this.state.tags,
+      situations: this.state.situations,
       date_given: moment(this.state.date_given).format(),
     };
-    delete formData.preview;
+
+    // Group kehu is going to different endpoint so modify parameters
+    const isGroupKehu = this.state.group_name !== "-";
+    if (isGroupKehu) {
+      const activeGroup = this.props.groups.find(
+        (group) => group.name === this.state.group_name
+      );
+      formData.group_id = activeGroup.id;
+      formData.is_public = !this.state.isPrivate;
+      delete formData.giver_id;
+      delete formData.giver_name;
+    }
+
     this.props.sendKehu(formData);
   };
 }
