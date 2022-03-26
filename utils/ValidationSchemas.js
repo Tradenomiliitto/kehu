@@ -39,25 +39,6 @@ const addKehuSchema = {
 };
 
 const sendKehuSchema = {
-  giver_id: {
-    errorMessage: "Kehun antajan tunnus puuttuu tai on virheellinen.",
-    exists: true,
-    isInt: true,
-    toInt: true,
-    custom: {
-      options: (value, { req }) => {
-        return value === req.user.id;
-      },
-    },
-  },
-  giver_name: {
-    errorMessage: "Kehun antaja on pakollinen tieto.",
-    custom: {
-      options: (value) => {
-        return !!value;
-      },
-    },
-  },
   receiver_name: {
     errorMessage: "Kehun saajan nimi on pakollinen tieto.",
     trim: true,
@@ -98,7 +79,7 @@ const sendGroupKehuSchema = {
     isEmail: true,
     notEmpty: true,
     trim: true,
-    optional: true,
+    optional: { options: { nullable: true } },
     errorMessage: "Kehun saajan sähköpostiosoite on pakollinen tieto.",
   },
   date_given: {
@@ -116,7 +97,8 @@ const sendGroupKehuSchema = {
   },
   role_id: {
     isInt: true,
-    optional: true,
+    optional: { options: { nullable: true } },
+    nullable: true,
     errorMessage: "role_id must be an integer",
   },
   situations: {

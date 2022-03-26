@@ -34,25 +34,10 @@ router.post("/", checkSchema(addKehuSchema), async (req, res) => {
   }
 });
 
-router.post("/laheta", checkSchema(sendKehuSchema), async (req, res) => {
-  try {
-    const validations = validationResult(req);
-    if (validations.isEmpty()) {
-      const kehu = await KehuService.sendKehu(req.body, req.t);
-      res.json({ kehu });
-    } else {
-      res
-        .status(422)
-        // Schema has only one error message for each parameter so we shouln't
-        // return the same message multiple times -> onlyFirstError: true
-        .json({ errors: validations.array({ onlyFirstError: true }) });
-    }
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+router.post("/laheta", checkSchema(sendKehuSchema), validateAndSendKehu);
+router.post("/group", checkSchema(sendGroupKehuSchema), validateAndSendKehu);
 
-router.post("/group", checkSchema(sendGroupKehuSchema), async (req, res) => {
+async function validateAndSendKehu(req, res) {
   try {
     const validations = validationResult(req);
     if (validations.isEmpty()) {
@@ -70,7 +55,7 @@ router.post("/group", checkSchema(sendGroupKehuSchema), async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-});
+}
 
 router.get("/lisaa/:claim_id", async (req, res) => {
   try {

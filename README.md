@@ -187,18 +187,16 @@ modelClass: `${__dirname}/Group`,
 
 There are five different ways to create Kehus and it determines what values are used to populate the `Kehus` database table. In the table content and source for the some Kehu table column values are given. Asterix (\*) after the value indicates it is provided in the request body.
 
-| How Kehu was created                                            | giver_id                 | giver_name                     | owner_id                 | receiver_name    | receiver_email                           | claim_id | group_id      | is_public      |
-| --------------------------------------------------------------- | ------------------------ | ------------------------------ | ------------------------ | ---------------- | ---------------------------------------- | -------- | ------------- | -------------- |
-| User adds a Kehu to himself (`POST /`)                          | `Users.id`\*<sup>1</sup> | user input\*                   | `Users.id`\*<sup>1</sup> | NULL             | NULL                                     | NULL     | NULL          | NULL           |
-| User sends a Kehu to an existing Kehu user (`POST /laheta`)     | `Users.id`\*<sup>1</sup> | user's full name\*<sup>2</sup> | `Users.id` <sup>3</sup>  | user input\*     | email found from user database\*         | NULL     | NULL          | NULL           |
-| User sends a Kehu to a new Kehu user (`POST /laheta`)           | `Users.id`\*<sup>1</sup> | user's full name\*<sup>2</sup> | NULL                     | user input\*     | email **NOT** found from user database\* | uuidv4   | NULL          | NULL           |
-| User sends a Kehu to a user in a common group (`POST /yhteiso`) | `Users.id`<sup>4</sup>   | Sender's full name             | `Users.id` <sup>3</sup>  | user selection\* | user selection\*                         | NULL     | `Groups.id`\* | `true/false`\* |
-| User sends a Kehu to a whole group (`POST /yhteiso`)            | `Users.id`<sup>4</sup>   | Sender's full name             | NULL                     | NULL             | NULL                                     | NULL     | `Groups.id`\* | `true`\*       |
+| How Kehu was created                                            | giver_id               | giver_name         | owner_id                 | receiver_name    | receiver_email                           | claim_id | group_id      | is_public      |
+| --------------------------------------------------------------- | ---------------------- | ------------------ | ------------------------ | ---------------- | ---------------------------------------- | -------- | ------------- | -------------- |
+| User adds a Kehu to himself (`POST /`)                          | `Users.id`<sup>1</sup> | user input\*       | `Users.id`\*<sup>1</sup> | NULL             | NULL                                     | NULL     | NULL          | NULL           |
+| User sends a Kehu to an existing Kehu user (`POST /laheta`)     | `Users.id`<sup>1</sup> | Sender's full name | `Users.id` <sup>2</sup>  | user input\*     | email found from user database\*         | NULL     | NULL          | NULL           |
+| User sends a Kehu to a new Kehu user (`POST /laheta`)           | `Users.id`<sup>1</sup> | Sender's full name | NULL                     | user input\*     | email **NOT** found from user database\* | uuidv4   | NULL          | NULL           |
+| User sends a Kehu to a user in a common group (`POST /yhteiso`) | `Users.id`<sup>1</sup> | Sender's full name | `Users.id` <sup>2</sup>  | user selection\* | user selection\*                         | NULL     | `Groups.id`\* | `true/false`\* |
+| User sends a Kehu to a whole group (`POST /yhteiso`)            | `Users.id`<sup>1</sup> | Sender's full name | NULL                     | NULL             | NULL                                     | NULL     | `Groups.id`\* | `true`\*       |
 
-1: Even though the `Users.id` value is provided in the request body it must match `req.user.id` (i.e. the logged in user's id).  
-2: Field is not validated but frontend is using sender's `Users.first_name + Users.last_name`  
-3: Id of the user whose email is in the `receiver_email` column  
-4: Sender's user id (`req.user.id`)
+1: Sender's user id (`req.user.id`)  
+2: Id of the user whose email is in the `receiver_email` column
 
 ## License
 

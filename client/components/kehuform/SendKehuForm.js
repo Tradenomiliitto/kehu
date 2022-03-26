@@ -316,8 +316,6 @@ export class SendKehuForm extends Component {
 
   sendKehu = () => {
     const formData = {
-      giver_id: this.state.giver_id,
-      giver_name: this.state.giver_name,
       receiver_name: this.state.receiver_name,
       receiver_email: this.state.receiver_email,
       role_id: this.state.role_id,
@@ -335,8 +333,6 @@ export class SendKehuForm extends Component {
       );
       formData.group_id = activeGroup.id;
       formData.is_public = !this.state.isPrivate;
-      delete formData.giver_id;
-      delete formData.giver_name;
     }
 
     this.props.sendKehu(formData);
