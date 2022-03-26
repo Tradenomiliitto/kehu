@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "npm run build:prod && npm run migrate:latest",
-    "build:dev": "npx webpack --env dev --watch",
+    "build:watch": "npx webpack --env dev --watch",
     "build:prod": "NODE_ENV=production npx webpack --env prod",
     "lint": "eslint --ext js . ; stylelint '**/*.{css,scss}'",
     "lint:fix": "eslint --fix --ext js . ; stylelint --fix '**/*.{css,scss}'",
@@ -13,7 +13,7 @@
     "start:dev": "npx webpack --env dev && nodemon ./bin/www",
     "start:dev+build": "WEBPACK_HOT_RELOAD=true nodemon ./bin/www",
     "start:prod": "NODE_ENV=production node ./bin/www",
-    "start:debug": "nodemon --inspect=0.0.0.0:9229 ./bin/www",
+    "start:debug": "npx webpack --env dev && nodemon --inspect ./bin/www",
     "test": "npx nightwatch && npx jest",
     "jest:watch": "jest --watch"
   },
