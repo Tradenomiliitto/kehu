@@ -168,15 +168,22 @@ async function sendKehu(data, t) {
   try {
     trx = await transaction.start(knex);
 
-    const user = await findUserByEmail(data.receiver_email);
-    let kehuData;
-    let claim_id;
+    let kehuData, user, claim_id;
 
-    if (user) {
-      kehuData = parseKehu({ ...data, owner_id: user.id });
+    // If receiver_email field is null then the kehu is for the whole group
+    const receiverIsGroup = data.receiver_email == null;
+
+    if (receiverIsGroup) {
+      kehuData = parseKehu(data);
     } else {
-      claim_id = uuidv4();
-      kehuData = parseKehu({ ...data, claim_id });
+      user = await findUserByEmail(data.receiver_email);
+
+      if (user) {
+        kehuData = parseKehu({ ...data, owner_id: user.id });
+      } else {
+        claim_id = uuidv4();
+        kehuData = parseKehu({ ...data, claim_id });
+      }
     }
 
     const kehu = await Kehu.query().insert(kehuData);
@@ -187,12 +194,15 @@ async function sendKehu(data, t) {
     await trx.commit();
     logger.info(`User ${data.giver_id} sent kehu ${kehu.id}`);
 
-    if (user) {
-      await sendEmailToKnownUser(user, kehu.id, t);
-      logger.info(`Email sent to user ${user.id}`);
-    } else {
-      await sendEmailToUnkownUser(data, claim_id, kehu.id, t);
-      logger.info(`Email sent to unknown user`);
+    // Only send emails if receiver is not a group
+    if (!receiverIsGroup) {
+      if (user) {
+        await sendEmailToKnownUser(user, kehu.id, t);
+        logger.info(`Email sent to user ${user.id}`);
+      } else {
+        await sendEmailToUnkownUser(data, claim_id, kehu.id, t);
+        logger.info(`Email sent to unknown user`);
+      }
     }
 
     return await Kehu.query()
@@ -304,6 +314,8 @@ function parseKehu(data) {
     receiver_email,
     role_id,
     text,
+    group_id,
+    is_public,
   } = data;
   return {
     claim_id,
@@ -317,6 +329,8 @@ function parseKehu(data) {
     receiver_email,
     role_id,
     text,
+    group_id,
+    is_public,
   };
 }
 

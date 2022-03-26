@@ -87,6 +87,54 @@ const sendKehuSchema = {
   },
 };
 
+const sendGroupKehuSchema = {
+  receiver_name: {
+    isString: true,
+    notEmpty: true,
+    trim: true,
+    errorMessage: "Kehun saajan nimi on pakollinen tieto.",
+  },
+  receiver_email: {
+    isEmail: true,
+    notEmpty: true,
+    trim: true,
+    optional: true,
+    errorMessage: "Kehun saajan sähköpostiosoite on pakollinen tieto.",
+  },
+  date_given: {
+    isString: true,
+    notEmpty: true,
+    errorMessage: "date_given must be nonempty string",
+  },
+  group_id: {
+    isInt: true,
+    errorMessage: "Yhteisön tunniste on pakollinen tieto.",
+  },
+  is_public: {
+    isBoolean: true,
+    errorMessage: "Kehun julkisuus on pakollinen tieto.",
+  },
+  role_id: {
+    isInt: true,
+    optional: true,
+    errorMessage: "role_id must be an integer",
+  },
+  situations: {
+    isArray: true,
+    errorMessage: "situations must be an array",
+  },
+  tags: {
+    isArray: true,
+    errorMessage: "tags must be an array",
+  },
+  text: {
+    isString: true,
+    notEmpty: true,
+    trim: true,
+    errorMessage: "Teksti on pakollinen tieto.",
+  },
+};
+
 const updateReceivedKehuSchema = {
   giver_id: {
     errorMessage: "Kehun antajan tunnus puuttuu tai on virheellinen.",
@@ -176,6 +224,7 @@ const createGroupSchema = {
 module.exports = {
   addKehuSchema,
   sendKehuSchema,
+  sendGroupKehuSchema,
   updateReceivedKehuSchema,
   updateProfileSchema,
   createGroupSchema,

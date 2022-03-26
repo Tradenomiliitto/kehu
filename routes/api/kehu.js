@@ -4,6 +4,7 @@ const { checkSchema, validationResult } = require("express-validator");
 const {
   addKehuSchema,
   sendKehuSchema,
+  sendGroupKehuSchema,
   updateReceivedKehuSchema,
 } = require("../../utils/ValidationSchemas");
 const KehuService = require("../../services/KehuService");
@@ -38,6 +39,26 @@ router.post("/laheta", checkSchema(sendKehuSchema), async (req, res) => {
     const validations = validationResult(req);
     if (validations.isEmpty()) {
       const kehu = await KehuService.sendKehu(req.body, req.t);
+      res.json({ kehu });
+    } else {
+      res
+        .status(422)
+        // Schema has only one error message for each parameter so we shouln't
+        // return the same message multiple times -> onlyFirstError: true
+        .json({ errors: validations.array({ onlyFirstError: true }) });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.post("/group", checkSchema(sendGroupKehuSchema), async (req, res) => {
+  try {
+    const validations = validationResult(req);
+    if (validations.isEmpty()) {
+      const giver_name = req.user.first_name + " " + req.user.last_name;
+      const data = { giver_id: req.user.id, giver_name, ...req.body };
+      const kehu = await KehuService.sendKehu(data, req.t);
       res.json({ kehu });
     } else {
       res
