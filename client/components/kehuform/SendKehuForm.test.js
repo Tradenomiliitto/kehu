@@ -24,6 +24,7 @@ describe("client:components:kehuform:SendKehuForm", () => {
   const roles = [{ id: 1, role: "role1" }];
   const situations = [{ text: "situation" }];
   const tags = [{ text: "tag" }];
+  const groups = [{ id: 1, name: "group1" }];
 
   beforeEach(() => {
     MockDate.set("2018-11-17");
@@ -36,6 +37,7 @@ describe("client:components:kehuform:SendKehuForm", () => {
         roles={roles}
         situations={situations}
         tags={tags}
+        groups={groups}
         t={(key) => key}
       />
     );
@@ -46,6 +48,8 @@ describe("client:components:kehuform:SendKehuForm", () => {
       preview: false,
       giver_id: profile.id,
       giver_name: `${profile.first_name} ${profile.last_name}`,
+      group_name: "-",
+      isPrivate: null,
       receiver_name: "",
       receiver_email: "",
       role_id: null,
@@ -84,8 +88,6 @@ describe("client:components:kehuform:SendKehuForm", () => {
 
       it("sends new kehu", () => {
         expect(sendKehuStub).toHaveBeenCalledWith({
-          giver_id: profile.id,
-          giver_name: `${profile.first_name} ${profile.last_name}`,
           receiver_name: "",
           receiver_email: "",
           role_id: null,
@@ -109,6 +111,7 @@ describe("client:components:kehuform:SendKehuForm", () => {
           roles={roles}
           situations={situations}
           tags={tags}
+          groups={groups}
           t={(key) => key}
         />
       );
@@ -135,6 +138,7 @@ describe("client:components:kehuform:SendKehuForm", () => {
           roles={roles}
           situations={situations}
           tags={tags}
+          groups={groups}
           t={(key) => key}
         />
       );
