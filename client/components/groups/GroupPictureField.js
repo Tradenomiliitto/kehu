@@ -5,7 +5,13 @@ import Spinner from "../Spinner";
 
 import { uploadWidget } from "../../util/uploadWidget";
 
-const DEFAULT_GROUP_PICTURES = ["/images/group-default.png"];
+const DEFAULT_GROUP_PICTURES = [
+  "/images/avatars/alykot.png",
+  "/images/avatars/kahvittelijat.png",
+  "/images/avatars/makeanhimoiset.png",
+  "/images/avatars/nortit.png",
+  "/images/avatars/urheilulliset.png",
+];
 export const USER_PICTURE = -1;
 
 export default function GroupPictureField({
@@ -18,17 +24,15 @@ export default function GroupPictureField({
   const [isUploadingPicture, setIsUploadingPicture] = useState(false);
   const { selectedPicture, userPictureUrl } = value;
 
-  let defaultPictures = [];
-  for (let i = 0; i < 12; i++)
-    defaultPictures.push(
-      <GroupPicture
-        key={i}
-        id={i}
-        url={DEFAULT_GROUP_PICTURES[i % DEFAULT_GROUP_PICTURES.length]}
-        handleClick={handleClick}
-        isSelected={i === selectedPicture}
-      />
-    );
+  const defaultPictures = DEFAULT_GROUP_PICTURES.map((pictureURl, idx) => (
+    <GroupPicture
+      key={idx}
+      id={idx}
+      url={pictureURl}
+      handleClick={handleClick}
+      isSelected={idx === selectedPicture}
+    />
+  ));
 
   return (
     <div className="Form-group">
