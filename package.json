@@ -48,7 +48,7 @@
     "knex": "^0.21.19",
     "method-override": "^3.0.0",
     "mini-css-extract-plugin": "^1.6.0",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "morgan": "^1.10.0",
     "objection": "^2.2.15",
     "passport": "^0.4.1",
