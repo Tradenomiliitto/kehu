@@ -26,10 +26,19 @@ async function getGroups(userId, groupId = null) {
       "m.is_admin",
       "m.joined_at"
     )
+    .withGraphJoined("kehus(selectKehus).[role, situations, tags]")
     .joinRelated("members as m")
     .where("m.user_id", userId)
     .withGraphJoined("members(selectMember).user(selectUser)")
     .modifiers({
+      selectKehus(builder) {
+        builder
+          .where("is_public", true)
+          .orWhere("owner_id", userId)
+          // For some reason the order given here is reversed in the final
+          // result, probably related to how Objection.js parses the raw data
+          .orderBy("date_given", "asc");
+      },
       selectMember(builder) {
         builder.select("is_admin");
       },
