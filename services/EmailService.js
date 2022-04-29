@@ -1,6 +1,7 @@
 const sgMail = require("@sendgrid/mail");
 const moment = require("moment");
 const Kehu = require("../models/Kehu");
+const logger = require("../logger");
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -26,7 +27,7 @@ async function sendEmailToUnkownUser(receiver, claim_id, kehu_id, t) {
       text: kehu.text,
     },
   };
-  sgMail.send(msg);
+  sendEmailUsingSendgrid(msg);
 }
 
 async function sendEmailToKnownUser(user, kehu_id, t) {
@@ -46,6 +47,11 @@ async function sendEmailToKnownUser(user, kehu_id, t) {
       text: kehu.text,
     },
   };
+  sendEmailUsingSendgrid(msg);
+}
+
+function sendEmailUsingSendgrid(msg) {
+  logger.info("Sending email to " + msg.to);
   sgMail.send(msg);
 }
 
