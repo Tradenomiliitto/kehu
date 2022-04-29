@@ -98,7 +98,6 @@ const sendGroupKehuSchema = {
   role_id: {
     isInt: true,
     optional: { options: { nullable: true } },
-    nullable: true,
     errorMessage: "role_id must be an integer",
   },
   situations: {
