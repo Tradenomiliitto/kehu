@@ -3,9 +3,10 @@ const moment = require("moment");
 const Kehu = require("../models/Kehu");
 const logger = require("../logger");
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+if (process.env.SENDGRID_API_KEY)
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-if (!process.env.SENDGRID_API_KEY || !process.env.HOME_URL) {
+if (!process.env.HOME_URL) {
   throw new Error("Set SENDGRID_API_KEY and HOME_URL.");
 }
 
@@ -51,6 +52,11 @@ async function sendEmailToKnownUser(user, kehu_id, t) {
 }
 
 function sendEmailUsingSendgrid(msg) {
+  if (!process.env.SENDGRID_API_KEY) {
+    logger.warn("SendGrid API key not set, unable to send email to " + msg.to);
+    return;
+  }
+
   logger.info("Sending email to " + msg.to);
   sgMail.send(msg);
 }
