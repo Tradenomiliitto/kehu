@@ -81,6 +81,7 @@ export class HomePanel extends Component {
 
   renderMainContent() {
     if (this.props.hasKehus) {
+      console.log(this.props.feedItems);
       return <FeedPanel items={this.props.feedItems} />;
     }
     return <WelcomePanel />;

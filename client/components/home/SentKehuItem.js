@@ -9,10 +9,13 @@ export class SentKehuItem extends Component {
   static propTypes = {
     kehu: PropTypes.object.isRequired,
     roles: PropTypes.array.isRequired,
+    // i18n props coming from withTranslation()
+    t: PropTypes.func.isRequired,
   };
 
   render() {
     const { kehu } = this.props;
+    //console.log(kehu);
     return (
       <div className="FeedItem">
         <img

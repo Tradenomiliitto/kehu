@@ -24,6 +24,7 @@ export default function GroupsPanel() {
     ev.target.blur();
     setKehusVisible((kehusVisible) => kehusVisible + SHOW_MORE_KEHUS_STEP_SIZE);
   };
+  console.log(activeGroup.kehus.slice(0, kehusVisible));
 
   return (
     <div className="Groups">

@@ -6,10 +6,14 @@ import { compose } from "redux";
 import { withTranslation } from "react-i18next";
 import cn from "classnames";
 import { capitalizeText } from "../../util/TextUtil";
+import { kehuPropType, rolePropType } from "../../util/PropTypes";
 
 export class KehuItem extends Component {
   static propTypes = {
-    kehu: PropTypes.object.isRequired,
+    kehu: kehuPropType,
+    roles: PropTypes.arrayOf(rolePropType),
+    // i18n props coming from withTranslation()
+    t: PropTypes.func.isRequired,
   };
 
   render() {
