@@ -79,6 +79,20 @@ describe("client:Homepanel", () => {
   });
 
   function createProps(search) {
+    const kehu = {
+      id: 1,
+      giver_name: "name",
+      text: "text",
+      giver_id: 1,
+      is_public: false,
+    };
+
+    const sentKehu = {
+      giver_name: "name",
+      text: "text",
+      picture: "/images/picture.svg",
+    };
+
     return {
       history: {
         location: {
@@ -86,7 +100,7 @@ describe("client:Homepanel", () => {
         },
         replace: replaceStub,
       },
-      feedItems: [{ item: 1 }, { item: 2 }],
+      feedItems: [kehu, sentKehu],
       hasKehus: false,
       tags: [{ text: "Test" }, { text: "Tag" }],
       toggleAddKehuFormModal: toggleAddKehuFormModalStub,

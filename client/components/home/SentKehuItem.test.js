@@ -4,13 +4,14 @@ import moment from "moment";
 describe("client:components:home:SentKehuItem", () => {
   let component;
   const roles = [
-    { id: 1, role: "client" },
-    { id: 6, role: "client" },
+    { id: 1, role: "client", imageId: "client" },
+    { id: 6, role: "client", imageId: "client" },
   ];
   const kehu = {
     date_given: "2019-02-10",
+    giver_name: "name",
     text: "text",
-    receiver_name: "name",
+    picture: "/images/picture.svg",
   };
 
   beforeEach(() => {

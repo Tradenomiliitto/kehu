@@ -9,12 +9,15 @@ describe("client:components:home:KehuItem", () => {
     { id: 6, role: "client", imageId: "client" },
   ];
   const kehu = {
+    id: 1,
     date_given: "2019-02-10",
     text: "text",
+    giver_id: 1,
     giver_name: "name",
     giver: {
       picture: "pic-src",
     },
+    is_public: false,
   };
 
   beforeEach(() => {
@@ -40,7 +43,7 @@ describe("client:components:home:KehuItem", () => {
 
   describe("when role is given", () => {
     it("renders correct info", () => {
-      const role = { id: 1, role: "client" };
+      const role = { id: 1, role: "client", imageId: "client" };
       component.setProps({ kehu: { ...kehu, role } });
       const expectedInfo = `${kehu.giver_name}, ${role.role}`;
       expect(component.find(".FeedItem-info").text()).toEqual(expectedInfo);
@@ -80,7 +83,7 @@ describe("client:components:home:KehuItem", () => {
 
   describe("when all info at once", () => {
     it("renders correct info", () => {
-      const role = { id: 1, role: "client" };
+      const role = { id: 1, role: "client", imageId: "client" };
       const tags = [{ text: "client" }, { text: "customer" }];
       component.setProps({
         kehu: { ...kehu, tags, role, receiver_email: "some@email" },
@@ -97,7 +100,7 @@ describe("client:components:home:KehuItem", () => {
 
   describe("when user had saved the kehu role", () => {
     it("renders image", () => {
-      const role = { id: 6, role: "client" };
+      const role = { id: 6, role: "client", imageId: "client" };
       const src = `/images/role-client.svg`;
       component.setProps({ kehu: { ...kehu, picture: null, role } });
       expect(component.find(".FeedItem-image").prop("src")).toEqual(src);
