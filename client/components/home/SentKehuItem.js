@@ -4,11 +4,14 @@ import { compose } from "redux";
 import { withTranslation } from "react-i18next";
 import { connect } from "react-redux";
 import moment from "moment";
+import { feedSentKehuPropType, rolePropType } from "../../util/PropTypes";
 
 export class SentKehuItem extends Component {
   static propTypes = {
-    kehu: PropTypes.object.isRequired,
-    roles: PropTypes.array.isRequired,
+    kehu: feedSentKehuPropType,
+    roles: PropTypes.arrayOf(rolePropType),
+    // i18n props coming from withTranslation()
+    t: PropTypes.func.isRequired,
   };
 
   render() {

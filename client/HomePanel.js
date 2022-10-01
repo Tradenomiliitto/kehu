@@ -11,6 +11,11 @@ import {
 import WelcomePanel from "./components/home/WelcomePanel";
 import FeedPanel from "./components/home/FeedPanel";
 import { capitalizeText } from "./util/TextUtil";
+import {
+  feedKehuPropType,
+  feedSentKehuPropType,
+  tagPropType,
+} from "./util/PropTypes";
 
 export class HomePanel extends Component {
   static propTypes = {
@@ -20,11 +25,16 @@ export class HomePanel extends Component {
       }).isRequired,
       replace: PropTypes.func.isRequired,
     }).isRequired,
-    feedItems: PropTypes.array.isRequired,
+    feedItems: PropTypes.arrayOf(
+      PropTypes.oneOfType([feedKehuPropType, feedSentKehuPropType])
+    ).isRequired,
     hasKehus: PropTypes.bool.isRequired,
-    tags: PropTypes.array.isRequired,
+    tags: PropTypes.arrayOf(tagPropType).isRequired,
     toggleAddKehuFormModal: PropTypes.func.isRequired,
     toggleSendKehuFormModal: PropTypes.func.isRequired,
+    // i18n props
+    t: PropTypes.func.isRequired,
+    i18n: PropTypes.object.isRequired,
   };
 
   componentDidMount() {
