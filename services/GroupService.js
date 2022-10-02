@@ -26,11 +26,16 @@ async function getGroups(userId, groupId = null) {
       "m.is_admin",
       "m.joined_at"
     )
-    .withGraphJoined("kehus(selectKehus).[role, situations, tags]")
+    .withGraphJoined(
+      "kehus(selectKehus).[role, situations, tags, giver(selectGiver)]"
+    )
     .joinRelated("members as m")
     .where("m.user_id", userId)
     .withGraphJoined("members(selectMember).user(selectUser)")
     .modifiers({
+      selectGiver(builder) {
+        builder.select("picture");
+      },
       selectKehus(builder) {
         builder
           .where("is_public", true)
