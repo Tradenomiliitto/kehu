@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
+import moment from "moment";
 
 import CreateGroupForm from "./CreateGroupForm";
 import { selectGroup } from "../../redux/group";
@@ -47,6 +48,11 @@ function OneGroup({ group, isActive }) {
   const [t] = useTranslation();
   const dispatch = useDispatch();
 
+  // Get the most recent Kehu in the group
+  let latestKehu = [...group.kehus].sort(
+    (kehu1, kehu2) => new Date(kehu2.date_given) - new Date(kehu1.date_given)
+  )[0];
+
   return (
     <button
       className={`MyGroups-GroupButton ${
@@ -68,7 +74,11 @@ function OneGroup({ group, isActive }) {
             })}
           </div>
           <div className="MyGroups-GroupInfo MyGroups-LatestKehu">
-            {t("groups.latest-kehu", "Viimeisin kehu")} x.x.xxxx
+            {latestKehu
+              ? t("groups.latest-kehu", "Viimeisin kehu") +
+                " " +
+                moment(latestKehu.date_given).format("D.M.YYYY")
+              : "\u00A0"}
           </div>
         </div>
         {!isActive && (
