@@ -4,7 +4,6 @@ import moment from "moment";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { withTranslation } from "react-i18next";
-import cn from "classnames";
 import { capitalizeText } from "../../util/TextUtil";
 import { feedKehuPropType, rolePropType } from "../../util/PropTypes";
 
@@ -19,13 +18,9 @@ export class KehuItem extends Component {
   render() {
     const { kehu, t } = this.props;
     const imageSrc = this.createImageSrc(kehu);
-    const classNames = cn({
-      FeedItem: true,
-      "FeedItem--noImage": !imageSrc,
-    });
 
     return (
-      <div className={classNames}>
+      <div className="FeedItem">
         {kehu.isNewKehu && (
           <div className="new-kehu-ribbon">
             {t("home.feed.new-kehu-ribbon")}

@@ -111,7 +111,6 @@ describe("client:components:home:KehuItem", () => {
     it("does not render image", () => {
       component.setProps({ kehu: { ...kehu, picture: null } });
       expect(component.find(".FeedItem-image").exists()).toBeFalsy();
-      expect(component.hasClass("FeedItem--noImage"));
     });
   });
 });
