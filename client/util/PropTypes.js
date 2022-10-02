@@ -67,3 +67,26 @@ const feedSentKehu = {
   picture: PropTypes.string.isRequired,
 };
 export const feedSentKehuPropType = PropTypes.shape(feedSentKehu);
+
+const user = {
+  id: PropTypes.number.isRequired,
+  first_name: PropTypes.string.isRequired,
+  last_name: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+  picture: PropTypes.string,
+};
+export const userPropType = PropTypes.shape(user);
+
+const group = {
+  id: PropTypes.number.isRequired,
+  description: PropTypes.string,
+  is_admin: PropTypes.bool.isRequired,
+  joined_at: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  picture: PropTypes.string.isRequired,
+  kehus: PropTypes.arrayOf(kehuPropType).isRequired,
+  members: PropTypes.arrayOf(
+    PropTypes.shape({ is_admin: PropTypes.bool, user: userPropType })
+  ).isRequired,
+};
+export const groupPropType = PropTypes.shape(group);

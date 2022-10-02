@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 
 import CreateGroupForm from "./CreateGroupForm";
 import { selectGroup } from "../../redux/group";
+import { groupPropType } from "../../util/PropTypes";
 
 export default function MyGroups({ groups, activeGroupIdx }) {
   const [t] = useTranslation();
@@ -38,7 +39,7 @@ export default function MyGroups({ groups, activeGroupIdx }) {
 }
 
 MyGroups.propTypes = {
-  groups: PropTypes.arrayOf(PropTypes.object),
+  groups: PropTypes.arrayOf(groupPropType),
   activeGroupIdx: PropTypes.number,
 };
 
@@ -82,6 +83,6 @@ function OneGroup({ group, isActive }) {
 }
 
 OneGroup.propTypes = {
-  group: PropTypes.object.isRequired,
+  group: groupPropType.isRequired,
   isActive: PropTypes.bool.isRequired,
 };
