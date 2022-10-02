@@ -67,6 +67,8 @@ export class KehuItem extends Component {
 
     if (kehu.receiver_email) {
       text += t("kehus.kehu-received", "Vastaanotettu kehu:") + " ";
+    } else {
+      text += t("kehus.kehu-added", "Lisätty kehu:") + " ";
     }
 
     if (kehu.role && kehu.role.role) {

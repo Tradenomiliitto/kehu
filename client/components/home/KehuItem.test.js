@@ -37,7 +37,7 @@ describe("client:components:home:KehuItem", () => {
   });
 
   it("renders correct info", () => {
-    const expectedInfo = kehu.giver_name;
+    const expectedInfo = "kehus.kehu-added " + kehu.giver_name;
     expect(component.find(".FeedItem-info").text()).toEqual(expectedInfo);
   });
 
@@ -45,7 +45,7 @@ describe("client:components:home:KehuItem", () => {
     it("renders correct info", () => {
       const role = { id: 1, role: "client", imageId: "client" };
       component.setProps({ kehu: { ...kehu, role } });
-      const expectedInfo = `${kehu.giver_name}, ${role.role}`;
+      const expectedInfo = `kehus.kehu-added ${kehu.giver_name}, ${role.role}`;
       expect(component.find(".FeedItem-info").text()).toEqual(expectedInfo);
     });
   });
@@ -54,9 +54,11 @@ describe("client:components:home:KehuItem", () => {
     it("renders correct info", () => {
       const tags = [{ text: "client" }, { text: "customer" }];
       component.setProps({ kehu: { ...kehu, tags } });
-      const expectedInfo = `${kehu.giver_name}. kehus.skills: ${capitalizeText(
-        tags[0].text
-      )}, ${capitalizeText(tags[1].text)}`;
+      const expectedInfo = `kehus.kehu-added ${
+        kehu.giver_name
+      }. kehus.skills: ${capitalizeText(tags[0].text)}, ${capitalizeText(
+        tags[1].text
+      )}`;
       expect(component.find(".FeedItem-info").text()).toEqual(expectedInfo);
     });
   });
