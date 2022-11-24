@@ -36,7 +36,7 @@ export const sentKehuPropType = PropTypes.shape(sentKehu);
 const kehu = {
   ...sentKehu,
   giver_id: PropTypes.number.isRequired,
-  is_public: PropTypes.bool.isRequired,
+  is_public: PropTypes.bool,
   owner_id: PropTypes.number,
   created_at: PropTypes.string,
   updated_at: PropTypes.string,
