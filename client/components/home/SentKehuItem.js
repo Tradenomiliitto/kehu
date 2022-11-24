@@ -22,6 +22,7 @@ export class SentKehuItem extends Component {
           src={kehu.picture}
           className="FeedItem-image"
           alt={kehu.giver_name}
+          referrerPolicy="no-referrer"
         />
         <span className="FeedItem-date">
           {moment(kehu.date_given).format("D.M.YYYY")}

@@ -38,7 +38,14 @@ export class KehuItem extends Component {
 
   renderImage(kehu, src) {
     if (src) {
-      return <img src={src} className="FeedItem-image" alt={kehu.giver_name} />;
+      return (
+        <img
+          src={src}
+          className="FeedItem-image"
+          alt={kehu.giver_name}
+          referrerPolicy="no-referrer"
+        />
+      );
     }
   }
 
