@@ -40,6 +40,7 @@ async function getGroups(userId, groupId = null) {
         builder
           .where("is_public", true)
           .orWhere("owner_id", userId)
+          .orWhere("giver_id", userId)
           // For some reason the order given here is reversed in the final
           // result, probably related to how Objection.js parses the raw data
           .orderBy("date_given", "asc");
