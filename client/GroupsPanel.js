@@ -25,13 +25,19 @@ export default function GroupsPanel() {
     setKehusVisible((kehusVisible) => kehusVisible + SHOW_MORE_KEHUS_STEP_SIZE);
   };
 
+  const kehusInFeed = [...activeGroup.kehus]
+    // Sort Kehus newest first
+    .sort((a, b) => new Date(b.date_given) - new Date(a.date_given))
+    // Show only set number of newest Kehus
+    .slice(0, kehusVisible);
+
   return (
     <div className="Groups">
       <div className="container">
         <div className="row">
           <div className="col col-xs-12 col-md-9">
             <ActiveGroup group={activeGroup} />
-            <FeedPanel items={activeGroup.kehus.slice(0, kehusVisible)} />
+            <FeedPanel items={kehusInFeed} />
             {activeGroup.kehus.length > kehusVisible && (
               <button className="Button" onClick={showMoreKehus}>
                 {t("groups.show-more-kehus-btn", "Näytä lisää")}
