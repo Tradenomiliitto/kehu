@@ -18,6 +18,8 @@ export class ClaimKehuPanel extends Component {
         claim_id: PropTypes.string.isRequired,
       }).isRequired,
     }).isRequired,
+    // i18n props
+    t: PropTypes.func.isRequired,
   };
 
   componentDidMount() {

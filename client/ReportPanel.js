@@ -15,11 +15,12 @@ import { FinnishDate } from "./util/TextUtil";
 import KehuFormModal from "./components/KehuFormModal";
 import SelectKehusPanel from "./components/report/SelectKehusPanel";
 import { countReportStatistics } from "./redux/report";
+import { kehuPropType, sentKehuPropType } from "./util/PropTypes";
 
 export class ReportPanel extends Component {
   static propTypes = {
-    kehus: PropTypes.array.isRequired,
-    sentKehus: PropTypes.array,
+    kehus: PropTypes.arrayOf(kehuPropType).isRequired,
+    sentKehus: PropTypes.arrayOf(sentKehuPropType).isRequired,
     report: PropTypes.shape({
       numberOfKehus: PropTypes.number.isRequired,
       numberOfSentKehus: PropTypes.number.isRequired,
@@ -33,6 +34,8 @@ export class ReportPanel extends Component {
       first_name: PropTypes.string.isRequired,
       last_name: PropTypes.string.isRequired,
     }).isRequired,
+    // i18n props
+    t: PropTypes.func.isRequired,
   };
 
   constructor() {
