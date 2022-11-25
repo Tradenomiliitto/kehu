@@ -15,4 +15,15 @@ const rootReducer = combineReducers({
   report,
 });
 
-export default createStore(rootReducer, applyMiddleware(thunk, logger));
+const middlewares = [thunk];
+
+// Enable redux-logger in development unless set differently by env variable
+if (
+  process.env.REDUX_LOGGER === "true" ||
+  (process.env.REDUX_LOGGER !== "false" &&
+    process.env.NODE_ENV === "development")
+) {
+  middlewares.push(logger);
+}
+
+export default createStore(rootReducer, applyMiddleware(...middlewares));
