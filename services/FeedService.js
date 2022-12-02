@@ -2,6 +2,7 @@ const moment = require("moment");
 const { raw } = require("objection");
 const Kehu = require("../models/Kehu");
 const logger = require("../logger");
+const { addKehuType } = require("../utils/ServerUtils");
 
 async function getKehus(user_id, t) {
   const kehus = await Kehu.query()
@@ -30,11 +31,15 @@ async function getKehus(user_id, t) {
       kehu.date_owner_saw == null ||
       (!isNaN(seenDate) && new Date().getTime() - seenDate < 5 * 1000);
   }
+
+  // Add Kehu types
+  addKehuType(kehus, "received", user_id);
+
   return kehus;
 }
 
 async function getSentKehus(user_id) {
-  return await Kehu.query()
+  const sentKehus = await Kehu.query()
     .select(
       "date_given",
       "giver_name",
@@ -52,6 +57,11 @@ async function getSentKehus(user_id) {
       this.where("giver_id", user_id).andWhere(raw("claim_id IS NOT NULL"));
     })
     .orderBy("date_given", "desc");
+
+  // Add Kehu types
+  addKehuType(sentKehus, "sent", user_id);
+
+  return sentKehus;
 }
 
 function sortKehus(a, b) {

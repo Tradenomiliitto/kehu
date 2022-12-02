@@ -24,6 +24,7 @@ const kehuSituationAndTag = {
 export const kehuSituationAndTagPropType = PropTypes.shape(kehuSituationAndTag);
 
 const sentKehu = {
+  type: PropTypes.oneOf(["sent"]).isRequired,
   id: PropTypes.number.isRequired,
   giver_name: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
@@ -35,6 +36,7 @@ export const sentKehuPropType = PropTypes.shape(sentKehu);
 
 const kehu = {
   ...sentKehu,
+  type: PropTypes.oneOf(["added", "received"]).isRequired,
   giver_id: PropTypes.number.isRequired,
   is_public: PropTypes.bool,
   owner_id: PropTypes.number,
@@ -54,6 +56,7 @@ export const kehuPropType = PropTypes.shape(kehu);
 
 const feedKehu = {
   ...kehu,
+  type: PropTypes.oneOf(["added", "received", "others"]).isRequired,
   isNewKehu: PropTypes.bool,
   giver: PropTypes.shape({
     picture: PropTypes.string.isRequired,

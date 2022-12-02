@@ -11,19 +11,25 @@ const {
 } = require("./EmailService");
 const { raw } = require("objection");
 const logger = require("../logger");
+const { addKehuType } = require("../utils/ServerUtils");
 
 async function getKehus(user_id, t) {
   logger.info(`Fetching kehus for user ${user_id}`);
-  return await Kehu.query()
+  const kehus = await Kehu.query()
     .context({ t })
     .where("owner_id", user_id)
     .withGraphFetched("[role, situations, tags]")
     .orderBy("date_given", "desc");
+
+  // Add Kehu types
+  addKehuType(kehus, "received", user_id);
+
+  return kehus;
 }
 
 async function getSentKehus(user_id) {
   logger.info(`Fetching given Kehus for user ${user_id}`);
-  return await Kehu.query()
+  const sentKehus = await Kehu.query()
     .select(
       "id",
       "date_given",
@@ -39,6 +45,11 @@ async function getSentKehus(user_id) {
       this.where("giver_id", user_id).andWhere(raw("claim_id IS NOT NULL"));
     })
     .orderBy("date_given", "desc");
+
+  // Add Kehu types
+  addKehuType(sentKehus, "sent", user_id);
+
+  return sentKehus;
 }
 
 async function getKehu(user_id, kehu_id, t) {
