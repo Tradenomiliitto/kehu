@@ -52,6 +52,7 @@
   },
   "kehus": {
     "confirm-removal": "Are you sure you want to remove the Kehu?",
+    "kehu-sent": "Sent Kehu",
     "kehu-received": "Kehu received",
     "received-kehus-btn": "Received Kehus",
     "remove-kehu-error": "Unfortunately the removal of the Kehu failed. Error occurred: {{error}}",
@@ -71,7 +72,6 @@
     "title-sent-kehus": "Sent Kehus",
     "toggle-view": "Toggle view"
   },
-  "kehus-sent-kehu": "Sent Kehu",
   "modals": {
     "add-kehu": {
       "comment-btn": "Own comments",

@@ -52,6 +52,7 @@
   },
   "kehus": {
     "confirm-removal": "Haluatko varmasti poistaa Kehun?",
+    "kehu-sent": "Lähetetty kehu",
     "kehu-received": "Vastaanotettu kehu",
     "kehu-added": "Lisätty kehu",
     "kehu-others": "Kehu ryhmässä",
@@ -73,7 +74,6 @@
     "title-sent-kehus": "Lähetetyt kehut",
     "toggle-view": "Vaihda näkymää"
   },
-  "kehus-sent-kehu": "Lähetetty kehu",
   "modals": {
     "add-kehu": {
       "comment-btn": "Omat kommentit",

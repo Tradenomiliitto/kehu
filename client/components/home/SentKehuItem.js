@@ -34,7 +34,7 @@ export class SentKehuItem extends Component {
   }
 
   createInfo(kehu) {
-    let text = this.props.t("kehus-sent-kehu", "Lähetetty kehu") + ": ";
+    let text = this.props.t("kehus.kehu-sent", "Lähetetty kehu") + ": ";
 
     if (kehu.role_id) {
       const role = this.props.roles.find((r) => r.id === kehu.role_id);

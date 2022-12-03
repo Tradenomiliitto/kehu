@@ -31,14 +31,14 @@ describe("client:components:home:SentKehuItem", () => {
   });
 
   it("renders correct info", () => {
-    const expectedInfo = `kehus-sent-kehu: ${kehu.receiver_name}`;
+    const expectedInfo = `kehus.kehu-sent: ${kehu.receiver_name}`;
     expect(component.find(".FeedItem-info").text()).toEqual(expectedInfo);
   });
 
   describe("when role is given", () => {
     it("renders correct info", () => {
       component.setProps({ kehu: { ...kehu, role_id: 6 } });
-      const expectedInfo = `kehus-sent-kehu: ${kehu.receiver_name}, ${roles[1].role}`;
+      const expectedInfo = `kehus.kehu-sent: ${kehu.receiver_name}, ${roles[1].role}`;
       expect(component.find(".FeedItem-info").text()).toEqual(expectedInfo);
     });
   });
