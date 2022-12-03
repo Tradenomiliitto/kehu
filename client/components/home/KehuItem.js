@@ -132,7 +132,8 @@ export function getKehuInfo(kehu, t) {
   }
 
   // Is kehu for the whole group
-  if (kehuToWholeGroup) text += ", koko tiimin kehu";
+  if (kehuToWholeGroup)
+    text += ", " + t("kehus.kehu-whole-group", "koko tiimin kehu");
 
   // Add group name if it's a group Kehu
   if (kehu?.group?.name) text += ` - ${kehu?.group?.name}`;

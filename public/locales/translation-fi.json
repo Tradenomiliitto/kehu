@@ -56,6 +56,7 @@
     "kehu-received": "Vastaanotettu kehu",
     "kehu-added": "Lisätty kehu",
     "kehu-others": "Kehu ryhmässä",
+    "kehu-whole-group": "koko tiimin kehu",
     "received-kehus-btn": "Saadut Kehut",
     "remove-kehu-error": "Valitettavasti Kehun poistaminen epäonnistui. Seuraava virhe tapahtui: {{error}}",
     "sent-kehus-btn": "Lähetetyt Kehut",
