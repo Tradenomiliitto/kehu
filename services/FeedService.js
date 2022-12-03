@@ -56,6 +56,10 @@ async function getSentKehus(user_id) {
     .orWhere(function () {
       this.where("giver_id", user_id).andWhere(raw("claim_id IS NOT NULL"));
     })
+    // Include Kehus sent to a whole group
+    .orWhere(function () {
+      this.where("giver_id", user_id).andWhere(raw("group_id IS NOT NULL"));
+    })
     .orderBy("date_given", "desc");
 
   // Add Kehu types
