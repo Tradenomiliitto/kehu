@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import KehusTable from "../kehus/KehusTable";
 import SentKehusTable from "../kehus/SentKehusTable";
 import ErrorPanel from "../ErrorPanel";
-import { kehuPropType, sentKehuPropType } from "../../util/PropTypes";
+import { kehuPropType } from "../../util/PropTypes";
 
 export class KehusPanel extends Component {
   static propTypes = {
@@ -12,7 +12,7 @@ export class KehusPanel extends Component {
     receivedTitle: PropTypes.string.isRequired,
     error: PropTypes.object,
     kehus: PropTypes.arrayOf(kehuPropType).isRequired,
-    sentKehus: PropTypes.arrayOf(sentKehuPropType).isRequired,
+    sentKehus: PropTypes.arrayOf(kehuPropType).isRequired,
     roles: PropTypes.array.isRequired,
   };
 

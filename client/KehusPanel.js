@@ -6,13 +6,13 @@ import { compose } from "redux";
 import KehusTable from "./components/kehus/KehusTable";
 import SentKehusTable from "./components/kehus/SentKehusTable";
 import ErrorPanel from "./components/ErrorPanel";
-import { kehuPropType, sentKehuPropType } from "./util/PropTypes";
+import { kehuPropType } from "./util/PropTypes";
 
 export class KehusPanel extends Component {
   static propTypes = {
     error: PropTypes.object,
     kehus: PropTypes.arrayOf(kehuPropType).isRequired,
-    sentKehus: PropTypes.arrayOf(sentKehuPropType).isRequired,
+    sentKehus: PropTypes.arrayOf(kehuPropType).isRequired,
     roles: PropTypes.array.isRequired,
     // i18n props
     t: PropTypes.func.isRequired,

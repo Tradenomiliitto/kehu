@@ -13,7 +13,7 @@ const logger = require("../../logger");
 router.get("/", async (req, res) => {
   try {
     const kehus = await KehuService.getKehus(req.user.id, req.t);
-    const sent_kehus = await KehuService.getSentKehus(req.user.id);
+    const sent_kehus = await KehuService.getSentKehus(req.user.id, req.t);
     res.json({ kehus, sent_kehus });
   } catch (err) {
     res.status(500).json({ error: err.message });

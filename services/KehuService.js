@@ -17,8 +17,8 @@ async function getKehus(user_id, t) {
   logger.info(`Fetching kehus for user ${user_id}`);
   const kehus = await Kehu.query()
     .context({ t })
-    .where("owner_id", user_id)
     .withGraphFetched("[role, situations, tags]")
+    .where("owner_id", user_id)
     .orderBy("date_given", "desc");
 
   // Add Kehu types
@@ -27,18 +27,11 @@ async function getKehus(user_id, t) {
   return kehus;
 }
 
-async function getSentKehus(user_id) {
+async function getSentKehus(user_id, t) {
   logger.info(`Fetching given Kehus for user ${user_id}`);
   const sentKehus = await Kehu.query()
-    .select(
-      "id",
-      "date_given",
-      "giver_name",
-      "giver_id",
-      "role_id",
-      "receiver_name",
-      "text"
-    )
+    .context({ t })
+    .withGraphFetched("[role, situations, tags]")
     .where(function () {
       this.where("giver_id", user_id).andWhere("owner_id", "<>", user_id);
     })

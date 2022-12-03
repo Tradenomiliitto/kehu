@@ -33,11 +33,16 @@ const sentKehu = {
   receiver_name: PropTypes.string,
   role_id: PropTypes.number,
 };
-export const sentKehuPropType = PropTypes.shape(sentKehu);
 
 const kehu = {
-  ...sentKehu,
-  type: PropTypes.oneOf(["added", "received"]).isRequired,
+  type: PropTypes.oneOf(["sent", "added", "received"]).isRequired,
+  id: PropTypes.number.isRequired,
+  giver_id: PropTypes.number.isRequired,
+  giver_name: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  date_given: PropTypes.string,
+  receiver_name: PropTypes.string,
+  role_id: PropTypes.number,
   is_public: PropTypes.bool,
   owner_id: PropTypes.number,
   created_at: PropTypes.string,
