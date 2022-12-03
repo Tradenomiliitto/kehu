@@ -4,13 +4,11 @@ import { withTranslation } from "react-i18next";
 import { LangLink } from "../../util/LangLink";
 import KehuItem from "./KehuItem";
 import SentKehuItem from "./SentKehuItem";
-import { feedKehuPropType, feedSentKehuPropType } from "../../util/PropTypes";
+import { feedKehuPropType } from "../../util/PropTypes";
 
 export class FeedPanel extends Component {
   static propTypes = {
-    items: PropTypes.arrayOf(
-      PropTypes.oneOfType([feedKehuPropType, feedSentKehuPropType])
-    ).isRequired,
+    items: PropTypes.arrayOf(feedKehuPropType).isRequired,
     // i18n props
     t: PropTypes.func.isRequired,
   };

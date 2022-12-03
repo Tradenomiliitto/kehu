@@ -4,11 +4,11 @@ import { compose } from "redux";
 import { withTranslation } from "react-i18next";
 import { connect } from "react-redux";
 import moment from "moment";
-import { feedSentKehuPropType, rolePropType } from "../../util/PropTypes";
+import { feedKehuPropType, rolePropType } from "../../util/PropTypes";
 
 export class SentKehuItem extends Component {
   static propTypes = {
-    kehu: feedSentKehuPropType,
+    kehu: feedKehuPropType,
     roles: PropTypes.arrayOf(rolePropType),
     // i18n props coming from withTranslation()
     t: PropTypes.func.isRequired,
@@ -19,7 +19,7 @@ export class SentKehuItem extends Component {
     return (
       <div className="FeedItem">
         <img
-          src={kehu.picture}
+          src={kehu.giver.picture}
           className="FeedItem-image"
           alt={kehu.giver_name}
           referrerPolicy="no-referrer"

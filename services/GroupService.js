@@ -62,12 +62,8 @@ async function getGroups(userId, groupId = null) {
 
   const groups = await groupQuery;
 
-  groups.forEach((group) => {
-    // Add Kehu types
-    addKehuType(group.kehus, userId);
-    // Add picture property to conform with feedSentKehuPropType
-    group.kehus.forEach((kehu) => (kehu.picture = kehu.giver.picture));
-  });
+  // Add Kehu types
+  groups.forEach((group) => addKehuType(group.kehus, userId));
 
   return groups;
 }

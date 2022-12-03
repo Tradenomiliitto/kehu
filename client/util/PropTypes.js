@@ -23,17 +23,6 @@ const kehuSituationAndTag = {
 };
 export const kehuSituationAndTagPropType = PropTypes.shape(kehuSituationAndTag);
 
-const sentKehu = {
-  type: PropTypes.oneOf(["sent"]).isRequired,
-  giver_id: PropTypes.number.isRequired,
-  id: PropTypes.number.isRequired,
-  giver_name: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
-  date_given: PropTypes.string,
-  receiver_name: PropTypes.string,
-  role_id: PropTypes.number,
-};
-
 const kehu = {
   type: PropTypes.oneOf(["sent", "added", "received"]).isRequired,
   id: PropTypes.number.isRequired,
@@ -61,12 +50,12 @@ export const kehuPropType = PropTypes.shape(kehu);
 
 const feedKehu = {
   ...kehu,
-  type: PropTypes.oneOf(["added", "received", "others"]).isRequired,
-  isNewKehu: PropTypes.bool,
+  type: PropTypes.oneOf(["sent", "added", "received", "others"]).isRequired,
+  isNewKehu: PropTypes.bool, // Property only present in added and received Kehus
   giver: PropTypes.shape({
     picture: PropTypes.string.isRequired,
   }).isRequired,
-  // Owner information is only provided when the type is "others"
+  // owner is not defined if Kehu is sent to a new user or to a whole group
   owner: PropTypes.shape({
     first_name: PropTypes.string.isRequired,
     last_name: PropTypes.string.isRequired,
@@ -74,13 +63,6 @@ const feedKehu = {
   }),
 };
 export const feedKehuPropType = PropTypes.shape(feedKehu);
-
-const feedSentKehu = {
-  ...sentKehu,
-  id: undefined,
-  picture: PropTypes.string.isRequired,
-};
-export const feedSentKehuPropType = PropTypes.shape(feedSentKehu);
 
 const user = {
   id: PropTypes.number.isRequired,
@@ -98,9 +80,7 @@ const group = {
   joined_at: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   picture: PropTypes.string.isRequired,
-  kehus: PropTypes.arrayOf(
-    PropTypes.oneOfType([feedKehuPropType, feedSentKehuPropType])
-  ).isRequired,
+  kehus: PropTypes.arrayOf(feedKehuPropType).isRequired,
   members: PropTypes.arrayOf(
     PropTypes.shape({ is_admin: PropTypes.bool, user: userPropType })
   ).isRequired,

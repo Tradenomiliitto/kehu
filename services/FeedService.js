@@ -7,11 +7,14 @@ const { addKehuType } = require("../utils/ServerUtils");
 async function getKehus(user_id, t) {
   const kehus = await Kehu.query()
     .context({ t })
-    .where("owner_id", user_id)
-    .withGraphFetched("[role, situations, tags, giver]")
+    .withGraphFetched("[role, situations, tags, giver, owner]")
     .modifyGraph("giver", (builder) => {
       builder.select("picture");
     })
+    .modifyGraph("owner", (builder) => {
+      builder.select("first_name", "last_name", "picture");
+    })
+    .where("owner_id", user_id)
     .orderBy("date_given", "desc");
 
   // Mark all unseen kehus as seen
@@ -65,19 +68,16 @@ async function getGroupKehusNotOwnedOrSent(user_id, t) {
   return kehus;
 }
 
-async function getSentKehus(user_id) {
+async function getSentKehus(user_id, t) {
   const sentKehus = await Kehu.query()
-    .select(
-      "date_given",
-      "giver_name",
-      "giver_id",
-      "role_id",
-      "receiver_name",
-      "text",
-      "Users.picture as picture"
-    )
-    .join("Users", "Kehus.giver_id", "=", "Users.id")
-    .limit(5)
+    .context({ t })
+    .withGraphFetched("[role, situations, tags, giver, owner]")
+    .modifyGraph("giver", (builder) => {
+      builder.select("picture");
+    })
+    .modifyGraph("owner", (builder) => {
+      builder.select("first_name", "last_name", "picture");
+    })
     .where(function () {
       this.where("giver_id", user_id).andWhere("owner_id", "<>", user_id);
     })
@@ -106,7 +106,7 @@ async function getFeedItems(user_id, t) {
   logger.info(`Fetching feed items for user ${user_id}`);
   try {
     const kehus = await getKehus(user_id, t);
-    const sentKehus = await getSentKehus(user_id);
+    const sentKehus = await getSentKehus(user_id, t);
     const groupKehus = await getGroupKehusNotOwnedOrSent(user_id, t);
 
     // Return top 5 kehus but always return all new kehus even if not fitting
