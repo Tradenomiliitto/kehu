@@ -7,12 +7,15 @@ const { addKehuType } = require("../utils/ServerUtils");
 async function getKehus(user_id, t) {
   const kehus = await Kehu.query()
     .context({ t })
-    .withGraphFetched("[role, situations, tags, giver, owner]")
+    .withGraphFetched("[role, situations, tags, giver, owner, group]")
     .modifyGraph("giver", (builder) => {
       builder.select("picture");
     })
     .modifyGraph("owner", (builder) => {
       builder.select("first_name", "last_name", "picture");
+    })
+    .modifyGraph("group", (builder) => {
+      builder.select("name");
     })
     .where("owner_id", user_id)
     .orderBy("date_given", "desc");
@@ -48,12 +51,15 @@ async function getGroupKehusNotOwnedOrSent(user_id, t) {
   const kehus = await Kehu.query()
     .context({ t })
     .select("Kehus.*")
-    .withGraphFetched("[role, situations, tags, giver, owner]")
+    .withGraphFetched("[role, situations, tags, giver, owner, group]")
     .modifyGraph("giver", (builder) => {
       builder.select("picture");
     })
     .modifyGraph("owner", (builder) => {
       builder.select("first_name", "last_name", "picture");
+    })
+    .modifyGraph("group", (builder) => {
+      builder.select("name");
     })
     .joinRelated("group")
     .leftJoin("GroupMembers", "group.id", "GroupMembers.group_id")
@@ -71,12 +77,15 @@ async function getGroupKehusNotOwnedOrSent(user_id, t) {
 async function getSentKehus(user_id, t) {
   const sentKehus = await Kehu.query()
     .context({ t })
-    .withGraphFetched("[role, situations, tags, giver, owner]")
+    .withGraphFetched("[role, situations, tags, giver, owner, group]")
     .modifyGraph("giver", (builder) => {
       builder.select("picture");
     })
     .modifyGraph("owner", (builder) => {
       builder.select("first_name", "last_name", "picture");
+    })
+    .modifyGraph("group", (builder) => {
+      builder.select("name");
     })
     .where(function () {
       this.where("giver_id", user_id).andWhere("owner_id", "<>", user_id);

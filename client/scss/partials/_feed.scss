@@ -67,6 +67,10 @@ $imageDim: 78px;
   padding-left: calc(#{$imageDim} + 1rem);
 }
 
+.FeedItem-info--kehuType {
+  position: absolute;
+}
+
 .FeedItem-plainLink {
   &,
   &:hover,

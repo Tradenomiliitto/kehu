@@ -5,6 +5,7 @@ import { withTranslation } from "react-i18next";
 import { connect } from "react-redux";
 import moment from "moment";
 import { feedKehuPropType, rolePropType } from "../../util/PropTypes";
+import { getKehuInfo, getKehuType } from "./KehuItem";
 
 export class SentKehuItem extends Component {
   static propTypes = {
@@ -27,23 +28,13 @@ export class SentKehuItem extends Component {
         <span className="FeedItem-date">
           {moment(kehu.date_given).format("D.M.YYYY")}
         </span>
+        <p className="FeedItem-info FeedItem-info--kehuType">
+          {getKehuType(kehu, this.props.t)}
+        </p>
         <p className="FeedItem-text">{kehu.text}</p>
-        <p className="FeedItem-info">{this.createInfo(kehu)}</p>
+        <p className="FeedItem-info">{getKehuInfo(kehu, this.props.t)}</p>
       </div>
     );
-  }
-
-  createInfo(kehu) {
-    let text = this.props.t("kehus.kehu-sent", "Lähetetty kehu") + ": ";
-
-    if (kehu.role_id) {
-      const role = this.props.roles.find((r) => r.id === kehu.role_id);
-      text += `${kehu.receiver_name}, ${role.role}`;
-    } else {
-      text += kehu.receiver_name;
-    }
-
-    return text;
   }
 }
 

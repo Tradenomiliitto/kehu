@@ -61,6 +61,9 @@ const feedKehu = {
     last_name: PropTypes.string.isRequired,
     picture: PropTypes.string.isRequired,
   }),
+  group: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+  }),
 };
 export const feedKehuPropType = PropTypes.shape(feedKehu);
 

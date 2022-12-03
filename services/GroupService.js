@@ -28,7 +28,7 @@ async function getGroups(userId, groupId = null) {
       "m.joined_at"
     )
     .withGraphJoined(
-      "kehus(selectKehus).[role, situations, tags, giver(selectGiver), owner(selectOwner)]"
+      "kehus(selectKehus).[role, situations, tags, giver(selectGiver), owner(selectOwner), group(selectGroup)]"
     )
     .joinRelated("members as m")
     .where("m.user_id", userId)
@@ -39,6 +39,9 @@ async function getGroups(userId, groupId = null) {
       },
       selectOwner(builder) {
         builder.select("first_name", "last_name", "picture");
+      },
+      selectGroup(builder) {
+        builder.select("name");
       },
       selectKehus(builder) {
         builder

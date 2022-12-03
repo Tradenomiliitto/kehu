@@ -29,8 +29,11 @@ export class KehuItem extends Component {
         <span className="FeedItem-date">
           {moment(kehu.date_given).format("D.M.YYYY")}
         </span>
+        <p className="FeedItem-info FeedItem-info--kehuType">
+          {getKehuType(kehu, t)}
+        </p>
         <p className="FeedItem-text">{kehu.text}</p>
-        <p className="FeedItem-info">{this.createInfo(kehu)}</p>
+        <p className="FeedItem-info">{getKehuInfo(kehu, t)}</p>
       </div>
     );
   }
@@ -101,35 +104,6 @@ export class KehuItem extends Component {
       .replace(/ö/g, "o")
       .replace(/ /g, "-");
   }
-
-  createInfo(kehu) {
-    const { t } = this.props;
-    let text = "";
-
-    if (kehu.type === "received") {
-      text += t("kehus.kehu-received", "Vastaanotettu kehu");
-    } else if (kehu.type === "added") {
-      text += t("kehus.kehu-added", "Lisätty kehu");
-    } else {
-      text += t("kehus.kehu-others", "Kehu ryhmässä");
-    }
-    text += ": ";
-
-    if (kehu.role && kehu.role.role) {
-      text += `${kehu.giver_name}, ${kehu.role.role}`;
-    } else {
-      text += kehu.giver_name;
-    }
-
-    if (kehu.tags && kehu.tags.length) {
-      text += `. ${t("kehus.skills", "Asiasanat")}: ${kehu.tags
-        .map((t) => t.text)
-        .map(capitalizeText)
-        .join(", ")}`;
-    }
-
-    return text;
-  }
 }
 
 const mapStateToProps = (state) => ({
@@ -140,3 +114,41 @@ export default compose(
   withTranslation(),
   connect(mapStateToProps, null)
 )(KehuItem);
+
+export function getKehuInfo(kehu, t) {
+  const kehuToWholeGroup = kehu.group_id != null && kehu.owner_id == null;
+  let text;
+
+  if (kehu.type === "sent")
+    text = kehu?.owner?.first_name ?? kehu.receiver_name;
+  else text = kehu.giver_name;
+
+  if (kehu.type === "others") text += ` -> ${kehu.owner.first_name}`;
+  if (kehu.type !== "others" && !kehuToWholeGroup) {
+    // Add role if defined
+    if (kehu?.role?.role) text += `, ${kehu.role.role.toLowerCase()}`;
+  }
+
+  // Is kehu for the whole group
+  if (kehuToWholeGroup) text += ", koko tiimin kehu";
+
+  // Add group name if it's a group Kehu
+  if (kehu?.group?.name) text += ` - ${kehu?.group?.name}`;
+
+  return text;
+}
+
+export function getKehuType(kehu, t) {
+  switch (kehu.type) {
+    case "sent":
+      return t("kehus.kehu-sent", "Lähetetty kehu");
+    case "received":
+      return t("kehus.kehu-received", "Vastaanotettu kehu");
+    case "added":
+      return t("kehus.kehu-added", "Lisätty kehu");
+    case "others":
+      return t("kehus.kehu-others", "Kehu ryhmässä");
+    default:
+      return "";
+  }
+}
