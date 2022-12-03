@@ -49,8 +49,8 @@ const kehu = {
   date_owner_saw: PropTypes.string,
   group_id: PropTypes.number,
   role: rolePropType,
-  situations: PropTypes.arrayOf(kehuSituationAndTagPropType),
-  tags: PropTypes.arrayOf(kehuSituationAndTagPropType),
+  situations: PropTypes.arrayOf(kehuSituationAndTagPropType).isRequired,
+  tags: PropTypes.arrayOf(kehuSituationAndTagPropType).isRequired,
 };
 export const kehuPropType = PropTypes.shape(kehu);
 
@@ -60,7 +60,7 @@ const feedKehu = {
   isNewKehu: PropTypes.bool,
   giver: PropTypes.shape({
     picture: PropTypes.string.isRequired,
-  }),
+  }).isRequired,
 };
 export const feedKehuPropType = PropTypes.shape(feedKehu);
 
