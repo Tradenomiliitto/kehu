@@ -4,7 +4,6 @@ import moment from "moment";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { withTranslation } from "react-i18next";
-import { capitalizeText } from "../../util/TextUtil";
 import { feedKehuPropType, rolePropType } from "../../util/PropTypes";
 
 export class KehuItem extends Component {
@@ -33,7 +32,10 @@ export class KehuItem extends Component {
           {getKehuType(kehu, t)}
         </p>
         <p className="FeedItem-text">{kehu.text}</p>
-        <p className="FeedItem-info">{getKehuInfo(kehu, t)}</p>
+        <p className="FeedItem-info">
+          {getKehuInfo(kehu, t)}
+          {renderPublicityIcon(kehu)}
+        </p>
       </div>
     );
   }
@@ -151,4 +153,17 @@ export function getKehuType(kehu, t) {
     default:
       return "";
   }
+}
+
+export function renderPublicityIcon(kehu) {
+  const isPublic = kehu.is_public;
+
+  const imageName = isPublic === true ? "icon-view.png" : "icon-padlock.png";
+
+  return (
+    <img
+      src={`/images/${imageName}`}
+      className={`FeedItem-icon--${isPublic ? "public" : "private"}`}
+    />
+  );
 }

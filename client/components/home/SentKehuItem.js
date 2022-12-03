@@ -5,7 +5,7 @@ import { withTranslation } from "react-i18next";
 import { connect } from "react-redux";
 import moment from "moment";
 import { feedKehuPropType, rolePropType } from "../../util/PropTypes";
-import { getKehuInfo, getKehuType } from "./KehuItem";
+import { getKehuInfo, getKehuType, renderPublicityIcon } from "./KehuItem";
 
 export class SentKehuItem extends Component {
   static propTypes = {
@@ -32,7 +32,10 @@ export class SentKehuItem extends Component {
           {getKehuType(kehu, this.props.t)}
         </p>
         <p className="FeedItem-text">{kehu.text}</p>
-        <p className="FeedItem-info">{getKehuInfo(kehu, this.props.t)}</p>
+        <p className="FeedItem-info">
+          {getKehuInfo(kehu, this.props.t)}
+          {renderPublicityIcon(kehu)}
+        </p>
       </div>
     );
   }

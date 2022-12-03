@@ -71,6 +71,18 @@ $imageDim: 78px;
   position: absolute;
 }
 
+.FeedItem-icon--public {
+  height: 1rem;
+  margin-left: 6px;
+  margin-top: -2px;
+}
+
+.FeedItem-icon--private {
+  height: 0.9rem;
+  margin-left: 6px;
+  margin-top: -4px;
+}
+
 .FeedItem-plainLink {
   &,
   &:hover,
