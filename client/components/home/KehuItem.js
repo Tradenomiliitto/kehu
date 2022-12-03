@@ -17,7 +17,6 @@ export class KehuItem extends Component {
 
   render() {
     const { kehu, t } = this.props;
-    const imageSrc = this.createImageSrc(kehu);
 
     return (
       <div className="FeedItem">
@@ -26,7 +25,7 @@ export class KehuItem extends Component {
             {t("home.feed.new-kehu-ribbon")}
           </div>
         )}
-        {this.renderImage(kehu, imageSrc)}
+        {this.renderImage(kehu)}
         <span className="FeedItem-date">
           {moment(kehu.date_given).format("D.M.YYYY")}
         </span>
@@ -36,17 +35,51 @@ export class KehuItem extends Component {
     );
   }
 
-  renderImage(kehu, src) {
-    if (src) {
-      return (
-        <img
-          src={src}
-          className="FeedItem-image"
-          alt={kehu.giver_name}
-          referrerPolicy="no-referrer"
-        />
-      );
-    }
+  renderImage(kehu) {
+    // If Kehu type is "others" render special image showing both sender and receiver
+    if (kehu.type === "others") return this.renderOthersImage(kehu);
+
+    const src = this.createImageSrc(kehu);
+    if (!src) return;
+
+    return (
+      <img
+        src={src}
+        className="FeedItem-image"
+        alt={kehu.giver_name}
+        referrerPolicy="no-referrer"
+      />
+    );
+  }
+
+  renderOthersImage(kehu) {
+    const senderSrc = kehu?.giver?.picture;
+    const receiverSrc = kehu?.owner?.picture;
+
+    return (
+      <>
+        {senderSrc ? (
+          <img
+            src={senderSrc}
+            className="FeedItem-image--others FeedItem-image--others-first"
+            alt={kehu.giver_name}
+            referrerPolicy="no-referrer"
+          />
+        ) : (
+          // Render empty block if no sender image available to prevent the
+          // shift of the receiver image
+          <div className="FeedItem-image--others FeedItem-image--others-first"></div>
+        )}
+        {receiverSrc && (
+          <img
+            src={receiverSrc}
+            className="FeedItem-image--others"
+            alt={`${kehu?.owner?.first_name} ${kehu?.owner?.last_name}`}
+            referrerPolicy="no-referrer"
+          />
+        )}
+      </>
+    );
   }
 
   createImageSrc(kehu) {

@@ -1,3 +1,4 @@
+@use "sass:math";
 $imageDim: 78px;
 
 .Feed-title {
@@ -35,6 +36,18 @@ $imageDim: 78px;
   float: left;
   height: $imageDim;
   width: $imageDim;
+}
+
+.FeedItem-image--others {
+  border-radius: calc(#{$imageDim} / 2);
+  float: left;
+  height: math.div($imageDim, 2);
+  width: math.div($imageDim, 2);
+}
+
+.FeedItem-image--others-first {
+  position: relative;
+  top: math.div($imageDim, 2);
 }
 
 .FeedItem-date {

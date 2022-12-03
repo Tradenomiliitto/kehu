@@ -45,9 +45,12 @@ async function getGroupKehusNotOwnedOrSent(user_id, t) {
   const kehus = await Kehu.query()
     .context({ t })
     .select("Kehus.*")
-    .withGraphFetched("[role, situations, tags, giver]")
+    .withGraphFetched("[role, situations, tags, giver, owner]")
     .modifyGraph("giver", (builder) => {
       builder.select("picture");
+    })
+    .modifyGraph("owner", (builder) => {
+      builder.select("first_name", "last_name", "picture");
     })
     .joinRelated("group")
     .leftJoin("GroupMembers", "group.id", "GroupMembers.group_id")

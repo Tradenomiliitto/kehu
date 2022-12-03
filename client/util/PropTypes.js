@@ -61,6 +61,12 @@ const feedKehu = {
   giver: PropTypes.shape({
     picture: PropTypes.string.isRequired,
   }).isRequired,
+  // Owner information is only provided when the type is "others"
+  owner: PropTypes.shape({
+    first_name: PropTypes.string.isRequired,
+    last_name: PropTypes.string.isRequired,
+    picture: PropTypes.string.isRequired,
+  }),
 };
 export const feedKehuPropType = PropTypes.shape(feedKehu);
 
