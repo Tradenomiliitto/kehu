@@ -38,6 +38,30 @@ async function getKehus(user_id, t) {
   return kehus;
 }
 
+// Get all Kehus from user's groups which are not sent or owned by the user,
+// in practise this means Kehus sent to the whole group or a public Kehu sent
+// between two other group members
+async function getGroupKehusNotOwnedOrSent(user_id, t) {
+  const kehus = await Kehu.query()
+    .context({ t })
+    .select("Kehus.*")
+    .withGraphFetched("[role, situations, tags, giver]")
+    .modifyGraph("giver", (builder) => {
+      builder.select("picture");
+    })
+    .joinRelated("group")
+    .leftJoin("GroupMembers", "group.id", "GroupMembers.group_id")
+    .where("GroupMembers.user_id", user_id)
+    // COALESCE is required since owner_id is null for Kehus sent to the whole group
+    .andWhere(raw(`COALESCE("Kehus".owner_id, -1)`), "<>", user_id)
+    .andWhere("Kehus.giver_id", "<>", user_id)
+    .andWhere("Kehus.is_public", true)
+    .orderBy("date_given", "desc");
+
+  addKehuType(kehus, "received", user_id);
+  return kehus;
+}
+
 async function getSentKehus(user_id) {
   const sentKehus = await Kehu.query()
     .select(
@@ -79,9 +103,11 @@ async function getFeedItems(user_id, t) {
   try {
     const kehus = await getKehus(user_id, t);
     const sentKehus = await getSentKehus(user_id);
+    const groupKehus = await getGroupKehusNotOwnedOrSent(user_id, t);
+
     // Return top 5 kehus but always return all new kehus even if not fitting
     // in top 5
-    return [...kehus, ...sentKehus]
+    return [...kehus, ...groupKehus, ...sentKehus]
       .sort(sortKehus)
       .filter((kehu, idx) => idx < 5 || kehu.isNewKehu);
   } catch (e) {
