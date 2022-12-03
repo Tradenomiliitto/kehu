@@ -33,7 +33,7 @@ async function getKehus(user_id, t) {
   }
 
   // Add Kehu types
-  addKehuType(kehus, "received", user_id);
+  addKehuType(kehus, user_id);
 
   return kehus;
 }
@@ -61,7 +61,7 @@ async function getGroupKehusNotOwnedOrSent(user_id, t) {
     .andWhere("Kehus.is_public", true)
     .orderBy("date_given", "desc");
 
-  addKehuType(kehus, "received", user_id);
+  addKehuType(kehus, user_id);
   return kehus;
 }
 
@@ -70,6 +70,7 @@ async function getSentKehus(user_id) {
     .select(
       "date_given",
       "giver_name",
+      "giver_id",
       "role_id",
       "receiver_name",
       "text",
@@ -90,7 +91,7 @@ async function getSentKehus(user_id) {
     .orderBy("date_given", "desc");
 
   // Add Kehu types
-  addKehuType(sentKehus, "sent", user_id);
+  addKehuType(sentKehus, user_id);
 
   return sentKehus;
 }

@@ -22,7 +22,7 @@ async function getKehus(user_id, t) {
     .orderBy("date_given", "desc");
 
   // Add Kehu types
-  addKehuType(kehus, "received", user_id);
+  addKehuType(kehus, user_id);
 
   return kehus;
 }
@@ -34,6 +34,7 @@ async function getSentKehus(user_id) {
       "id",
       "date_given",
       "giver_name",
+      "giver_id",
       "role_id",
       "receiver_name",
       "text"
@@ -47,7 +48,7 @@ async function getSentKehus(user_id) {
     .orderBy("date_given", "desc");
 
   // Add Kehu types
-  addKehuType(sentKehus, "sent", user_id);
+  addKehuType(sentKehus, user_id);
 
   return sentKehus;
 }
