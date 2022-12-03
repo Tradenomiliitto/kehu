@@ -5,6 +5,7 @@ const GroupMember = require("../models/GroupMember");
 
 const { findUserByEmail } = require("./UserService");
 const logger = require("../logger");
+const { addKehuType } = require("../utils/ServerUtils");
 
 /**
  * Get user's groups from database.
@@ -16,7 +17,7 @@ const logger = require("../logger");
 async function getGroups(userId, groupId = null) {
   logger.info(`Fetching groups for user ${userId}`);
 
-  const groups = Group.query()
+  const groupQuery = Group.query()
     .alias("g")
     .select(
       "g.id",
@@ -27,7 +28,7 @@ async function getGroups(userId, groupId = null) {
       "m.joined_at"
     )
     .withGraphJoined(
-      "kehus(selectKehus).[role, situations, tags, giver(selectGiver)]"
+      "kehus(selectKehus).[role, situations, tags, giver(selectGiver), owner(selectOwner)]"
     )
     .joinRelated("members as m")
     .where("m.user_id", userId)
@@ -35,6 +36,9 @@ async function getGroups(userId, groupId = null) {
     .modifiers({
       selectGiver(builder) {
         builder.select("picture");
+      },
+      selectOwner(builder) {
+        builder.select("first_name", "last_name", "picture");
       },
       selectKehus(builder) {
         builder
@@ -54,7 +58,16 @@ async function getGroups(userId, groupId = null) {
     });
 
   // If groupId is specified return only that group
-  if (groupId != null) groups.andWhere("g.id", groupId);
+  if (groupId != null) groupQuery.andWhere("g.id", groupId);
+
+  const groups = await groupQuery;
+
+  groups.forEach((group) => {
+    // Add Kehu types
+    addKehuType(group.kehus, userId);
+    // Add picture property to conform with feedSentKehuPropType
+    group.kehus.forEach((kehu) => (kehu.picture = kehu.giver.picture));
+  });
 
   return groups;
 }

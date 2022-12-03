@@ -93,7 +93,9 @@ const group = {
   joined_at: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   picture: PropTypes.string.isRequired,
-  kehus: PropTypes.arrayOf(kehuPropType).isRequired,
+  kehus: PropTypes.arrayOf(
+    PropTypes.oneOfType([feedKehuPropType, feedSentKehuPropType])
+  ).isRequired,
   members: PropTypes.arrayOf(
     PropTypes.shape({ is_admin: PropTypes.bool, user: userPropType })
   ).isRequired,
