@@ -52,7 +52,9 @@
   },
   "kehus": {
     "confirm-removal": "Haluatko varmasti poistaa Kehun?",
-    "kehu-received": "Vastaanotettu kehu:",
+    "kehu-received": "Vastaanotettu kehu",
+    "kehu-added": "Lisätty kehu",
+    "kehu-others": "Kehu ryhmässä",
     "received-kehus-btn": "Saadut Kehut",
     "remove-kehu-error": "Valitettavasti Kehun poistaminen epäonnistui. Seuraava virhe tapahtui: {{error}}",
     "sent-kehus-btn": "Lähetetyt Kehut",

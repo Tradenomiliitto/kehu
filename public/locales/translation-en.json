@@ -52,7 +52,7 @@
   },
   "kehus": {
     "confirm-removal": "Are you sure you want to remove the Kehu?",
-    "kehu-received": "Kehu received:",
+    "kehu-received": "Kehu received",
     "received-kehus-btn": "Received Kehus",
     "remove-kehu-error": "Unfortunately the removal of the Kehu failed. Error occurred: {{error}}",
     "sent-kehus-btn": "Sent Kehus",

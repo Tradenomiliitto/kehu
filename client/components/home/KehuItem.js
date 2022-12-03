@@ -72,11 +72,14 @@ export class KehuItem extends Component {
     const { t } = this.props;
     let text = "";
 
-    if (kehu.receiver_email) {
-      text += t("kehus.kehu-received", "Vastaanotettu kehu:") + " ";
+    if (kehu.type === "received") {
+      text += t("kehus.kehu-received", "Vastaanotettu kehu");
+    } else if (kehu.type === "added") {
+      text += t("kehus.kehu-added", "Lisätty kehu");
     } else {
-      text += t("kehus.kehu-added", "Lisätty kehu:") + " ";
+      text += t("kehus.kehu-others", "Kehu ryhmässä");
     }
+    text += ": ";
 
     if (kehu.role && kehu.role.role) {
       text += `${kehu.giver_name}, ${kehu.role.role}`;

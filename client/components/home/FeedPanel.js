@@ -32,7 +32,7 @@ export class FeedPanel extends Component {
 
   renderItems() {
     return this.props.items.map((it, i) => {
-      if (it.id) {
+      if (it.type !== "sent") {
         return (
           <LangLink to="/kehut" className="FeedItem-plainLink" key={i}>
             <KehuItem kehu={it} />
