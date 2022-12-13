@@ -19,6 +19,19 @@ async function getKehus(user_id, t) {
     .context({ t })
     .withGraphFetched("[role, situations, tags]")
     .where("owner_id", user_id)
+    // Add Kehus sent to the whole group in groups user is a member
+    .union(
+      Kehu.query()
+        .context({ t })
+        .withGraphFetched("[role, situations, tags]")
+        .joinRelated("group")
+        .leftJoin("GroupMembers", "group.id", "GroupMembers.group_id")
+        .where("GroupMembers.user_id", user_id)
+        // owner_id is null for Kehus sent to the whole group
+        .andWhere(raw(`"Kehus".owner_id IS NULL`))
+        // Exclude Kehus user himself sent to the whole group
+        .andWhere("Kehus.giver_id", "<>", user_id)
+    )
     .orderBy("date_given", "desc");
 
   // Add Kehu types
