@@ -87,6 +87,7 @@ export class SendKehuForm extends Component {
             src={profile.picture}
             className="KehuDetails-image"
             alt={`${profile.first_name} ${profile.last_name}`}
+            referrerPolicy="no-referrer"
           />
           <span className="kehu-giver-name-nw">{this.renderGiverName()}</span>
           <br />

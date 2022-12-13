@@ -87,8 +87,9 @@ export class Header extends Component {
                     <Link to="/profiili" onClick={this.closeMenu}>
                       {profile && profile.first_name}
                       <img
-                        src={profile && profile.picture}
+                        src={profile?.picture}
                         className="Header-profileImage"
+                        referrerPolicy="no-referrer"
                       />
                     </Link>
                   </li>

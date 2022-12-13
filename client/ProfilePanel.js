@@ -48,6 +48,7 @@ export class ProfilePanel extends Component {
                       <img
                         src={profile.picture}
                         className="ProfilePicture-image"
+                        referrerPolicy="no-referrer"
                       />
                     </div>
                     <div className="UploadNewProfilePicture">
