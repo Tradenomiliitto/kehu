@@ -80,17 +80,33 @@ describe("client:Homepanel", () => {
 
   function createProps(search) {
     const kehu = {
+      type: "received",
       id: 1,
-      giver_name: "name",
+      date_given: "2019-02-10",
       text: "text",
       giver_id: 1,
+      giver_name: "name",
+      giver: {
+        picture: "pic-src",
+      },
       is_public: false,
+      situations: [],
+      tags: [],
     };
 
     const sentKehu = {
+      type: "sent",
+      id: 1,
+      date_given: "2019-02-10",
+      giver_id: 1,
       giver_name: "name",
+      receiver_name: "receiver name",
       text: "text",
-      picture: "/images/picture.svg",
+      giver: {
+        picture: "/images/picture.svg",
+      },
+      situations: [],
+      tags: [],
     };
 
     return {

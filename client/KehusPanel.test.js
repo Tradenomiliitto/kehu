@@ -11,6 +11,8 @@ describe("client:components:KehusPanel", () => {
     component = shallow(
       <KehusPanel
         kehus={[]}
+        sentKehus={[]}
+        history={{ push: () => {} }}
         roles={roles}
         t={(key) => key}
         i18n={{}}

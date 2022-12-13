@@ -8,10 +8,18 @@ describe("client:components:home:SentKehuItem", () => {
     { id: 6, role: "client", imageId: "client" },
   ];
   const kehu = {
+    type: "sent",
+    id: 1,
     date_given: "2019-02-10",
+    giver_id: 1,
     giver_name: "name",
+    receiver_name: "receiver name",
     text: "text",
-    picture: "/images/picture.svg",
+    giver: {
+      picture: "/images/picture.svg",
+    },
+    situations: [],
+    tags: [],
   };
 
   beforeEach(() => {
@@ -31,15 +39,19 @@ describe("client:components:home:SentKehuItem", () => {
   });
 
   it("renders correct info", () => {
-    const expectedInfo = `kehus.kehu-sent: ${kehu.receiver_name}`;
-    expect(component.find(".FeedItem-info").text()).toEqual(expectedInfo);
+    const expectedInfo = `${kehu.receiver_name}`;
+    expect(
+      component.find(".FeedItem-info:not(.FeedItem-info--kehuType)").text()
+    ).toEqual(expectedInfo);
   });
 
   describe("when role is given", () => {
     it("renders correct info", () => {
       component.setProps({ kehu: { ...kehu, role_id: 6 } });
-      const expectedInfo = `kehus.kehu-sent: ${kehu.receiver_name}, ${roles[1].role}`;
-      expect(component.find(".FeedItem-info").text()).toEqual(expectedInfo);
+      const expectedInfo = `${kehu.receiver_name}`;
+      expect(
+        component.find(".FeedItem-info:not(.FeedItem-info--kehuType)").text()
+      ).toEqual(expectedInfo);
     });
   });
 });
