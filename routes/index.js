@@ -12,6 +12,7 @@ const CLIENT_ROUTES = [
   "/profiili",
   "/raportit",
   "/yhteisot",
+  "/yhteisot/admin/*",
 ];
 
 module.exports = function setupRoutes(app) {

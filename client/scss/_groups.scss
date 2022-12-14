@@ -326,3 +326,10 @@
     margin-right: 1rem;
   }
 }
+
+.ErrorCard {
+  @extend .Card;
+
+  margin: 1rem;
+  text-align: center;
+}

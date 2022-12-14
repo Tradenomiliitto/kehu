@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import moment from "moment";
 
 import { toggleSendKehuFormModal } from "../../redux/portal";
+import { LangLink } from "../../util/LangLink";
 
 export default function ActiveGroup({ group }) {
   const [t] = useTranslation();
@@ -72,9 +73,12 @@ export default function ActiveGroup({ group }) {
           >
             <div className="ActiveGroup-Buttons">
               {group.is_admin && (
-                <button className="Button Button--inverse" disabled>
+                <LangLink
+                  to={`/yhteisot/admin/${group.id}`}
+                  className="Button Button--inverse"
+                >
                   {t("groups.edit-group-btn", "Muokkaa yhteisöä")}
-                </button>
+                </LangLink>
               )}
               <button
                 className="Button"
