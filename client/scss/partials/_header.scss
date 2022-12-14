@@ -22,6 +22,17 @@ $header-height: 66px;
   margin: 16px 0 20px;
 }
 
+@media (min-width: 60em) {
+  .Header-logoCol {
+    width: 13.5%;
+  }
+
+  .Header-menuCol {
+    width: 86.5%;
+    padding-left: 0;
+  }
+}
+
 .Header-menuButton {
   background: transparent;
   border: none;

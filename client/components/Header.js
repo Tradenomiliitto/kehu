@@ -39,7 +39,7 @@ export class Header extends Component {
       <header className="Header">
         <div className="container">
           <div className="row">
-            <div className="col col-md-12 col-lg-2">
+            <div className="col col-md-12 col-lg-2 Header-logoCol">
               <Link to="/" onClick={this.closeMenu}>
                 <img src="/images/kehu-logo.png" className="Header-logo" />
               </Link>
@@ -47,7 +47,7 @@ export class Header extends Component {
                 <img src="/images/icon-menu.png" />
               </button>
             </div>
-            <div className="col col-md-12 col-lg-10">
+            <div className="col col-md-12 col-lg-10 Header-menuCol">
               <div className="Header-menuContainer">
                 <menu className={menuClass}>
                   <li className="Header-menuItem">
