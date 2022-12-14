@@ -54,7 +54,11 @@ function Member({ name, email, picture, isDarkRow, isAdmin }) {
   return (
     <div className={`MyGroups-OneMember ${isDarkRow ? "DarkRow" : ""}`}>
       <div className="MyGroups-MemberPicture">
-        <img className="MemberPicture-image" src={picture} />
+        <img
+          className="MemberPicture-image"
+          src={picture}
+          referrerPolicy="no-referrer"
+        />
       </div>
       <div className="MyGroups-MemberDetails">
         <div className="MyGroups-MemberName">{name}</div>

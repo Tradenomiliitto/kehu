@@ -220,7 +220,11 @@ export class SendKehuForm extends Component {
           value={text}
           handleChange={this.handleChangeWithEvent("text")}
         />
-        <img src={profile.picture} className="SendKehuForm-profileImage" />
+        <img
+          src={profile.picture}
+          className="SendKehuForm-profileImage"
+          referrerPolicy="no-referrer"
+        />
         <DateGivenField
           value={date_given}
           handleChange={this.handleChangeWithValue("date_given")}

@@ -38,7 +38,11 @@ export default function ActiveGroup({ group }) {
         <div>
           {group.members.map((member) => (
             <div key={member.user.id} className="ActiveGroup-MemberPicture">
-              <img className="MemberPicture-image" src={member.user.picture} />
+              <img
+                className="MemberPicture-image"
+                src={member.user.picture}
+                referrerPolicy="no-referrer"
+              />
             </div>
           ))}
         </div>
