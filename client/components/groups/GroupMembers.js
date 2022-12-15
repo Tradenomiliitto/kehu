@@ -2,26 +2,20 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 
+import { GroupMemberOverview } from "./GroupMemberOverview";
+
 export default function GroupMembers({ members, groupName }) {
   const [t] = useTranslation();
 
   return (
     <div className="MyGroups-Card">
       <h3 className="MyGroups-title">{t("groups.members", "Jäsenet")}</h3>
-      <div className="MyGroups-GroupMemberOverview">
-        {groupName} &#8211;{" "}
-        {t("groups.member-count", {
-          count: members.length,
-          defaultValue: "{{count}} jäsen",
-          defaultValue_plural: "{{count}} jäsentä",
-        })}
-        ,{" "}
-        {t("groups.admin-count", {
-          count: members.filter((member) => member.is_admin).length,
-          defaultValue: "{{count}} admin",
-          defaultValue_plural: "{{count}} adminia",
-        })}
-      </div>
+      <GroupMemberOverview
+        className="MyGroups-GroupMemberOverview"
+        groupName={groupName}
+        members={members}
+      />
+
       <hr />
       {members.map((member, idx) => (
         <Member
