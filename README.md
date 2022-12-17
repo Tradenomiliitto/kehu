@@ -25,7 +25,7 @@ Blog content is managed with Contentful headless CMS.
 
 [i18next](https://www.i18next.com/) internationalization framework is used for localization. Localization files are stored in _public/locales_ directory.
 
-In the private SPA section of the app [react-i18next](https://react.i18next.com/) is used and the localizations are extracted from the code using Babel plugin [babel-plugin-i18next-extract](https://i18next-extract.netlify.app/). Translation default values (i.e. `t("translation key", "default translation")`) are extracted to Finnish translations. The plugin is configured in _babel.config.json_ file and by default it is commented off since otherwise any change to default translation requires manual change in translation file. The best practise is
+In the private SPA section of the app [react-i18next](https://react.i18next.com/) is used and the localizations are extracted from the code using Babel plugin [babel-plugin-i18next-extract](https://i18next-extract.netlify.app/). Translation default values (i.e. `t("translation key", "default translation")`) are extracted to Finnish translations (note: [plural default values are not extracted](https://github.com/gilbsgilbs/babel-plugin-i18next-extract/issues/167)). The plugin is configured in _babel.config.json_ file and by default it is commented off since after the initial extraction any updates to default translation in the code is not updated to translation files and would thus require manual update. The best practise is
 
 - Finalize part of the application.
 - Uncomment plugin, run in and comment plugin again.
