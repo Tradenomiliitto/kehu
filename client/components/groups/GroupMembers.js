@@ -17,22 +17,7 @@ export default function GroupMembers({ members, groupName }) {
       />
 
       <hr />
-      {members.map((member, idx) => (
-        <Member
-          key={member.user.id}
-          name={
-            member.user.first_name +
-            (members.filter((m) => m.user.first_name === member.user.first_name)
-              .length > 1
-              ? ` ${member.user.last_name[0]}.`
-              : "")
-          }
-          email={member.user.email}
-          picture={member.user.picture}
-          isDarkRow={idx % 2 === 1}
-          isAdmin={member.is_admin}
-        />
-      ))}
+      <MemberList members={members} />
     </div>
   );
 }
@@ -42,11 +27,40 @@ GroupMembers.propTypes = {
   groupName: PropTypes.string.isRequired,
 };
 
-function Member({ name, email, picture, isDarkRow, isAdmin }) {
+export function MemberList({ members, isAdminList }) {
+  return members.map((member, idx) => (
+    <Member
+      key={member.user.id}
+      name={
+        member.user.first_name +
+        (members.filter((m) => m.user.first_name === member.user.first_name)
+          .length > 1
+          ? ` ${member.user.last_name[0]}.`
+          : "")
+      }
+      email={member.user.email}
+      picture={member.user.picture}
+      isDarkRow={idx % 2 === 1}
+      isAdmin={member.is_admin}
+      isAdminList={isAdminList}
+    />
+  ));
+}
+
+MemberList.propTypes = {
+  members: PropTypes.arrayOf(PropTypes.object).isRequired,
+  isAdminList: PropTypes.bool,
+};
+
+function Member({ name, email, picture, isDarkRow, isAdmin, isAdminList }) {
   const [t] = useTranslation();
 
   return (
-    <div className={`MyGroups-OneMember ${isDarkRow ? "DarkRow" : ""}`}>
+    <div
+      className={`MyGroups-OneMember ${isDarkRow ? "DarkRow" : ""} ${
+        isAdminList ? "GroupAdmin-OneMember" : ""
+      }`}
+    >
       <div className="MyGroups-MemberPicture">
         <img
           className="MemberPicture-image"
@@ -66,6 +80,25 @@ function Member({ name, email, picture, isDarkRow, isAdmin }) {
           })}
         </div>
       )}
+      {isAdminList && !isAdmin && (
+        <div className="MyGroups-MemberAdmin">
+          {t("groups.member", {
+            count: 1,
+            defaultValue: "Jäsen",
+          })}
+        </div>
+      )}
+      <div className="GroupAdmin-MemberListBreak"></div>
+      {isAdminList && (
+        <>
+          <button className="Button--link GroupAdmin-SetAdmin">
+            Aseta adminiksi
+          </button>
+          <button className="Button--link GroupAdmin-Remove">
+            Poista yhteisöstä
+          </button>
+        </>
+      )}
     </div>
   );
 }
@@ -76,4 +109,5 @@ Member.propTypes = {
   picture: PropTypes.string,
   isDarkRow: PropTypes.bool.isRequired,
   isAdmin: PropTypes.bool.isRequired,
+  isAdminList: PropTypes.bool,
 };
