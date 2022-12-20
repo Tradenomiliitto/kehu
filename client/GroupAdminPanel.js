@@ -3,11 +3,22 @@ import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 
+import { GroupMemberOverview } from "./components/groups/GroupMemberOverview";
+import { MemberList } from "./components/groups/GroupMembers";
+import {
+  GroupNameInput,
+  GroupDescriptionInput,
+} from "./components/groups/AdminInputs";
+
 export default function GroupAdminPanel(props) {
   const { groupId } = props.match.params;
   const [t] = useTranslation();
+
   const groups = useSelector((state) => state.group.groups);
   const group = groups.find((g) => g.id === parseInt(groupId, 10));
+
+  const [groupName, setGroupName] = useState(group.name);
+  const [groupDescription, setGroupDescription] = useState(group.description);
 
   if (!group)
     return (
@@ -25,43 +36,41 @@ export default function GroupAdminPanel(props) {
   return (
     <div className="Groups">
       <div className="container">
-        <div className="row">
-          <div className="col col-xs-12 col-md-9">
-            <div className="MyGroups-Card row">
-              <div className="col col-xs-12 col-sm-3 ActiveGroup-PictureContainer">
-                <div className="ActiveGroup-Picture">
-                  <img className="GroupPicture-image" src={group.picture} />
-                </div>
+        <div className="GroupAdmin-Card row">
+          <div className="col col-xs-12 col-sm-3 GroupAdmin-PictureContainer">
+            <div>
+              <div className="ActiveGroup-Picture">
+                <img className="GroupPicture-image" src={group.picture} />
               </div>
+              <button className="Button--link GroupAdmin-ChangePicture ">
+                Vaihda kuva
+              </button>
+            </div>
+          </div>
 
-              <div className="col col-xs-12 col-sm-9 ActiveGroup-Details">
-                <h2>{group.name}</h2>
-                <div className="ActiveGroup-Description">
-                  {group.description || "\u00A0"}
-                </div>
-
+          <div className="col col-xs-12 col-sm-9 col-lg-9 ActiveGroup-Details">
+            <div className="GroupAdmin-ContentContainer">
+              <GroupNameInput value={groupName} setValue={setGroupName} />
+              <GroupDescriptionInput
+                value={groupDescription}
+                setValue={setGroupDescription}
+              />
+              <div className="GroupAdmin-MemberDetailsHeader">
                 <div>
-                  {group.members.map((member) => (
-                    <div
-                      key={member.user.id}
-                      className="ActiveGroup-MemberPicture"
-                    >
-                      <img
-                        className="MemberPicture-image"
-                        src={member.user.picture}
-                        referrerPolicy="no-referrer"
-                      />
-                    </div>
-                  ))}
+                  <h3>Jäsenet</h3>
+                  <GroupMemberOverview
+                    className="GroupAdmin-GroupMemberOverview"
+                    groupName={group.name}
+                    members={group.members}
+                  />
                 </div>
-
-                <div className="ActiveGroup-Info">
-                  {t("groups.member-count", {
-                    count: group.members.length,
-                    defaultValue: "{{count}} jäsen",
-                    defaultValue_plural: "{{count}} jäsentä",
-                  })}
-                </div>
+                <button className="Button">Kutsu lisää jäseniä</button>
+              </div>
+              <hr className="GroupAdmin-Separator" />
+              <MemberList members={group.members} isAdminList={true} />
+              <div className="GroupAdmin-Buttons">
+                <button className="Button Button--inverse">Peruuta</button>
+                <button className="Button ">Tallenna muutokset</button>
               </div>
             </div>
           </div>
