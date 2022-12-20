@@ -43,4 +43,16 @@
   &--fullWidth {
     width: 100%;
   }
+
+  &--link {
+    cursor: pointer;
+    background-color: transparent;
+    border: 0;
+
+    &:hover,
+    &:focus,
+    &:active {
+      text-decoration: underline;
+    }
+  }
 }
