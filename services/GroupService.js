@@ -82,20 +82,10 @@ async function createGroup(
 
     // Update Cloudinary public id if custom picture was used
     if (cloudinaryPublicId) {
-      // Public id also contains the path of the file, only update the name
-      const imagePath = cloudinaryPublicId.split("/");
-      imagePath.pop(); // Remove old name from the path
-      const newPublicId = [...imagePath, `group_${group.id}`].join("/");
-
-      logger.debug(
-        `Updating Cloudinary public id (${cloudinaryPublicId} -> ${newPublicId})`
-      );
-      const res = await cloudinary.uploader.rename(
-        cloudinaryPublicId,
-        newPublicId
-      );
-      // Update picture url in database
-      await group.$query().patch({ picture: res.secure_url });
+      const url = await updateCloudinaryPublicId(cloudinaryPublicId, group.id);
+      // Update picture url in database. Must be done here since group id which
+      // is used in the url is not known when the group is being created
+      await group.$query().patch({ picture: url });
     }
 
     await GroupMember.query().insert({
@@ -158,6 +148,21 @@ async function addMembersToGroup(members, groupId) {
       }
     })
   );
+}
+
+// Update Cloudinary public id from randomly generated to one generated from
+// the group id and return the new public url
+async function updateCloudinaryPublicId(cloudinaryPublicId, groupId) {
+  // Public id also contains the path of the file, only update the name
+  const imagePath = cloudinaryPublicId.split("/");
+  imagePath.pop(); // Remove old name from the path
+  const newPublicId = [...imagePath, `group_${groupId}`].join("/");
+
+  logger.debug(
+    `Updating Cloudinary public id (${cloudinaryPublicId} -> ${newPublicId})`
+  );
+  const res = await cloudinary.uploader.rename(cloudinaryPublicId, newPublicId);
+  return res.secure_url;
 }
 
 module.exports = {
