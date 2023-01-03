@@ -264,8 +264,8 @@
 
 .MyGroups-MemberAdmin {
   color: $medium-dark-grey;
-  font-size: 12px;
   flex-shrink: 0;
+  font-size: 12px;
 }
 
 .MyGroups-GroupMemberOverview {
@@ -344,15 +344,15 @@
 }
 
 .GroupAdmin-SmallHeader {
+  color: $secondary;
   font-size: small;
   font-weight: 500;
-  color: $secondary;
 }
 
 .GroupAdmin-PictureContainer {
+  align-items: flex-start;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
   margin-top: 1rem;
 
   @include mq($until: sm) {
@@ -362,8 +362,9 @@
 
 .GroupAdmin-ChangePicture {
   @extend .GroupAdmin-SmallHeader;
-  margin-top: 0.75rem;
+
   display: block;
+  margin-top: 0.75rem;
   width: 100%;
 }
 
@@ -376,17 +377,17 @@
   border: 0;
   border-bottom: 1px solid #989898;
   border-radius: 0;
-  padding: 0;
-  height: auto;
   font-size: 2rem;
+  height: auto;
+  padding: 0;
 }
 
 .GroupAdmin-GroupDescriptionInput {
   @extend .GroupAdmin-GroupNameInput;
 
   font-size: 1rem;
-  resize: none;
   overflow: hidden;
+  resize: none;
 }
 
 .GroupAdmin-MemberDetailsHeader {
@@ -396,20 +397,20 @@
 }
 
 .GroupAdmin-SetAdmin {
+  flex-shrink: 0;
   font-size: small;
   margin-left: 1rem;
   margin-right: 1rem;
-  flex-shrink: 0;
   @include mq($until: md) {
-    padding-left: 0;
     margin-left: 0;
+    padding-left: 0;
   }
 }
 
 .GroupAdmin-Remove {
-  font-size: small;
   color: $primary;
   flex-shrink: 0;
+  font-size: small;
   padding-left: 0;
 }
 
@@ -428,21 +429,21 @@
 }
 
 .GroupAdmin-Separator {
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
   color: $dark-grey;
+  margin-bottom: 0.5rem;
+  margin-top: 1rem;
 }
 
 .GroupAdmin-Buttons {
+  column-gap: 1rem;
   display: flex;
   justify-content: flex-end;
-  column-gap: 1rem;
 
   button,
   a {
     border-radius: 4px;
-    margin-top: 2rem;
     display: inline-block;
+    margin-top: 2rem;
   }
 }
 

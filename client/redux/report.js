@@ -113,7 +113,7 @@ export default function reducer(state = initialState, action = {}) {
         roles: addToRoles(state.roles, action.payload.kehu),
       };
 
-    case SELECT_KEHU:
+    case SELECT_KEHU: {
       let selection = action.sent ? "unselectedSentKehus" : "unselectedKehus";
       let unselectedKehus = new Set(state[selection]);
       if (action.status) {
@@ -125,6 +125,7 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         [selection]: unselectedKehus,
       };
+    }
 
     default:
       return state;
