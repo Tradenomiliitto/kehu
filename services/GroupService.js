@@ -106,23 +106,7 @@ async function createGroup(
     });
 
     // Assign group members
-    await Promise.all(
-      members.map(async (member) => {
-        const user = await findUserByEmail(member);
-        if (user) {
-          logger.info(`Adding user ${member} to group`);
-          await GroupMember.query().insert({
-            user_id: user.id,
-            group_id: group.id,
-            is_admin: false,
-            joined_at: new Date().toISOString(),
-          });
-        } else {
-          logger.info(`User ${member} not signed up, sending invitation email`);
-          // TODO: send invites to members who haven't signed up yet
-        }
-      })
-    );
+    await addMembersToGroup(members, group.id);
 
     return (await getGroups(userId, group.id))[0];
   } catch (error) {
@@ -154,6 +138,26 @@ async function updateGroupName(userId, groupId, { name, description }) {
 async function isUserGroupAdmin(user_id, group_id) {
   const member = await GroupMember.query().findOne({ user_id, group_id });
   return member?.is_admin === true;
+}
+
+async function addMembersToGroup(members, groupId) {
+  return Promise.all(
+    members.map(async (member) => {
+      const user = await findUserByEmail(member);
+      if (user) {
+        logger.info(`Adding user ${member} to group`);
+        await GroupMember.query().insert({
+          user_id: user.id,
+          group_id: groupId,
+          is_admin: false,
+          joined_at: new Date().toISOString(),
+        });
+      } else {
+        logger.info(`User ${member} not signed up, sending invitation email`);
+        // TODO: send invites to members who haven't signed up yet
+      }
+    })
+  );
 }
 
 module.exports = {
