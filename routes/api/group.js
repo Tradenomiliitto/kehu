@@ -11,6 +11,7 @@ const {
   createGroup,
   updateGroupName,
   changeMemberAdminRole,
+  deleteMember,
 } = require("../../services/GroupService");
 const logger = require("../../logger");
 
@@ -85,5 +86,19 @@ router.put(
     }
   }
 );
+
+router.delete("/:groupId/members/:memberId", async (req, res) => {
+  try {
+    const group = await deleteMember(
+      req.user.id,
+      req.params.memberId,
+      req.params.groupId
+    );
+    return res.json(group);
+  } catch (err) {
+    logger.error(err);
+    res.status(500).json({ error: err.message });
+  }
+});
 
 module.exports = router;

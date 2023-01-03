@@ -147,6 +147,28 @@ async function changeMemberAdminRole(userId, memberId, groupId, isAdmin) {
   }
 }
 
+async function deleteMember(userId, memberId, groupId) {
+  logger.info(`Removing a member from a group ${groupId}`);
+
+  // Check that user making the request is admin of the group
+  const isRequesterAdmin = await isUserGroupAdmin(userId, groupId);
+  if (!isRequesterAdmin) {
+    throw new Error("User is not a group admin");
+  }
+
+  try {
+    await GroupMember.query()
+      .delete()
+      .where({ user_id: memberId, group_id: groupId });
+
+    return (await getGroups(userId, groupId))[0];
+  } catch (error) {
+    logger.error(`Removing user from a group failed`);
+    logger.error(error.message);
+    throw error;
+  }
+}
+
 async function isUserGroupAdmin(user_id, group_id) {
   const member = await GroupMember.query().findOne({ user_id, group_id });
   return member?.is_admin === true;
@@ -192,5 +214,6 @@ module.exports = {
   createGroup,
   updateGroupName,
   changeMemberAdminRole,
+  deleteMember,
   isUserGroupAdmin,
 };
