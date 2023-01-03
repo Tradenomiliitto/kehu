@@ -125,6 +125,28 @@ async function updateGroupName(userId, groupId, { name, description }) {
   }
 }
 
+async function changeMemberAdminRole(userId, memberId, groupId, isAdmin) {
+  logger.info(`Changing user's admin status in a group ${groupId}`);
+
+  // Check that user making the request is admin of the group
+  const isRequesterAdmin = await isUserGroupAdmin(userId, groupId);
+  if (!isRequesterAdmin) {
+    throw new Error("User is not a group admin");
+  }
+
+  try {
+    await GroupMember.query()
+      .where({ user_id: memberId, group_id: groupId })
+      .patch({ is_admin: isAdmin });
+
+    return (await getGroups(userId, groupId))[0];
+  } catch (error) {
+    logger.error(`Assigning user's admin role failed`);
+    logger.error(error.message);
+    throw error;
+  }
+}
+
 async function isUserGroupAdmin(user_id, group_id) {
   const member = await GroupMember.query().findOne({ user_id, group_id });
   return member?.is_admin === true;
@@ -169,5 +191,6 @@ module.exports = {
   getGroups,
   createGroup,
   updateGroupName,
+  changeMemberAdminRole,
   isUserGroupAdmin,
 };

@@ -215,6 +215,12 @@ const updateGroupNameSchema = {
   },
 };
 
+const updateGroupMemberSchema = {
+  isAdmin: {
+    isBoolean: true,
+  },
+};
+
 module.exports = {
   addKehuSchema,
   sendKehuSchema,
@@ -223,4 +229,5 @@ module.exports = {
   updateProfileSchema,
   createGroupSchema,
   updateGroupNameSchema,
+  updateGroupMemberSchema,
 };
