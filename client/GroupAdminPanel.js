@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 
@@ -9,16 +10,31 @@ import {
   GroupNameInput,
   GroupDescriptionInput,
 } from "./components/groups/AdminInputs";
+import { LangLink } from "./util/LangLink";
+import { updateGroupName } from "./redux/group";
 
 export default function GroupAdminPanel(props) {
   const { groupId } = props.match.params;
   const [t] = useTranslation();
+  const dispatch = useDispatch();
+  const history = useHistory();
 
+  const loading = useSelector((state) => state.group.loading);
   const groups = useSelector((state) => state.group.groups);
   const group = groups.find((g) => g.id === parseInt(groupId, 10));
 
   const [groupName, setGroupName] = useState(group.name);
   const [groupDescription, setGroupDescription] = useState(group.description);
+
+  const handleSaveClick = async () => {
+    dispatch(
+      updateGroupName(
+        { id: groupId, name: groupName, description: groupDescription },
+        history,
+        "/yhteisot"
+      )
+    );
+  };
 
   if (!group)
     return (
@@ -74,10 +90,14 @@ export default function GroupAdminPanel(props) {
               <hr className="GroupAdmin-Separator" />
               <MemberList members={group.members} isAdminList={true} />
               <div className="GroupAdmin-Buttons">
-                <button className="Button Button--inverse">
+                <LangLink className="Button Button--inverse" to="/yhteisot">
                   {t("groups.admin-view.cancel-btn", "Peruuta")}
-                </button>
-                <button className="Button">
+                </LangLink>
+                <button
+                  className="Button"
+                  disabled={loading}
+                  onClick={handleSaveClick}
+                >
                   {t(
                     "groups.admin-view.save-changes-btn",
                     "Tallenna muutokset"
