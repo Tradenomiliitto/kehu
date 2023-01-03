@@ -1,4 +1,4 @@
-import { get, post } from "../util/ApiUtil";
+import { get, post, put } from "../util/ApiUtil";
 
 export const GET_GROUPS = "groups/GET_GROUPS";
 export const GET_GROUPS_SUCCESS = "groups/GET_GROUPS_SUCCESS";
@@ -7,6 +7,10 @@ export const GET_GROUPS_ERROR = "groups/GET_GROUPS_ERROR";
 export const CREATE_GROUP = "group/CREATE_GROUP";
 export const CREATE_GROUP_SUCCESS = "group/CREATE_GROUP_SUCCESS";
 export const CREATE_GROUP_ERROR = "group/CREATE_GROUP_ERROR";
+
+export const UPDATE_GROUP_NAME = "group/UPDATE_GROUP_NAME";
+export const UPDATE_GROUP_NAME_SUCCESS = "group/UPDATE_GROUP_NAME_SUCCESS";
+export const UPDATE_GROUP_NAME_ERROR = "group/UPDATE_GROUP_NAME_ERROR";
 
 export const RESET_CREATE_GROUP_FORM = "group/RESET_CREATE_GROUP_FORM";
 export const SELECT_GROUP = "group/SELECT_GROUP";
@@ -43,6 +47,21 @@ export function createGroup(data) {
   };
 }
 
+// history and to parameters are optional and used to redirect after succesful
+// update
+export function updateGroupName({ id, name, description }, history, to) {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: UPDATE_GROUP_NAME });
+      const group = await put(`/yhteisot/${id}`, { name, description });
+      dispatch({ type: UPDATE_GROUP_NAME_SUCCESS, payload: group });
+      if (history && to) history.push(to);
+    } catch (e) {
+      dispatch({ type: UPDATE_GROUP_NAME_ERROR, payload: e });
+    }
+  };
+}
+
 export function resetCreateGroupForm() {
   return { type: RESET_CREATE_GROUP_FORM };
 }
@@ -56,6 +75,7 @@ export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case GET_GROUPS:
     case CREATE_GROUP:
+    case UPDATE_GROUP_NAME:
       return {
         ...state,
         loading: true,
@@ -82,8 +102,19 @@ export default function reducer(state = initialState, action = {}) {
         groupsLoaded: true,
       };
 
+    case UPDATE_GROUP_NAME_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        groups: state.groups.map((group) =>
+          group.id === action.payload.id ? action.payload : group
+        ),
+      };
+
     case GET_GROUPS_ERROR:
     case CREATE_GROUP_ERROR:
+    case UPDATE_GROUP_NAME_ERROR:
       return {
         ...state,
         loading: false,
