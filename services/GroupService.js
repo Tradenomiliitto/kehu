@@ -115,13 +115,13 @@ async function updateGroup(
     `Updating group name, description and picture for a group ${groupId}`
   );
 
-  // Check that user is admin of the group
-  const isAdmin = await isUserGroupAdmin(userId, groupId);
-  if (!isAdmin) {
-    throw new Error("User is not a group admin");
-  }
-
   try {
+    // Check that user is admin of the group
+    const isAdmin = await isUserGroupAdmin(userId, groupId);
+    if (!isAdmin) {
+      throw new Error("User is not a group admin");
+    }
+
     // Update Cloudinary public id if custom picture was used
     if (cloudinaryPublicId) {
       picture = await updateCloudinaryPublicId(cloudinaryPublicId, groupId);
@@ -139,13 +139,13 @@ async function updateGroup(
 async function changeMemberAdminRole(userId, memberId, groupId, isAdmin) {
   logger.info(`Changing user's admin status in a group ${groupId}`);
 
-  // Check that user making the request is admin of the group
-  const isRequesterAdmin = await isUserGroupAdmin(userId, groupId);
-  if (!isRequesterAdmin) {
-    throw new Error("User is not a group admin");
-  }
-
   try {
+    // Check that user making the request is admin of the group
+    const isRequesterAdmin = await isUserGroupAdmin(userId, groupId);
+    if (!isRequesterAdmin) {
+      throw new Error("User is not a group admin");
+    }
+
     await GroupMember.query()
       .where({ user_id: memberId, group_id: groupId })
       .patch({ is_admin: isAdmin });
@@ -161,13 +161,13 @@ async function changeMemberAdminRole(userId, memberId, groupId, isAdmin) {
 async function deleteMember(userId, memberId, groupId) {
   logger.info(`Removing a member from a group ${groupId}`);
 
-  // Check that user making the request is admin of the group
-  const isRequesterAdmin = await isUserGroupAdmin(userId, groupId);
-  if (!isRequesterAdmin) {
-    throw new Error("User is not a group admin");
-  }
-
   try {
+    // Check that user making the request is admin of the group
+    const isRequesterAdmin = await isUserGroupAdmin(userId, groupId);
+    if (!isRequesterAdmin) {
+      throw new Error("User is not a group admin");
+    }
+
     await GroupMember.query()
       .delete()
       .where({ user_id: memberId, group_id: groupId });
@@ -184,13 +184,13 @@ async function deleteMember(userId, memberId, groupId) {
 async function addGroupMembers(userId, groupId, members) {
   logger.info(`Adding members to a group ${groupId}`);
 
-  // Check that user making the request is admin of the group
-  const isRequesterAdmin = await isUserGroupAdmin(userId, groupId);
-  if (!isRequesterAdmin) {
-    throw new Error("User is not a group admin");
-  }
-
   try {
+    // Check that user making the request is admin of the group
+    const isRequesterAdmin = await isUserGroupAdmin(userId, groupId);
+    if (!isRequesterAdmin) {
+      throw new Error("User is not a group admin");
+    }
+
     await addMembersToGroup(members, groupId);
     return (await getGroups(userId, groupId))[0];
   } catch (error) {
