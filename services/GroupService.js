@@ -132,7 +132,33 @@ async function createGroup(
   }
 }
 
+async function updateGroupName(userId, groupId, { name, description }) {
+  logger.info(`Updating group name and description for a group ${groupId}`);
+
+  // Check that user is admin of the group
+  const isAdmin = await isUserGroupAdmin(userId, groupId);
+  if (!isAdmin) {
+    throw new Error("User is not a group admin");
+  }
+
+  try {
+    await Group.query().findById(groupId).patch({ name, description });
+    return (await getGroups(userId, groupId))[0];
+  } catch (error) {
+    logger.error(`Updating a group failed`);
+    logger.error(error.message);
+    throw error;
+  }
+}
+
+async function isUserGroupAdmin(user_id, group_id) {
+  const member = await GroupMember.query().findOne({ user_id, group_id });
+  return member?.is_admin === true;
+}
+
 module.exports = {
   getGroups,
   createGroup,
+  updateGroupName,
+  isUserGroupAdmin,
 };

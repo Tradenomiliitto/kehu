@@ -202,6 +202,19 @@ const createGroupSchema = {
   },
 };
 
+const updateGroupNameSchema = {
+  name: {
+    isString: true,
+    optional: true,
+    trim: true,
+  },
+  description: {
+    isString: true,
+    optional: true,
+    trim: true,
+  },
+};
+
 module.exports = {
   addKehuSchema,
   sendKehuSchema,
@@ -209,4 +222,5 @@ module.exports = {
   updateReceivedKehuSchema,
   updateProfileSchema,
   createGroupSchema,
+  updateGroupNameSchema,
 };
