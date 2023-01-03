@@ -202,7 +202,7 @@ const createGroupSchema = {
   },
 };
 
-const updateGroupNameSchema = {
+const updateGroupSchema = {
   name: {
     isString: true,
     optional: true,
@@ -212,6 +212,19 @@ const updateGroupNameSchema = {
     isString: true,
     optional: true,
     trim: true,
+  },
+  picture: {
+    isString: true,
+    notEmpty: true,
+    optional: true,
+    errorMessage: "Ryhmän kuvan on oltava ei-tyhjä merkkijono.",
+    trim: true,
+  },
+  cloudinaryPublicId: {
+    isString: true,
+    notEmpty: true,
+    optional: true,
+    errorMessage: "Cloudinary-kuvan id on oltava ei-tyhjä merkkijono.",
   },
 };
 
@@ -247,7 +260,7 @@ module.exports = {
   updateReceivedKehuSchema,
   updateProfileSchema,
   createGroupSchema,
-  updateGroupNameSchema,
+  updateGroupSchema,
   updateGroupMemberSchema,
   addGroupMembersSchema,
 };

@@ -106,8 +106,14 @@ async function createGroup(
   }
 }
 
-async function updateGroupName(userId, groupId, { name, description }) {
-  logger.info(`Updating group name and description for a group ${groupId}`);
+async function updateGroup(
+  userId,
+  groupId,
+  { name, description, picture, cloudinaryPublicId }
+) {
+  logger.info(
+    `Updating group name, description and picture for a group ${groupId}`
+  );
 
   // Check that user is admin of the group
   const isAdmin = await isUserGroupAdmin(userId, groupId);
@@ -116,7 +122,12 @@ async function updateGroupName(userId, groupId, { name, description }) {
   }
 
   try {
-    await Group.query().findById(groupId).patch({ name, description });
+    // Update Cloudinary public id if custom picture was used
+    if (cloudinaryPublicId) {
+      picture = await updateCloudinaryPublicId(cloudinaryPublicId, groupId);
+    }
+
+    await Group.query().findById(groupId).patch({ name, description, picture });
     return (await getGroups(userId, groupId))[0];
   } catch (error) {
     logger.error(`Updating a group failed`);
@@ -233,7 +244,7 @@ async function updateCloudinaryPublicId(cloudinaryPublicId, groupId) {
 module.exports = {
   getGroups,
   createGroup,
-  updateGroupName,
+  updateGroup,
   changeMemberAdminRole,
   deleteMember,
   addGroupMembers,

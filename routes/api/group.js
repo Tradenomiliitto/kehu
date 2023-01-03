@@ -3,14 +3,14 @@ const router = express.Router();
 const { checkSchema, validationResult } = require("express-validator");
 const {
   createGroupSchema,
-  updateGroupNameSchema,
+  updateGroupSchema,
   updateGroupMemberSchema,
   addGroupMembersSchema,
 } = require("../../utils/ValidationSchemas");
 const {
   getGroups,
   createGroup,
-  updateGroupName,
+  updateGroup,
   changeMemberAdminRole,
   deleteMember,
   addGroupMembers,
@@ -42,28 +42,20 @@ router.post("/", checkSchema(createGroupSchema), async (req, res) => {
   }
 });
 
-router.put(
-  "/:groupId",
-  checkSchema(updateGroupNameSchema),
-  async (req, res) => {
-    try {
-      const validations = validationResult(req);
-      if (!validations.isEmpty()) {
-        return res.status(422).json({ errors: validations.array() });
-      }
-
-      const group = await updateGroupName(
-        req.user.id,
-        req.params.groupId,
-        req.body
-      );
-      return res.json(group);
-    } catch (err) {
-      logger.error(err);
-      res.status(500).json({ error: err.message });
+router.put("/:groupId", checkSchema(updateGroupSchema), async (req, res) => {
+  try {
+    const validations = validationResult(req);
+    if (!validations.isEmpty()) {
+      return res.status(422).json({ errors: validations.array() });
     }
+
+    const group = await updateGroup(req.user.id, req.params.groupId, req.body);
+    return res.json(group);
+  } catch (err) {
+    logger.error(err);
+    res.status(500).json({ error: err.message });
   }
-);
+});
 
 router.post(
   "/:groupId/members",
