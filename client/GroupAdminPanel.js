@@ -23,13 +23,13 @@ export default function GroupAdminPanel(props) {
   if (!group)
     return (
       <div className="ErrorCard">
-        {t("groups.admin.group-not-found", "Yhteisöä ei löydy")}
+        {t("groups.admin-view.group-not-found", "Yhteisöä ei löydy")}
       </div>
     );
   if (!group.is_admin)
     return (
       <div className="ErrorCard">
-        {t("groups.admin.not-admin", "Et ole ryhmän admin")}
+        {t("groups.admin-view.not-admin", "Et ole ryhmän admin")}
       </div>
     );
 
@@ -42,8 +42,8 @@ export default function GroupAdminPanel(props) {
               <div className="ActiveGroup-Picture">
                 <img className="GroupPicture-image" src={group.picture} />
               </div>
-              <button className="Button--link GroupAdmin-ChangePicture ">
-                Vaihda kuva
+              <button className="Button--link GroupAdmin-ChangePicture">
+                {t("groups.admin-view.change-picture", "Vaihda kuva")}
               </button>
             </div>
           </div>
@@ -57,20 +57,32 @@ export default function GroupAdminPanel(props) {
               />
               <div className="GroupAdmin-MemberDetailsHeader">
                 <div>
-                  <h3>Jäsenet</h3>
+                  <h3>{t("groups.members", "Jäsenet")}</h3>
                   <GroupMemberOverview
                     className="GroupAdmin-GroupMemberOverview"
                     groupName={group.name}
                     members={group.members}
                   />
                 </div>
-                <button className="Button">Kutsu lisää jäseniä</button>
+                <button className="Button">
+                  {t(
+                    "groups.admin-view.invite-members-btn",
+                    "Kutsu lisää jäseniä"
+                  )}
+                </button>
               </div>
               <hr className="GroupAdmin-Separator" />
               <MemberList members={group.members} isAdminList={true} />
               <div className="GroupAdmin-Buttons">
-                <button className="Button Button--inverse">Peruuta</button>
-                <button className="Button ">Tallenna muutokset</button>
+                <button className="Button Button--inverse">
+                  {t("groups.admin-view.cancel-btn", "Peruuta")}
+                </button>
+                <button className="Button">
+                  {t(
+                    "groups.admin-view.save-changes-btn",
+                    "Tallenna muutokset"
+                  )}
+                </button>
               </div>
             </div>
           </div>

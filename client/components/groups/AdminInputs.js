@@ -8,7 +8,7 @@ export function GroupNameInput({ value, setValue }) {
   return (
     <div className="Form-group">
       <label htmlFor="groupName" className="GroupAdmin-SmallHeader">
-        {t("groups.admin.group-name-input", "Yhteisön nimi")}:
+        {t("groups.admin-view.group-name-input", "Yhteisön nimi")}:
       </label>
       <input
         className="GroupAdmin-GroupNameInput"
@@ -39,7 +39,7 @@ export function GroupDescriptionInput({ value, setValue }) {
     <div className="Form-group">
       <label htmlFor="groupName" className="GroupAdmin-SmallHeader">
         {t(
-          "groups.admin.group-description-input",
+          "groups.admin-view.group-description-input",
           "Yhteisön kuvaus (julkinen jäsenille)"
         )}
         :
