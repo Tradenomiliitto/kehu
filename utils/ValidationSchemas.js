@@ -221,6 +221,25 @@ const updateGroupMemberSchema = {
   },
 };
 
+const addGroupMembersSchema = {
+  members: {
+    custom: {
+      options: (value) => {
+        const errorMessage = "members must be a non-empty array of strings";
+
+        if (!Array.isArray(value) || value.length === 0)
+          throw new Error(errorMessage);
+
+        for (const val of value) {
+          if (typeof val !== "string")
+            throw new Error(`${errorMessage}, ${val} is not a string`);
+        }
+        return true;
+      },
+    },
+  },
+};
+
 module.exports = {
   addKehuSchema,
   sendKehuSchema,
@@ -230,4 +249,5 @@ module.exports = {
   createGroupSchema,
   updateGroupNameSchema,
   updateGroupMemberSchema,
+  addGroupMembersSchema,
 };

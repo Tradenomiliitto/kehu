@@ -169,11 +169,32 @@ async function deleteMember(userId, memberId, groupId) {
   }
 }
 
+// `members` is an array of email addresses
+async function addGroupMembers(userId, groupId, members) {
+  logger.info(`Adding members to a group ${groupId}`);
+
+  // Check that user making the request is admin of the group
+  const isRequesterAdmin = await isUserGroupAdmin(userId, groupId);
+  if (!isRequesterAdmin) {
+    throw new Error("User is not a group admin");
+  }
+
+  try {
+    await addMembersToGroup(members, groupId);
+    return (await getGroups(userId, groupId))[0];
+  } catch (error) {
+    logger.error(`Adding members to a group failed`);
+    logger.error(error.message);
+    throw error;
+  }
+}
+
 async function isUserGroupAdmin(user_id, group_id) {
   const member = await GroupMember.query().findOne({ user_id, group_id });
   return member?.is_admin === true;
 }
 
+// `members` is an array of email addresses
 async function addMembersToGroup(members, groupId) {
   return Promise.all(
     members.map(async (member) => {
@@ -215,5 +236,6 @@ module.exports = {
   updateGroupName,
   changeMemberAdminRole,
   deleteMember,
+  addGroupMembers,
   isUserGroupAdmin,
 };

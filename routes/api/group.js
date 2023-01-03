@@ -5,6 +5,7 @@ const {
   createGroupSchema,
   updateGroupNameSchema,
   updateGroupMemberSchema,
+  addGroupMembersSchema,
 } = require("../../utils/ValidationSchemas");
 const {
   getGroups,
@@ -12,6 +13,7 @@ const {
   updateGroupName,
   changeMemberAdminRole,
   deleteMember,
+  addGroupMembers,
 } = require("../../services/GroupService");
 const logger = require("../../logger");
 
@@ -54,6 +56,29 @@ router.put(
         req.user.id,
         req.params.groupId,
         req.body
+      );
+      return res.json(group);
+    } catch (err) {
+      logger.error(err);
+      res.status(500).json({ error: err.message });
+    }
+  }
+);
+
+router.post(
+  "/:groupId/members",
+  checkSchema(addGroupMembersSchema),
+  async (req, res) => {
+    try {
+      const validations = validationResult(req);
+      if (!validations.isEmpty()) {
+        return res.status(422).json({ errors: validations.array() });
+      }
+
+      const group = await addGroupMembers(
+        req.user.id,
+        req.params.groupId,
+        req.body.members
       );
       return res.json(group);
     } catch (err) {
