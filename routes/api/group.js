@@ -16,6 +16,7 @@ const {
   addGroupMembers,
 } = require("../../services/GroupService");
 const logger = require("../../logger");
+const { strToInt } = require("../../utils/ServerUtils");
 
 router.get("/", async (req, res) => {
   try {
@@ -48,8 +49,9 @@ router.put("/:groupId", checkSchema(updateGroupSchema), async (req, res) => {
     if (!validations.isEmpty()) {
       return res.status(422).json({ errors: validations.array() });
     }
+    const groupId = strToInt(req.params.groupId);
 
-    const group = await updateGroup(req.user.id, req.params.groupId, req.body);
+    const group = await updateGroup(req.user.id, groupId, req.body);
     return res.json(group);
   } catch (err) {
     logger.error(err);
@@ -66,10 +68,11 @@ router.post(
       if (!validations.isEmpty()) {
         return res.status(422).json({ errors: validations.array() });
       }
+      const groupId = strToInt(req.params.groupId);
 
       const group = await addGroupMembers(
         req.user.id,
-        req.params.groupId,
+        groupId,
         req.body.members
       );
       return res.json(group);
@@ -89,11 +92,13 @@ router.put(
       if (!validations.isEmpty()) {
         return res.status(422).json({ errors: validations.array() });
       }
+      const groupId = strToInt(req.params.groupId);
+      const memberId = strToInt(req.params.memberId);
 
       const group = await changeMemberAdminRole(
         req.user.id,
-        req.params.memberId,
-        req.params.groupId,
+        memberId,
+        groupId,
         req.body.isAdmin
       );
       return res.json(group);
@@ -106,11 +111,10 @@ router.put(
 
 router.delete("/:groupId/members/:memberId", async (req, res) => {
   try {
-    const group = await deleteMember(
-      req.user.id,
-      req.params.memberId,
-      req.params.groupId
-    );
+    const groupId = strToInt(req.params.groupId);
+    const memberId = strToInt(req.params.memberId);
+
+    const group = await deleteMember(req.user.id, memberId, groupId);
     return res.json(group);
   } catch (err) {
     logger.error(err);
