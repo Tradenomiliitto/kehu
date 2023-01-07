@@ -69,6 +69,7 @@ export default function InviteMembersField({ value, handleChange, isInEdit }) {
         )}
         value={inputValue}
         onChange={handleInputChange}
+        onKeyDown={(ev) => ev.key === "Enter" && addMember(ev)}
       />
       <button className="Button" onClick={addMember}>
         {t("modals.create-group.add-member-btn", "Lisää")}
