@@ -24,3 +24,29 @@ export default class ErrorPanel extends Component {
     );
   }
 }
+
+export function FormattedErrorPanel({ error, genericMessage }) {
+  if (error?.responseJson?.errors) {
+    return error.responseJson.errors.map((e, i) => (
+      <ErrorPanel key={i} message={e.msg} />
+    ));
+  }
+
+  if (error) {
+    let errMessage = "";
+    if (genericMessage) errMessage += genericMessage + ": ";
+    errMessage += error.message;
+
+    if (error.responseJson?.error)
+      errMessage += ": " + error?.responseJson?.error;
+
+    return <ErrorPanel message={errMessage} />;
+  }
+
+  return null;
+}
+
+FormattedErrorPanel.propTypes = {
+  error: PropTypes.object,
+  genericMessage: PropTypes.string,
+};
