@@ -37,7 +37,15 @@ function addKehuType(kehus, userId) {
   });
 }
 
+function strToInt(str) {
+  const val = parseInt(str, 10);
+  if (Number.isNaN(val))
+    throw new Error(`String "${str}" is not possible to convert to int`);
+  return val;
+}
+
 module.exports = {
   setupLocals,
   addKehuType,
+  strToInt,
 };
