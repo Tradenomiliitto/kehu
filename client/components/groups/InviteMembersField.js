@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 
-export default function InviteMembersField({ value, handleChange }) {
+export default function InviteMembersField({ value, handleChange, isInEdit }) {
   const [t] = useTranslation();
   const [inputValue, setInputValue] = useState("");
   const [addMemberError, setAddMemberError] = useState(null);
@@ -38,17 +38,22 @@ export default function InviteMembersField({ value, handleChange }) {
   };
 
   return (
-    <div className="Form-group">
+    <div className={`Form-group ${isInEdit ? "GroupAdmin-InviteMembers" : ""}`}>
       <label htmlFor="invite_members">
         {t(
           "modals.create-group.invite-members-input",
           "Kutsu jäseniä yhteisöön"
         )}
         <div className="InviteMembersField-disclaimer">
-          {t(
-            "modals.create-group.invite-members-input-fineprint",
-            `Kirjoita henkilön sähköpostiosoite ja klikkaa "Lisää" kun haluat lisätä seuraavan jäsenen. Kaikki kutsut lähetetään vasta seuraavassa vaiheessa, kun yhteisö on valmis. `
-          )}
+          {isInEdit
+            ? t(
+                "groups.admin-view.invite-members-input-fineprint",
+                `Kirjoita henkilön sähköpostiosoite ja klikkaa "Lisää" kun haluat lisätä seuraavan jäsenen. Kaikki kutsut lähetetään vasta painettaessa "Lähetä kutsut" -nappia.`
+              )
+            : t(
+                "modals.create-group.invite-members-input-fineprint",
+                `Kirjoita henkilön sähköpostiosoite ja klikkaa "Lisää" kun haluat lisätä seuraavan jäsenen. Kaikki kutsut lähetetään vasta seuraavassa vaiheessa, kun yhteisö on valmis. `
+              )}
         </div>
       </label>
       <input
@@ -78,6 +83,8 @@ export default function InviteMembersField({ value, handleChange }) {
 InviteMembersField.propTypes = {
   value: PropTypes.arrayOf(PropTypes.string),
   handleChange: PropTypes.func,
+  // Is the field used in Edit Group view and not in Create group view
+  isInEdit: PropTypes.bool,
 };
 
 function renderItems(values, handleRemoveClick) {

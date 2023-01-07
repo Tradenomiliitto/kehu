@@ -450,3 +450,20 @@
 .GroupAdmin-ContentContainer {
   max-width: 600px;
 }
+
+.GroupAdmin-AddMemberButtons {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  button,
+  a {
+    border-radius: 4px;
+    display: inline-block;
+    margin-top: 1rem;
+  }
+}
+
+.GroupAdmin-InviteMembers {
+  min-height: 300px;
+}
