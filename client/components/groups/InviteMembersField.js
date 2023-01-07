@@ -35,6 +35,7 @@ export default function InviteMembersField({ value, handleChange, isInEdit }) {
     const items = [...new Set([...value, inputValue])];
     setInputValue("");
     handleChange(items);
+    inputEl.current.focus();
   };
 
   return (
