@@ -12,6 +12,11 @@ export const UPDATE_GROUP_NAME = "group/UPDATE_GROUP_NAME";
 export const UPDATE_GROUP_NAME_SUCCESS = "group/UPDATE_GROUP_NAME_SUCCESS";
 export const UPDATE_GROUP_NAME_ERROR = "group/UPDATE_GROUP_NAME_ERROR";
 
+export const INVITE_GROUP_MEMBERS = "group/INVITE_GROUP_MEMBERS";
+export const INVITE_GROUP_MEMBERS_SUCCESS =
+  "group/INVITE_GROUP_MEMBERS_SUCCESS";
+export const INVITE_GROUP_MEMBERS_ERROR = "group/INVITE_GROUP_MEMBERS_ERROR";
+
 export const RESET_CREATE_GROUP_FORM = "group/RESET_CREATE_GROUP_FORM";
 export const SELECT_GROUP = "group/SELECT_GROUP";
 
@@ -62,6 +67,21 @@ export function updateGroupName({ id, name, description }, history, to) {
   };
 }
 
+// `cb` callback function is used to close modal when inviting members in
+// admin view
+export function inviteGroupMembers(groupId, members, cb) {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: INVITE_GROUP_MEMBERS });
+      const group = await post(`/yhteisot/${groupId}/members`, { members });
+      dispatch({ type: INVITE_GROUP_MEMBERS_SUCCESS, payload: group });
+      if (typeof cb === "function") cb();
+    } catch (e) {
+      dispatch({ type: INVITE_GROUP_MEMBERS_ERROR, payload: e });
+    }
+  };
+}
+
 export function resetCreateGroupForm() {
   return { type: RESET_CREATE_GROUP_FORM };
 }
@@ -76,6 +96,7 @@ export default function reducer(state = initialState, action = {}) {
     case GET_GROUPS:
     case CREATE_GROUP:
     case UPDATE_GROUP_NAME:
+    case INVITE_GROUP_MEMBERS:
       return {
         ...state,
         loading: true,
@@ -103,6 +124,7 @@ export default function reducer(state = initialState, action = {}) {
       };
 
     case UPDATE_GROUP_NAME_SUCCESS:
+    case INVITE_GROUP_MEMBERS_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -115,6 +137,7 @@ export default function reducer(state = initialState, action = {}) {
     case GET_GROUPS_ERROR:
     case CREATE_GROUP_ERROR:
     case UPDATE_GROUP_NAME_ERROR:
+    case INVITE_GROUP_MEMBERS_ERROR:
       return {
         ...state,
         loading: false,
