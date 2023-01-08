@@ -1,4 +1,4 @@
-import { get, post, put } from "../util/ApiUtil";
+import { get, post, put, del } from "../util/ApiUtil";
 
 export const GET_GROUPS = "groups/GET_GROUPS";
 export const GET_GROUPS_SUCCESS = "groups/GET_GROUPS_SUCCESS";
@@ -16,6 +16,10 @@ export const INVITE_GROUP_MEMBERS = "group/INVITE_GROUP_MEMBERS";
 export const INVITE_GROUP_MEMBERS_SUCCESS =
   "group/INVITE_GROUP_MEMBERS_SUCCESS";
 export const INVITE_GROUP_MEMBERS_ERROR = "group/INVITE_GROUP_MEMBERS_ERROR";
+
+export const REMOVE_GROUP_MEMBER = "group/REMOVE_GROUP_MEMBER";
+export const REMOVE_GROUP_MEMBER_SUCCESS = "group/REMOVE_GROUP_MEMBER_SUCCESS";
+export const REMOVE_GROUP_MEMBER_ERROR = "group/REMOVE_GROUP_MEMBER_ERROR";
 
 export const RESET_GROUP_ERRORS = "group/RESET_GROUP_ERRORS";
 export const SELECT_GROUP = "group/SELECT_GROUP";
@@ -82,6 +86,23 @@ export function inviteGroupMembers(groupId, members, cb) {
   };
 }
 
+// `cb` callback function is used to close modal when removing members in
+// admin view
+export function removeGroupMember(groupId, memberId, cb) {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: REMOVE_GROUP_MEMBER });
+      const res = await del(`/yhteisot/${groupId}/members/${memberId}`);
+      const group = await res.json();
+
+      dispatch({ type: REMOVE_GROUP_MEMBER_SUCCESS, payload: group });
+      if (typeof cb === "function") cb();
+    } catch (e) {
+      dispatch({ type: REMOVE_GROUP_MEMBER_ERROR, payload: e });
+    }
+  };
+}
+
 export function resetGroupErrors() {
   return { type: RESET_GROUP_ERRORS };
 }
@@ -97,6 +118,7 @@ export default function reducer(state = initialState, action = {}) {
     case CREATE_GROUP:
     case UPDATE_GROUP_NAME:
     case INVITE_GROUP_MEMBERS:
+    case REMOVE_GROUP_MEMBER:
       return {
         ...state,
         loading: true,
@@ -125,6 +147,7 @@ export default function reducer(state = initialState, action = {}) {
 
     case UPDATE_GROUP_NAME_SUCCESS:
     case INVITE_GROUP_MEMBERS_SUCCESS:
+    case REMOVE_GROUP_MEMBER_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -138,6 +161,7 @@ export default function reducer(state = initialState, action = {}) {
     case CREATE_GROUP_ERROR:
     case UPDATE_GROUP_NAME_ERROR:
     case INVITE_GROUP_MEMBERS_ERROR:
+    case REMOVE_GROUP_MEMBER_ERROR:
       return {
         ...state,
         loading: false,
