@@ -14,6 +14,12 @@ import { LangLink } from "./util/LangLink";
 import { resetGroupErrors, updateGroupName } from "./redux/group";
 import { AddNewMembersModal } from "./components/groups/AddNewMembersModal";
 
+const MODAL_TYPES = {
+  AddNewMembers: 0,
+  RemoveMember: 1,
+  SetMemberAsAdmin: 2,
+};
+
 export default function GroupAdminPanel(props) {
   const { groupId } = props.match.params;
   const [t] = useTranslation();
@@ -26,8 +32,7 @@ export default function GroupAdminPanel(props) {
 
   const [groupName, setGroupName] = useState(group.name);
   const [groupDescription, setGroupDescription] = useState(group.description);
-  const [isAddNewMembersModalVisible, setIsAddNewMembersModalVisible] =
-    useState(false);
+  const [visibleModal, setVisibleModal] = useState(null);
 
   const handleSaveClick = async () => {
     dispatch(
@@ -40,9 +45,9 @@ export default function GroupAdminPanel(props) {
   };
 
   const closeModal = useCallback(() => {
-    setIsAddNewMembersModalVisible(false);
+    setVisibleModal(null);
     dispatch(resetGroupErrors());
-  }, [setIsAddNewMembersModalVisible, dispatch]);
+  }, [setVisibleModal, dispatch]);
 
   if (!group)
     return (
@@ -59,7 +64,7 @@ export default function GroupAdminPanel(props) {
 
   return (
     <>
-      {isAddNewMembersModalVisible && (
+      {visibleModal === MODAL_TYPES.AddNewMembers && (
         <AddNewMembersModal closeModal={closeModal} groupId={group.id} />
       )}
       <div className="Groups">
@@ -94,7 +99,7 @@ export default function GroupAdminPanel(props) {
                   </div>
                   <button
                     className="Button"
-                    onClick={() => setIsAddNewMembersModalVisible(true)}
+                    onClick={() => setVisibleModal(MODAL_TYPES.AddNewMembers)}
                   >
                     {t(
                       "groups.admin-view.invite-members-btn",
