@@ -7,7 +7,7 @@ import { withTranslation, useTranslation } from "react-i18next";
 import Portal from "../Portal";
 import KehuFormModal from "../KehuFormModal";
 import ErrorPanel from "../ErrorPanel";
-import { createGroup, resetCreateGroupForm } from "../../redux/group";
+import { createGroup, resetGroupErrors } from "../../redux/group";
 import GroupNameField from "./GroupNameField";
 import GroupDescriptionField from "./GroupDescriptionField";
 import InviteMembersField from "./InviteMembersField";
@@ -21,7 +21,7 @@ export class CreateGroupForm extends Component {
     userAuth0Id: PropTypes.string.isRequired,
     // mapDispatchToProps
     createGroup: PropTypes.func.isRequired,
-    resetCreateGroupForm: PropTypes.func.isRequired,
+    resetGroupErrors: PropTypes.func.isRequired,
     // i18n props
     t: PropTypes.func.isRequired,
   };
@@ -175,7 +175,7 @@ export class CreateGroupForm extends Component {
   };
 
   closeForm = () => {
-    this.props.resetCreateGroupForm();
+    this.props.resetGroupErrors();
     this.props.closeModal();
   };
 
@@ -241,7 +241,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   createGroup,
-  resetCreateGroupForm,
+  resetGroupErrors,
 };
 
 export default compose(

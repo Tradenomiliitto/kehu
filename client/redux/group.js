@@ -17,7 +17,7 @@ export const INVITE_GROUP_MEMBERS_SUCCESS =
   "group/INVITE_GROUP_MEMBERS_SUCCESS";
 export const INVITE_GROUP_MEMBERS_ERROR = "group/INVITE_GROUP_MEMBERS_ERROR";
 
-export const RESET_CREATE_GROUP_FORM = "group/RESET_CREATE_GROUP_FORM";
+export const RESET_GROUP_ERRORS = "group/RESET_GROUP_ERRORS";
 export const SELECT_GROUP = "group/SELECT_GROUP";
 
 export const initialState = {
@@ -82,8 +82,8 @@ export function inviteGroupMembers(groupId, members, cb) {
   };
 }
 
-export function resetCreateGroupForm() {
-  return { type: RESET_CREATE_GROUP_FORM };
+export function resetGroupErrors() {
+  return { type: RESET_GROUP_ERRORS };
 }
 
 // If both parameters are defined then `groupId` is used
@@ -144,7 +144,7 @@ export default function reducer(state = initialState, action = {}) {
         error: action.payload,
       };
 
-    case RESET_CREATE_GROUP_FORM:
+    case RESET_GROUP_ERRORS:
       return {
         ...state,
         loading: false,
