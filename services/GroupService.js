@@ -211,6 +211,18 @@ async function addMembersToGroup(members, groupId) {
     members.map(async (member) => {
       const user = await findUserByEmail(member);
       if (user) {
+        // Check if user is already member of the group before adding
+        const existingMember = await GroupMember.query().where({
+          user_id: user.id,
+          group_id: groupId,
+        });
+        if (existingMember.length > 0) {
+          logger.info(
+            `User ${member} is already member of the group, not adding again`
+          );
+          return;
+        }
+
         logger.info(`Adding user ${member} to group`);
         await GroupMember.query().insert({
           user_id: user.id,
