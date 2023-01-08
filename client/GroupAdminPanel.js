@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -11,7 +11,7 @@ import {
   GroupDescriptionInput,
 } from "./components/groups/AdminInputs";
 import { LangLink } from "./util/LangLink";
-import { updateGroupName } from "./redux/group";
+import { resetGroupErrors, updateGroupName } from "./redux/group";
 import { AddNewMembersModal } from "./components/groups/AddNewMembersModal";
 
 export default function GroupAdminPanel(props) {
@@ -39,6 +39,11 @@ export default function GroupAdminPanel(props) {
     );
   };
 
+  const closeModal = useCallback(() => {
+    setIsAddNewMembersModalVisible(false);
+    dispatch(resetGroupErrors());
+  }, [setIsAddNewMembersModalVisible, dispatch]);
+
   if (!group)
     return (
       <div className="ErrorCard">
@@ -55,10 +60,7 @@ export default function GroupAdminPanel(props) {
   return (
     <>
       {isAddNewMembersModalVisible && (
-        <AddNewMembersModal
-          closeModal={() => setIsAddNewMembersModalVisible(false)}
-          groupId={group.id}
-        />
+        <AddNewMembersModal closeModal={closeModal} groupId={group.id} />
       )}
       <div className="Groups">
         <div className="container">
