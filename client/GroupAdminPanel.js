@@ -13,8 +13,9 @@ import {
 import { LangLink } from "./util/LangLink";
 import { resetGroupErrors, updateGroupName } from "./redux/group";
 import { AddNewMembersModal } from "./components/groups/AddNewMembersModal";
+import { RemoveMemberModal } from "./components/groups/RemoveMemberModal";
 
-const MODAL_TYPES = {
+export const MODAL_TYPES = {
   AddNewMembers: 0,
   RemoveMember: 1,
   SetMemberAsAdmin: 2,
@@ -33,6 +34,7 @@ export default function GroupAdminPanel(props) {
   const [groupName, setGroupName] = useState(group.name);
   const [groupDescription, setGroupDescription] = useState(group.description);
   const [visibleModal, setVisibleModal] = useState(null);
+  const [memberInModal, setMemberInModal] = useState();
 
   const handleSaveClick = async () => {
     dispatch(
@@ -43,6 +45,14 @@ export default function GroupAdminPanel(props) {
       )
     );
   };
+
+  const openModal = useCallback(
+    (modalType, member) => {
+      setVisibleModal(modalType);
+      setMemberInModal(member);
+    },
+    [setVisibleModal, setMemberInModal]
+  );
 
   const closeModal = useCallback(() => {
     setVisibleModal(null);
@@ -66,6 +76,13 @@ export default function GroupAdminPanel(props) {
     <>
       {visibleModal === MODAL_TYPES.AddNewMembers && (
         <AddNewMembersModal closeModal={closeModal} groupId={group.id} />
+      )}
+      {visibleModal === MODAL_TYPES.RemoveMember && (
+        <RemoveMemberModal
+          closeModal={closeModal}
+          member={memberInModal}
+          groupId={group.id}
+        />
       )}
       <div className="Groups">
         <div className="container">
@@ -108,7 +125,11 @@ export default function GroupAdminPanel(props) {
                   </button>
                 </div>
                 <hr className="GroupAdmin-Separator" />
-                <MemberList members={group.members} isAdminList={true} />
+                <MemberList
+                  members={group.members}
+                  isAdminList={true}
+                  openModal={openModal}
+                />
                 <div className="GroupAdmin-Buttons">
                   <LangLink className="Button Button--inverse" to="/yhteisot">
                     {t("groups.admin-view.cancel-btn", "Peruuta")}

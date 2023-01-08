@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 
 import { GroupMemberOverview } from "./GroupMemberOverview";
+import { MODAL_TYPES } from "../../GroupAdminPanel";
 
 export default function GroupMembers({ members, groupName }) {
   const [t] = useTranslation();
@@ -27,7 +28,7 @@ GroupMembers.propTypes = {
   groupName: PropTypes.string.isRequired,
 };
 
-export function MemberList({ members, isAdminList }) {
+export function MemberList({ members, isAdminList, openModal }) {
   return members.map((member, idx) => (
     <Member
       key={member.user.id}
@@ -43,6 +44,7 @@ export function MemberList({ members, isAdminList }) {
       isDarkRow={idx % 2 === 1}
       isAdmin={member.is_admin}
       isAdminList={isAdminList}
+      handleClick={(modalType) => openModal(modalType, member.user)}
     />
   ));
 }
@@ -50,9 +52,18 @@ export function MemberList({ members, isAdminList }) {
 MemberList.propTypes = {
   members: PropTypes.arrayOf(PropTypes.object).isRequired,
   isAdminList: PropTypes.bool,
+  openModal: PropTypes.func,
 };
 
-function Member({ name, email, picture, isDarkRow, isAdmin, isAdminList }) {
+function Member({
+  name,
+  email,
+  picture,
+  isDarkRow,
+  isAdmin,
+  isAdminList,
+  handleClick,
+}) {
   const [t] = useTranslation();
 
   return (
@@ -94,7 +105,10 @@ function Member({ name, email, picture, isDarkRow, isAdmin, isAdminList }) {
           <button className="Button--link GroupAdmin-SetAdmin">
             Aseta adminiksi
           </button>
-          <button className="Button--link GroupAdmin-Remove">
+          <button
+            className="Button--link GroupAdmin-Remove"
+            onClick={() => handleClick(MODAL_TYPES.RemoveMember)}
+          >
             Poista yhteisöstä
           </button>
         </>
@@ -110,4 +124,5 @@ Member.propTypes = {
   isDarkRow: PropTypes.bool.isRequired,
   isAdmin: PropTypes.bool.isRequired,
   isAdminList: PropTypes.bool,
+  handleClick: PropTypes.func,
 };
