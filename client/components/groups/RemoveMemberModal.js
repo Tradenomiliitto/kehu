@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import Portal from "../Portal";
 import KehuFormModal from "../KehuFormModal";
 import { removeGroupMember } from "../../redux/group";
-import { FormattedErrorPanel } from "../ErrorPanel";
+import ErrorPanel, { FormattedErrorPanel } from "../ErrorPanel";
 
 export function RemoveMemberModal({ closeModal, member, groupId }) {
   const [t] = useTranslation();
@@ -78,13 +78,22 @@ export function RemoveMemberModal({ closeModal, member, groupId }) {
             )}
           </button>
         </div>
-        <FormattedErrorPanel
-          error={error}
-          genericMessage={t(
-            "groups.admin-view.member-invite-failed",
-            "Jäsenten kutsuminen epäonnistui"
-          )}
-        />
+        {error?.responseJson?.type === "LAST_ADMIN_ERROR" ? (
+          <ErrorPanel
+            message={t(
+              "groups.admin-view.remove-last-admin-error",
+              "Ryhmän viimeistä admin-käyttäjää ei voi poistaa."
+            )}
+          />
+        ) : (
+          <FormattedErrorPanel
+            error={error}
+            genericMessage={t(
+              "groups.admin-view.remove-member-failed",
+              "Jäsenen poistaminen epäonnistui"
+            )}
+          />
+        )}
       </KehuFormModal>
     </Portal>
   );

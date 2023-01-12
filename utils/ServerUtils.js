@@ -44,8 +44,16 @@ function strToInt(str) {
   return val;
 }
 
+class CustomError extends Error {
+  constructor(message, type) {
+    super(message);
+    this.type = type;
+  }
+}
+
 module.exports = {
   setupLocals,
   addKehuType,
   strToInt,
+  CustomError,
 };

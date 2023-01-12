@@ -5,7 +5,7 @@ const GroupMember = require("../models/GroupMember");
 
 const { findUserByEmail } = require("./UserService");
 const logger = require("../logger");
-const { addKehuType } = require("../utils/ServerUtils");
+const { addKehuType, CustomError } = require("../utils/ServerUtils");
 
 /**
  * Get user's groups from database.
@@ -159,7 +159,7 @@ async function changeMemberAdminRole(userId, memberId, groupId, isAdmin) {
 }
 
 async function deleteMember(userId, memberId, groupId) {
-  logger.info(`Removing a member from a group ${groupId}`);
+  logger.info(`Removing a user from a group ${groupId}`);
 
   try {
     // Check that user making the request is admin of the group
@@ -168,6 +168,17 @@ async function deleteMember(userId, memberId, groupId) {
       throw new Error("User is not a group admin");
     }
 
+    // Group must have at least one admin member after deletion
+    const remainingAdmings = await GroupMember.query()
+      .where({ group_id: groupId, is_admin: true })
+      .whereNot({ user_id: memberId });
+
+    if (remainingAdmings.length < 1)
+      throw new CustomError(
+        "Cannot remove the group's last admin",
+        "LAST_ADMIN_ERROR"
+      );
+
     await GroupMember.query()
       .delete()
       .where({ user_id: memberId, group_id: groupId });
@@ -175,7 +186,6 @@ async function deleteMember(userId, memberId, groupId) {
     return (await getGroups(userId, groupId))[0];
   } catch (error) {
     logger.error(`Removing user from a group failed`);
-    logger.error(error.message);
     throw error;
   }
 }
