@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -11,7 +11,7 @@ import {
   GroupDescriptionInput,
 } from "./components/groups/AdminInputs";
 import { LangLink } from "./util/LangLink";
-import { resetGroupErrors, updateGroup } from "./redux/group";
+import { resetGroupErrors, selectGroup, updateGroup } from "./redux/group";
 import { AddNewMembersModal } from "./components/groups/AddNewMembersModal";
 import { RemoveMemberModal } from "./components/groups/RemoveMemberModal";
 import { AddMemberToAdminsModal } from "./components/groups/AddMemberToAdminsModal";
@@ -40,6 +40,11 @@ export default function GroupAdminPanel(props) {
   const [groupDescription, setGroupDescription] = useState(group.description);
   const [visibleModal, setVisibleModal] = useState(null);
   const [memberInModal, setMemberInModal] = useState();
+
+  // Restore active group on refresh
+  useEffect(() => {
+    dispatch(selectGroup({ groupId: group.id }));
+  }, [dispatch, group.id]);
 
   const handleSaveClick = async () => {
     dispatch(
