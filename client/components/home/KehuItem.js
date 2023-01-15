@@ -150,7 +150,7 @@ export function getKehuType(kehu, t) {
     case "added":
       return t("kehus.kehu-added", "Lisätty kehu");
     case "others":
-      return t("kehus.kehu-others", "Kehu ryhmässä");
+      return t("kehus.kehu-others", "Kehu yhteisössä");
     default:
       return "";
   }

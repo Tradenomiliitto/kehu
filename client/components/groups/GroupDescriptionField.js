@@ -11,7 +11,7 @@ export default function GroupDescriptionField({ value, handleChange }) {
         <div className="InviteMembersField-disclaimer">
           {t(
             "modals.create-group.group-description-input-fineprint",
-            "Lyhyt kuvaus yhteisöstäsi - tämä näkyy julkisesti koko ryhmälle. Tsemppihenki ja hauskuus sallittuja!"
+            "Lyhyt kuvaus yhteisöstäsi - tämä näkyy julkisesti koko yhteisölle. Tsemppihenki ja hauskuus sallittuja!"
           )}
         </div>
       </label>

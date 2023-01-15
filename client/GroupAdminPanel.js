@@ -71,7 +71,7 @@ export default function GroupAdminPanel(props) {
   if (!group.is_admin)
     return (
       <div className="ErrorCard">
-        {t("groups.admin-view.not-admin", "Et ole ryhmän admin")}
+        {t("groups.admin-view.not-admin", "Et ole yhteisön admin")}
       </div>
     );
 

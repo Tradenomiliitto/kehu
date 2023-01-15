@@ -38,25 +38,25 @@ export function RemoveMemberModal({ closeModal, member, groupId }) {
             <li>
               {t(
                 "groups.admin-view.remove-member5",
-                "näkee edelleen koko ryhmän kehut, jotka annettiin hänen ollessa jäsen"
+                "näkee edelleen koko yhteisön kehut, jotka annettiin hänen ollessa jäsen"
               )}
             </li>
             <li>
               {t(
                 "groups.admin-view.remove-member6",
-                "näkee ryhmän sisällä hänelle annetut kehut"
+                "näkee yhteisön sisällä hänelle annetut kehut"
               )}
             </li>
             <li>
               {t(
                 "groups.admin-view.remove-member7",
-                "ei näe tästä hetkestä eteenpäin mitään, mitä ryhmässä tapahtuu"
+                "ei näe tästä hetkestä eteenpäin mitään, mitä yhteisössä tapahtuu"
               )}
             </li>
             <li>
               {t(
                 "groups.admin-view.remove-member8",
-                "ei näe aiempia ryhmän sisällä jäseneltä toiselle annettuja kehuja, joissa hän itse ei ole osallisena"
+                "ei näe aiempia yhteisön sisällä jäseneltä toiselle annettuja kehuja, joissa hän itse ei ole osallisena"
               )}
             </li>
           </ul>

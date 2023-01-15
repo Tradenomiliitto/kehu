@@ -14,7 +14,7 @@ export default function ActiveGroup({ group }) {
 
   const admins = group.members.filter((m) => m.is_admin);
   const adminText = group.is_admin
-    ? t("groups.is-group-admin", "Olet ryhmän admin")
+    ? t("groups.is-group-admin", "Olet yhteisön admin")
     : t("groups.admin", {
         count: admins.length,
         defaultValue: "Admin",
