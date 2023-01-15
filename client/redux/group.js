@@ -1,4 +1,5 @@
 import { get, post, put, del } from "../util/ApiUtil";
+import { sortGroups } from "../util/misc";
 
 export const GET_GROUPS = "groups/GET_GROUPS";
 export const GET_GROUPS_SUCCESS = "groups/GET_GROUPS_SUCCESS";
@@ -153,7 +154,7 @@ export default function reducer(state = initialState, action = {}) {
         loading: false,
         error: null,
         groups: action.payload,
-        activeGroupId: action.payload[0]?.id,
+        activeGroupId: sortGroups(action.payload)[0]?.id,
         groupsLoaded: true,
       };
 
