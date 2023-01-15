@@ -14,11 +14,13 @@ import { LangLink } from "./util/LangLink";
 import { resetGroupErrors, updateGroupName } from "./redux/group";
 import { AddNewMembersModal } from "./components/groups/AddNewMembersModal";
 import { RemoveMemberModal } from "./components/groups/RemoveMemberModal";
+import { AddMemberToAdminsModal } from "./components/groups/AddMemberToAdminsModal";
 
 export const MODAL_TYPES = {
   AddNewMembers: 0,
   RemoveMember: 1,
-  SetMemberAsAdmin: 2,
+  AddMemberToAdmins: 2,
+  RemoveMemberFromAdmins: 3,
 };
 
 export default function GroupAdminPanel(props) {
@@ -79,6 +81,13 @@ export default function GroupAdminPanel(props) {
       )}
       {visibleModal === MODAL_TYPES.RemoveMember && (
         <RemoveMemberModal
+          closeModal={closeModal}
+          member={memberInModal}
+          groupId={group.id}
+        />
+      )}
+      {visibleModal === MODAL_TYPES.AddMemberToAdmins && (
+        <AddMemberToAdminsModal
           closeModal={closeModal}
           member={memberInModal}
           groupId={group.id}

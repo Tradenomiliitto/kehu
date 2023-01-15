@@ -102,14 +102,26 @@ function Member({
       <div className="GroupAdmin-MemberListBreak"></div>
       {isAdminList && (
         <>
-          <button className="Button--link GroupAdmin-SetAdmin">
-            Aseta adminiksi
-          </button>
+          {isAdmin ? (
+            <button
+              className="Button--link GroupAdmin-SetAdmin"
+              onClick={() => handleClick(MODAL_TYPES.RemoveMemberFromAdmins)}
+            >
+              {t("groups.admin-view.remove-from-admins", "Poista admineista")}
+            </button>
+          ) : (
+            <button
+              className="Button--link GroupAdmin-SetAdmin"
+              onClick={() => handleClick(MODAL_TYPES.AddMemberToAdmins)}
+            >
+              {t("groups.admin-view.add-to-admins", "Aseta adminiksi")}
+            </button>
+          )}
           <button
             className="Button--link GroupAdmin-Remove"
             onClick={() => handleClick(MODAL_TYPES.RemoveMember)}
           >
-            Poista yhteisöstä
+            {t("groups.admin-view.remove-from-group", "Poista yhteisöstä")}
           </button>
         </>
       )}

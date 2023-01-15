@@ -401,6 +401,9 @@
   font-size: small;
   margin-left: 1rem;
   margin-right: 1rem;
+  min-width: 8rem;
+  text-align: right;
+
   @include mq($until: md) {
     margin-left: 0;
     padding-left: 0;
