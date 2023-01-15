@@ -146,6 +146,19 @@ async function changeMemberAdminRole(userId, memberId, groupId, isAdmin) {
       throw new Error("User is not a group admin");
     }
 
+    // If removing admin rights the group must have at least one other admin
+    if (isAdmin === false) {
+      const remainingAdmings = await GroupMember.query()
+        .where({ group_id: groupId, is_admin: true })
+        .whereNot({ user_id: memberId });
+
+      if (remainingAdmings.length < 1)
+        throw new CustomError(
+          "Cannot remove the group's last admin",
+          "LAST_ADMIN_ERROR"
+        );
+    }
+
     await GroupMember.query()
       .where({ user_id: memberId, group_id: groupId })
       .patch({ is_admin: isAdmin });
@@ -153,7 +166,6 @@ async function changeMemberAdminRole(userId, memberId, groupId, isAdmin) {
     return (await getGroups(userId, groupId))[0];
   } catch (error) {
     logger.error(`Assigning user's admin role failed`);
-    logger.error(error.message);
     throw error;
   }
 }

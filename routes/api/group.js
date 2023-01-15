@@ -103,6 +103,11 @@ router.put(
       );
       return res.json(group);
     } catch (err) {
+      if (err?.type === "LAST_ADMIN_ERROR") {
+        logger.error(err.message);
+        return res.status(403).json({ error: err.message, type: err.type });
+      }
+
       logger.error(err);
       res.status(500).json({ error: err.message });
     }

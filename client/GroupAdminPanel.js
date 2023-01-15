@@ -15,6 +15,7 @@ import { resetGroupErrors, updateGroupName } from "./redux/group";
 import { AddNewMembersModal } from "./components/groups/AddNewMembersModal";
 import { RemoveMemberModal } from "./components/groups/RemoveMemberModal";
 import { AddMemberToAdminsModal } from "./components/groups/AddMemberToAdminsModal";
+import { RemoveMemberFromAdminsModal } from "./components/groups/RemoveMemberFromAdminsModal";
 
 export const MODAL_TYPES = {
   AddNewMembers: 0,
@@ -88,6 +89,13 @@ export default function GroupAdminPanel(props) {
       )}
       {visibleModal === MODAL_TYPES.AddMemberToAdmins && (
         <AddMemberToAdminsModal
+          closeModal={closeModal}
+          member={memberInModal}
+          groupId={group.id}
+        />
+      )}
+      {visibleModal === MODAL_TYPES.RemoveMemberFromAdmins && (
+        <RemoveMemberFromAdminsModal
           closeModal={closeModal}
           member={memberInModal}
           groupId={group.id}

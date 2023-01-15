@@ -82,7 +82,7 @@ export function RemoveMemberModal({ closeModal, member, groupId }) {
           <ErrorPanel
             message={t(
               "groups.admin-view.remove-last-admin-error",
-              "Ryhmän viimeistä admin-käyttäjää ei voi poistaa."
+              "Yhteisön viimeistä admin-käyttäjää ei voi poistaa."
             )}
           />
         ) : (
