@@ -9,9 +9,9 @@ export const CREATE_GROUP = "group/CREATE_GROUP";
 export const CREATE_GROUP_SUCCESS = "group/CREATE_GROUP_SUCCESS";
 export const CREATE_GROUP_ERROR = "group/CREATE_GROUP_ERROR";
 
-export const UPDATE_GROUP_NAME = "group/UPDATE_GROUP_NAME";
-export const UPDATE_GROUP_NAME_SUCCESS = "group/UPDATE_GROUP_NAME_SUCCESS";
-export const UPDATE_GROUP_NAME_ERROR = "group/UPDATE_GROUP_NAME_ERROR";
+export const UPDATE_GROUP = "group/UPDATE_GROUP_NAME";
+export const UPDATE_GROUP_SUCCESS = "group/UPDATE_GROUP_NAME_SUCCESS";
+export const UPDATE_GROUP_ERROR = "group/UPDATE_GROUP_NAME_ERROR";
 
 export const INVITE_GROUP_MEMBERS = "group/INVITE_GROUP_MEMBERS";
 export const INVITE_GROUP_MEMBERS_SUCCESS =
@@ -61,17 +61,26 @@ export function createGroup(data) {
   };
 }
 
-// history and to parameters are optional and used to redirect after succesful
-// update
-export function updateGroupName({ id, name, description }, history, to) {
+// `history` and `to` parameters are optional and used to redirect after succesful
+// update, optional `cb` callback function is used to close modal
+export function updateGroup(
+  { id, name, description, picture, cloudinaryPublicId },
+  { history, to, cb }
+) {
   return async (dispatch) => {
     try {
-      dispatch({ type: UPDATE_GROUP_NAME });
-      const group = await put(`/yhteisot/${id}`, { name, description });
-      dispatch({ type: UPDATE_GROUP_NAME_SUCCESS, payload: group });
+      dispatch({ type: UPDATE_GROUP });
+      const group = await put(`/yhteisot/${id}`, {
+        name,
+        description,
+        picture,
+        cloudinaryPublicId,
+      });
+      dispatch({ type: UPDATE_GROUP_SUCCESS, payload: group });
       if (history && to) history.push(to);
+      if (typeof cb === "function") cb();
     } catch (e) {
-      dispatch({ type: UPDATE_GROUP_NAME_ERROR, payload: e });
+      dispatch({ type: UPDATE_GROUP_ERROR, payload: e });
     }
   };
 }
@@ -138,7 +147,7 @@ export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case GET_GROUPS:
     case CREATE_GROUP:
-    case UPDATE_GROUP_NAME:
+    case UPDATE_GROUP:
     case INVITE_GROUP_MEMBERS:
     case REMOVE_GROUP_MEMBER:
     case UPDATE_GROUP_MEMBER:
@@ -168,7 +177,7 @@ export default function reducer(state = initialState, action = {}) {
         groupsLoaded: true,
       };
 
-    case UPDATE_GROUP_NAME_SUCCESS:
+    case UPDATE_GROUP_SUCCESS:
     case INVITE_GROUP_MEMBERS_SUCCESS:
     case REMOVE_GROUP_MEMBER_SUCCESS:
     case UPDATE_GROUP_MEMBER_SUCCESS:
@@ -183,7 +192,7 @@ export default function reducer(state = initialState, action = {}) {
 
     case GET_GROUPS_ERROR:
     case CREATE_GROUP_ERROR:
-    case UPDATE_GROUP_NAME_ERROR:
+    case UPDATE_GROUP_ERROR:
     case INVITE_GROUP_MEMBERS_ERROR:
     case REMOVE_GROUP_MEMBER_ERROR:
     case UPDATE_GROUP_MEMBER_ERROR:

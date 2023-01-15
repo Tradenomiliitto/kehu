@@ -11,7 +11,7 @@ import {
   GroupDescriptionInput,
 } from "./components/groups/AdminInputs";
 import { LangLink } from "./util/LangLink";
-import { resetGroupErrors, updateGroupName } from "./redux/group";
+import { resetGroupErrors, updateGroup } from "./redux/group";
 import { AddNewMembersModal } from "./components/groups/AddNewMembersModal";
 import { RemoveMemberModal } from "./components/groups/RemoveMemberModal";
 import { AddMemberToAdminsModal } from "./components/groups/AddMemberToAdminsModal";
@@ -41,10 +41,9 @@ export default function GroupAdminPanel(props) {
 
   const handleSaveClick = async () => {
     dispatch(
-      updateGroupName(
+      updateGroup(
         { id: groupId, name: groupName, description: groupDescription },
-        history,
-        "/yhteisot"
+        { history, to: "/yhteisot" }
       )
     );
   };
