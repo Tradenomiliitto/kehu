@@ -32,7 +32,7 @@ export const initialState = {
   error: null,
   loading: false,
   groups: [],
-  activeGroupIdx: null,
+  activeGroupId: null,
   groupsLoaded: false,
 };
 
@@ -153,7 +153,7 @@ export default function reducer(state = initialState, action = {}) {
         loading: false,
         error: null,
         groups: action.payload,
-        activeGroupIdx: 0,
+        activeGroupId: action.payload[0]?.id,
         groupsLoaded: true,
       };
 
@@ -163,7 +163,7 @@ export default function reducer(state = initialState, action = {}) {
         loading: false,
         error: null,
         groups: [...state.groups, action.payload],
-        activeGroupIdx: state.groups.length,
+        activeGroupId: action.payload.id,
         groupsLoaded: true,
       };
 
@@ -202,10 +202,8 @@ export default function reducer(state = initialState, action = {}) {
     case SELECT_GROUP:
       return {
         ...state,
-        activeGroupIdx:
-          action.payload.groupId != null
-            ? state.groups.findIndex((g) => g.id === action.payload.groupId)
-            : action.payload.groupIdx,
+        activeGroupId:
+          action.payload.groupId ?? state.groups[action.payload.groupIdx]?.id,
       };
 
     default:

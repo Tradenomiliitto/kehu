@@ -14,11 +14,11 @@ export default function GroupsPanel() {
   const [t] = useTranslation();
   const [kehusVisible, setKehusVisible] = useState(SHOW_MORE_KEHUS_STEP_SIZE);
   const groups = useSelector((state) => state.group.groups);
-  const activeGroupIdx = useSelector((state) => state.group.activeGroupIdx);
+  const activeGroupId = useSelector((state) => state.group.activeGroupId);
 
-  if (groups.length === 0) return <NoGroups />;
+  const activeGroup = groups.find((g) => g.id === activeGroupId);
 
-  const activeGroup = groups[activeGroupIdx ?? 0];
+  if (!activeGroup) return <NoGroups />;
 
   const showMoreKehus = (ev) => {
     ev.target.blur();
@@ -45,7 +45,7 @@ export default function GroupsPanel() {
             )}
           </div>
           <div className="col col-xs-12 col-md-3">
-            <MyGroups groups={groups} activeGroupIdx={activeGroupIdx} />
+            <MyGroups groups={groups} activeGroupId={activeGroupId} />
             <GroupMembers
               members={activeGroup.members}
               groupName={activeGroup.name}

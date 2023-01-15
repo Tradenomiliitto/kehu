@@ -8,7 +8,7 @@ import CreateGroupForm from "./CreateGroupForm";
 import { selectGroup } from "../../redux/group";
 import { groupPropType } from "../../util/PropTypes";
 
-export default function MyGroups({ groups, activeGroupIdx }) {
+export default function MyGroups({ groups, activeGroupId }) {
   const [t] = useTranslation();
   const [isCreateNewGroupVisible, setIsCreateNewGroupVisible] = useState(false);
 
@@ -19,7 +19,7 @@ export default function MyGroups({ groups, activeGroupIdx }) {
       </h3>
       {groups.map((group, idx) => (
         <React.Fragment key={group.id}>
-          <OneGroup group={group} isActive={activeGroupIdx === idx} />
+          <OneGroup group={group} isActive={group.id === activeGroupId} />
           <hr className="MyGroups-SeparatorLine" />
         </React.Fragment>
       ))}
@@ -41,7 +41,7 @@ export default function MyGroups({ groups, activeGroupIdx }) {
 
 MyGroups.propTypes = {
   groups: PropTypes.arrayOf(groupPropType),
-  activeGroupIdx: PropTypes.number,
+  activeGroupId: PropTypes.number,
 };
 
 function OneGroup({ group, isActive }) {
