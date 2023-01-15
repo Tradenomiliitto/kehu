@@ -32,6 +32,7 @@ export class SendKehuForm extends Component {
     situations: PropTypes.array.isRequired,
     tags: PropTypes.array.isRequired,
     groups: PropTypes.array.isRequired,
+    targetGroup: PropTypes.string,
     // i18n prop coming from withTranslation()
     t: PropTypes.func.isRequired,
   };
@@ -42,7 +43,7 @@ export class SendKehuForm extends Component {
       preview: false,
       giver_id: props.profile.id,
       giver_name: `${props.profile.first_name} ${props.profile.last_name}`,
-      group_name: "-",
+      group_name: props.targetGroup ?? "-",
       receiver_name: "",
       receiver_email: "",
       isPrivate: null,
@@ -358,6 +359,7 @@ const mapStateToProps = (state) => ({
   situations: state.profile.situations,
   tags: state.profile.tags,
   groups: state.group.groups,
+  targetGroup: state.portal.sendKehuPortalTargetGroup,
 });
 
 const mapDispatchToProps = {

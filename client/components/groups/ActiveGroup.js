@@ -83,7 +83,7 @@ export default function ActiveGroup({ group }) {
               )}
               <button
                 className="Button"
-                onClick={() => dispatch(toggleSendKehuFormModal())}
+                onClick={() => dispatch(toggleSendKehuFormModal(group.name))}
               >
                 {t("home.send-new-kehu-btn", "Lähetä Kehu")}
               </button>

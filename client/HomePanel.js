@@ -64,7 +64,7 @@ export class HomePanel extends Component {
                     </button>
                     <button
                       className="Button send-kehu-nw"
-                      onClick={this.props.toggleSendKehuFormModal}
+                      onClick={() => this.props.toggleSendKehuFormModal()}
                     >
                       {t("home.send-new-kehu-btn", "Lähetä Kehu")}
                     </button>
