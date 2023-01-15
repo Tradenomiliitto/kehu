@@ -7,6 +7,7 @@ import moment from "moment";
 import CreateGroupForm from "./CreateGroupForm";
 import { selectGroup } from "../../redux/group";
 import { groupPropType } from "../../util/PropTypes";
+import { getLatestKehu, sortGroups } from "../../util/misc";
 
 export default function MyGroups({ groups, activeGroupId }) {
   const [t] = useTranslation();
@@ -17,7 +18,7 @@ export default function MyGroups({ groups, activeGroupId }) {
       <h3 className="MyGroups-title">
         {t("groups.mygroups-title", "Yhteisöni")}
       </h3>
-      {groups.map((group, idx) => (
+      {sortGroups(groups).map((group) => (
         <React.Fragment key={group.id}>
           <OneGroup group={group} isActive={group.id === activeGroupId} />
           <hr className="MyGroups-SeparatorLine" />
@@ -49,9 +50,7 @@ function OneGroup({ group, isActive }) {
   const dispatch = useDispatch();
 
   // Get the most recent Kehu in the group
-  let latestKehu = [...group.kehus].sort(
-    (kehu1, kehu2) => new Date(kehu2.date_given) - new Date(kehu1.date_given)
-  )[0];
+  const latestKehu = getLatestKehu(group.kehus);
 
   return (
     <button
