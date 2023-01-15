@@ -6,6 +6,7 @@ import moment from "moment";
 
 import { toggleSendKehuFormModal } from "../../redux/portal";
 import { LangLink } from "../../util/LangLink";
+import { sortMembers } from "../../util/misc";
 
 export default function ActiveGroup({ group }) {
   const [t] = useTranslation();
@@ -37,7 +38,7 @@ export default function ActiveGroup({ group }) {
         </div>
 
         <div>
-          {group.members.map((member) => (
+          {sortMembers(group.members).map((member) => (
             <div key={member.user.id} className="ActiveGroup-MemberPicture">
               <img
                 className="MemberPicture-image"

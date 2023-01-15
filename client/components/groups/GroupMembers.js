@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 
 import { GroupMemberOverview } from "./GroupMemberOverview";
 import { MODAL_TYPES } from "../../GroupAdminPanel";
+import { sortMembers } from "../../util/misc";
 
 export default function GroupMembers({ members, groupName }) {
   const [t] = useTranslation();
@@ -29,7 +30,8 @@ GroupMembers.propTypes = {
 };
 
 export function MemberList({ members, isAdminList, openModal }) {
-  return members.map((member, idx) => (
+  // Sort members admins first, then by firstname and lastname
+  return sortMembers(members).map((member, idx) => (
     <Member
       key={member.user.id}
       name={
