@@ -2,6 +2,7 @@ import moment from "moment";
 import { get, del, post, put } from "../util/ApiUtil";
 import { RESET_REPORTS } from "./report";
 import { updateFeed } from "./profile";
+import { getGroups } from "./group";
 
 export const ADD_KEHU = "kehu/ADD_KEHU";
 export const ADD_KEHU_SUCCESS = "kehu/ADD_KEHU_SUCCESS";
@@ -112,6 +113,12 @@ export function sendKehu(data) {
       const kehu = isGroupKehu
         ? await post("/kehut/group", data)
         : await post("/kehut/laheta", data);
+
+      // If kehu type was group kehu update groups
+      // Could be optimized to only update the specific group but performance is
+      // currently no issue
+      if (isGroupKehu) dispatch(getGroups());
+
       dispatch({ type: SEND_KEHU_SUCCESS, payload: kehu });
       dispatch({
         type: RESET_REPORTS,
