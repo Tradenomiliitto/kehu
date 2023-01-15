@@ -35,7 +35,7 @@ router.post("/", checkSchema(createGroupSchema), async (req, res) => {
       return res.status(422).json({ errors: validations.array() });
     }
 
-    const group = await createGroup(req.user.id, req.body);
+    const group = await createGroup(req.user.id, req.user.auth0_id, req.body);
     return res.json(group);
   } catch (err) {
     logger.error(err);
@@ -51,7 +51,12 @@ router.put("/:groupId", checkSchema(updateGroupSchema), async (req, res) => {
     }
     const groupId = strToInt(req.params.groupId);
 
-    const group = await updateGroup(req.user.id, groupId, req.body);
+    const group = await updateGroup(
+      req.user.id,
+      req.user.auth0_id,
+      groupId,
+      req.body
+    );
     return res.json(group);
   } catch (err) {
     logger.error(err);
