@@ -16,12 +16,14 @@ import { AddNewMembersModal } from "./components/groups/AddNewMembersModal";
 import { RemoveMemberModal } from "./components/groups/RemoveMemberModal";
 import { AddMemberToAdminsModal } from "./components/groups/AddMemberToAdminsModal";
 import { RemoveMemberFromAdminsModal } from "./components/groups/RemoveMemberFromAdminsModal";
+import { ChangeGroupPictureModal } from "./components/groups/ChangeGroupPictureModal";
 
 export const MODAL_TYPES = {
   AddNewMembers: 0,
   RemoveMember: 1,
   AddMemberToAdmins: 2,
   RemoveMemberFromAdmins: 3,
+  ChangeGroupPicture: 4,
 };
 
 export default function GroupAdminPanel(props) {
@@ -100,6 +102,9 @@ export default function GroupAdminPanel(props) {
           groupId={group.id}
         />
       )}
+      {visibleModal === MODAL_TYPES.ChangeGroupPicture && (
+        <ChangeGroupPictureModal closeModal={closeModal} groupId={group.id} />
+      )}
       <div className="Groups">
         <div className="container">
           <div className="GroupAdmin-Card row">
@@ -108,7 +113,12 @@ export default function GroupAdminPanel(props) {
                 <div className="ActiveGroup-Picture">
                   <img className="GroupPicture-image" src={group.picture} />
                 </div>
-                <button className="Button--link GroupAdmin-ChangePicture">
+                <button
+                  className="Button--link GroupAdmin-ChangePicture"
+                  onClick={() =>
+                    setVisibleModal(MODAL_TYPES.ChangeGroupPicture)
+                  }
+                >
                   {t("groups.admin-view.change-picture", "Vaihda kuva")}
                 </button>
               </div>
