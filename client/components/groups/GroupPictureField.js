@@ -76,7 +76,7 @@ export default function GroupPictureField({
 
   function uploadPicture() {
     setIsUploadingPicture(true);
-    uploadWidget("create_group_" + userId, i18n.language, pictureUploadCb);
+    uploadWidget("new_group_picture_" + userId, i18n.language, pictureUploadCb);
   }
 
   async function pictureUploadCb(url, publicId) {

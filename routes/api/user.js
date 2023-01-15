@@ -120,10 +120,10 @@ router.get("/cloudinary-signature", (req, res) => {
 // Throw an error if user is not permitted to upload the picture
 function isPermittedToUploadPicture(req) {
   const { public_id } = req.query.data;
-  // User can upload and potentially overwrite only their own temporary
-  // group creation picture (when group is created the picture is renamed)
-  if (public_id.startsWith("create_group")) {
-    if (public_id === "create_group_" + req.user.auth0_id) return;
+  // User can upload and potentially overwrite only their own temporary group
+  // picture (when group is created / updated, the picture is renamed)
+  if (public_id.startsWith("new_group_picture")) {
+    if (public_id === "new_group_picture_" + req.user.auth0_id) return;
     logger.warn(
       `Unauthorized temporary group picture upload: picture name suffix not matching user id`,
       { public_id, user_id: req.user.auth0_id }
@@ -139,11 +139,6 @@ function isPermittedToUploadPicture(req) {
       { public_id, user_id: req.user.auth0_id }
     );
     throw new Error("Unauthorized profile picture upload");
-  }
-
-  // Only admins can update group pictures
-  if (public_id.startsWith("group")) {
-    // TODO: check that user is admin of the group
   }
 
   throw new Error("Unauthorized picture upload");
