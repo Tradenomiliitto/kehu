@@ -28,7 +28,7 @@ async function sendEmailToUnkownUser(receiver, claim_id, kehu_id, t) {
       text: kehu.text,
     },
   };
-  sendEmailUsingSendgrid(msg);
+  await sendEmailUsingSendgrid(msg);
 }
 
 async function sendEmailToKnownUser(user, kehu_id, t) {
@@ -48,17 +48,21 @@ async function sendEmailToKnownUser(user, kehu_id, t) {
       text: kehu.text,
     },
   };
-  sendEmailUsingSendgrid(msg);
+  await sendEmailUsingSendgrid(msg);
 }
 
-function sendEmailUsingSendgrid(msg) {
+async function sendEmailUsingSendgrid(msg) {
   if (!process.env.SENDGRID_API_KEY) {
     logger.warn("SendGrid API key not set, unable to send email to " + msg.to);
     return;
   }
 
   logger.info("Sending email to " + msg.to);
-  sgMail.send(msg);
+  try {
+    await sgMail.send(msg);
+  } catch (err) {
+    logger.error("Error sending email to " + msg.to, err);
+  }
 }
 
 async function getKehu(kehu_id, t) {
