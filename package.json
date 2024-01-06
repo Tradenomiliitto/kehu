@@ -155,6 +155,6 @@
     "*.js": "eslint --fix",
     "*.{css,scss}": "stylelint --fix"
   },
-  "stack": "heroku-20",
+  "stack": "heroku-22",
   "heroku-run-build-script": true
 }
