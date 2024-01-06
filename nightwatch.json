@@ -24,6 +24,9 @@
       "desiredCapabilities": {
         "browserName": "chrome",
         "chromeOptions": {
+          "prefs": {
+            "intl.accept_languages": "fi"
+          },
           "args": ["--window-size=1600,1080"]
         }
       }
