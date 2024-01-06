@@ -13,7 +13,7 @@ export default function TextField({ value, handleChange, disabled }) {
         rows={7}
         placeholder={t(
           "modals.add-kehu.textfield-placeholder",
-          "Hyvää työtä! Olet..."
+          "Hyvää työtä! Olet...",
         )}
         disabled={disabled}
         value={value}

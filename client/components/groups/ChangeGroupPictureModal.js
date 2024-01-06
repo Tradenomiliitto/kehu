@@ -57,7 +57,7 @@ export function ChangeGroupPictureModal({ closeModal, groupId }) {
           error={error}
           genericMessage={t(
             "groups.admin-view.picture-change-failed",
-            "Kuvan vaihtaminen epäonnistui"
+            "Kuvan vaihtaminen epäonnistui",
           )}
         />
       </KehuFormModal>

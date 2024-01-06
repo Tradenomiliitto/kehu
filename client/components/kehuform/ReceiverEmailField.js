@@ -15,7 +15,7 @@ export default function ReceiverEmailField({ value, handleChange }) {
         type="email"
         placeholder={t(
           "modals.send-kehu.receiver-email-placeholder",
-          "Sähköpostisoite"
+          "Sähköpostisoite",
         )}
         value={value}
         onChange={handleChange}

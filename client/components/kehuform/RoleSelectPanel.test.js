@@ -15,19 +15,19 @@ describe("client:components:kehuform:RoleSelectPanel", () => {
         roles={roles}
         disabled={false}
         handleClick={handleClickStub}
-      />
+      />,
     );
   });
 
   it("does not render active role", () => {
     expect(
-      component.find(".RoleSelector-button--selected").exists()
+      component.find(".RoleSelector-button--selected").exists(),
     ).toBeFalsy();
   });
 
   it("does not render disabled role", () => {
     expect(
-      component.find(".RoleSelector-button--disabled").exists()
+      component.find(".RoleSelector-button--disabled").exists(),
     ).toBeFalsy();
   });
 
@@ -57,13 +57,13 @@ describe("client:components:kehuform:RoleSelectPanel", () => {
           component
             .find(".RoleSelector-button")
             .last()
-            .hasClass("RoleSelector-button--selected")
+            .hasClass("RoleSelector-button--selected"),
         ).toBeTruthy();
         expect(
           component
             .find(".RoleSelector-button")
             .last()
-            .hasClass("RoleSelector-button--disabled")
+            .hasClass("RoleSelector-button--disabled"),
         ).toBeFalsy();
       });
 
@@ -72,13 +72,13 @@ describe("client:components:kehuform:RoleSelectPanel", () => {
           component
             .find(".RoleSelector-button")
             .first()
-            .hasClass("RoleSelector-button--selected")
+            .hasClass("RoleSelector-button--selected"),
         ).toBeFalsy();
         expect(
           component
             .find(".RoleSelector-button")
             .first()
-            .hasClass("RoleSelector-button--disabled")
+            .hasClass("RoleSelector-button--disabled"),
         ).toBeTruthy();
       });
     });
@@ -95,7 +95,7 @@ describe("client:components:kehuform:RoleSelectPanel", () => {
 
     it("renders all roles as disabled", () => {
       expect(component.find(".RoleSelector-button--disabled").length).toEqual(
-        roles.length
+        roles.length,
       );
     });
 

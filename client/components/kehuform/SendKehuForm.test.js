@@ -39,7 +39,7 @@ describe("client:components:kehuform:SendKehuForm", () => {
         tags={tags}
         groups={groups}
         t={(key) => key}
-      />
+      />,
     );
   });
 
@@ -113,16 +113,16 @@ describe("client:components:kehuform:SendKehuForm", () => {
           tags={tags}
           groups={groups}
           t={(key) => key}
-        />
+        />,
       );
     });
 
     it("renders ErrorPanel for each error", () => {
       expect(component.find("ErrorPanel").first().prop("message")).toEqual(
-        error1.msg
+        error1.msg,
       );
       expect(component.find("ErrorPanel").last().prop("message")).toEqual(
-        error2.msg
+        error2.msg,
       );
     });
   });
@@ -140,13 +140,13 @@ describe("client:components:kehuform:SendKehuForm", () => {
           tags={tags}
           groups={groups}
           t={(key) => key}
-        />
+        />,
       );
     });
 
     it("renders ErrorPanel", () => {
       expect(component.find("ErrorPanel").first().prop("message")).toEqual(
-        `modals.send-kehu.error`
+        `modals.send-kehu.error`,
       );
     });
   });

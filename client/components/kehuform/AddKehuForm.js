@@ -112,11 +112,11 @@ export class AddKehuForm extends Component {
           cloudItems={this.props.situations}
           label={t(
             "modals.wordcloud.label-situations",
-            "Kehu koskee tilannetta"
+            "Kehu koskee tilannetta",
           )}
           placeholder={t(
             "modals.wordcloud.placeholder-situations",
-            "Uusi tilanne"
+            "Uusi tilanne",
           )}
           values={situations}
           handleChange={this.handleChangeWithValue("situations")}
@@ -145,7 +145,7 @@ export class AddKehuForm extends Component {
         <p className="ReceivedKehuNotice">
           {t(
             "modals.claim-kehu.received-kehu-notice",
-            "Saatu Kehu on muokattavissa vain asiasanojen, tilanteen, tärkeyden ja kommentin osalta. Nämä tiedot eivät näy Kehun antajalle."
+            "Saatu Kehu on muokattavissa vain asiasanojen, tilanteen, tärkeyden ja kommentin osalta. Nämä tiedot eivät näy Kehun antajalle.",
           )}
         </p>
       );
@@ -217,5 +217,5 @@ const mapDispatchToProps = {
 
 export default compose(
   withTranslation(),
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(mapStateToProps, mapDispatchToProps),
 )(AddKehuForm);

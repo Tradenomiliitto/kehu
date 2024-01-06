@@ -47,12 +47,12 @@ router.get("/", async (req, res) => {
   const situations = await getItems(
     req.user.id,
     SituationService.getUserSituations,
-    req.t("default-config.situations", { returnObjects: true })
+    req.t("default-config.situations", { returnObjects: true }),
   );
   const tags = await getItems(
     req.user.id,
     TagService.getUserTags,
-    req.t("default-config.tags", { returnObjects: true })
+    req.t("default-config.tags", { returnObjects: true }),
   );
   const profile = req.user;
   const feed = await FeedService.getFeedItems(req.user.id, req.t);
@@ -80,7 +80,7 @@ router.put(
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
-  }
+  },
 );
 
 router.delete("/", async (req, res) => {
@@ -111,7 +111,7 @@ router.get("/cloudinary-signature", (req, res) => {
 
     response = cloudinary.utils.api_sign_request(
       req.query.data,
-      process.env.CLOUDINARY_SECRET
+      process.env.CLOUDINARY_SECRET,
     );
   } catch (e) {
     logger.info("Unable to generate Cloudinary signature", {
@@ -131,7 +131,7 @@ function isPermittedToUploadPicture(req) {
     if (public_id === "new_group_picture_" + req.user.auth0_id) return;
     logger.warn(
       `Unauthorized temporary group picture upload: picture name suffix not matching user id`,
-      { public_id, user_id: req.user.auth0_id }
+      { public_id, user_id: req.user.auth0_id },
     );
     throw new Error("Unauthorized temporary group picture upload");
   }
@@ -141,7 +141,7 @@ function isPermittedToUploadPicture(req) {
     if (public_id === "profile_" + req.user.auth0_id) return;
     logger.warn(
       `Unauthorized profile picture upload: picture name suffix not matching user id`,
-      { public_id, user_id: req.user.auth0_id }
+      { public_id, user_id: req.user.auth0_id },
     );
     throw new Error("Unauthorized profile picture upload");
   }
@@ -153,7 +153,7 @@ router.put("/kuva", async (req, res) => {
   try {
     const updatedUser = await UserService.updateProfilePicture(
       req.user.id,
-      req.body.picture
+      req.body.picture,
     );
     res.json(updatedUser);
   } catch (err) {

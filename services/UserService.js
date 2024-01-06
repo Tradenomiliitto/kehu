@@ -44,7 +44,7 @@ async function updateProfile(user_id, data) {
             first_name: data.first_name,
             last_name: data.last_name,
           },
-        }
+        },
       );
       await Auth0.sendEmailVerification({ user_id: user.auth0_id });
     } else {
@@ -55,7 +55,7 @@ async function updateProfile(user_id, data) {
             first_name: data.first_name,
             last_name: data.last_name,
           },
-        }
+        },
       );
     }
     return await User.query().patchAndFetchById(user_id, data);

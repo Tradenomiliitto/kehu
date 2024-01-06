@@ -26,7 +26,7 @@ describe("client:components:kehuform:WordCloudField", () => {
         placeholder={placeholder}
         values={initValues}
         t={(key) => key}
-      />
+      />,
     );
   });
 

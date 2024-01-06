@@ -1,9 +1,7 @@
 @import "variables";
 @import "settings";
-
 @import "vendor/baseguide";
-@import "~react-datepicker/src/stylesheets/datepicker.scss";
-
+@import "~react-datepicker/src/stylesheets/datepicker";
 @import "partials/buttons";
 @import "partials/contacts-toggle";
 @import "partials/claim-kehu-success";
@@ -22,7 +20,6 @@
 @import "partials/send-kehu-success";
 @import "partials/success";
 @import "partials/elements";
-
 @import "app";
 @import "home";
 @import "kehus";

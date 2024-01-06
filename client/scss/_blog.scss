@@ -16,10 +16,9 @@
 
 .Posts {
   column-count: 1;
-  column-gap: 2rem;
+  gap: 2rem 2rem;
   line-height: 0;
   margin-bottom: 4rem;
-  row-gap: 2rem;
 
   @include mq(md) {
     column-count: 2;
@@ -73,9 +72,8 @@
 
 .SimilarPosts {
   column-count: 1;
-  column-gap: 2rem;
+  gap: 2rem 2rem;
   margin-bottom: 4rem;
-  row-gap: 2rem;
 
   @include mq(md) {
     column-count: 2;

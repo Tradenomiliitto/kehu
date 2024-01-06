@@ -25,10 +25,10 @@ async function getGroups(userId, groupId = null) {
       "g.description",
       "g.picture",
       "m.is_admin",
-      "m.joined_at"
+      "m.joined_at",
     )
     .withGraphJoined(
-      "kehus(selectKehus).[role, situations, tags, giver(selectGiver), owner(selectOwner), group(selectGroup)]"
+      "kehus(selectKehus).[role, situations, tags, giver(selectGiver), owner(selectOwner), group(selectGroup)]",
     )
     .joinRelated("members as m")
     .where("m.user_id", userId)
@@ -74,7 +74,7 @@ async function getGroups(userId, groupId = null) {
 async function createGroup(
   userId,
   auth0Id,
-  { name, description, picture, members, cloudinaryPublicId }
+  { name, description, picture, members, cloudinaryPublicId },
 ) {
   try {
     const group = await Group.query().insert({ name, description, picture });
@@ -86,7 +86,7 @@ async function createGroup(
       const url = await updateCloudinaryPublicId(
         cloudinaryPublicId,
         group.id,
-        auth0Id
+        auth0Id,
       );
       // Update picture url in database. Must be done here since group id which
       // is used in the url is not known when the group is being created
@@ -115,10 +115,10 @@ async function updateGroup(
   userId,
   auth0Id,
   groupId,
-  { name, description, picture, cloudinaryPublicId }
+  { name, description, picture, cloudinaryPublicId },
 ) {
   logger.info(
-    `Updating group name, description and picture for a group ${groupId}`
+    `Updating group name, description and picture for a group ${groupId}`,
   );
 
   try {
@@ -133,7 +133,7 @@ async function updateGroup(
       picture = await updateCloudinaryPublicId(
         cloudinaryPublicId,
         groupId,
-        auth0Id
+        auth0Id,
       );
     }
 
@@ -164,7 +164,7 @@ async function changeMemberAdminRole(userId, memberId, groupId, isAdmin) {
       if (remainingAdmings.length < 1)
         throw new CustomError(
           "Cannot remove the group's last admin",
-          "LAST_ADMIN_ERROR"
+          "LAST_ADMIN_ERROR",
         );
     }
 
@@ -197,7 +197,7 @@ async function deleteMember(userId, memberId, groupId) {
     if (remainingAdmings.length < 1)
       throw new CustomError(
         "Cannot remove the group's last admin",
-        "LAST_ADMIN_ERROR"
+        "LAST_ADMIN_ERROR",
       );
 
     await GroupMember.query()
@@ -249,7 +249,7 @@ async function addMembersToGroup(members, groupId) {
         });
         if (existingMember.length > 0) {
           logger.info(
-            `User ${member} is already member of the group, not adding again`
+            `User ${member} is already member of the group, not adding again`,
           );
           return;
         }
@@ -265,7 +265,7 @@ async function addMembersToGroup(members, groupId) {
         logger.info(`User ${member} not signed up, sending invitation email`);
         // TODO: send invites to members who haven't signed up yet
       }
-    })
+    }),
   );
 }
 
@@ -279,7 +279,7 @@ async function updateCloudinaryPublicId(cloudinaryPublicId, groupId, userId) {
   // User can only change the publicId of their own picture
   if (oldPublicId !== "new_group_picture_" + userId) {
     logger.warn(
-      `Unauthorized Cloudinary public id rename, user ${userId} tried to change ${oldPublicId}`
+      `Unauthorized Cloudinary public id rename, user ${userId} tried to change ${oldPublicId}`,
     );
     throw new Error("Unauthorized Cloudinary public id rename");
   }
@@ -287,12 +287,12 @@ async function updateCloudinaryPublicId(cloudinaryPublicId, groupId, userId) {
   const newPublicId = [...imagePath, `group_${groupId}`].join("/");
 
   logger.debug(
-    `Updating Cloudinary public id (${cloudinaryPublicId} -> ${newPublicId})`
+    `Updating Cloudinary public id (${cloudinaryPublicId} -> ${newPublicId})`,
   );
   const res = await cloudinary.uploader.rename(
     cloudinaryPublicId,
     newPublicId,
-    { overwrite: true }
+    { overwrite: true },
   );
   return res.secure_url;
 }

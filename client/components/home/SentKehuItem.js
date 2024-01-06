@@ -47,5 +47,5 @@ const mapStateToProps = (state) => ({
 
 export default compose(
   withTranslation(),
-  connect(mapStateToProps, null)
+  connect(mapStateToProps, null),
 )(SentKehuItem);

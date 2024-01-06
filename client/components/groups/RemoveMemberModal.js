@@ -38,25 +38,25 @@ export function RemoveMemberModal({ closeModal, member, groupId }) {
             <li>
               {t(
                 "groups.admin-view.remove-member5",
-                "näkee edelleen koko yhteisön kehut, jotka annettiin hänen ollessa jäsen"
+                "näkee edelleen koko yhteisön kehut, jotka annettiin hänen ollessa jäsen",
               )}
             </li>
             <li>
               {t(
                 "groups.admin-view.remove-member6",
-                "näkee yhteisön sisällä hänelle annetut kehut"
+                "näkee yhteisön sisällä hänelle annetut kehut",
               )}
             </li>
             <li>
               {t(
                 "groups.admin-view.remove-member7",
-                "ei näe tästä hetkestä eteenpäin mitään, mitä yhteisössä tapahtuu"
+                "ei näe tästä hetkestä eteenpäin mitään, mitä yhteisössä tapahtuu",
               )}
             </li>
             <li>
               {t(
                 "groups.admin-view.remove-member8",
-                "ei näe aiempia yhteisön sisällä jäseneltä toiselle annettuja kehuja, joissa hän itse ei ole osallisena"
+                "ei näe aiempia yhteisön sisällä jäseneltä toiselle annettuja kehuja, joissa hän itse ei ole osallisena",
               )}
             </li>
           </ul>
@@ -64,7 +64,7 @@ export function RemoveMemberModal({ closeModal, member, groupId }) {
         <div className="GroupAdmin-TextSpacing">
           {t(
             "groups.admin-view.remove-member9",
-            "Henkilö ei saa erillistä ilmoitusta, että hänet on poistettu yhteisöstä."
+            "Henkilö ei saa erillistä ilmoitusta, että hänet on poistettu yhteisöstä.",
           )}
         </div>
         <div className="GroupAdmin-AddMemberButtons">
@@ -74,7 +74,7 @@ export function RemoveMemberModal({ closeModal, member, groupId }) {
           <button className="Button Button--fullWidth" onClick={removeUser}>
             {t(
               "groups.admin-view.remove-member-btn",
-              "Poista jäsen yhteisöstä"
+              "Poista jäsen yhteisöstä",
             )}
           </button>
         </div>
@@ -82,7 +82,7 @@ export function RemoveMemberModal({ closeModal, member, groupId }) {
           <ErrorPanel
             message={t(
               "groups.admin-view.remove-last-admin-error",
-              "Yhteisön viimeistä admin-käyttäjää ei voi poistaa."
+              "Yhteisön viimeistä admin-käyttäjää ei voi poistaa.",
             )}
           />
         ) : (
@@ -90,7 +90,7 @@ export function RemoveMemberModal({ closeModal, member, groupId }) {
             error={error}
             genericMessage={t(
               "groups.admin-view.remove-member-failed",
-              "Jäsenen poistaminen epäonnistui"
+              "Jäsenen poistaminen epäonnistui",
             )}
           />
         )}

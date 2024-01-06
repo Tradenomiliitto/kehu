@@ -98,7 +98,7 @@ export class KehuRow extends Component {
           key={i}
           src={`/images/icon-star-${icon}.png`}
           className="KehusTable-star"
-        />
+        />,
       );
     }
 
@@ -155,5 +155,5 @@ export default compose(
     removeKehu,
     openEditKehuModal,
     selectKehu,
-  })
+  }),
 )(KehuRow);

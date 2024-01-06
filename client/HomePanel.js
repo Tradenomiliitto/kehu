@@ -50,7 +50,7 @@ export class HomePanel extends Component {
                   <p className="HomeButtons-text">
                     {t(
                       "home.add-new-kehu-text",
-                      "Älä pidä kehujasi vakan alla! Tallenna Kehu-pankkiisi kuulemasi kehu tai piristä kollegaa lähettämällä Kehu!"
+                      "Älä pidä kehujasi vakan alla! Tallenna Kehu-pankkiisi kuulemasi kehu tai piristä kollegaa lähettämällä Kehu!",
                     )}
                   </p>
                 </div>
@@ -123,13 +123,13 @@ export class HomePanel extends Component {
           <p className="SidebarElement-text tags-text-js">
             {t(
               "home.sidebar.skills-no-skills-text1",
-              "Jokaiseen kehuun liitetään siihen liittyvät taidot tageina. Kun kehudataa alkaa kertyä, voit tarkastella mm. kehutuimpia taitojasi Kehu-raportistasi."
+              "Jokaiseen kehuun liitetään siihen liittyvät taidot tageina. Kun kehudataa alkaa kertyä, voit tarkastella mm. kehutuimpia taitojasi Kehu-raportistasi.",
             )}
           </p>
           <p className="SidebarElement-text">
             {t(
               "home.sidebar.skills-no-skills-text2",
-              "Kehu ei ole sosiaalinen media, eli raporttisi ja kaikki tallentamasi kehut näkyvät vain sinulle."
+              "Kehu ei ole sosiaalinen media, eli raporttisi ja kaikki tallentamasi kehut näkyvät vain sinulle.",
             )}
           </p>
         </Fragment>
@@ -144,13 +144,13 @@ export class HomePanel extends Component {
         <h3 className="SidebarElement-title">
           {t(
             "home.sidebar.strengths-title",
-            "Omien vahvuuksien tunteminen on ehdoton valttikortti uralla"
+            "Omien vahvuuksien tunteminen on ehdoton valttikortti uralla",
           )}
         </h3>
         <p className="SidebarElement-text">
           {t(
             "home.sidebar.strengths-text",
-            "Lähetä kehu kollegalle, ystävälle, esimiehelle, asiakkaalle tai kenelle tahansa. Tarvitset vastaanottajan sähköpostiosoitteen."
+            "Lähetä kehu kollegalle, ystävälle, esimiehelle, asiakkaalle tai kenelle tahansa. Tarvitset vastaanottajan sähköpostiosoitteen.",
           )}
         </p>
         <img
@@ -194,5 +194,5 @@ const mapActionsToProps = {
 
 export default compose(
   withTranslation(),
-  connect(mapStateToProps, mapActionsToProps)
+  connect(mapStateToProps, mapActionsToProps),
 )(HomePanel);

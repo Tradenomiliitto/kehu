@@ -18,7 +18,7 @@ describe("client:components:KehuFormModal", () => {
         t={(key) => key}
       >
         {childComponent}
-      </KehuFormModal>
+      </KehuFormModal>,
     );
   });
 

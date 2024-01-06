@@ -50,8 +50,8 @@ export default function GroupAdminPanel(props) {
     dispatch(
       updateGroup(
         { id: groupId, name: groupName, description: groupDescription },
-        { history, to: "/yhteisot" }
-      )
+        { history, to: "/yhteisot" },
+      ),
     );
   };
 
@@ -60,7 +60,7 @@ export default function GroupAdminPanel(props) {
       setVisibleModal(modalType);
       setMemberInModal(member);
     },
-    [setVisibleModal, setMemberInModal]
+    [setVisibleModal, setMemberInModal],
   );
 
   const closeModal = useCallback(() => {
@@ -151,7 +151,7 @@ export default function GroupAdminPanel(props) {
                   >
                     {t(
                       "groups.admin-view.invite-members-btn",
-                      "Kutsu lisää jäseniä"
+                      "Kutsu lisää jäseniä",
                     )}
                   </button>
                 </div>
@@ -172,7 +172,7 @@ export default function GroupAdminPanel(props) {
                   >
                     {t(
                       "groups.admin-view.save-changes-btn",
-                      "Tallenna muutokset"
+                      "Tallenna muutokset",
                     )}
                   </button>
                 </div>

@@ -19,13 +19,13 @@ export default function NoGroups() {
               <p>
                 {t(
                   "groups.no-groups-text-1",
-                  "Yhteisöt ovat Kehun työkalu tiimeille, kavereille ja muille porukoille. Yhteisön sisällä voitte kehua toisianne julkisesti tai yksityisesti sekä kehua koko porukkaa."
+                  "Yhteisöt ovat Kehun työkalu tiimeille, kavereille ja muille porukoille. Yhteisön sisällä voitte kehua toisianne julkisesti tai yksityisesti sekä kehua koko porukkaa.",
                 )}
               </p>
               <p>
                 {t(
                   "groups.no-groups-text-2",
-                  "Luo ensimmäinen yhteisösi nyt ja kutsu kehurinki koolle!"
+                  "Luo ensimmäinen yhteisösi nyt ja kutsu kehurinki koolle!",
                 )}
               </p>
               <button

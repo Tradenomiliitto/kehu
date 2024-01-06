@@ -21,7 +21,7 @@ describe("client:App", () => {
             kehusLoaded: false,
             groupsLoaded: false,
           })}
-        />
+        />,
       );
     });
 
@@ -52,7 +52,7 @@ describe("client:App", () => {
             kehusLoaded: false,
             groupsLoaded: false,
           })}
-        />
+        />,
       );
     });
 
@@ -83,7 +83,7 @@ describe("client:App", () => {
             kehusLoaded: true,
             groupsLoaded: false,
           })}
-        />
+        />,
       );
     });
 
@@ -114,7 +114,7 @@ describe("client:App", () => {
             kehusLoaded: false,
             groupsLoaded: true,
           })}
-        />
+        />,
       );
     });
 
@@ -145,7 +145,7 @@ describe("client:App", () => {
             kehusLoaded: true,
             groupsLoaded: true,
           })}
-        />
+        />,
       );
     });
 

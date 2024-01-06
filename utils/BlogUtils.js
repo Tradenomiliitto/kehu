@@ -108,8 +108,8 @@ function getUniqueTags(posts) {
       ...new Set(
         [].concat.apply(
           [],
-          posts.map((p) => p.tags)
-        )
+          posts.map((p) => p.tags),
+        ),
       ),
     ];
   }

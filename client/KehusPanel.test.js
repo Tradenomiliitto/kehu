@@ -17,7 +17,7 @@ describe("client:components:KehusPanel", () => {
         t={(key) => key}
         i18n={{}}
         location={{ search: "" }}
-      />
+      />,
     );
   });
 
@@ -32,7 +32,7 @@ describe("client:components:KehusPanel", () => {
 
     it("renders error panel", () => {
       expect(component.find("ErrorPanel").first().prop("message")).toEqual(
-        `kehus.remove-kehu-error`
+        `kehus.remove-kehu-error`,
       );
     });
   });

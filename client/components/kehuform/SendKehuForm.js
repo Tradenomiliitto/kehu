@@ -72,7 +72,7 @@ export class SendKehuForm extends Component {
           <b>
             {t(
               "modals.send-kehu.preview-receiver",
-              "Lähetetään kehun saajalle:"
+              "Lähetetään kehun saajalle:",
             )}
           </b>
           <br />
@@ -171,7 +171,7 @@ export class SendKehuForm extends Component {
           activeGroup.members.map((m) => ({
             name: `${m.user.first_name} ${m.user.last_name}`,
             email: m.user.email,
-          }))
+          })),
         )
       : null;
 
@@ -249,11 +249,11 @@ export class SendKehuForm extends Component {
           cloudItems={this.props.situations}
           label={t(
             "modals.wordcloud.label-situations",
-            "Kehu koskee tilannetta"
+            "Kehu koskee tilannetta",
           )}
           placeholder={t(
             "modals.wordcloud.placeholder-situations",
-            "Uusi tilanne"
+            "Uusi tilanne",
           )}
           values={situations}
           handleChange={this.handleChangeWithValue("situations")}
@@ -263,7 +263,7 @@ export class SendKehuForm extends Component {
           className="Button Button--fullWidth submit-kehu-nw"
           value={t(
             "modals.send-kehu.preview-and-submit-btn",
-            "Esikatsele ja lähetä"
+            "Esikatsele ja lähetä",
           )}
         />
       </form>
@@ -335,7 +335,7 @@ export class SendKehuForm extends Component {
     const isGroupKehu = this.state.group_name !== "-";
     if (isGroupKehu) {
       const activeGroup = this.props.groups.find(
-        (group) => group.name === this.state.group_name
+        (group) => group.name === this.state.group_name,
       );
       formData.group_id = activeGroup.id;
       formData.is_public = !this.state.isPrivate;
@@ -368,5 +368,5 @@ const mapDispatchToProps = {
 
 export default compose(
   withTranslation(),
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(mapStateToProps, mapDispatchToProps),
 )(SendKehuForm);

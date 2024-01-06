@@ -38,31 +38,31 @@ export function AddMemberToAdminsModal({ closeModal, member, groupId }) {
             <li>
               {t(
                 "groups.admin-view.add-to-admins5",
-                "muokata yhteisön nimeä, kuvausta ja kuvaa"
+                "muokata yhteisön nimeä, kuvausta ja kuvaa",
               )}
             </li>
             <li>
               {t(
                 "groups.admin-view.add-to-admins6",
-                "kutsua lisää jäseniä yhteisöön"
+                "kutsua lisää jäseniä yhteisöön",
               )}
             </li>
             <li>
               {t(
                 "groups.admin-view.add-to-admins7",
-                "poistaa jäseniä yhteisöstä"
+                "poistaa jäseniä yhteisöstä",
               )}
             </li>
             <li>
               {t(
                 "groups.admin-view.add-to-admins8",
-                "lisätä muita jäseniä admineiksi"
+                "lisätä muita jäseniä admineiksi",
               )}
             </li>
             <li>
               {t(
                 "groups.admin-view.add-to-admins9",
-                "poistaa admin-oikeudet muilta admineilta"
+                "poistaa admin-oikeudet muilta admineilta",
               )}
             </li>
           </ul>
@@ -70,7 +70,7 @@ export function AddMemberToAdminsModal({ closeModal, member, groupId }) {
         <div className="GroupAdmin-TextSpacing">
           {t(
             "groups.admin-view.add-to-admins10",
-            "Olet edelleen myös itse yhteisön admin."
+            "Olet edelleen myös itse yhteisön admin.",
           )}
         </div>
         <div className="GroupAdmin-AddMemberButtons">
@@ -89,7 +89,7 @@ export function AddMemberToAdminsModal({ closeModal, member, groupId }) {
             error={error}
             genericMessage={t(
               "groups.admin-view.add-to-admins-failed",
-              "Jäsenen lisääminen adminiksi epäonnistui"
+              "Jäsenen lisääminen adminiksi epäonnistui",
             )}
           />
         }

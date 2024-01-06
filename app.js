@@ -61,7 +61,7 @@ if (!isProd && process.env.WEBPACK_HOT_RELOAD) {
   app.use(
     require("webpack-dev-middleware")(compiler, {
       publicPath: webpackConfig.output.publicPath,
-    })
+    }),
   );
   app.use(require("webpack-hot-middleware")(compiler));
 } else {
@@ -97,7 +97,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: redisStore,
-  })
+  }),
 );
 
 app.use(staticify.middleware);

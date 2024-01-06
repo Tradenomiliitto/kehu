@@ -7,7 +7,7 @@ describe("client:components:kehus:KehusTableActionButton", () => {
   beforeEach(() => {
     onClickStub = jest.fn();
     component = shallow(
-      <KehusTableActionButton icon={"icon"} onClick={onClickStub} />
+      <KehusTableActionButton icon={"icon"} onClick={onClickStub} />,
     );
   });
 

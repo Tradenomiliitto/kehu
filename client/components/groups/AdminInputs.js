@@ -40,7 +40,7 @@ export function GroupDescriptionInput({ value, setValue }) {
       <label htmlFor="groupName" className="GroupAdmin-SmallHeader">
         {t(
           "groups.admin-view.group-description-input",
-          "Yhteisön kuvaus (julkinen jäsenille)"
+          "Yhteisön kuvaus (julkinen jäsenille)",
         )}
         :
       </label>
@@ -52,7 +52,7 @@ export function GroupDescriptionInput({ value, setValue }) {
         rows={1}
         placeholder={t(
           "modals.create-group.group-description-placeholder",
-          "Kirjoita kuvaus"
+          "Kirjoita kuvaus",
         )}
         value={value}
         onChange={(ev) => {

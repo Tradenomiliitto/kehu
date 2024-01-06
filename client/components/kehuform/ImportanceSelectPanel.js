@@ -46,7 +46,7 @@ export class ImportanceSelectPanel extends Component {
           onMouseOver={this.handleMouseOver(i)}
           onMouseOut={this.handleMouseOut}
           onClick={this.handleClick(i)}
-        />
+        />,
       );
     }
 

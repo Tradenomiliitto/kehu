@@ -109,5 +109,5 @@ const mapActionsToProps = {
 
 export default compose(
   withTranslation(),
-  connect(mapStateToProps, mapActionsToProps)
+  connect(mapStateToProps, mapActionsToProps),
 )(ProfileEditForm);

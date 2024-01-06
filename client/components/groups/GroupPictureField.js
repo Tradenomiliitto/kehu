@@ -39,7 +39,7 @@ export default function GroupPictureField({
       <label htmlFor="group_name">
         {t(
           "modals.create-group.group-picture",
-          "Valitse tai lisää yhteisön profiilikuva"
+          "Valitse tai lisää yhteisön profiilikuva",
         )}
       </label>
       <AddGroupPictureButton

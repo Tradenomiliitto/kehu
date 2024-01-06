@@ -47,7 +47,7 @@ module.exports = {
       ".receiver-nw",
       `Lähetetään kehun saajalle:
 ${RECEIVER_NAME}
-${browser.globals.GENERIC_USER_2_EMAIL}`
+${browser.globals.GENERIC_USER_2_EMAIL}`,
     );
     expectTags(browser, [TAG1, TAG2, SITUATION1, SITUATION2]);
     browser

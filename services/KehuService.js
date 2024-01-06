@@ -30,7 +30,7 @@ async function getKehus(user_id, t) {
         // owner_id is null for Kehus sent to the whole group
         .andWhere(raw(`"Kehus".owner_id IS NULL`))
         // Exclude Kehus user himself sent to the whole group
-        .andWhere("Kehus.giver_id", "<>", user_id)
+        .andWhere("Kehus.giver_id", "<>", user_id),
     )
     .orderBy("date_given", "desc");
 
@@ -77,12 +77,12 @@ async function unrelateTags(kehu, tags) {
   const oldTags = kehu.tags;
   const tagsToUnrelate = oldTags.filter(
     (tag) =>
-      -1 === tags.findIndex((tagFromData) => tag.text === tagFromData.text)
+      -1 === tags.findIndex((tagFromData) => tag.text === tagFromData.text),
   );
   return await Promise.all(
     tagsToUnrelate.map((tag) =>
-      kehu.$relatedQuery("tags").unrelate().where("id", tag.id)
-    )
+      kehu.$relatedQuery("tags").unrelate().where("id", tag.id),
+    ),
   );
 }
 
@@ -92,13 +92,13 @@ async function unrelateSituations(kehu, situations) {
     (situation) =>
       -1 ===
       situations.findIndex(
-        (situationFromData) => situation.text === situationFromData.text
-      )
+        (situationFromData) => situation.text === situationFromData.text,
+      ),
   );
   return await Promise.all(
     situationsToUnrelate.map((situation) =>
-      kehu.$relatedQuery("situations").unrelate().where("id", situation.id)
-    )
+      kehu.$relatedQuery("situations").unrelate().where("id", situation.id),
+    ),
   );
 }
 
@@ -110,7 +110,7 @@ async function createOrRelateTags(kehu, tagsFromData) {
     tagsToRelate = tagsFromData;
   } else {
     tagsToRelate = tagsFromData.filter(
-      (tag) => -1 === oldTags.findIndex((oldTag) => tag.text === oldTag.text)
+      (tag) => -1 === oldTags.findIndex((oldTag) => tag.text === oldTag.text),
     );
   }
 
@@ -122,7 +122,7 @@ async function createOrRelateTags(kehu, tagsFromData) {
       } else {
         return await kehu.$relatedQuery("tags").insert(tag);
       }
-    })
+    }),
   );
 }
 
@@ -137,8 +137,8 @@ async function createOrRelateSituations(kehu, situationsFromData) {
       (situation) =>
         -1 ===
         oldSituations.findIndex(
-          (oldSituation) => situation.text === oldSituation.text
-        )
+          (oldSituation) => situation.text === oldSituation.text,
+        ),
     );
   }
 
@@ -152,7 +152,7 @@ async function createOrRelateSituations(kehu, situationsFromData) {
       } else {
         return await kehu.$relatedQuery("situations").insert(situation);
       }
-    })
+    }),
   );
 }
 
@@ -315,7 +315,7 @@ async function deleteKehu(user_id, kehu_id) {
     await trx.commit();
   } catch (error) {
     logger.error(
-      `Deleting Kehu ${kehu_id} for user ${user_id} failed. Rolling back..`
+      `Deleting Kehu ${kehu_id} for user ${user_id} failed. Rolling back..`,
     );
     logger.error(error.message);
     await trx.rollback();
@@ -379,7 +379,7 @@ async function excelReport(userId, i18n) {
       "giver_name as " + i18n.t("excel-report.headers.name"),
       "text as " + i18n.t("excel-report.headers.kehu"),
       "comment as " + i18n.t("excel-report.headers.comment"),
-      "importance as " + i18n.t("excel-report.headers.stars")
+      "importance as " + i18n.t("excel-report.headers.stars"),
     )
     .where("owner_id", userId)
     .withGraphFetched("[role, situations, tags]")
@@ -410,7 +410,7 @@ async function excelReport(userId, i18n) {
     .select(
       "date_given as " + i18n.t("excel-report.headers.time"),
       "receiver_name as " + i18n.t("excel-report.headers.receiver"),
-      "text as " + i18n.t("excel-report.headers.kehu")
+      "text as " + i18n.t("excel-report.headers.kehu"),
     )
     .where(function () {
       this.where("giver_id", userId).andWhere("owner_id", "<>", userId);
@@ -461,7 +461,7 @@ async function excelReport(userId, i18n) {
         i18n.t("excel-report.headers.receiver"),
         i18n.t("excel-report.headers.kehu"),
       ],
-    }
+    },
   );
   const sentColsWidths = [10, 10, 35, 60].map((width) => ({
     width,

@@ -44,7 +44,7 @@ const LanguageSelector = ({ device, closeMenu }) => {
           device,
           isOpen,
           t,
-          toggleLanguageSelector
+          toggleLanguageSelector,
         )}
         {isOpen &&
           device === "desktop" &&
@@ -62,7 +62,7 @@ function languageToggleLabel(
   device,
   isOpen,
   t,
-  toggleLanguageSelector
+  toggleLanguageSelector,
 ) {
   const html =
     device === "desktop"

@@ -42,6 +42,6 @@ export function getLatestKehu(kehus) {
       prev && new Date(prev.date_given) > new Date(current.date_given)
         ? prev
         : current,
-    null
+    null,
   );
 }

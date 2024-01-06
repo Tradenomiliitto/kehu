@@ -10,7 +10,7 @@ export default class RoleSelectPanel extends Component {
       PropTypes.shape({
         id: PropTypes.number.isRequired,
         role: PropTypes.string.isRequired,
-      })
+      }),
     ).isRequired,
     selected: PropTypes.number,
     handleClick: PropTypes.func.isRequired,

@@ -62,11 +62,11 @@ export class Header extends Component {
                   </li>
                   {this.renderMenuItem(
                     "/yhteisot",
-                    t("header.groups-link", "Yhteisöni")
+                    t("header.groups-link", "Yhteisöni"),
                   )}
                   {this.renderMenuItem(
                     "/raportit",
-                    t("header.report-link", "Raportit")
+                    t("header.report-link", "Raportit"),
                   )}
                   {i18n.language === "fi" && (
                     <li className="Header-menuItem">
@@ -77,7 +77,7 @@ export class Header extends Component {
                   )}
                   {this.renderMenuItem(
                     "/kehut",
-                    t("header.kehut-link", "Kehut")
+                    t("header.kehut-link", "Kehut"),
                   )}
                   <LanguageSelector
                     device="mobile"
@@ -143,5 +143,5 @@ const mapStateToProps = (state) => ({
 
 export default compose(
   withTranslation(),
-  connect(mapStateToProps, { toggleAddKehuFormModal, toggleSendKehuFormModal })
+  connect(mapStateToProps, { toggleAddKehuFormModal, toggleSendKehuFormModal }),
 )(Header);

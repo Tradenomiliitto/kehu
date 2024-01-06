@@ -33,7 +33,7 @@ exports.onExecutePostUserRegistration = async (event) => {
           .replace("T", " ")
           .substring(0, 19),
       },
-      { auth }
+      { auth },
     );
 
     console.log(`User ${user.email} added to Mailchimp`);

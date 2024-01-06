@@ -25,13 +25,13 @@ describe("client:components:home:KehuItem", () => {
 
   beforeEach(() => {
     component = shallow(
-      <KehuItem kehu={kehu} roles={roles} t={(key) => key} />
+      <KehuItem kehu={kehu} roles={roles} t={(key) => key} />,
     );
   });
 
   it("renders date", () => {
     expect(component.find(".FeedItem-date").text()).toEqual(
-      moment(kehu.date_given).format("D.M.YYYY")
+      moment(kehu.date_given).format("D.M.YYYY"),
     );
   });
 
@@ -42,7 +42,7 @@ describe("client:components:home:KehuItem", () => {
   it("renders correct info", () => {
     const expectedInfo = kehu.giver_name;
     expect(
-      component.find(".FeedItem-info:not(.FeedItem-info--kehuType)").text()
+      component.find(".FeedItem-info:not(.FeedItem-info--kehuType)").text(),
     ).toEqual(expectedInfo);
   });
 
@@ -52,7 +52,7 @@ describe("client:components:home:KehuItem", () => {
       component.setProps({ kehu: { ...kehu, role } });
       const expectedInfo = `${kehu.giver_name}, ${role.role}`;
       expect(
-        component.find(".FeedItem-info:not(.FeedItem-info--kehuType)").text()
+        component.find(".FeedItem-info:not(.FeedItem-info--kehuType)").text(),
       ).toEqual(expectedInfo);
     });
   });
@@ -63,7 +63,7 @@ describe("client:components:home:KehuItem", () => {
       component.setProps({ kehu: { ...kehu, tags } });
       const expectedInfo = `${kehu.giver_name}`;
       expect(
-        component.find(".FeedItem-info:not(.FeedItem-info--kehuType)").text()
+        component.find(".FeedItem-info:not(.FeedItem-info--kehuType)").text(),
       ).toEqual(expectedInfo);
     });
   });
@@ -72,7 +72,7 @@ describe("client:components:home:KehuItem", () => {
     it("show the new kehu badge", () => {
       component.setProps({ kehu: { ...kehu, isNewKehu: true } });
       expect(component.find(".new-kehu-ribbon").text()).toEqual(
-        "home.feed.new-kehu-ribbon"
+        "home.feed.new-kehu-ribbon",
       );
     });
   });
@@ -82,10 +82,10 @@ describe("client:components:home:KehuItem", () => {
       component.setProps({ kehu: { ...kehu, receiver_email: "some@email" } });
       const expectedInfo = `${kehu.giver_name}`;
       expect(
-        component.find(".FeedItem-info:not(.FeedItem-info--kehuType)").text()
+        component.find(".FeedItem-info:not(.FeedItem-info--kehuType)").text(),
       ).toEqual(expectedInfo);
       expect(component.find(".FeedItem-image").prop("src")).toEqual(
-        kehu.giver.picture
+        kehu.giver.picture,
       );
     });
   });
@@ -99,7 +99,7 @@ describe("client:components:home:KehuItem", () => {
       });
       const expectedInfo = `${kehu.giver_name}, ${role.role}`;
       expect(
-        component.find(".FeedItem-info:not(.FeedItem-info--kehuType)").text()
+        component.find(".FeedItem-info:not(.FeedItem-info--kehuType)").text(),
       ).toEqual(expectedInfo);
       expect(component.find(".new-kehu-ribbon").exists()).toBeFalsy();
     });

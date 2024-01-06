@@ -22,7 +22,7 @@ $header-height: 66px;
   margin: 16px 0 20px;
 }
 
-@media (min-width: 60em) {
+@media (width >= 60em) {
   .Header-logoCol {
     width: 13.5%;
   }
@@ -132,9 +132,7 @@ $header-height: 66px;
   cursor: pointer;
 
   &.Header-language--desktop {
-    border-left-color: #bebebe;
-    border-left-style: solid;
-    border-left-width: 2px;
+    border-left: 2px solid #bebebe;
     line-height: 2rem;
     padding-left: 0.8rem;
   }

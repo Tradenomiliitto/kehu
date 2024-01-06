@@ -142,12 +142,11 @@
 }
 
 .MyGroups-OneGroup {
-  align-content: center;
+  place-content: center flex-start;
   align-items: center;
   display: flex;
   flex-direction: row;
   height: 80px;
-  justify-content: flex-start;
 }
 
 .MyGroups-GroupPicture {

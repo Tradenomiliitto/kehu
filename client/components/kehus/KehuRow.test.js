@@ -23,7 +23,7 @@ describe("client:components:kehus:KehuRow", () => {
         removeKehu={removeKehuStub}
         openEditKehuModal={openEditKehuModalStub}
         t={(key) => key}
-      />
+      />,
     );
   });
 
@@ -31,7 +31,7 @@ describe("client:components:kehus:KehuRow", () => {
     expect(component.state().open).toBeFalsy();
     expect(component.find(".KehusTable-cell--tagsOpen").exists()).toBeFalsy();
     expect(component.find(".text-js").text()).toEqual(
-      truncateText(kehu.text, 200)
+      truncateText(kehu.text, 200),
     );
   });
 
@@ -43,7 +43,7 @@ describe("client:components:kehus:KehuRow", () => {
     it("opens the row", () => {
       expect(component.state().open).toBeTruthy();
       expect(
-        component.find(".KehusTable-cell--tagsOpen").exists()
+        component.find(".KehusTable-cell--tagsOpen").exists(),
       ).toBeTruthy();
       expect(component.find(".text-js").text()).toEqual(kehu.text);
     });

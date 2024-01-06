@@ -85,7 +85,7 @@ export class KehuSuccessPanel extends Component {
           key={i}
           src={`/images/icon-star-${icon}.png`}
           className={classNames}
-        />
+        />,
       );
     }
 
@@ -110,5 +110,5 @@ const mapDispatchToProps = {
 
 export default compose(
   withTranslation(),
-  connect(null, mapDispatchToProps)
+  connect(null, mapDispatchToProps),
 )(KehuSuccessPanel);

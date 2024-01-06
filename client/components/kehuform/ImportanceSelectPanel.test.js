@@ -12,14 +12,14 @@ describe("client:components:kehuform:ImportanceSelectPanel", () => {
         handleClick={handleClickStub}
         value={value}
         t={(key) => key}
-      />
+      />,
     );
   });
 
   it(`renders ${value} active stars`, () => {
     expect(component.find(".ImportanceSelector-star").length).toEqual(5);
     expect(component.find(".ImportanceSelector-star--active").length).toEqual(
-      value
+      value,
     );
   });
 
@@ -37,7 +37,7 @@ describe("client:components:kehuform:ImportanceSelectPanel", () => {
 
     it("sets all stars before active", () => {
       expect(component.find(".ImportanceSelector-star--active").length).toEqual(
-        4
+        4,
       );
     });
 
@@ -49,7 +49,7 @@ describe("client:components:kehuform:ImportanceSelectPanel", () => {
       it(`renders ${value} active stars`, () => {
         expect(component.find(".ImportanceSelector-star").length).toEqual(5);
         expect(
-          component.find(".ImportanceSelector-star--active").length
+          component.find(".ImportanceSelector-star--active").length,
         ).toEqual(value);
       });
     });

@@ -61,7 +61,7 @@ router.get("/lisaa/:claim_id", async (req, res) => {
   try {
     const claimedKehu = await KehuService.claimKehu(
       req.user.id,
-      req.params.claim_id
+      req.params.claim_id,
     );
     const kehu = await KehuService.getKehu(req.user.id, claimedKehu.id, req.t);
     res.json({ kehu });
@@ -87,7 +87,7 @@ router.put("/:id", selectKehuSchema, async (req, res) => {
         req.user.id,
         req.params.id,
         req.body,
-        req.t
+        req.t,
       );
       res.json({ kehu });
     } else {

@@ -11,7 +11,7 @@ export default function GroupDescriptionField({ value, handleChange }) {
         <div className="InviteMembersField-disclaimer">
           {t(
             "modals.create-group.group-description-input-fineprint",
-            "Lyhyt kuvaus yhteisöstäsi - tämä näkyy julkisesti koko yhteisölle. Tsemppihenki ja hauskuus sallittuja!"
+            "Lyhyt kuvaus yhteisöstäsi - tämä näkyy julkisesti koko yhteisölle. Tsemppihenki ja hauskuus sallittuja!",
           )}
         </div>
       </label>
@@ -21,7 +21,7 @@ export default function GroupDescriptionField({ value, handleChange }) {
         rows="5"
         placeholder={t(
           "modals.create-group.group-description-placeholder",
-          "Kirjoita kuvaus"
+          "Kirjoita kuvaus",
         )}
         value={value}
         onChange={handleChange}

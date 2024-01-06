@@ -24,7 +24,7 @@ export function RemoveMemberFromAdminsModal({ closeModal, member, groupId }) {
         <div className="GroupAdmin-TextSpacing">
           {t(
             "groups.admin-view.remove-from-admins1",
-            "Olet poistamassa käyttäjän"
+            "Olet poistamassa käyttäjän",
           )}
         </div>
         <div className="GroupAdmin-TextSpacing GroupAdmin-User">
@@ -38,7 +38,7 @@ export function RemoveMemberFromAdminsModal({ closeModal, member, groupId }) {
         <div className="GroupAdmin-TextSpacing">
           {t(
             "groups.admin-view.remove-from-admins10",
-            "Käyttäjästä tulee yhteisön tavallinen jäsen."
+            "Käyttäjästä tulee yhteisön tavallinen jäsen.",
           )}
         </div>
         <div className="GroupAdmin-AddMemberButtons">
@@ -56,7 +56,7 @@ export function RemoveMemberFromAdminsModal({ closeModal, member, groupId }) {
           <ErrorPanel
             message={t(
               "groups.admin-view.remove-last-admin-error",
-              "Yhteisön viimeistä admin-käyttäjää ei voi poistaa."
+              "Yhteisön viimeistä admin-käyttäjää ei voi poistaa.",
             )}
           />
         ) : (
@@ -64,7 +64,7 @@ export function RemoveMemberFromAdminsModal({ closeModal, member, groupId }) {
             error={error}
             genericMessage={t(
               "groups.admin-view.remove-from-admins-failed",
-              "Jäsenen poistaminen admineista epäonnistui"
+              "Jäsenen poistaminen admineista epäonnistui",
             )}
           />
         )}

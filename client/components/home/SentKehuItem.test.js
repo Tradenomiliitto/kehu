@@ -24,13 +24,13 @@ describe("client:components:home:SentKehuItem", () => {
 
   beforeEach(() => {
     component = shallow(
-      <SentKehuItem kehu={kehu} roles={roles} t={(key) => key} />
+      <SentKehuItem kehu={kehu} roles={roles} t={(key) => key} />,
     );
   });
 
   it("renders date", () => {
     expect(component.find(".FeedItem-date").text()).toEqual(
-      moment(kehu.date_given).format("D.M.YYYY")
+      moment(kehu.date_given).format("D.M.YYYY"),
     );
   });
 
@@ -41,7 +41,7 @@ describe("client:components:home:SentKehuItem", () => {
   it("renders correct info", () => {
     const expectedInfo = `${kehu.receiver_name}`;
     expect(
-      component.find(".FeedItem-info:not(.FeedItem-info--kehuType)").text()
+      component.find(".FeedItem-info:not(.FeedItem-info--kehuType)").text(),
     ).toEqual(expectedInfo);
   });
 
@@ -50,7 +50,7 @@ describe("client:components:home:SentKehuItem", () => {
       component.setProps({ kehu: { ...kehu, role_id: 6 } });
       const expectedInfo = `${kehu.receiver_name}`;
       expect(
-        component.find(".FeedItem-info:not(.FeedItem-info--kehuType)").text()
+        component.find(".FeedItem-info:not(.FeedItem-info--kehuType)").text(),
       ).toEqual(expectedInfo);
     });
   });

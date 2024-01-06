@@ -65,7 +65,7 @@ export function createGroup(data) {
 // update, optional `cb` callback function is used to close modal
 export function updateGroup(
   { id, name, description, picture, cloudinaryPublicId },
-  { history, to, cb }
+  { history, to, cb },
 ) {
   return async (dispatch) => {
     try {
@@ -186,7 +186,7 @@ export default function reducer(state = initialState, action = {}) {
         loading: false,
         error: null,
         groups: state.groups.map((group) =>
-          group.id === action.payload.id ? action.payload : group
+          group.id === action.payload.id ? action.payload : group,
         ),
       };
 

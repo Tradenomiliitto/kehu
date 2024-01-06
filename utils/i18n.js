@@ -21,7 +21,7 @@ function initializeI18n(app) {
 
       backend: {
         loadPath: path.resolve(
-          path.join("public", "locales", "{{ns}}-{{lng}}.json")
+          path.join("public", "locales", "{{ns}}-{{lng}}.json"),
         ),
       },
       detection: {
@@ -39,7 +39,7 @@ function initializeI18n(app) {
   app.use(
     i18nextMiddleware.handle(i18next, {
       removeLngFromUrl: true,
-    })
+    }),
   );
 
   app.use((req, res, next) => {

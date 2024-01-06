@@ -176,7 +176,7 @@ export class App extends Component {
         <KehuFormModal
           title={t(
             "modals.add-kehu.title-successfully-saved",
-            "Kehu tallennettu!"
+            "Kehu tallennettu!",
           )}
         >
           <KehuSuccessPanel kehu={this.props.successfullySavedKehu} />
@@ -237,7 +237,7 @@ const mapDispatchToProps = {
 
 const AppContainer = compose(
   withTranslation(),
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(mapStateToProps, mapDispatchToProps),
 )(App);
 
 export default function ProviderApp() {

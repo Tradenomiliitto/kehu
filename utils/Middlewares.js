@@ -5,7 +5,7 @@ function ensureAuthenticated(req, res, next) {
     return next();
   } else {
     logger.info(
-      `User not authenticated to access ${req.originalUrl}, redirecting to /`
+      `User not authenticated to access ${req.originalUrl}, redirecting to /`,
     );
     return res.redirect("/");
   }

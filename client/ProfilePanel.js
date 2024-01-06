@@ -109,7 +109,7 @@ export class ProfilePanel extends Component {
     uploadWidget(
       "profile_" + this.props.profile.auth0_id,
       this.props.i18n.language,
-      this.pictureUploadCb
+      this.pictureUploadCb,
     );
   };
 
@@ -127,7 +127,7 @@ export class ProfilePanel extends Component {
         <SuccessPanel
           message={t(
             "profile.update-successful",
-            "Profiilin päivitys onnistui."
+            "Profiilin päivitys onnistui.",
           )}
           hideAfter={5000}
         />
@@ -188,5 +188,5 @@ export default compose(
   connect(mapStateToProps, {
     deleteProfile,
     updateProfile,
-  })
+  }),
 )(ProfilePanel);

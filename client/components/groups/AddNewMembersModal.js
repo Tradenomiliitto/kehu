@@ -44,7 +44,7 @@ export function AddNewMembersModal({ closeModal, groupId }) {
           error={error}
           genericMessage={t(
             "groups.admin-view.member-invite-failed",
-            "Jäsenten kutsuminen epäonnistui"
+            "Jäsenten kutsuminen epäonnistui",
           )}
         />
       </KehuFormModal>

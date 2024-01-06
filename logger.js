@@ -30,7 +30,7 @@ const myFormat = printf((info) => {
 logger.add(
   new winston.transports.Console({
     format: combine(timestamp({ format: "HH:mm:ss" }), colorize(), myFormat),
-  })
+  }),
 );
 
 module.exports = logger;

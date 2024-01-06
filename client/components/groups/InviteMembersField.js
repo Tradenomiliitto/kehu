@@ -25,7 +25,7 @@ export default function InviteMembersField({ value, handleChange, isInEdit }) {
     ev.currentTarget.blur();
     if (!inputEl.current.checkValidity()) {
       setAddMemberError(
-        t("modals.create-group.invalid-email", "Virheellinen sähköposti")
+        t("modals.create-group.invalid-email", "Virheellinen sähköposti"),
       );
       return;
     }
@@ -43,17 +43,17 @@ export default function InviteMembersField({ value, handleChange, isInEdit }) {
       <label htmlFor="invite_members">
         {t(
           "modals.create-group.invite-members-input",
-          "Kutsu jäseniä yhteisöön"
+          "Kutsu jäseniä yhteisöön",
         )}
         <div className="InviteMembersField-disclaimer">
           {isInEdit
             ? t(
                 "groups.admin-view.invite-members-input-fineprint",
-                `Kirjoita henkilön sähköpostiosoite ja klikkaa "Lisää" kun haluat lisätä seuraavan jäsenen. Kaikki kutsut lähetetään vasta painettaessa "Lähetä kutsut" -nappia.`
+                `Kirjoita henkilön sähköpostiosoite ja klikkaa "Lisää" kun haluat lisätä seuraavan jäsenen. Kaikki kutsut lähetetään vasta painettaessa "Lähetä kutsut" -nappia.`,
               )
             : t(
                 "modals.create-group.invite-members-input-fineprint",
-                `Kirjoita henkilön sähköpostiosoite ja klikkaa "Lisää" kun haluat lisätä seuraavan jäsenen. Kaikki kutsut lähetetään vasta seuraavassa vaiheessa, kun yhteisö on valmis. `
+                `Kirjoita henkilön sähköpostiosoite ja klikkaa "Lisää" kun haluat lisätä seuraavan jäsenen. Kaikki kutsut lähetetään vasta seuraavassa vaiheessa, kun yhteisö on valmis. `,
               )}
         </div>
       </label>
@@ -65,7 +65,7 @@ export default function InviteMembersField({ value, handleChange, isInEdit }) {
         type="email"
         placeholder={t(
           "modals.create-group.invite-members-placeholder",
-          "elli.esimerkki@yritys.com"
+          "elli.esimerkki@yritys.com",
         )}
         value={inputValue}
         onChange={handleInputChange}

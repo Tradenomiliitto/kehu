@@ -117,7 +117,7 @@ export class CreateGroupForm extends Component {
         <div className="CreateGroupPreview-PreviewInfo">
           {t(
             "modals.create-group.preview-info",
-            "Kun luot yhteisön sinusta tulee yhteisön admin. Adminina voit myöhemmin lisätä jäseniä yhteisöösi."
+            "Kun luot yhteisön sinusta tulee yhteisön admin. Adminina voit myöhemmin lisätä jäseniä yhteisöösi.",
           )}
         </div>
 
@@ -134,7 +134,7 @@ export class CreateGroupForm extends Component {
           >
             {t(
               "modals.create-group.create-group-btn",
-              "Luo yhteisö ja lähetä kutsut"
+              "Luo yhteisö ja lähetä kutsut",
             )}
           </button>
         </div>
@@ -216,7 +216,7 @@ export class CreateGroupForm extends Component {
       isValid = false;
       errors.groupName = this.props.t(
         "modals.create-group.empty-groupname-error",
-        "Yhteisöllä on oltava nimi"
+        "Yhteisöllä on oltava nimi",
       );
       this.modalRef.current.scrollTo({ top: 0, behavior: "smooth" });
     }
@@ -225,7 +225,7 @@ export class CreateGroupForm extends Component {
       isValid = false;
       errors.groupPicture = t(
         "modals.create-group.empty-grouppicture-error",
-        "Yhteisölle on valittava kuva"
+        "Yhteisölle on valittava kuva",
       );
     }
 
@@ -246,7 +246,7 @@ const mapDispatchToProps = {
 
 export default compose(
   withTranslation(),
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(mapStateToProps, mapDispatchToProps),
 )(CreateGroupForm);
 
 function InvitedMembers({ membersToInvite }) {

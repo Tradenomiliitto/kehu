@@ -33,7 +33,7 @@ export default function VisibilitySelection({
         title={t("modals.send-kehu.visibility-public", "Julkinen kehu")}
         info={t(
           "modals.send-kehu.visibility-public-description",
-          "Kehu näytetään myös yhteisönne jäsenille"
+          "Kehu näytetään myös yhteisönne jäsenille",
         )}
         selection={selection.public}
         handleClick={handleClick(isPrivate === false ? null : false)}
@@ -43,7 +43,7 @@ export default function VisibilitySelection({
         title={t("modals.send-kehu.visibility-private", "Yksityinen kehu")}
         info={t(
           "modals.send-kehu.visibility-private-description",
-          "Vain vastaanottaja näkee kehun."
+          "Vain vastaanottaja näkee kehun.",
         )}
         selection={selection.private}
         handleClick={handleClick(isPrivate === true ? null : true)}

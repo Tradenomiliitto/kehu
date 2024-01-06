@@ -55,7 +55,7 @@ router.put("/:groupId", checkSchema(updateGroupSchema), async (req, res) => {
       req.user.id,
       req.user.auth0_id,
       groupId,
-      req.body
+      req.body,
     );
     return res.json(group);
   } catch (err) {
@@ -78,14 +78,14 @@ router.post(
       const group = await addGroupMembers(
         req.user.id,
         groupId,
-        req.body.members
+        req.body.members,
       );
       return res.json(group);
     } catch (err) {
       logger.error(err);
       res.status(500).json({ error: err.message });
     }
-  }
+  },
 );
 
 router.put(
@@ -104,7 +104,7 @@ router.put(
         req.user.id,
         memberId,
         groupId,
-        req.body.isAdmin
+        req.body.isAdmin,
       );
       return res.json(group);
     } catch (err) {
@@ -116,7 +116,7 @@ router.put(
       logger.error(err);
       res.status(500).json({ error: err.message });
     }
-  }
+  },
 );
 
 router.delete("/:groupId/members/:memberId", async (req, res) => {

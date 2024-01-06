@@ -49,7 +49,7 @@ export function uploadWidget(publicId, language, cb) {
         return cb(result.info.secure_url, result.info.public_id);
       }
       return cb(null);
-    }
+    },
   );
 }
 

@@ -17,7 +17,7 @@ exports.up = async function (knex) {
       await knex("Kehus_Situations").insert({
         kehu_id: kehu.id,
         situation_id: situation[0],
-      })
+      }),
     );
   });
 
@@ -37,7 +37,7 @@ exports.down = async function (knex) {
     .leftOuterJoin(
       "Kehus_Situations",
       "Situations.id",
-      "Kehus_Situations.situation_id"
+      "Kehus_Situations.situation_id",
     )
     .leftOuterJoin("Kehus", "Kehus_Situations.kehu_id", "Kehus.id");
 
@@ -46,7 +46,7 @@ exports.down = async function (knex) {
     promises.push(
       await knex("Kehus")
         .where("id", situation.kehu_id)
-        .update({ situation: situation.situation })
+        .update({ situation: situation.situation }),
     );
   });
   promises.push(await knex("Kehus_Situations").del());

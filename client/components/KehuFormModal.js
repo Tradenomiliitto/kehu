@@ -69,5 +69,5 @@ export class KehuFormModal extends Component {
 
 export default compose(
   withTranslation(),
-  connect(null, { resetKehuFormState })
+  connect(null, { resetKehuFormState }),
 )(KehuFormModal);

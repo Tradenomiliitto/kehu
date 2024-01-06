@@ -35,7 +35,7 @@ export class CommentField extends Component {
           rows={5}
           placeholder={t(
             "modals.add-kehu.comment-placeholder",
-            "Omat kommentit"
+            "Omat kommentit",
           )}
           value={value}
           onChange={handleChange}

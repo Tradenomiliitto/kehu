@@ -85,7 +85,7 @@ const group = {
   picture: PropTypes.string.isRequired,
   kehus: PropTypes.arrayOf(feedKehuPropType).isRequired,
   members: PropTypes.arrayOf(
-    PropTypes.shape({ is_admin: PropTypes.bool, user: userPropType })
+    PropTypes.shape({ is_admin: PropTypes.bool, user: userPropType }),
   ).isRequired,
 };
 export const groupPropType = PropTypes.shape(group);

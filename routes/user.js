@@ -19,7 +19,7 @@ router.get(
     const returnTo = req.session.returnTo;
     delete req.session.returnTo;
     res.redirect(returnTo || req.session.languageRedirect || "/");
-  }
+  },
 );
 
 module.exports = router;
