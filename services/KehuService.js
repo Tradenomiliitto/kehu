@@ -1,5 +1,5 @@
 const { transaction } = require("objection");
-const { v4: uuidv4 } = require("uuid");
+const { randomUUID } = require("crypto");
 const XLSX = require("xlsx");
 const Kehu = require("../models/Kehu");
 const { findTagWithText } = require("./TagService");
@@ -203,7 +203,7 @@ async function sendKehu(data, t) {
       if (user) {
         kehuData = parseKehu({ ...data, owner_id: user.id });
       } else {
-        claim_id = uuidv4();
+        claim_id = randomUUID(); // UUIDv4
         kehuData = parseKehu({ ...data, claim_id });
       }
     }
