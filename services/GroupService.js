@@ -194,7 +194,11 @@ async function deleteMember(userId, memberId, groupId) {
       .where({ group_id: groupId, is_admin: true })
       .whereNot({ user_id: memberId });
 
-    if (remainingAdmings.length < 1)
+    // Allow group deletion if the last admin is removing themselves
+    if (
+      remainingAdmings.length < 1 &&
+      (await GroupMember.query().where({ group_id: groupId })).length > 1
+    )
       throw new CustomError(
         "Cannot remove the group's last admin",
         "LAST_ADMIN_ERROR",
