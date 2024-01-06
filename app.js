@@ -10,7 +10,7 @@ const Knex = require("knex");
 const pg = require("pg");
 const Model = require("objection").Model;
 const redis = require("redis");
-const connectRedis = require("connect-redis");
+const RedisStore = require("connect-redis").default;
 const csrf = require("csurf");
 const compression = require("compression");
 const methodOverride = require("method-override");
@@ -25,7 +25,6 @@ const webpackConfig = isProd ? null : require("./webpack.dev.config");
 const compiler = isProd ? null : webpack(webpackConfig);
 
 const { initializeI18n } = require("./utils/i18n");
-const RedisStore = connectRedis(session);
 const csrfProtection = csrf({ cookie: true });
 const staticify = require("staticify")(path.join(__dirname, "public"));
 
@@ -83,14 +82,21 @@ app.use(methodOverride("_method"));
 initializeI18n(app);
 
 app.use(csrfProtection);
+
+// Initialize redis client
+const redisClient = redis.createClient({ url: process.env.REDIS_URL });
+redisClient.connect().catch(console.error);
+
+// Initialize redis store
+const redisStore = new RedisStore({ client: redisClient });
+
+// Initialize sesssion storage.
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    store: new RedisStore({
-      client: redis.createClient(process.env.REDIS_URL),
-    }),
+    store: redisStore,
   })
 );
 
