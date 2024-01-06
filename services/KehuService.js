@@ -371,113 +371,79 @@ function parseArray(array) {
     .map((text) => ({ text }));
 }
 
-async function excelReport(userId, i18n) {
+async function excelReport(userId, t) {
   // Fetch and format received Kehus
-  const kehus = await Kehu.query()
-    .select(
-      "date_given as " + i18n.t("excel-report.headers.time"),
-      "giver_name as " + i18n.t("excel-report.headers.name"),
-      "text as " + i18n.t("excel-report.headers.kehu"),
-      "comment as " + i18n.t("excel-report.headers.comment"),
-      "importance as " + i18n.t("excel-report.headers.stars"),
-    )
-    .where("owner_id", userId)
-    .withGraphFetched("[role, situations, tags]")
-    .orderBy("date_given", "desc");
-
-  // Join arrays to fit in a single spreadsheet cell
-  kehus.forEach((kehu) => {
-    if (kehu.role) {
-      kehu[i18n.t("excel-report.headers.sender")] = kehu.role.role;
-    }
-    delete kehu.role;
-    if (isArray(kehu.tags)) {
-      kehu[i18n.t("excel-report.headers.skills")] = kehu.tags
-        .map((t) => t.text)
-        .join(", ");
-    }
-    delete kehu.tags;
-    if (isArray(kehu.situations)) {
-      kehu[i18n.t("excel-report.headers.situation")] = kehu.situations
-        .map((t) => t.text)
-        .join(", ");
-    }
-    delete kehu.situations;
-  });
+  const kehus = await getKehus(userId, t);
+  const formattedKehus = kehus.map((kehu) => ({
+    [t("excel-report.headers.time")]: kehu.date_given,
+    [t("excel-report.headers.sender")]: kehu?.role?.role,
+    [t("excel-report.headers.name")]: kehu.giver_name,
+    [t("excel-report.headers.kehu")]: kehu.text,
+    [t("excel-report.headers.situation")]: kehu?.situations
+      ?.map((t) => t.text)
+      ?.join(", "),
+    [t("excel-report.headers.skills")]: kehu?.tags
+      ?.map((t) => t.text)
+      ?.join(", "),
+    [t("excel-report.headers.stars")]: kehu.importance,
+    [t("excel-report.headers.comment")]: kehu.comment,
+  }));
 
   // Fetch and format sent Kehus
-  const sent_kehus = await Kehu.query()
-    .select(
-      "date_given as " + i18n.t("excel-report.headers.time"),
-      "receiver_name as " + i18n.t("excel-report.headers.receiver"),
-      "text as " + i18n.t("excel-report.headers.kehu"),
-    )
-    .where(function () {
-      this.where("giver_id", userId).andWhere("owner_id", "<>", userId);
-    })
-    .orWhere(function () {
-      this.where("giver_id", userId).andWhere(raw("claim_id IS NOT NULL"));
-    })
-    .withGraphFetched("[role]")
-    .orderBy("date_given", "desc");
-
-  // Join arrays to fit in a single spreadsheet cell
-  sent_kehus.forEach((kehu) => {
-    if (kehu.role) {
-      kehu[i18n.t("excel-report.headers.sender")] = kehu.role.role;
-    }
-    delete kehu.role;
-  });
+  const sentKehus = await getSentKehus(userId, t);
+  const formattedSentKehus = sentKehus.map((kehu) => ({
+    [t("excel-report.headers.time")]: kehu.date_given,
+    [t("excel-report.headers.sender")]: kehu?.role?.role,
+    [t("excel-report.headers.receiver")]: kehu.receiver_name,
+    [t("excel-report.headers.kehu")]: kehu.text,
+  }));
 
   // Create new sheets from json, define column orders and widths
   const wb = XLSX.utils.book_new();
-  wb.SheetNames.push(i18n.t("excel-report.received-kehus-sheet"));
-  wb.Sheets[i18n.t("excel-report.received-kehus-sheet")] =
-    XLSX.utils.json_to_sheet(kehus, {
+  wb.SheetNames.push(t("excel-report.received-kehus-sheet"));
+  wb.Sheets[t("excel-report.received-kehus-sheet")] = XLSX.utils.json_to_sheet(
+    formattedKehus,
+    {
       header: [
-        i18n.t("excel-report.headers.time"),
-        i18n.t("excel-report.headers.sender"),
-        i18n.t("excel-report.headers.name"),
-        i18n.t("excel-report.headers.kehu"),
-        i18n.t("excel-report.headers.situation"),
-        i18n.t("excel-report.headers.skills"),
-        i18n.t("excel-report.headers.stars"),
-        i18n.t("excel-report.headers.comment"),
+        t("excel-report.headers.time"),
+        t("excel-report.headers.sender"),
+        t("excel-report.headers.name"),
+        t("excel-report.headers.kehu"),
+        t("excel-report.headers.situation"),
+        t("excel-report.headers.skills"),
+        t("excel-report.headers.stars"),
+        t("excel-report.headers.comment"),
       ],
-    });
+    },
+  );
   const receivedColsWidths = [10, 10, 20, 50, 30, 30, 8, 50].map((width) => ({
     width,
   }));
-  wb.Sheets[i18n.t("excel-report.received-kehus-sheet")]["!cols"] =
+  wb.Sheets[t("excel-report.received-kehus-sheet")]["!cols"] =
     receivedColsWidths;
 
-  wb.SheetNames.push(i18n.t("excel-report.sent-kehus-sheet"));
-  wb.Sheets[i18n.t("excel-report.sent-kehus-sheet")] = XLSX.utils.json_to_sheet(
-    sent_kehus,
+  wb.SheetNames.push(t("excel-report.sent-kehus-sheet"));
+  wb.Sheets[t("excel-report.sent-kehus-sheet")] = XLSX.utils.json_to_sheet(
+    formattedSentKehus,
     {
       header: [
-        i18n.t("excel-report.headers.time"),
-        i18n.t("excel-report.headers.sender"),
-        i18n.t("excel-report.headers.receiver"),
-        i18n.t("excel-report.headers.kehu"),
+        t("excel-report.headers.time"),
+        t("excel-report.headers.sender"),
+        t("excel-report.headers.receiver"),
+        t("excel-report.headers.kehu"),
       ],
     },
   );
   const sentColsWidths = [10, 10, 35, 60].map((width) => ({
     width,
   }));
-  wb.Sheets[i18n.t("excel-report.sent-kehus-sheet")]["!cols"] = sentColsWidths;
+  wb.Sheets[t("excel-report.sent-kehus-sheet")]["!cols"] = sentColsWidths;
 
   return XLSX.write(wb, {
     type: "buffer",
     bookType: "xlsx",
     compression: true,
   });
-}
-
-// Returns true if o is array
-function isArray(o) {
-  return Object.prototype.toString.call(o) === "[object Array]";
 }
 
 module.exports = {

@@ -110,7 +110,7 @@ router.delete("/:id", async (req, res) => {
 
 router.get("/report", async (req, res) => {
   try {
-    const xlsxBuffer = await KehuService.excelReport(req.user.id, req.i18n);
+    const xlsxBuffer = await KehuService.excelReport(req.user.id, req.i18n.t);
     const fileName = req.t("excel-report.filename");
 
     res.writeHead(200, [
