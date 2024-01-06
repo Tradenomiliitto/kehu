@@ -385,7 +385,7 @@ async function excelReport(userId, t) {
     [t("excel-report.headers.skills")]: kehu?.tags
       ?.map((t) => t.text)
       ?.join(", "),
-    [t("excel-report.headers.stars")]: kehu.importance,
+    [t("excel-report.headers.stars")]: kehu.importance || "",
     [t("excel-report.headers.comment")]: kehu.comment,
   }));
 
