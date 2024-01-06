@@ -85,7 +85,7 @@ app.use(csrfProtection);
 
 // Initialize redis client
 const redisClient = redis.createClient({ url: process.env.REDIS_URL });
-redisClient.connect().catch(console.error);
+redisClient.connect().catch((err) => logger.error(err));
 
 // Initialize redis store
 const redisStore = new RedisStore({ client: redisClient });
