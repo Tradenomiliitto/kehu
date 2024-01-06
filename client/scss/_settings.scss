@@ -18,13 +18,11 @@ $headings: (
   "h5, .h5",
   "h6, .h6"
 ) !default;
-
 $headings-spacing: 0.4em !default;
 $headings-font-family: inherit !default;
 $headings-font-weight: 700 !default;
 $headings-line-height: 1.2 !default;
 $headings-color: inherit !default;
-
 $type-scale-base: $font-size-base !default;
 $type-scale: 1.25 !default;
 
@@ -41,7 +39,6 @@ $input-transition: border-color 0.15s ease-out !default;
 $input-disabled-bg: #eee !default;
 $input-disabled-color: #555 !default;
 $input-disabled-border-color: #ccc !default;
-
 $placeholder-color: lighten($input-color, 50%) !default;
 
 // Button
