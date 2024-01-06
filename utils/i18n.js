@@ -13,8 +13,9 @@ function initializeI18n(app) {
     .use(i18nextBackend)
     .use(i18nextMiddleware.LanguageDetector)
     .init({
+      compatibilityJSON: "v3",
       fallbackLng: "fi",
-      whitelist: langWhitelist,
+      supportedLngs: langWhitelist,
       preload: langWhitelist,
       ns: "translation-public", // Namespace to load
       defaultNS: "translation-public", // Default namespace (if not defined)
@@ -32,6 +33,7 @@ function initializeI18n(app) {
         checkWhitelist: true,
       },
       interpolation: {
+        skipOnVariables: false, // default value changed in i18next upgrade, use existing value since not sure if this can be changed
         escapeValue: false, // pug already safe from xss
       },
     });
