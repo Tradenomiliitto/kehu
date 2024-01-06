@@ -13,6 +13,10 @@ export const UPDATE_GROUP = "group/UPDATE_GROUP_NAME";
 export const UPDATE_GROUP_SUCCESS = "group/UPDATE_GROUP_NAME_SUCCESS";
 export const UPDATE_GROUP_ERROR = "group/UPDATE_GROUP_NAME_ERROR";
 
+export const DELETE_GROUP = "group/DELETE_GROUP_NAME";
+export const DELETE_GROUP_SUCCESS = "group/DELETE_GROUP_NAME_SUCCESS";
+export const DELETE_GROUP_ERROR = "group/DELETE_GROUP_NAME_ERROR";
+
 export const INVITE_GROUP_MEMBERS = "group/INVITE_GROUP_MEMBERS";
 export const INVITE_GROUP_MEMBERS_SUCCESS =
   "group/INVITE_GROUP_MEMBERS_SUCCESS";
@@ -109,7 +113,10 @@ export function removeGroupMember(groupId, memberId, cb) {
       const res = await del(`/yhteisot/${groupId}/members/${memberId}`);
       const group = await res.json();
 
-      dispatch({ type: REMOVE_GROUP_MEMBER_SUCCESS, payload: group });
+      // If returned group is empty then the user was removed from the group
+      if (group == null)
+        dispatch({ type: DELETE_GROUP_SUCCESS, payload: { groupId } });
+      else dispatch({ type: REMOVE_GROUP_MEMBER_SUCCESS, payload: group });
       if (typeof cb === "function") cb();
     } catch (e) {
       dispatch({ type: REMOVE_GROUP_MEMBER_ERROR, payload: e });
@@ -190,12 +197,27 @@ export default function reducer(state = initialState, action = {}) {
         ),
       };
 
+    case DELETE_GROUP_SUCCESS: {
+      const groups = state.groups.filter(
+        (group) => group.id !== action.payload.groupId,
+      );
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        groups: groups,
+        activeGroupId: sortGroups(groups)[0]?.id,
+        groupsLoaded: true,
+      };
+    }
+
     case GET_GROUPS_ERROR:
     case CREATE_GROUP_ERROR:
     case UPDATE_GROUP_ERROR:
     case INVITE_GROUP_MEMBERS_ERROR:
     case REMOVE_GROUP_MEMBER_ERROR:
     case UPDATE_GROUP_MEMBER_ERROR:
+    case DELETE_GROUP_ERROR:
       return {
         ...state,
         loading: false,
