@@ -86,7 +86,12 @@ router.put(
 router.delete("/", async (req, res) => {
   try {
     await UserService.deleteProfile(req.user.id);
-    req.logout();
+    await new Promise((resolve, reject) => {
+      req.logout({}, (err) => {
+        if (err) reject(err);
+        else resolve();
+      });
+    });
     res.status(200).send();
   } catch (err) {
     res.status(500).json({ error: err.message });
