@@ -184,8 +184,8 @@ async function deleteMember(userId, memberId, groupId) {
 
   try {
     // Check that user making the request is admin of the group
-    const isRequesterAdmin = await isUserGroupAdmin(userId, groupId);
-    if (!isRequesterAdmin) {
+    // or they are trying to remove themselves
+    if (userId !== memberId && !(await isUserGroupAdmin(userId, groupId))) {
       throw new Error("User is not a group admin");
     }
 
@@ -204,7 +204,12 @@ async function deleteMember(userId, memberId, groupId) {
       .delete()
       .where({ user_id: memberId, group_id: groupId });
 
-    return (await getGroups(userId, groupId))[0];
+    const groups = await getGroups(userId, groupId);
+
+    // If no groups are returned the user making the request was removed from
+    // the group -> return null instead of the group
+    if (groups.length === 0) return null;
+    return groups[0];
   } catch (error) {
     logger.error(`Removing user from a group failed`);
     throw error;
