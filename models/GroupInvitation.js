@@ -1,20 +1,19 @@
 const Model = require("objection").Model;
 
-class GroupMember extends Model {
+class GroupInvitation extends Model {
   static get tableName() {
-    return "GroupMembers";
+    return "GroupInvitations";
   }
 
   static get jsonSchema() {
     return {
       type: "object",
-      required: ["group_id", "is_admin"],
+      required: ["group_id"],
       properties: {
         id: { type: "integer" },
         user_id: { type: ["integer", "null"] },
+        email: { type: ["string", "null"] },
         group_id: { type: "integer" },
-        is_admin: { type: "boolean" },
-        joined_at: { type: ["string", "null"] },
       },
     };
   }
@@ -26,7 +25,7 @@ class GroupMember extends Model {
         modelClass: `${__dirname}/User`,
         join: {
           from: "Users.id",
-          to: "GroupMembers.user_id",
+          to: "GroupInvitations.user_id",
         },
       },
       group: {
@@ -34,7 +33,7 @@ class GroupMember extends Model {
         modelClass: `${__dirname}/Group`,
         join: {
           from: "Groups.id",
-          to: "GroupMembers.group_id",
+          to: "GroupInvitations.group_id",
         },
       },
     };
@@ -49,4 +48,4 @@ class GroupMember extends Model {
   }
 }
 
-module.exports = GroupMember;
+module.exports = GroupInvitation;

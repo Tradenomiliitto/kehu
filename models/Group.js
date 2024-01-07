@@ -1,6 +1,7 @@
 const Model = require("objection").Model;
 const Kehu = require("./Kehu");
 const GroupMember = require("./GroupMember");
+const GroupInvitation = require("./GroupInvitation");
 
 class Group extends Model {
   static get tableName() {
@@ -36,6 +37,14 @@ class Group extends Model {
         join: {
           from: "Groups.id",
           to: "GroupMembers.group_id",
+        },
+      },
+      invitations: {
+        relation: Model.HasManyRelation,
+        modelClass: GroupInvitation,
+        join: {
+          from: "Groups.id",
+          to: "GroupInvitations.group_id",
         },
       },
     };
