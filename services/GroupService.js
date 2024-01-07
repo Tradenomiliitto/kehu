@@ -2,6 +2,7 @@ const cloudinary = require("cloudinary").v2;
 
 const Group = require("../models/Group");
 const GroupMember = require("../models/GroupMember");
+const GroupInvitation = require("../models/GroupInvitation");
 
 const { findUserByEmail } = require("./UserService");
 const logger = require("../logger");
@@ -101,7 +102,7 @@ async function createGroup(
     });
 
     // Assign group members
-    await addMembersToGroup(members, group.id);
+    await inviteMembersToGroup(members, group.id);
 
     return (await getGroups(userId, group.id))[0];
   } catch (error) {
@@ -221,7 +222,7 @@ async function deleteMember(userId, memberId, groupId) {
 }
 
 // `members` is an array of email addresses
-async function addGroupMembers(userId, groupId, members) {
+async function inviteGroupMembers(userId, groupId, members) {
   logger.info(`Adding members to a group ${groupId}`);
 
   try {
@@ -231,7 +232,7 @@ async function addGroupMembers(userId, groupId, members) {
       throw new Error("User is not a group admin");
     }
 
-    await addMembersToGroup(members, groupId);
+    await inviteMembersToGroup(members, groupId);
     return (await getGroups(userId, groupId))[0];
   } catch (error) {
     logger.error(`Adding members to a group failed`);
@@ -246,10 +247,10 @@ async function isUserGroupAdmin(user_id, group_id) {
 }
 
 // `members` is an array of email addresses
-async function addMembersToGroup(members, groupId) {
+async function inviteMembersToGroup(members, groupId) {
   return Promise.all(
-    members.map(async (member) => {
-      const user = await findUserByEmail(member);
+    members.map(async (email) => {
+      const user = await findUserByEmail(email);
       if (user) {
         // Check if user is already member of the group before adding
         const existingMember = await GroupMember.query().where({
@@ -258,22 +259,20 @@ async function addMembersToGroup(members, groupId) {
         });
         if (existingMember.length > 0) {
           logger.info(
-            `User ${member} is already member of the group, not adding again`,
+            `User ${email} is already member of the group, not inviting again`,
           );
           return;
         }
-
-        logger.info(`Adding user ${member} to group`);
-        await GroupMember.query().insert({
-          user_id: user.id,
-          group_id: groupId,
-          is_admin: false,
-          joined_at: new Date().toISOString(),
-        });
       } else {
-        logger.info(`User ${member} not signed up, sending invitation email`);
-        // TODO: send invites to members who haven't signed up yet
+        logger.info(`User ${email} not signed up, sending invitation email`);
+        // TODO: send invitation email
       }
+      logger.info(`Inviting user ${email} to the group`);
+      await GroupInvitation.query().insert({
+        user_id: user?.id,
+        email: email,
+        group_id: groupId,
+      });
     }),
   );
 }
@@ -312,6 +311,6 @@ module.exports = {
   updateGroup,
   changeMemberAdminRole,
   deleteMember,
-  addGroupMembers,
+  inviteGroupMembers,
   isUserGroupAdmin,
 };

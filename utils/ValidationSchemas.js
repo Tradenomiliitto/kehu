@@ -234,7 +234,7 @@ const updateGroupMemberSchema = {
   },
 };
 
-const addGroupMembersSchema = {
+const inviteGroupMembersSchema = {
   members: {
     custom: {
       options: (value) => {
@@ -262,5 +262,5 @@ module.exports = {
   createGroupSchema,
   updateGroupSchema,
   updateGroupMemberSchema,
-  addGroupMembersSchema,
+  inviteGroupMembersSchema,
 };

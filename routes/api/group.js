@@ -5,7 +5,7 @@ const {
   createGroupSchema,
   updateGroupSchema,
   updateGroupMemberSchema,
-  addGroupMembersSchema,
+  inviteGroupMembersSchema,
 } = require("../../utils/ValidationSchemas");
 const {
   getGroups,
@@ -13,7 +13,7 @@ const {
   updateGroup,
   changeMemberAdminRole,
   deleteMember,
-  addGroupMembers,
+  inviteGroupMembers,
 } = require("../../services/GroupService");
 const logger = require("../../logger");
 const { strToInt } = require("../../utils/ServerUtils");
@@ -64,9 +64,10 @@ router.put("/:groupId", checkSchema(updateGroupSchema), async (req, res) => {
   }
 });
 
+// Member is not added directly but through an invitation
 router.post(
   "/:groupId/members",
-  checkSchema(addGroupMembersSchema),
+  checkSchema(inviteGroupMembersSchema),
   async (req, res) => {
     try {
       const validations = validationResult(req);
@@ -75,7 +76,7 @@ router.post(
       }
       const groupId = strToInt(req.params.groupId);
 
-      const group = await addGroupMembers(
+      const group = await inviteGroupMembers(
         req.user.id,
         groupId,
         req.body.members,
