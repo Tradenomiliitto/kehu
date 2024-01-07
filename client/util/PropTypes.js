@@ -76,6 +76,16 @@ const user = {
 };
 export const userPropType = PropTypes.shape(user);
 
+const invitation = {
+  id: PropTypes.number.isRequired,
+  user_id: PropTypes.number.isRequired,
+  email: PropTypes.string.isRequired,
+  group_id: PropTypes.number.isRequired,
+  created_at: PropTypes.string,
+  updated_at: PropTypes.string,
+};
+export const invitationPropType = PropTypes.shape(invitation);
+
 const group = {
   id: PropTypes.number.isRequired,
   description: PropTypes.string,
@@ -87,5 +97,6 @@ const group = {
   members: PropTypes.arrayOf(
     PropTypes.shape({ is_admin: PropTypes.bool, user: userPropType }),
   ).isRequired,
+  invitations: PropTypes.arrayOf(invitationPropType).isRequired,
 };
 export const groupPropType = PropTypes.shape(group);

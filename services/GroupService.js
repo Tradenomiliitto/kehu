@@ -34,6 +34,7 @@ async function getGroups(userId, groupId = null) {
     .joinRelated("members as m")
     .where("m.user_id", userId)
     .withGraphJoined("members(selectMember).user(selectUser)")
+    .withGraphJoined("invitations")
     .modifiers({
       selectGiver(builder) {
         builder.select("picture");
