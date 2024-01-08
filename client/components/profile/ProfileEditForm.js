@@ -9,7 +9,7 @@ import ErrorPanel from "../ErrorPanel";
 
 export class ProfileEditForm extends Component {
   static propTypes = {
-    error: PropTypes.oneOf([PropTypes.string, PropTypes.object]),
+    error: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     loading: PropTypes.bool.isRequired,
     profile: PropTypes.object.isRequired,
     updateProfile: PropTypes.func.isRequired,
