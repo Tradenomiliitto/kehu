@@ -8,6 +8,7 @@ import { toggleSendKehuFormModal } from "../../redux/portal";
 import { LangLink } from "../../util/LangLink";
 import { sortMembers } from "../../util/misc";
 import { LeaveGroupModal } from "./LeaveGroupModal";
+import { groupPropType, invitationGroupPropType } from "../../util/PropTypes";
 
 export default function ActiveGroup({ group }) {
   const [t] = useTranslation();
@@ -26,6 +27,56 @@ export default function ActiveGroup({ group }) {
       ": " +
       admins.map((m) => `${m.user.first_name} (${m.user.email})`).join(", ");
 
+  const groupJoinedDate = group.invitationPending ? (
+    <span className="ActiveGroup-InvitationNotAccepted">
+      {t("groups.invite-not-accepted", "Et ole vielä hyväksynyt kutsua")}
+    </span>
+  ) : (
+    t("groups.joined-group", "liityit yhteisöön") +
+    " " +
+    moment(group.joined_at).format("D.M.YYYY")
+  );
+
+  const invitePendingButtons = (
+    <div className="ActiveGroup-Buttons">
+      <button onClick={() => {}} className="Button Button--inverse">
+        {t("groups.reject-invitation-btn", "Hylkää kutsu")}
+      </button>
+      <button className="Button" onClick={() => {}}>
+        {t("groups.accept-invitation-btn", "Liity yhteisöön")}
+      </button>
+    </div>
+  );
+
+  const joinedGroupButtons = (
+    <div className="ActiveGroup-Buttons">
+      <button
+        onClick={() => setLeaveGroupModal(true)}
+        className="Button Button--inverse"
+      >
+        {t("groups.leave-group-btn", "Poistu yhteisöstä")}
+      </button>
+      {group.is_admin && (
+        <LangLink
+          to={`/yhteisot/admin/${group.id}`}
+          className="Button Button--inverse"
+        >
+          {t("groups.edit-group-btn", "Muokkaa yhteisöä")}
+        </LangLink>
+      )}
+      <button
+        className="Button"
+        onClick={() => dispatch(toggleSendKehuFormModal(group.name))}
+      >
+        {t("home.send-new-kehu-btn", "Lähetä Kehu")}
+      </button>
+    </div>
+  );
+
+  const buttons = group.invitationPending
+    ? invitePendingButtons
+    : joinedGroupButtons;
+
   return (
     <>
       {leaveGroupModal ? (
@@ -37,6 +88,11 @@ export default function ActiveGroup({ group }) {
         />
       ) : null}
       <div className="MyGroups-Card row">
+        {group.invitationPending && (
+          <div className="MyGroups-InvitationBanner">
+            {t("groups.invitation-banner", "Kutsu yhteisöön")}
+          </div>
+        )}
         <div className="col col-xs-12 col-sm-3 ActiveGroup-PictureContainer">
           <div className="ActiveGroup-Picture">
             <img className="GroupPicture-image" src={group.picture} />
@@ -67,39 +123,14 @@ export default function ActiveGroup({ group }) {
               defaultValue: "{{count}} jäsen",
               defaultValue_plural: "{{count}} jäsentä",
             })}{" "}
-            &#8211; {t("groups.joined-group", "liityit yhteisöön")}{" "}
-            {moment(group.joined_at).format("D.M.YYYY")}
+            &#8211; {groupJoinedDate}
           </div>
 
           <div className="row">
             <div className={"ActiveGroup-Info col col-xs-12"}>
               <div>{adminText}</div>
             </div>
-
-            <div className={"col col-xs-12"}>
-              <div className="ActiveGroup-Buttons">
-                <button
-                  onClick={() => setLeaveGroupModal(true)}
-                  className="Button Button--inverse"
-                >
-                  {t("groups.leave-group-btn", "Poistu yhteisöstä")}
-                </button>
-                {group.is_admin && (
-                  <LangLink
-                    to={`/yhteisot/admin/${group.id}`}
-                    className="Button Button--inverse"
-                  >
-                    {t("groups.edit-group-btn", "Muokkaa yhteisöä")}
-                  </LangLink>
-                )}
-                <button
-                  className="Button"
-                  onClick={() => dispatch(toggleSendKehuFormModal(group.name))}
-                >
-                  {t("home.send-new-kehu-btn", "Lähetä Kehu")}
-                </button>
-              </div>
-            </div>
+            <div className={"col col-xs-12"}>{buttons}</div>
           </div>
         </div>
       </div>
@@ -108,5 +139,6 @@ export default function ActiveGroup({ group }) {
 }
 
 ActiveGroup.propTypes = {
-  group: PropTypes.object.isRequired,
+  group: PropTypes.oneOfType([groupPropType, invitationGroupPropType])
+    .isRequired,
 };

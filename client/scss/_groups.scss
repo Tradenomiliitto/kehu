@@ -282,6 +282,18 @@
   margin: 0 1rem 1rem;
 }
 
+.MyGroups-InvitationBanner {
+  background-color: $primary;
+  color: $white;
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 0.1rem;
+  position: absolute;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  top: 0.3rem;
+}
+
 .ActiveGroup-PictureContainer {
   align-items: center;
   display: flex;
@@ -322,6 +334,10 @@
   font-weight: bold;
   overflow-wrap: anywhere;
   padding-right: 0;
+}
+
+.ActiveGroup-InvitationNotAccepted {
+  color: $dark-pink;
 }
 
 .ActiveGroup-Buttons {
