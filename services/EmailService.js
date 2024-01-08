@@ -51,6 +51,31 @@ async function sendEmailToKnownUser(user, kehu_id, t) {
   await sendEmailUsingSendgrid(msg);
 }
 
+async function sendInvitationEmail({ email, firstName, groupName, type }) {
+  const TEMPLATE_IDS = {
+    KNOWN_USER: "d-2cf0ce5cb9f64fe6a62384dee9848201",
+    UNKNOWN_USER: "d-4b7f6c97bd7145729af930e1aa745418",
+  };
+  const templateId = TEMPLATE_IDS[type];
+
+  if (!templateId) {
+    throw new Error("Invalid type: " + type);
+  }
+
+  const msg = {
+    to: email,
+    from: "Kehu <noreply@mykehu.fi>",
+    templateId,
+    dynamic_template_data: {
+      first_name: firstName,
+      kehu_url: process.env.HOME_URL,
+      root_url: process.env.HOME_URL,
+      group_name: groupName,
+    },
+  };
+  await sendEmailUsingSendgrid(msg);
+}
+
 async function sendEmailUsingSendgrid(msg) {
   if (!process.env.SENDGRID_API_KEY) {
     logger.warn("SendGrid API key not set, unable to send email to " + msg.to);
@@ -90,4 +115,5 @@ async function getSender(kehu) {
 module.exports = {
   sendEmailToKnownUser,
   sendEmailToUnkownUser,
+  sendInvitationEmail,
 };

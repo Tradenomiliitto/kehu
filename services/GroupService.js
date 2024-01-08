@@ -7,6 +7,7 @@ const GroupInvitation = require("../models/GroupInvitation");
 const { findUserByEmail } = require("./UserService");
 const logger = require("../logger");
 const { addKehuType, CustomError } = require("../utils/ServerUtils");
+const { sendInvitationEmail } = require("./EmailService");
 
 /**
  * Get user's groups from database.
@@ -249,6 +250,12 @@ async function isUserGroupAdmin(user_id, group_id) {
 
 // `members` is an array of email addresses
 async function inviteMembersToGroup(members, groupId) {
+  // Verify that group exists
+  const group = await Group.query().findById(groupId);
+  if (!group) {
+    throw new Error("Group does not exist");
+  }
+
   return Promise.all(
     members.map(async (email) => {
       const user = await findUserByEmail(email);
@@ -264,15 +271,19 @@ async function inviteMembersToGroup(members, groupId) {
           );
           return;
         }
-      } else {
-        logger.info(`User ${email} not signed up, sending invitation email`);
-        // TODO: send invitation email
       }
       logger.info(`Inviting user ${email} to the group`);
       await GroupInvitation.query().insert({
         user_id: user?.id,
         email: email,
         group_id: groupId,
+      });
+
+      await sendInvitationEmail({
+        email,
+        firstName: user?.first_name,
+        groupName: group.name,
+        type: user ? "KNOWN_USER" : "UNKNOWN_USER",
       });
     }),
   );
