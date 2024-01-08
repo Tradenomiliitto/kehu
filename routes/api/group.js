@@ -14,8 +14,8 @@ const {
   changeMemberAdminRole,
   deleteMember,
   inviteGroupMembers,
-  processGroupInvitation,
 } = require("../../services/GroupService");
+const { processGroupInvitation } = require("../../services/InvitationService");
 const logger = require("../../logger");
 const { strToInt } = require("../../utils/ServerUtils");
 
