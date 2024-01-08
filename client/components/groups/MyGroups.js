@@ -6,10 +6,10 @@ import moment from "moment";
 
 import CreateGroupForm from "./CreateGroupForm";
 import { selectGroup } from "../../redux/group";
-import { groupPropType } from "../../util/PropTypes";
+import { groupPropType, invitationGroupPropType } from "../../util/PropTypes";
 import { getLatestKehu, sortGroups } from "../../util/misc";
 
-export default function MyGroups({ groups, activeGroupId }) {
+export default function MyGroups({ groups, invitationGroups, activeGroupId }) {
   const [t] = useTranslation();
   const [isCreateNewGroupVisible, setIsCreateNewGroupVisible] = useState(false);
 
@@ -18,7 +18,7 @@ export default function MyGroups({ groups, activeGroupId }) {
       <h3 className="MyGroups-title">
         {t("groups.mygroups-title", "Yhteisöni")}
       </h3>
-      {sortGroups(groups).map((group) => (
+      {[...invitationGroups, ...sortGroups(groups)].map((group) => (
         <React.Fragment key={group.id}>
           <OneGroup group={group} isActive={group.id === activeGroupId} />
           <hr className="MyGroups-SeparatorLine" />
@@ -42,6 +42,7 @@ export default function MyGroups({ groups, activeGroupId }) {
 
 MyGroups.propTypes = {
   groups: PropTypes.arrayOf(groupPropType),
+  invitationGroups: PropTypes.arrayOf(invitationGroupPropType),
   activeGroupId: PropTypes.number,
 };
 
@@ -65,6 +66,14 @@ function OneGroup({ group, isActive }) {
         </div>
         <div className="MyGroups-GroupDetails">
           <div className="MyGroups-GroupName">{group.name}</div>
+          {group.invitationPending && (
+            <div className="MyGroups-InviteNotAccepted">
+              {t(
+                "groups.invite-not-accepted",
+                "Et ole vielä hyväksynyt kutsua",
+              )}
+            </div>
+          )}
           <div className="MyGroups-GroupInfo">
             {t("groups.member-count", {
               count: group.members.length,
@@ -92,6 +101,7 @@ function OneGroup({ group, isActive }) {
 }
 
 OneGroup.propTypes = {
-  group: groupPropType.isRequired,
+  group: PropTypes.oneOfType([groupPropType, invitationGroupPropType])
+    .isRequired,
   isActive: PropTypes.bool.isRequired,
 };

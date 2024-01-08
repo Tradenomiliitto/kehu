@@ -171,6 +171,15 @@
   white-space: nowrap;
 }
 
+.MyGroups-InviteNotAccepted {
+  font-size: 10px;
+  color: $dark-pink;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .MyGroups-GroupInfo {
   font-size: 10px;
   font-weight: bold;

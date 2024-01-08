@@ -37,6 +37,7 @@ export function sortGroups(groups) {
 
 // Get the most recent Kehu in the group
 export function getLatestKehu(kehus) {
+  if (!kehus) return null;
   return kehus.reduce(
     (prev, current) =>
       prev && new Date(prev.date_given) > new Date(current.date_given)

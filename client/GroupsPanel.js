@@ -13,10 +13,16 @@ const SHOW_MORE_KEHUS_STEP_SIZE = 5;
 export default function GroupsPanel() {
   const [t] = useTranslation();
   const [kehusVisible, setKehusVisible] = useState(SHOW_MORE_KEHUS_STEP_SIZE);
-  const groups = useSelector((state) => state.group.groups);
+  const groupsJoined = useSelector((state) => state.group.groups);
+  const invitations = useSelector((state) => state.profile.invitations);
   const activeGroupId = useSelector((state) => state.group.activeGroupId);
 
-  const activeGroup = groups.find((g) => g.id === activeGroupId);
+  // Sort invitation groups most recent invitation first
+  const groupsInvitationPending = [...invitations]
+    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+    .map((i) => i.group);
+  const allGroups = [...groupsJoined, ...groupsInvitationPending];
+  const activeGroup = allGroups.find((g) => g.id === activeGroupId);
 
   if (!activeGroup) return <NoGroups />;
 
@@ -25,7 +31,7 @@ export default function GroupsPanel() {
     setKehusVisible((kehusVisible) => kehusVisible + SHOW_MORE_KEHUS_STEP_SIZE);
   };
 
-  const kehusInFeed = [...activeGroup.kehus]
+  const kehusInFeed = [...(activeGroup.kehus ?? [])]
     // Sort Kehus newest first
     .sort((a, b) => new Date(b.date_given) - new Date(a.date_given))
     // Show only set number of newest Kehus
@@ -37,15 +43,34 @@ export default function GroupsPanel() {
         <div className="row">
           <div className="col col-xs-12 col-md-9">
             <ActiveGroup group={activeGroup} />
-            <FeedPanel items={kehusInFeed} />
-            {activeGroup.kehus.length > kehusVisible && (
+            {activeGroup.invitationPending ? (
+              <div className="Feed">
+                <h1 className="Feed-title">
+                  {t("home.feed.title", "Viimeaikainen toiminta")}
+                </h1>
+                <div>
+                  {t(
+                    "home.feed.invite-pending-no-kehus",
+                    "Näet ryhmän Kehut, kun olet liittynyt ryhmään",
+                  )}
+                  .
+                </div>
+              </div>
+            ) : (
+              <FeedPanel items={kehusInFeed} />
+            )}
+            {activeGroup?.kehus?.length > kehusVisible && (
               <button className="Button" onClick={showMoreKehus}>
                 {t("groups.show-more-kehus-btn", "Näytä lisää")}
               </button>
             )}
           </div>
           <div className="col col-xs-12 col-md-3">
-            <MyGroups groups={groups} activeGroupId={activeGroupId} />
+            <MyGroups
+              groups={groupsJoined}
+              invitationGroups={groupsInvitationPending}
+              activeGroupId={activeGroupId}
+            />
             <GroupMembers
               members={activeGroup.members}
               groupName={activeGroup.name}
