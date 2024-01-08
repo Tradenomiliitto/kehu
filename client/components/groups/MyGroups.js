@@ -7,7 +7,7 @@ import moment from "moment";
 import CreateGroupForm from "./CreateGroupForm";
 import { selectGroup } from "../../redux/group";
 import { groupPropType, invitationGroupPropType } from "../../util/PropTypes";
-import { getLatestKehu, sortGroups } from "../../util/misc";
+import { getLatestKehu } from "../../util/misc";
 
 export default function MyGroups({ groups, invitationGroups, activeGroupId }) {
   const [t] = useTranslation();
@@ -18,7 +18,7 @@ export default function MyGroups({ groups, invitationGroups, activeGroupId }) {
       <h3 className="MyGroups-title">
         {t("groups.mygroups-title", "Yhteisöni")}
       </h3>
-      {[...invitationGroups, ...sortGroups(groups)].map((group) => (
+      {[...invitationGroups, ...groups].map((group) => (
         <React.Fragment key={group.id}>
           <OneGroup group={group} isActive={group.id === activeGroupId} />
           <hr className="MyGroups-SeparatorLine" />
@@ -41,6 +41,7 @@ export default function MyGroups({ groups, invitationGroups, activeGroupId }) {
 }
 
 MyGroups.propTypes = {
+  // Both groups and invitationGroups are sorted
   groups: PropTypes.arrayOf(groupPropType),
   invitationGroups: PropTypes.arrayOf(invitationGroupPropType),
   activeGroupId: PropTypes.number,

@@ -7,22 +7,27 @@ import MyGroups from "./components/groups/MyGroups";
 import FeedPanel from "./components/home/FeedPanel";
 import GroupMembers from "./components/groups/GroupMembers";
 import ActiveGroup from "./components/groups/ActiveGroup";
+import { sortGroups } from "./util/misc";
 
 const SHOW_MORE_KEHUS_STEP_SIZE = 5;
 
 export default function GroupsPanel() {
   const [t] = useTranslation();
   const [kehusVisible, setKehusVisible] = useState(SHOW_MORE_KEHUS_STEP_SIZE);
-  const groupsJoined = useSelector((state) => state.group.groups);
+  const groupsJoinedUnsorted = useSelector((state) => state.group.groups);
   const invitations = useSelector((state) => state.profile.invitations);
   const activeGroupId = useSelector((state) => state.group.activeGroupId);
 
+  const groupsJoined = sortGroups(groupsJoinedUnsorted);
   // Sort invitation groups most recent invitation first
   const groupsInvitationPending = [...invitations]
     .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
     .map((i) => i.group);
-  const allGroups = [...groupsJoined, ...groupsInvitationPending];
-  const activeGroup = allGroups.find((g) => g.id === activeGroupId);
+  const allGroups = [...groupsInvitationPending, ...groupsJoined];
+  const activeGroup =
+    activeGroupId == null
+      ? allGroups[0]
+      : allGroups.find((g) => g.id === activeGroupId);
 
   if (!activeGroup) return <NoGroups />;
 
@@ -69,7 +74,7 @@ export default function GroupsPanel() {
             <MyGroups
               groups={groupsJoined}
               invitationGroups={groupsInvitationPending}
-              activeGroupId={activeGroupId}
+              activeGroupId={activeGroup?.id}
             />
             <GroupMembers
               members={activeGroup.members}
