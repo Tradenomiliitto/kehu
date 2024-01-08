@@ -22,6 +22,10 @@ export const INVITE_GROUP_MEMBERS_SUCCESS =
   "group/INVITE_GROUP_MEMBERS_SUCCESS";
 export const INVITE_GROUP_MEMBERS_ERROR = "group/INVITE_GROUP_MEMBERS_ERROR";
 
+export const DELETE_INVITATION = "group/DELETE_INVITATION";
+export const DELETE_INVITATION_SUCCESS = "group/DELETE_INVITATION_SUCCESS";
+export const DELETE_INVITATION_ERROR = "group/DELETE_INVITATION_ERROR";
+
 export const REMOVE_GROUP_MEMBER = "group/REMOVE_GROUP_MEMBER";
 export const REMOVE_GROUP_MEMBER_SUCCESS = "group/REMOVE_GROUP_MEMBER_SUCCESS";
 export const REMOVE_GROUP_MEMBER_ERROR = "group/REMOVE_GROUP_MEMBER_ERROR";
@@ -141,6 +145,23 @@ export function updateGroupMember(groupId, memberId, isAdmin, cb) {
   };
 }
 
+// `cb` callback function is used to close modal when deleting invitations in
+// admin view
+export function deleteInvitation(groupId, invitationId, cb) {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: DELETE_INVITATION });
+      const res = await del(`/yhteisot/${groupId}/invitations/${invitationId}`);
+      const group = await res.json();
+
+      dispatch({ type: DELETE_INVITATION_SUCCESS, payload: group });
+      if (typeof cb === "function") cb();
+    } catch (e) {
+      dispatch({ type: DELETE_INVITATION_ERROR, payload: e });
+    }
+  };
+}
+
 export function resetGroupErrors() {
   return { type: RESET_GROUP_ERRORS };
 }
@@ -158,6 +179,7 @@ export default function reducer(state = initialState, action = {}) {
     case INVITE_GROUP_MEMBERS:
     case REMOVE_GROUP_MEMBER:
     case UPDATE_GROUP_MEMBER:
+    case DELETE_INVITATION:
       return {
         ...state,
         loading: true,
@@ -188,6 +210,7 @@ export default function reducer(state = initialState, action = {}) {
     case INVITE_GROUP_MEMBERS_SUCCESS:
     case REMOVE_GROUP_MEMBER_SUCCESS:
     case UPDATE_GROUP_MEMBER_SUCCESS:
+    case DELETE_INVITATION_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -218,6 +241,7 @@ export default function reducer(state = initialState, action = {}) {
     case REMOVE_GROUP_MEMBER_ERROR:
     case UPDATE_GROUP_MEMBER_ERROR:
     case DELETE_GROUP_ERROR:
+    case DELETE_INVITATION_ERROR:
       return {
         ...state,
         loading: false,
