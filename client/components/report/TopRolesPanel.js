@@ -6,6 +6,8 @@ import cn from "classnames";
 export class TopRolesPanel extends Component {
   static propTypes = {
     roles: PropTypes.array.isRequired,
+    // i18n props
+    t: PropTypes.func.isRequired,
   };
 
   constructor(props) {

@@ -14,6 +14,8 @@ export class ProfileEditForm extends Component {
     profile: PropTypes.object.isRequired,
     updateProfile: PropTypes.func.isRequired,
     onSuccess: PropTypes.func.isRequired,
+    // i18n props
+    t: PropTypes.func.isRequired,
   };
 
   constructor(props) {

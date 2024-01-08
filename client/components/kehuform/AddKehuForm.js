@@ -26,6 +26,8 @@ export class AddKehuForm extends Component {
     situations: PropTypes.array.isRequired,
     tags: PropTypes.array.isRequired,
     updateKehu: PropTypes.func.isRequired,
+    // i18n props
+    t: PropTypes.func.isRequired,
   };
 
   constructor(props) {

@@ -12,6 +12,8 @@ export class KehuSuccessPanel extends Component {
   static propTypes = {
     kehu: PropTypes.object.isRequired,
     resetKehuFormState: PropTypes.func.isRequired,
+    // i18n props
+    t: PropTypes.func.isRequired,
   };
 
   render() {

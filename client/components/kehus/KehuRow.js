@@ -19,6 +19,8 @@ export class KehuRow extends Component {
     openEditKehuModal: PropTypes.func.isRequired,
     isKehuSelection: PropTypes.bool,
     unselectedKehus: PropTypes.object,
+    // i18n props
+    t: PropTypes.func.isRequired,
   };
 
   constructor() {

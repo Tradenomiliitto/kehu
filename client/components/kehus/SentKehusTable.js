@@ -7,6 +7,8 @@ export class SentKehusTable extends Component {
   static propTypes = {
     kehus: PropTypes.array.isRequired,
     roles: PropTypes.array.isRequired,
+    // i18n props
+    t: PropTypes.func.isRequired,
   };
 
   render() {

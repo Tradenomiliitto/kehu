@@ -7,6 +7,8 @@ export class KehuCountPanel extends Component {
   static propTypes = {
     number: PropTypes.number.isRequired,
     text: PropTypes.string.isRequired,
+    // i18n props
+    t: PropTypes.func.isRequired,
   };
 
   render() {
