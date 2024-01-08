@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { GroupMemberOverview } from "./GroupMemberOverview";
 import { MODAL_TYPES } from "../../GroupAdminPanel";
 import { sortMembers } from "../../util/misc";
+import { invitationPropType } from "../../util/PropTypes";
 
 export default function GroupMembers({ members, groupName }) {
   const [t] = useTranslation();
@@ -29,11 +30,11 @@ GroupMembers.propTypes = {
   groupName: PropTypes.string.isRequired,
 };
 
-export function MemberList({ members, isAdminList, openModal }) {
+export function MemberList({ members, invitations, isAdminList, openModal }) {
   // Sort members admins first, then by firstname and lastname
-  return sortMembers(members).map((member, idx) => (
+  const memberList = sortMembers(members).map((member, idx) => (
     <Member
-      key={member.user.id}
+      key={"user-" + member.user.id}
       name={
         member.user.first_name +
         (members.filter((m) => m.user.first_name === member.user.first_name)
@@ -49,10 +50,28 @@ export function MemberList({ members, isAdminList, openModal }) {
       handleClick={(modalType) => openModal(modalType, member.user)}
     />
   ));
+
+  const invitationList = [...(invitations ?? [])]
+    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+    .map((invitation, idx) => (
+      <Member
+        key={"invitation-" + invitation.id}
+        name=""
+        email={invitation.email}
+        isDarkRow={idx % 2 === 1}
+        isAdmin={false}
+        isAdminList={true}
+        isInvitation={true}
+        handleClick={(modalType) => openModal(modalType, invitation)}
+      />
+    ));
+
+  return [...memberList, ...invitationList];
 }
 
 MemberList.propTypes = {
   members: PropTypes.arrayOf(PropTypes.object).isRequired,
+  invitations: PropTypes.arrayOf(invitationPropType),
   isAdminList: PropTypes.bool,
   openModal: PropTypes.func,
 };
@@ -64,9 +83,28 @@ function Member({
   isDarkRow,
   isAdmin,
   isAdminList,
+  isInvitation,
   handleClick,
 }) {
   const [t] = useTranslation();
+
+  let memberType;
+
+  if (isInvitation)
+    memberType = t("groups.invitation", {
+      count: 1,
+      defaultValue: "Kutsuttu",
+    });
+  else if (isAdmin)
+    memberType = t("groups.admin", {
+      count: 1,
+      defaultValue: "Admin",
+    });
+  else if (isAdminList)
+    memberType = t("groups.member", {
+      count: 1,
+      defaultValue: "Jäsen",
+    });
 
   return (
     <div
@@ -75,34 +113,23 @@ function Member({
       }`}
     >
       <div className="MyGroups-MemberPicture">
-        <img
-          className="MemberPicture-image"
-          src={picture}
-          referrerPolicy="no-referrer"
-        />
+        {picture ? (
+          <img
+            className="MemberPicture-image"
+            src={picture}
+            referrerPolicy="no-referrer"
+          />
+        ) : null}
       </div>
       <div className="MyGroups-MemberDetails">
         <div className="MyGroups-MemberName">{name}</div>
         <div className="MyGroups-MemberInfo">{email}</div>
       </div>
-      {isAdmin && (
-        <div className="MyGroups-MemberAdmin">
-          {t("groups.admin", {
-            count: 1,
-            defaultValue: "Admin",
-          })}
-        </div>
-      )}
-      {isAdminList && !isAdmin && (
-        <div className="MyGroups-MemberAdmin">
-          {t("groups.member", {
-            count: 1,
-            defaultValue: "Jäsen",
-          })}
-        </div>
-      )}
+      {memberType ? (
+        <div className="MyGroups-MemberAdmin">{memberType}</div>
+      ) : null}
       <div className="GroupAdmin-MemberListBreak"></div>
-      {isAdminList && (
+      {isAdminList && !isInvitation && (
         <>
           {isAdmin ? (
             <button
@@ -127,6 +154,14 @@ function Member({
           </button>
         </>
       )}
+      {isInvitation && (
+        <button
+          className="Button--link GroupAdmin-CancelInvitation"
+          onClick={() => handleClick(MODAL_TYPES.CancelInvitation)}
+        >
+          {t("groups.admin-view.cancel-invitation", "Peru kutsu")}
+        </button>
+      )}
     </div>
   );
 }
@@ -138,5 +173,6 @@ Member.propTypes = {
   isDarkRow: PropTypes.bool.isRequired,
   isAdmin: PropTypes.bool.isRequired,
   isAdminList: PropTypes.bool,
+  isInvitation: PropTypes.bool,
   handleClick: PropTypes.func,
 };

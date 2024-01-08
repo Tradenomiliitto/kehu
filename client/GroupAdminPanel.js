@@ -17,6 +17,7 @@ import { RemoveMemberModal } from "./components/groups/RemoveMemberModal";
 import { AddMemberToAdminsModal } from "./components/groups/AddMemberToAdminsModal";
 import { RemoveMemberFromAdminsModal } from "./components/groups/RemoveMemberFromAdminsModal";
 import { ChangeGroupPictureModal } from "./components/groups/ChangeGroupPictureModal";
+import { CancelInvitationModal } from "./components/groups/CancelInvitationModal";
 
 export const MODAL_TYPES = {
   AddNewMembers: 0,
@@ -24,6 +25,7 @@ export const MODAL_TYPES = {
   AddMemberToAdmins: 2,
   RemoveMemberFromAdmins: 3,
   ChangeGroupPicture: 4,
+  CancelInvitation: 5,
 };
 
 export default function GroupAdminPanel(props) {
@@ -110,6 +112,12 @@ export default function GroupAdminPanel(props) {
       {visibleModal === MODAL_TYPES.ChangeGroupPicture && (
         <ChangeGroupPictureModal closeModal={closeModal} groupId={group.id} />
       )}
+      {visibleModal === MODAL_TYPES.CancelInvitation && (
+        <CancelInvitationModal
+          closeModal={closeModal}
+          invitation={memberInModal}
+        />
+      )}
       <div className="Groups">
         <div className="container">
           <div className="GroupAdmin-Card row">
@@ -158,6 +166,7 @@ export default function GroupAdminPanel(props) {
                 <hr className="GroupAdmin-Separator" />
                 <MemberList
                   members={group.members}
+                  invitations={group.invitations}
                   isAdminList={true}
                   openModal={openModal}
                 />

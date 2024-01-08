@@ -414,6 +414,17 @@
   flex-shrink: 0;
   font-size: small;
   padding-left: 0;
+  min-width: 8rem;
+  text-align: right;
+}
+
+.GroupAdmin-CancelInvitation {
+  color: $primary;
+  flex-shrink: 0;
+  font-size: small;
+  padding-left: 0;
+  min-width: 18rem;
+  text-align: right;
 }
 
 .GroupAdmin-OneMember {
