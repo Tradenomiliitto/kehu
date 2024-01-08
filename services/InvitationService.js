@@ -60,7 +60,19 @@ async function getInvitations(userId) {
   try {
     const invitations = await GroupInvitation.query()
       .where("user_id", userId)
-      .withGraphFetched("group");
+      .withGraphFetched("group.members(selectMember).user(selectUser)")
+      .modifiers({
+        selectMember(builder) {
+          builder.select("is_admin");
+        },
+        selectUser(builder) {
+          builder.select("id", "first_name", "last_name", "email", "picture");
+        },
+      });
+
+    for (const invitation of invitations) {
+      invitation.group.invitationPending = true;
+    }
 
     return invitations;
   } catch (error) {
