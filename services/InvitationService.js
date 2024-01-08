@@ -54,6 +54,22 @@ async function processGroupInvitation({ userId, invitationId, groupId, type }) {
   }
 }
 
+async function getInvitations(userId) {
+  logger.info(`Getting group invitations for user ${userId}`);
+
+  try {
+    const invitations = await GroupInvitation.query()
+      .where("user_id", userId)
+      .withGraphFetched("group");
+
+    return invitations;
+  } catch (error) {
+    logger.error(`Getting group invitations failed`);
+    throw error;
+  }
+}
+
 module.exports = {
   processGroupInvitation,
+  getInvitations,
 };

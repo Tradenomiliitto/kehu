@@ -9,6 +9,7 @@ const UserService = require("../../services/UserService");
 const FeedService = require("../../services/FeedService");
 const { updateProfileSchema } = require("../../utils/ValidationSchemas");
 const logger = require("../../logger");
+const { getInvitations } = require("../../services/InvitationService");
 
 const MAX_ITEMS = 15;
 
@@ -42,21 +43,33 @@ async function getItems(userId, serviceMethod, defaults) {
 }
 
 router.get("/", async (req, res) => {
-  const contacts = await UserService.getContacts(req.user.id);
-  const roles = await RoleService.getRoles(req.t);
-  const situations = await getItems(
+  const contactsPromise = UserService.getContacts(req.user.id);
+  const rolesPromise = RoleService.getRoles(req.t);
+  const situationsPromise = getItems(
     req.user.id,
     SituationService.getUserSituations,
     req.t("default-config.situations", { returnObjects: true }),
   );
-  const tags = await getItems(
+  const tagsPromise = getItems(
     req.user.id,
     TagService.getUserTags,
     req.t("default-config.tags", { returnObjects: true }),
   );
   const profile = req.user;
-  const feed = await FeedService.getFeedItems(req.user.id, req.t);
-  res.json({ contacts, feed, profile, roles, situations, tags });
+  const feedPromise = FeedService.getFeedItems(req.user.id, req.t);
+  const invitationsPromise = getInvitations(req.user.id);
+
+  const [contacts, roles, situations, tags, feed, invitations] =
+    await Promise.all([
+      contactsPromise,
+      rolesPromise,
+      situationsPromise,
+      tagsPromise,
+      feedPromise,
+      invitationsPromise,
+    ]);
+
+  res.json({ contacts, feed, profile, roles, situations, tags, invitations });
 });
 
 router.put(
