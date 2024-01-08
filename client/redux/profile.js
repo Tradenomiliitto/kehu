@@ -23,6 +23,7 @@ export const initialState = {
   roles: [],
   situations: [],
   tags: [],
+  invitations: [],
   updateProfileError: null,
 };
 
@@ -85,6 +86,7 @@ export default function reducer(state = initialState, action = {}) {
         roles: action.payload.roles,
         situations: action.payload.situations,
         tags: action.payload.tags,
+        invitations: action.payload.invitations,
       };
     case PROFILE_ERROR:
       return {

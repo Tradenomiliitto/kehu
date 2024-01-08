@@ -76,6 +76,12 @@ const user = {
 };
 export const userPropType = PropTypes.shape(user);
 
+const member = {
+  is_admin: PropTypes.bool,
+  user: userPropType,
+};
+const memberPropType = PropTypes.shape(member);
+
 const invitation = {
   id: PropTypes.number.isRequired,
   user_id: PropTypes.number.isRequired,
@@ -94,9 +100,17 @@ const group = {
   name: PropTypes.string.isRequired,
   picture: PropTypes.string.isRequired,
   kehus: PropTypes.arrayOf(feedKehuPropType).isRequired,
-  members: PropTypes.arrayOf(
-    PropTypes.shape({ is_admin: PropTypes.bool, user: userPropType }),
-  ).isRequired,
+  members: PropTypes.arrayOf(memberPropType).isRequired,
   invitations: PropTypes.arrayOf(invitationPropType).isRequired,
 };
 export const groupPropType = PropTypes.shape(group);
+
+const invitationGroup = {
+  id: PropTypes.number.isRequired,
+  description: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  picture: PropTypes.string.isRequired,
+  members: PropTypes.arrayOf(memberPropType).isRequired,
+  invitationPending: PropTypes.bool.isRequired,
+};
+export const invitationGroupPropType = PropTypes.shape(invitationGroup);
