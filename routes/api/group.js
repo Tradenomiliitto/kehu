@@ -14,6 +14,7 @@ const {
   changeMemberAdminRole,
   deleteMember,
   inviteGroupMembers,
+  processGroupInvitation,
 } = require("../../services/GroupService");
 const logger = require("../../logger");
 const { strToInt } = require("../../utils/ServerUtils");
@@ -137,5 +138,44 @@ router.delete("/:groupId/members/:memberId", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+// Accept group invitation (only invited person can accept)
+router.put("/:groupId/invitations/:invitationId", handleInvitation("accept"));
+
+// Reject group invitation (invited person) or cancel invitation (group admin)
+router.delete("/:groupId/invitations/:invitationId", handleInvitation("del"));
+
+function handleInvitation(type) {
+  return async (req, res) => {
+    try {
+      const groupId = strToInt(req.params.groupId);
+      const invitationId = strToInt(req.params.invitationId);
+
+      const group = await processGroupInvitation({
+        userId: req.user.id,
+        invitationId,
+        groupId,
+        type,
+      });
+      return res.json(group);
+    } catch (err) {
+      const STATUS_CODES = {
+        BAD_REQUEST: 400,
+        UNAUTHORIZED: 403,
+        NOT_FOUND: 404,
+      };
+
+      const code = STATUS_CODES[err?.type];
+
+      if (code) {
+        logger.error(err.message);
+        return res.status(code).json({ error: err.message, type: err.type });
+      }
+
+      logger.error(err);
+      res.status(500).json({ error: err.message });
+    }
+  };
+}
 
 module.exports = router;
