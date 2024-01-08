@@ -28,6 +28,9 @@ export default function GroupsPanel() {
     activeGroupId == null
       ? allGroups[0]
       : allGroups.find((g) => g.id === activeGroupId);
+  const activeInvitation = invitations.find(
+    (invitation) => invitation.group.id === activeGroup.id,
+  );
 
   if (!activeGroup) return <NoGroups />;
 
@@ -47,7 +50,10 @@ export default function GroupsPanel() {
       <div className="container">
         <div className="row">
           <div className="col col-xs-12 col-md-9">
-            <ActiveGroup group={activeGroup} />
+            <ActiveGroup
+              group={activeGroup}
+              invitationId={activeInvitation?.id}
+            />
             {activeGroup.invitationPending ? (
               <div className="Feed">
                 <h1 className="Feed-title">

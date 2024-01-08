@@ -9,11 +9,14 @@ import { LangLink } from "../../util/LangLink";
 import { sortMembers } from "../../util/misc";
 import { LeaveGroupModal } from "./LeaveGroupModal";
 import { groupPropType, invitationGroupPropType } from "../../util/PropTypes";
+import { acceptInvitation, rejectInvitation } from "../../redux/profile";
+import { FormattedErrorPanel } from "../ErrorPanel";
 
-export default function ActiveGroup({ group }) {
+export default function ActiveGroup({ group, invitationId }) {
   const [t] = useTranslation();
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.profile.profile.id);
+  const invitationError = useSelector((state) => state.profile.invitationError);
   const [leaveGroupModal, setLeaveGroupModal] = useState(false);
 
   const admins = group.members.filter((m) => m.is_admin);
@@ -39,10 +42,16 @@ export default function ActiveGroup({ group }) {
 
   const invitePendingButtons = (
     <div className="ActiveGroup-Buttons">
-      <button onClick={() => {}} className="Button Button--inverse">
+      <button
+        onClick={() => dispatch(rejectInvitation(group.id, invitationId))}
+        className="Button Button--inverse"
+      >
         {t("groups.reject-invitation-btn", "Hylkää kutsu")}
       </button>
-      <button className="Button" onClick={() => {}}>
+      <button
+        className="Button"
+        onClick={() => dispatch(acceptInvitation(group.id, invitationId))}
+      >
         {t("groups.accept-invitation-btn", "Liity yhteisöön")}
       </button>
     </div>
@@ -133,6 +142,13 @@ export default function ActiveGroup({ group }) {
             <div className={"col col-xs-12"}>{buttons}</div>
           </div>
         </div>
+        <FormattedErrorPanel
+          error={invitationError}
+          genericMessage={t(
+            "groups.invitation-accept-or-reject-failed",
+            "Yhteisökutsun käsittely epäonnistui",
+          )}
+        />
       </div>
     </>
   );
@@ -141,4 +157,5 @@ export default function ActiveGroup({ group }) {
 ActiveGroup.propTypes = {
   group: PropTypes.oneOfType([groupPropType, invitationGroupPropType])
     .isRequired,
+  invitationId: PropTypes.number,
 };

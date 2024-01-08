@@ -1,4 +1,5 @@
 import { del, get, put } from "../util/ApiUtil";
+import { ADD_GROUP } from "./group";
 
 export const PROFILE_LOADED = "profile/PROFILE_LOADED";
 export const PROFILE_ERROR = "profile/PROFILE_ERROR";
@@ -13,6 +14,13 @@ export const DELETE_PROFILE = "profile/DELETE_PROFILE";
 export const DELETE_PROFILE_SUCCESS = "profile/DELETE_PROFILE_SUCCESS";
 export const DELETE_PROFILE_ERROR = "profile/DELETE_PROFILE_ERROR";
 
+export const ACCEPT_INVITATION = "profile/ACCEPT_INVITATION";
+export const ACCEPT_INVITATION_SUCCESS = "profile/ACCEPT_INVITATION_SUCCESS";
+export const ACCEPT_INVITATION_ERROR = "profile/ACCEPT_INVITATION_ERROR";
+export const REJECT_INVITATION = "profile/REJECT_INVITATION";
+export const REJECT_INVITATION_SUCCESS = "profile/REJECT_INVITATION_SUCCESS";
+export const REJECT_INVITATION_ERROR = "profile/REJECT_INVITATION_ERROR";
+
 export const initialState = {
   error: null,
   loading: false,
@@ -25,6 +33,8 @@ export const initialState = {
   tags: [],
   invitations: [],
   updateProfileError: null,
+  deleteProfileError: null,
+  invitationError: null,
 };
 
 export function getProfile() {
@@ -74,6 +84,33 @@ export function deleteProfile() {
   };
 }
 
+export function acceptInvitation(groupId, invitationId) {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: ACCEPT_INVITATION });
+      const group = await put(
+        `/yhteisot/${groupId}/invitations/${invitationId}`,
+      );
+      dispatch({ type: ACCEPT_INVITATION_SUCCESS, payload: { invitationId } });
+      dispatch({ type: ADD_GROUP, payload: group });
+    } catch (e) {
+      dispatch({ type: ACCEPT_INVITATION_ERROR, payload: e });
+    }
+  };
+}
+
+export function rejectInvitation(groupId, invitationId) {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: REJECT_INVITATION });
+      await del(`/yhteisot/${groupId}/invitations/${invitationId}`);
+      dispatch({ type: REJECT_INVITATION_SUCCESS, payload: { invitationId } });
+    } catch (e) {
+      dispatch({ type: REJECT_INVITATION_ERROR, payload: e });
+    }
+  };
+}
+
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case PROFILE_LOADED:
@@ -104,6 +141,13 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         error: action.payload,
       };
+    case REJECT_INVITATION_ERROR:
+    case ACCEPT_INVITATION_ERROR:
+      return {
+        ...state,
+        invitationError: action.payload,
+      };
+
     case UPDATE_PROFILE:
       return {
         ...state,
@@ -142,6 +186,23 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         loading: false,
         deleteProfileError: action.payload,
+      };
+    case ACCEPT_INVITATION:
+    case REJECT_INVITATION:
+      return {
+        ...state,
+        loading: true,
+        invitationError: null,
+      };
+    case ACCEPT_INVITATION_SUCCESS:
+    case REJECT_INVITATION_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        invitationError: null,
+        invitations: state.invitations.filter(
+          (invitation) => invitation.id !== action.payload.invitationId,
+        ),
       };
 
     default:

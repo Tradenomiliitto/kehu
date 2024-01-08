@@ -4,6 +4,8 @@ export const GET_GROUPS = "groups/GET_GROUPS";
 export const GET_GROUPS_SUCCESS = "groups/GET_GROUPS_SUCCESS";
 export const GET_GROUPS_ERROR = "groups/GET_GROUPS_ERROR";
 
+export const ADD_GROUP = "group/ADD_GROUP";
+
 export const CREATE_GROUP = "group/CREATE_GROUP";
 export const CREATE_GROUP_SUCCESS = "group/CREATE_GROUP_SUCCESS";
 export const CREATE_GROUP_ERROR = "group/CREATE_GROUP_ERROR";
@@ -203,6 +205,13 @@ export default function reducer(state = initialState, action = {}) {
         groups: [...state.groups, action.payload],
         activeGroupId: action.payload.id,
         groupsLoaded: true,
+      };
+
+    case ADD_GROUP:
+      return {
+        ...state,
+        groups: [...state.groups, action.payload],
+        activeGroupId: action.payload.id,
       };
 
     case UPDATE_GROUP_SUCCESS:
