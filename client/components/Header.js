@@ -33,7 +33,7 @@ export class Header extends Component {
       "Header-menu": true,
       "Header-menu--open": this.state.menuOpen,
     });
-    const { t, i18n, profile } = this.props;
+    const { t, profile } = this.props;
 
     return (
       <header className="Header">
@@ -67,13 +67,6 @@ export class Header extends Component {
                   {this.renderMenuItem(
                     "/raportit",
                     t("header.report-link", "Raportit"),
-                  )}
-                  {i18n.language === "fi" && (
-                    <li className="Header-menuItem">
-                      <a href={`/${i18n.language}/blogi`}>
-                        {t("header.blog-link", "Blogi")}
-                      </a>
-                    </li>
                   )}
                   {this.renderMenuItem(
                     "/kehut",

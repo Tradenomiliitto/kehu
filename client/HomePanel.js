@@ -138,7 +138,7 @@ export class HomePanel extends Component {
   }
 
   renderBlogElement() {
-    const { t, i18n } = this.props;
+    const { t } = this.props;
     return (
       <div className="SidebarElement">
         <h3 className="SidebarElement-title">
@@ -158,11 +158,6 @@ export class HomePanel extends Component {
           alt="Blogi"
           className="SidebarElement-image"
         />
-        {i18n.language === "fi" && (
-          <a href="/blogi" className="Button Button--fullWidth">
-            {t("home.sidebar.strengths-read-more-btn", "Lue lisää blogista!")}
-          </a>
-        )}
       </div>
     );
   }
