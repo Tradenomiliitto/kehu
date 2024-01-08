@@ -11,7 +11,12 @@ import {
 import WelcomePanel from "./components/home/WelcomePanel";
 import FeedPanel from "./components/home/FeedPanel";
 import { capitalizeText } from "./util/TextUtil";
-import { feedKehuPropType, tagPropType } from "./util/PropTypes";
+import {
+  feedKehuPropType,
+  invitationWithGroupPropType,
+  tagPropType,
+} from "./util/PropTypes";
+import ActiveGroup from "./components/groups/ActiveGroup";
 
 export class HomePanel extends Component {
   static propTypes = {
@@ -24,6 +29,7 @@ export class HomePanel extends Component {
     feedItems: PropTypes.arrayOf(feedKehuPropType).isRequired,
     hasKehus: PropTypes.bool.isRequired,
     tags: PropTypes.arrayOf(tagPropType).isRequired,
+    invitations: PropTypes.arrayOf(invitationWithGroupPropType).isRequired,
     toggleAddKehuFormModal: PropTypes.func.isRequired,
     toggleSendKehuFormModal: PropTypes.func.isRequired,
     // i18n props
@@ -42,7 +48,7 @@ export class HomePanel extends Component {
         <div className="container">
           <div className="row">
             <div className="col col-xs-12 col-md-9">
-              <div className="row HomeButtons">
+              <div className="row HomeButtons Home-Card">
                 <div className="col col-xs-12 col-md-8">
                   <h1 className="HomeButtons-title">
                     {t("home.add-new-kehu-title", "Lisää uusi Kehu")}
@@ -71,6 +77,14 @@ export class HomePanel extends Component {
                   </div>
                 </div>
               </div>
+              {this.props.invitations.map((invitation) => (
+                <ActiveGroup
+                  key={invitation.id}
+                  group={invitation.group}
+                  invitationId={invitation.id}
+                />
+              ))}
+
               {this.renderMainContent()}
             </div>
             <div className="col col-xs-12 col-md-3">
@@ -180,6 +194,7 @@ const mapStateToProps = (state) => ({
   feedItems: state.profile.feedItems,
   hasKehus: state.report.numberOfKehus > 0,
   tags: state.report.tags.slice(0, 5),
+  invitations: state.profile.invitations,
 });
 
 const mapActionsToProps = {

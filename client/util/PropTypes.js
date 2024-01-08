@@ -114,3 +114,9 @@ const invitationGroup = {
   invitationPending: PropTypes.bool.isRequired,
 };
 export const invitationGroupPropType = PropTypes.shape(invitationGroup);
+
+const invitationWithGroup = {
+  ...invitation,
+  group: invitationGroupPropType,
+};
+export const invitationWithGroupPropType = PropTypes.shape(invitationWithGroup);

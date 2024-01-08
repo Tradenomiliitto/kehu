@@ -54,6 +54,12 @@
   @extend .Card;
 }
 
+.Home-Card {
+  @extend .Card;
+
+  margin: 0 0 1rem;
+}
+
 .SidebarElement-title {
   color: $secondary;
   font-size: 1.125rem;

@@ -131,6 +131,7 @@
 .MyGroups-Card {
   @extend .Card;
 
+  position: relative;
   margin: 0 0 1rem;
   padding-left: 0;
   padding-right: 0;
