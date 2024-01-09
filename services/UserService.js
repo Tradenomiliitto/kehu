@@ -3,6 +3,7 @@ const User = require("../models/User");
 const logger = require("../logger");
 const Auth0 = require("../utils/Auth0Client");
 const { raw } = require("objection");
+const GroupInvitation = require("../models/GroupInvitation");
 
 function canAuth0EmailBeUpdated(user) {
   const prefix = user.auth0_id.split("|")[0];
@@ -129,7 +130,10 @@ async function createUserFromAuth0(user) {
   try {
     const auth0User = await Auth0.getUser({ id: user.id });
     logger.info("Creating new user");
-    return await User.query().insert(parseUser(auth0User));
+    const createdUser = await User.query().insert(parseUser(auth0User));
+    // Check for any pending invitations for the user and update user_id if so
+    await fillInvitationUserIdFromEmail(createdUser.id, createdUser.email);
+    return createdUser;
   } catch (error) {
     logger.error(error.stack);
   }
@@ -159,6 +163,17 @@ async function deleteProfile(user_id) {
   logger.info(`Deleting user data...`);
   await User.query().delete().where("id", user_id);
   logger.info(`User ${user_id} deleted.`);
+}
+
+async function fillInvitationUserIdFromEmail(userId, email) {
+  if (!userId || !email) return;
+
+  const updatedInvitations = await GroupInvitation.query()
+    .patch({ user_id: userId })
+    .whereNull("user_id")
+    .andWhere("email", email);
+
+  logger.info(`Assigned ${updatedInvitations} invitations for user ${userId}`);
 }
 
 module.exports = {
