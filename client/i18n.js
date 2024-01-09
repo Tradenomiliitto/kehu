@@ -12,10 +12,12 @@ i18n
   .use(LanguageDetector)
   .use(backend) // backend to fetch localizations
   .init({
+    compatibilityJSON: "v3",
     fallbackLng: "fi",
-    whitelist: supportedLanguages,
+    supportedLngs: supportedLanguages,
 
     interpolation: {
+      skipOnVariables: false, // default value changed in i18next upgrade, use existing value since not sure if this can be changed
       escapeValue: false, // react already safes from xss
     },
 
