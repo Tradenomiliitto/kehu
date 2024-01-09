@@ -84,7 +84,7 @@ const memberPropType = PropTypes.shape(member);
 
 const invitation = {
   id: PropTypes.number.isRequired,
-  user_id: PropTypes.number.isRequired,
+  user_id: PropTypes.number,
   email: PropTypes.string.isRequired,
   group_id: PropTypes.number.isRequired,
   created_at: PropTypes.string,
