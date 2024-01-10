@@ -27,6 +27,7 @@ export class SendKehuForm extends Component {
       first_name: PropTypes.string.isRequired,
       last_name: PropTypes.string.isRequired,
       picture: PropTypes.string.isRequired,
+      email: PropTypes.string.isRequired,
     }).isRequired,
     roles: PropTypes.array.isRequired,
     situations: PropTypes.array.isRequired,
@@ -168,10 +169,13 @@ export class SendKehuForm extends Component {
 
     const groupMembers = activeGroup
       ? [groupAsMember].concat(
-          activeGroup.members.map((m) => ({
-            name: `${m.user.first_name} ${m.user.last_name}`,
-            email: m.user.email,
-          })),
+          activeGroup.members
+            // Remove the user from the list of group members
+            .filter((m) => m.user.email !== profile.email)
+            .map((m) => ({
+              name: `${m.user.first_name} ${m.user.last_name}`,
+              email: m.user.email,
+            })),
         )
       : null;
 
