@@ -90,21 +90,9 @@ function Member({
 
   let memberType;
 
-  if (isInvitation)
-    memberType = t("groups.invitation", {
-      count: 1,
-      defaultValue: "Kutsuttu",
-    });
-  else if (isAdmin)
-    memberType = t("groups.admin", {
-      count: 1,
-      defaultValue: "Admin",
-    });
-  else if (isAdminList)
-    memberType = t("groups.member", {
-      count: 1,
-      defaultValue: "Jäsen",
-    });
+  if (isInvitation) memberType = t("groups.invitation", "Kutsuttu");
+  else if (isAdmin) memberType = t("groups.admin", "Admin");
+  else if (isAdminList) memberType = t("groups.member", "Jäsen");
 
   return (
     <div
