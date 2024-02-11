@@ -10,6 +10,7 @@ describe("client:components:kehuform:SendKehuForm", () => {
     first_name: "First",
     last_name: "Last",
     picture: "picture.jpg",
+    email: "first.last@email.com",
   };
   const error1 = { msg: "error 1" };
   const error2 = { msg: "error 2" };

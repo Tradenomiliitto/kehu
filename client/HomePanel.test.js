@@ -119,6 +119,7 @@ describe("client:Homepanel", () => {
       feedItems: [kehu, sentKehu],
       hasKehus: false,
       tags: [{ text: "Test" }, { text: "Tag" }],
+      invitations: [],
       toggleAddKehuFormModal: toggleAddKehuFormModalStub,
       toggleSendKehuFormModal: toggleSendKehuFormModalStub,
       t: (key) => key,

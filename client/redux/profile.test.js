@@ -1,3 +1,4 @@
+/* eslint-disable no-import-assign, import/namespace */
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
 import reducer, {
@@ -37,6 +38,7 @@ describe("client:redux:profile", () => {
         situations: [newSituation],
         tags: [newTag],
         feed: [feedItem],
+        invitations: [],
       };
       const action = { type: PROFILE_LOADED, payload };
       const expectedState = {
