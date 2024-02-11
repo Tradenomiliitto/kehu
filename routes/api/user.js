@@ -9,6 +9,7 @@ const UserService = require("../../services/UserService");
 const FeedService = require("../../services/FeedService");
 const { updateProfileSchema } = require("../../utils/ValidationSchemas");
 const logger = require("../../logger");
+const { getInvitations } = require("../../services/InvitationService");
 
 const MAX_ITEMS = 15;
 
@@ -42,21 +43,33 @@ async function getItems(userId, serviceMethod, defaults) {
 }
 
 router.get("/", async (req, res) => {
-  const contacts = await UserService.getContacts(req.user.id);
-  const roles = await RoleService.getRoles(req.t);
-  const situations = await getItems(
+  const contactsPromise = UserService.getContacts(req.user.id);
+  const rolesPromise = RoleService.getRoles(req.t);
+  const situationsPromise = getItems(
     req.user.id,
     SituationService.getUserSituations,
-    req.t("default-config.situations", { returnObjects: true })
+    req.t("default-config.situations", { returnObjects: true }),
   );
-  const tags = await getItems(
+  const tagsPromise = getItems(
     req.user.id,
     TagService.getUserTags,
-    req.t("default-config.tags", { returnObjects: true })
+    req.t("default-config.tags", { returnObjects: true }),
   );
   const profile = req.user;
-  const feed = await FeedService.getFeedItems(req.user.id, req.t);
-  res.json({ contacts, feed, profile, roles, situations, tags });
+  const feedPromise = FeedService.getFeedItems(req.user.id, req.t);
+  const invitationsPromise = getInvitations(req.user.id);
+
+  const [contacts, roles, situations, tags, feed, invitations] =
+    await Promise.all([
+      contactsPromise,
+      rolesPromise,
+      situationsPromise,
+      tagsPromise,
+      feedPromise,
+      invitationsPromise,
+    ]);
+
+  res.json({ contacts, feed, profile, roles, situations, tags, invitations });
 });
 
 router.put(
@@ -80,13 +93,18 @@ router.put(
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
-  }
+  },
 );
 
 router.delete("/", async (req, res) => {
   try {
     await UserService.deleteProfile(req.user.id);
-    req.logout();
+    await new Promise((resolve, reject) => {
+      req.logout({}, (err) => {
+        if (err) reject(err);
+        else resolve();
+      });
+    });
     res.status(200).send();
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -102,14 +120,11 @@ router.get("/cloudinary-signature", (req, res) => {
   logger.info("Sending Cloudinary signature", { params_to_sign: req.query });
   let response;
   try {
-    // Verify that user is uploading and potentially overwriting their own picture
-    if (req.query.data.public_id !== "profile_" + req.user.auth0_id) {
-      throw new Error("public_id not matching profile");
-    }
+    isPermittedToUploadPicture(req);
 
     response = cloudinary.utils.api_sign_request(
       req.query.data,
-      process.env.CLOUDINARY_SECRET
+      process.env.CLOUDINARY_SECRET,
     );
   } catch (e) {
     logger.info("Unable to generate Cloudinary signature", {
@@ -120,11 +135,38 @@ router.get("/cloudinary-signature", (req, res) => {
   res.send(response);
 });
 
+// Throw an error if user is not permitted to upload the picture
+function isPermittedToUploadPicture(req) {
+  const { public_id } = req.query.data;
+  // User can upload and potentially overwrite only their own temporary group
+  // picture (when group is created / updated, the picture is renamed)
+  if (public_id.startsWith("new_group_picture")) {
+    if (public_id === "new_group_picture_" + req.user.auth0_id) return;
+    logger.warn(
+      `Unauthorized temporary group picture upload: picture name suffix not matching user id`,
+      { public_id, user_id: req.user.auth0_id },
+    );
+    throw new Error("Unauthorized temporary group picture upload");
+  }
+
+  // User can upload and potentially overwrite only their own picture
+  if (public_id.startsWith("profile")) {
+    if (public_id === "profile_" + req.user.auth0_id) return;
+    logger.warn(
+      `Unauthorized profile picture upload: picture name suffix not matching user id`,
+      { public_id, user_id: req.user.auth0_id },
+    );
+    throw new Error("Unauthorized profile picture upload");
+  }
+
+  throw new Error("Unauthorized picture upload");
+}
+
 router.put("/kuva", async (req, res) => {
   try {
     const updatedUser = await UserService.updateProfilePicture(
       req.user.id,
-      req.body.picture
+      req.body.picture,
     );
     res.json(updatedUser);
   } catch (err) {

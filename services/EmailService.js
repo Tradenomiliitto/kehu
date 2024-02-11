@@ -1,10 +1,12 @@
 const sgMail = require("@sendgrid/mail");
 const moment = require("moment");
 const Kehu = require("../models/Kehu");
+const logger = require("../logger");
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+if (process.env.SENDGRID_API_KEY)
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-if (!process.env.SENDGRID_API_KEY || !process.env.HOME_URL) {
+if (!process.env.HOME_URL) {
   throw new Error("Set SENDGRID_API_KEY and HOME_URL.");
 }
 
@@ -26,7 +28,7 @@ async function sendEmailToUnkownUser(receiver, claim_id, kehu_id, t) {
       text: kehu.text,
     },
   };
-  sgMail.send(msg);
+  await sendEmailUsingSendgrid(msg);
 }
 
 async function sendEmailToKnownUser(user, kehu_id, t) {
@@ -46,7 +48,46 @@ async function sendEmailToKnownUser(user, kehu_id, t) {
       text: kehu.text,
     },
   };
-  sgMail.send(msg);
+  await sendEmailUsingSendgrid(msg);
+}
+
+async function sendInvitationEmail({ email, firstName, groupName, type }) {
+  const TEMPLATE_IDS = {
+    KNOWN_USER: "d-2cf0ce5cb9f64fe6a62384dee9848201",
+    UNKNOWN_USER: "d-4b7f6c97bd7145729af930e1aa745418",
+  };
+  const templateId = TEMPLATE_IDS[type];
+
+  if (!templateId) {
+    throw new Error("Invalid type: " + type);
+  }
+
+  const msg = {
+    to: email,
+    from: "Kehu <noreply@mykehu.fi>",
+    templateId,
+    dynamic_template_data: {
+      first_name: firstName,
+      kehu_url: process.env.HOME_URL,
+      root_url: process.env.HOME_URL,
+      group_name: groupName,
+    },
+  };
+  await sendEmailUsingSendgrid(msg);
+}
+
+async function sendEmailUsingSendgrid(msg) {
+  if (!process.env.SENDGRID_API_KEY) {
+    logger.warn("SendGrid API key not set, unable to send email to " + msg.to);
+    return;
+  }
+
+  logger.info("Sending email to " + msg.to);
+  try {
+    await sgMail.send(msg);
+  } catch (err) {
+    logger.error("Error sending email to " + msg.to, err);
+  }
 }
 
 async function getKehu(kehu_id, t) {
@@ -74,4 +115,5 @@ async function getSender(kehu) {
 module.exports = {
   sendEmailToKnownUser,
   sendEmailToUnkownUser,
+  sendInvitationEmail,
 };

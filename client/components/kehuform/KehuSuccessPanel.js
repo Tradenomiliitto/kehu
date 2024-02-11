@@ -12,6 +12,8 @@ export class KehuSuccessPanel extends Component {
   static propTypes = {
     kehu: PropTypes.object.isRequired,
     resetKehuFormState: PropTypes.func.isRequired,
+    // i18n props
+    t: PropTypes.func.isRequired,
   };
 
   render() {
@@ -85,7 +87,7 @@ export class KehuSuccessPanel extends Component {
           key={i}
           src={`/images/icon-star-${icon}.png`}
           className={classNames}
-        />
+        />,
       );
     }
 
@@ -110,5 +112,5 @@ const mapDispatchToProps = {
 
 export default compose(
   withTranslation(),
-  connect(null, mapDispatchToProps)
+  connect(null, mapDispatchToProps),
 )(KehuSuccessPanel);

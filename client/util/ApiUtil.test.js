@@ -129,7 +129,7 @@ describe("client:util:ApiUtil", () => {
           status: 400,
           statusText,
           json: () => new Promise((resolve) => resolve({ error: "error" })),
-        })
+        }),
       );
       fetch = jest.fn(() => {
         return new Promise((resolve) => resolve(response));

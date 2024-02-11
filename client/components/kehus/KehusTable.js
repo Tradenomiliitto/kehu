@@ -6,6 +6,8 @@ import KehuRow from "./KehuRow";
 export class KehusTable extends Component {
   static propTypes = {
     kehus: PropTypes.array.isRequired,
+    // i18n props
+    t: PropTypes.func.isRequired,
   };
 
   render() {

@@ -1,6 +1,5 @@
 const { transaction } = require("objection");
-//const { v4: uuidv4 } = require('uuid');
-const uuidv4 = require("uuid/v4");
+const { randomUUID } = require("crypto");
 const XLSX = require("xlsx");
 const Kehu = require("../models/Kehu");
 const { findTagWithText } = require("./TagService");
@@ -12,34 +11,56 @@ const {
 } = require("./EmailService");
 const { raw } = require("objection");
 const logger = require("../logger");
+const { addKehuType } = require("../utils/ServerUtils");
 
 async function getKehus(user_id, t) {
   logger.info(`Fetching kehus for user ${user_id}`);
-  return await Kehu.query()
+  const kehus = await Kehu.query()
     .context({ t })
-    .where("owner_id", user_id)
     .withGraphFetched("[role, situations, tags]")
+    .where("owner_id", user_id)
+    // Add Kehus sent to the whole group in groups user is a member
+    .union(
+      Kehu.query()
+        .context({ t })
+        .withGraphFetched("[role, situations, tags]")
+        .joinRelated("group")
+        .leftJoin("GroupMembers", "group.id", "GroupMembers.group_id")
+        .where("GroupMembers.user_id", user_id)
+        // owner_id is null for Kehus sent to the whole group
+        .andWhere(raw(`"Kehus".owner_id IS NULL`))
+        // Exclude Kehus user himself sent to the whole group
+        .andWhere("Kehus.giver_id", "<>", user_id),
+    )
     .orderBy("date_given", "desc");
+
+  // Add Kehu types
+  addKehuType(kehus, user_id);
+
+  return kehus;
 }
 
-async function getSentKehus(user_id) {
+async function getSentKehus(user_id, t) {
   logger.info(`Fetching given Kehus for user ${user_id}`);
-  return await Kehu.query()
-    .select(
-      "id",
-      "date_given",
-      "giver_name",
-      "role_id",
-      "receiver_name",
-      "text"
-    )
+  const sentKehus = await Kehu.query()
+    .context({ t })
+    .withGraphFetched("[role, situations, tags]")
     .where(function () {
       this.where("giver_id", user_id).andWhere("owner_id", "<>", user_id);
     })
     .orWhere(function () {
       this.where("giver_id", user_id).andWhere(raw("claim_id IS NOT NULL"));
     })
+    // Include Kehus sent to a whole group
+    .orWhere(function () {
+      this.where("giver_id", user_id).andWhere(raw("group_id IS NOT NULL"));
+    })
     .orderBy("date_given", "desc");
+
+  // Add Kehu types
+  addKehuType(sentKehus, user_id);
+
+  return sentKehus;
 }
 
 async function getKehu(user_id, kehu_id, t) {
@@ -56,12 +77,12 @@ async function unrelateTags(kehu, tags) {
   const oldTags = kehu.tags;
   const tagsToUnrelate = oldTags.filter(
     (tag) =>
-      -1 === tags.findIndex((tagFromData) => tag.text === tagFromData.text)
+      -1 === tags.findIndex((tagFromData) => tag.text === tagFromData.text),
   );
   return await Promise.all(
     tagsToUnrelate.map((tag) =>
-      kehu.$relatedQuery("tags").unrelate().where("id", tag.id)
-    )
+      kehu.$relatedQuery("tags").unrelate().where("id", tag.id),
+    ),
   );
 }
 
@@ -71,13 +92,13 @@ async function unrelateSituations(kehu, situations) {
     (situation) =>
       -1 ===
       situations.findIndex(
-        (situationFromData) => situation.text === situationFromData.text
-      )
+        (situationFromData) => situation.text === situationFromData.text,
+      ),
   );
   return await Promise.all(
     situationsToUnrelate.map((situation) =>
-      kehu.$relatedQuery("situations").unrelate().where("id", situation.id)
-    )
+      kehu.$relatedQuery("situations").unrelate().where("id", situation.id),
+    ),
   );
 }
 
@@ -89,7 +110,7 @@ async function createOrRelateTags(kehu, tagsFromData) {
     tagsToRelate = tagsFromData;
   } else {
     tagsToRelate = tagsFromData.filter(
-      (tag) => -1 === oldTags.findIndex((oldTag) => tag.text === oldTag.text)
+      (tag) => -1 === oldTags.findIndex((oldTag) => tag.text === oldTag.text),
     );
   }
 
@@ -101,7 +122,7 @@ async function createOrRelateTags(kehu, tagsFromData) {
       } else {
         return await kehu.$relatedQuery("tags").insert(tag);
       }
-    })
+    }),
   );
 }
 
@@ -116,8 +137,8 @@ async function createOrRelateSituations(kehu, situationsFromData) {
       (situation) =>
         -1 ===
         oldSituations.findIndex(
-          (oldSituation) => situation.text === oldSituation.text
-        )
+          (oldSituation) => situation.text === oldSituation.text,
+        ),
     );
   }
 
@@ -131,7 +152,7 @@ async function createOrRelateSituations(kehu, situationsFromData) {
       } else {
         return await kehu.$relatedQuery("situations").insert(situation);
       }
-    })
+    }),
   );
 }
 
@@ -169,15 +190,22 @@ async function sendKehu(data, t) {
   try {
     trx = await transaction.start(knex);
 
-    const user = await findUserByEmail(data.receiver_email);
-    let kehuData;
-    let claim_id;
+    let kehuData, user, claim_id;
 
-    if (user) {
-      kehuData = parseKehu({ ...data, owner_id: user.id });
+    // If receiver_email field is null then the kehu is for the whole group
+    const receiverIsGroup = data.receiver_email == null;
+
+    if (receiverIsGroup) {
+      kehuData = parseKehu(data);
     } else {
-      claim_id = uuidv4();
-      kehuData = parseKehu({ ...data, claim_id });
+      user = await findUserByEmail(data.receiver_email);
+
+      if (user) {
+        kehuData = parseKehu({ ...data, owner_id: user.id });
+      } else {
+        claim_id = randomUUID(); // UUIDv4
+        kehuData = parseKehu({ ...data, claim_id });
+      }
     }
 
     const kehu = await Kehu.query().insert(kehuData);
@@ -188,12 +216,15 @@ async function sendKehu(data, t) {
     await trx.commit();
     logger.info(`User ${data.giver_id} sent kehu ${kehu.id}`);
 
-    if (user) {
-      await sendEmailToKnownUser(user, kehu.id, t);
-      logger.info(`Email sent to user ${user.id}`);
-    } else {
-      await sendEmailToUnkownUser(data, claim_id, kehu.id, t);
-      logger.info(`Email sent to unknown user`);
+    // Only send emails if receiver is not a group
+    if (!receiverIsGroup) {
+      if (user) {
+        await sendEmailToKnownUser(user, kehu.id, t);
+        logger.info(`Email sent to user ${user.id}`);
+      } else {
+        await sendEmailToUnkownUser(data, claim_id, kehu.id, t);
+        logger.info(`Email sent to unknown user`);
+      }
     }
 
     return await Kehu.query()
@@ -284,7 +315,7 @@ async function deleteKehu(user_id, kehu_id) {
     await trx.commit();
   } catch (error) {
     logger.error(
-      `Deleting Kehu ${kehu_id} for user ${user_id} failed. Rolling back..`
+      `Deleting Kehu ${kehu_id} for user ${user_id} failed. Rolling back..`,
     );
     logger.error(error.message);
     await trx.rollback();
@@ -305,6 +336,8 @@ function parseKehu(data) {
     receiver_email,
     role_id,
     text,
+    group_id,
+    is_public,
   } = data;
   return {
     claim_id,
@@ -318,6 +351,8 @@ function parseKehu(data) {
     receiver_email,
     role_id,
     text,
+    group_id,
+    is_public,
   };
 }
 
@@ -336,113 +371,79 @@ function parseArray(array) {
     .map((text) => ({ text }));
 }
 
-async function excelReport(userId, i18n) {
+async function excelReport(userId, t) {
   // Fetch and format received Kehus
-  const kehus = await Kehu.query()
-    .select(
-      "date_given as " + i18n.t("excel-report.headers.time"),
-      "giver_name as " + i18n.t("excel-report.headers.name"),
-      "text as " + i18n.t("excel-report.headers.kehu"),
-      "comment as " + i18n.t("excel-report.headers.comment"),
-      "importance as " + i18n.t("excel-report.headers.stars")
-    )
-    .where("owner_id", userId)
-    .withGraphFetched("[role, situations, tags]")
-    .orderBy("date_given", "desc");
-
-  // Join arrays to fit in a single spreadsheet cell
-  kehus.forEach((kehu) => {
-    if (kehu.role) {
-      kehu[i18n.t("excel-report.headers.sender")] = kehu.role.role;
-    }
-    delete kehu.role;
-    if (isArray(kehu.tags)) {
-      kehu[i18n.t("excel-report.headers.skills")] = kehu.tags
-        .map((t) => t.text)
-        .join(", ");
-    }
-    delete kehu.tags;
-    if (isArray(kehu.situations)) {
-      kehu[i18n.t("excel-report.headers.situation")] = kehu.situations
-        .map((t) => t.text)
-        .join(", ");
-    }
-    delete kehu.situations;
-  });
+  const kehus = await getKehus(userId, t);
+  const formattedKehus = kehus.map((kehu) => ({
+    [t("excel-report.headers.time")]: kehu.date_given,
+    [t("excel-report.headers.sender")]: kehu?.role?.role,
+    [t("excel-report.headers.name")]: kehu.giver_name,
+    [t("excel-report.headers.kehu")]: kehu.text,
+    [t("excel-report.headers.situation")]: kehu?.situations
+      ?.map((t) => t.text)
+      ?.join(", "),
+    [t("excel-report.headers.skills")]: kehu?.tags
+      ?.map((t) => t.text)
+      ?.join(", "),
+    [t("excel-report.headers.stars")]: kehu.importance || "",
+    [t("excel-report.headers.comment")]: kehu.comment,
+  }));
 
   // Fetch and format sent Kehus
-  const sent_kehus = await Kehu.query()
-    .select(
-      "date_given as " + i18n.t("excel-report.headers.time"),
-      "receiver_name as " + i18n.t("excel-report.headers.receiver"),
-      "text as " + i18n.t("excel-report.headers.kehu")
-    )
-    .where(function () {
-      this.where("giver_id", userId).andWhere("owner_id", "<>", userId);
-    })
-    .orWhere(function () {
-      this.where("giver_id", userId).andWhere(raw("claim_id IS NOT NULL"));
-    })
-    .withGraphFetched("[role]")
-    .orderBy("date_given", "desc");
-
-  // Join arrays to fit in a single spreadsheet cell
-  sent_kehus.forEach((kehu) => {
-    if (kehu.role) {
-      kehu[i18n.t("excel-report.headers.sender")] = kehu.role.role;
-    }
-    delete kehu.role;
-  });
+  const sentKehus = await getSentKehus(userId, t);
+  const formattedSentKehus = sentKehus.map((kehu) => ({
+    [t("excel-report.headers.time")]: kehu.date_given,
+    [t("excel-report.headers.sender")]: kehu?.role?.role,
+    [t("excel-report.headers.receiver")]: kehu.receiver_name,
+    [t("excel-report.headers.kehu")]: kehu.text,
+  }));
 
   // Create new sheets from json, define column orders and widths
   const wb = XLSX.utils.book_new();
-  wb.SheetNames.push(i18n.t("excel-report.received-kehus-sheet"));
-  wb.Sheets[i18n.t("excel-report.received-kehus-sheet")] =
-    XLSX.utils.json_to_sheet(kehus, {
+  wb.SheetNames.push(t("excel-report.received-kehus-sheet"));
+  wb.Sheets[t("excel-report.received-kehus-sheet")] = XLSX.utils.json_to_sheet(
+    formattedKehus,
+    {
       header: [
-        i18n.t("excel-report.headers.time"),
-        i18n.t("excel-report.headers.sender"),
-        i18n.t("excel-report.headers.name"),
-        i18n.t("excel-report.headers.kehu"),
-        i18n.t("excel-report.headers.situation"),
-        i18n.t("excel-report.headers.skills"),
-        i18n.t("excel-report.headers.stars"),
-        i18n.t("excel-report.headers.comment"),
+        t("excel-report.headers.time"),
+        t("excel-report.headers.sender"),
+        t("excel-report.headers.name"),
+        t("excel-report.headers.kehu"),
+        t("excel-report.headers.situation"),
+        t("excel-report.headers.skills"),
+        t("excel-report.headers.stars"),
+        t("excel-report.headers.comment"),
       ],
-    });
+    },
+  );
   const receivedColsWidths = [10, 10, 20, 50, 30, 30, 8, 50].map((width) => ({
     width,
   }));
-  wb.Sheets[i18n.t("excel-report.received-kehus-sheet")]["!cols"] =
+  wb.Sheets[t("excel-report.received-kehus-sheet")]["!cols"] =
     receivedColsWidths;
 
-  wb.SheetNames.push(i18n.t("excel-report.sent-kehus-sheet"));
-  wb.Sheets[i18n.t("excel-report.sent-kehus-sheet")] = XLSX.utils.json_to_sheet(
-    sent_kehus,
+  wb.SheetNames.push(t("excel-report.sent-kehus-sheet"));
+  wb.Sheets[t("excel-report.sent-kehus-sheet")] = XLSX.utils.json_to_sheet(
+    formattedSentKehus,
     {
       header: [
-        i18n.t("excel-report.headers.time"),
-        i18n.t("excel-report.headers.sender"),
-        i18n.t("excel-report.headers.receiver"),
-        i18n.t("excel-report.headers.kehu"),
+        t("excel-report.headers.time"),
+        t("excel-report.headers.sender"),
+        t("excel-report.headers.receiver"),
+        t("excel-report.headers.kehu"),
       ],
-    }
+    },
   );
   const sentColsWidths = [10, 10, 35, 60].map((width) => ({
     width,
   }));
-  wb.Sheets[i18n.t("excel-report.sent-kehus-sheet")]["!cols"] = sentColsWidths;
+  wb.Sheets[t("excel-report.sent-kehus-sheet")]["!cols"] = sentColsWidths;
 
   return XLSX.write(wb, {
     type: "buffer",
     bookType: "xlsx",
     compression: true,
   });
-}
-
-// Returns true if o is array
-function isArray(o) {
-  return Object.prototype.toString.call(o) === "[object Array]";
 }
 
 module.exports = {

@@ -10,17 +10,13 @@ const Knex = require("knex");
 const pg = require("pg");
 const Model = require("objection").Model;
 const redis = require("redis");
-const connectRedis = require("connect-redis");
+const RedisStore = require("connect-redis").default;
 const csrf = require("csurf");
 const compression = require("compression");
 const methodOverride = require("method-override");
 const httpsRedirect = require("express-https-redirect");
 const webpack = require("webpack");
-const i18next = require("i18next");
-const i18nextMiddleware = require("i18next-http-middleware");
-const i18nextBackend = require("i18next-node-fs-backend");
-const languages = require("./languages.json");
-const { getLongLanguage } = require("./utils/LongLanguage");
+const { parse } = require("pg-connection-string");
 
 // Following packages are not required in production and importing them
 // will throw an error if devDependencies are not installed
@@ -28,20 +24,20 @@ const isProd = process.env.NODE_ENV === "production";
 const webpackConfig = isProd ? null : require("./webpack.dev.config");
 const compiler = isProd ? null : webpack(webpackConfig);
 
-const log = require("./logger");
-const RedisStore = connectRedis(session);
+const { initializeI18n } = require("./utils/i18n");
 const csrfProtection = csrf({ cookie: true });
 const staticify = require("staticify")(path.join(__dirname, "public"));
 
 const { setupLocals } = require("./utils/ServerUtils");
 const setupPassport = require("./passport");
 const setupRoutes = require("./routes");
+const logger = require("./logger");
 
 pg.defaults.ssl = isProd;
 const knex = Knex({
   client: "pg",
   connection: {
-    connectionString: process.env.DATABASE_URL,
+    ...parse(process.env.DATABASE_URL),
     ssl: { rejectUnauthorized: false },
   },
 });
@@ -60,13 +56,16 @@ app.use((req, res, next) => {
   next();
 });
 
-if (!isProd) {
+if (!isProd && process.env.WEBPACK_HOT_RELOAD) {
+  logger.info("Webpack building frontend... Watch and hot reload enabled.");
   app.use(
     require("webpack-dev-middleware")(compiler, {
       publicPath: webpackConfig.output.publicPath,
-    })
+    }),
   );
   app.use(require("webpack-hot-middleware")(compiler));
+} else {
+  logger.info("Frontend build step skipped, using existing build");
 }
 
 app.disable("x-powered-by");
@@ -77,51 +76,35 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(methodOverride("_method"));
+
+// i18n initialization must be early to have t, languages etc. set when
+// rendering error page if e.g. csrf fails
+initializeI18n(app);
+
 app.use(csrfProtection);
+
+// Initialize redis client
+const redisClient = redis.createClient({ url: process.env.REDIS_URL });
+redisClient.on("error", (error) => {
+  logger.error(`Redis client error`, error);
+});
+
+redisClient.connect().catch((err) => logger.error(err));
+
+// Initialize redis store
+const redisStore = new RedisStore({ client: redisClient });
+
+// Initialize sesssion storage.
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    store: new RedisStore({
-      client: redis.createClient(process.env.REDIS_URL),
-    }),
-  })
+    store: redisStore,
+  }),
 );
 
 app.use(staticify.middleware);
-
-const langWhitelist = languages.map((lang) => lang.value);
-
-i18next
-  .use(i18nextBackend)
-  .use(i18nextMiddleware.LanguageDetector)
-  .init({
-    fallbackLng: "fi",
-    whitelist: langWhitelist,
-    preload: langWhitelist,
-    ns: "translation-public", // Namespace to load
-    defaultNS: "translation-public", // Default namespace (if not defined)
-
-    backend: {
-      loadPath: __dirname + "/public/locales/{{ns}}-{{lng}}.json",
-    },
-    detection: {
-      // order and from where user language should be detected
-      order: ["path", "querystring", "header", "localStorage", "navigator"],
-
-      // only detect languages that are in the whitelist
-      checkWhitelist: true,
-    },
-    interpolation: {
-      escapeValue: false, // pug already safe from xss
-    },
-  });
-app.use(
-  i18nextMiddleware.handle(i18next, {
-    removeLngFromUrl: true,
-  })
-);
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/", httpsRedirect());
@@ -138,9 +121,6 @@ app.use((req, res, next) => {
   res.locals.user = req.user;
   res.locals.pageUrl = process.env.HOME_URL + req.originalUrl;
   res.locals.env = process.env;
-  res.locals.language = req.language;
-  res.locals.longLanguage = getLongLanguage(req.language);
-  res.locals.languages = languages;
   res.locals.pathWithoutLanguage = req.url;
   next();
 });
@@ -157,10 +137,21 @@ app.use(function (err, req, res, next) {
   res.locals.error = req.app.get("env") === "development" ? err : {};
 
   if (err.status !== 404) {
-    log.warn("Express error handler", { err });
+    logger.warn("Express error handler", { err });
   }
 
   res.status(err.status || 500);
+
+  // Handle errors for ajax requests (provide error in JSON instead of html)
+  if (req.get("Accept") === "application/json") {
+    res.json({
+      message: err.message,
+      // Provide error also in express-validator format so it will be shown to user
+      errors: [{ msg: err.message }],
+    });
+    return;
+  }
+
   res.render("error", {
     user: req.user,
     env: process.env,

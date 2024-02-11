@@ -6,13 +6,24 @@ import { compose } from "redux";
 import KehusTable from "./components/kehus/KehusTable";
 import SentKehusTable from "./components/kehus/SentKehusTable";
 import ErrorPanel from "./components/ErrorPanel";
+import { kehuPropType } from "./util/PropTypes";
 
 export class KehusPanel extends Component {
   static propTypes = {
     error: PropTypes.object,
-    kehus: PropTypes.array.isRequired,
+    kehus: PropTypes.arrayOf(kehuPropType).isRequired,
+    sentKehus: PropTypes.arrayOf(kehuPropType).isRequired,
     roles: PropTypes.array.isRequired,
-    sentKehus: PropTypes.array,
+    // i18n props
+    t: PropTypes.func.isRequired,
+    i18n: PropTypes.object.isRequired,
+    // react-router-dom
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
+    }).isRequired,
+    location: PropTypes.shape({
+      search: PropTypes.string,
+    }).isRequired,
   };
 
   constructor() {
@@ -112,12 +123,12 @@ export class KehusPanel extends Component {
 
 const mapStateToProps = (state) => ({
   kehus: state.kehu.kehus,
+  sentKehus: state.kehu.sentKehus,
   error: state.kehu.removeKehuError,
   roles: state.profile.roles,
-  sentKehus: state.kehu.sentKehus,
 });
 
 export default compose(
   withTranslation(),
-  connect(mapStateToProps, null)
+  connect(mapStateToProps, null),
 )(KehusPanel);

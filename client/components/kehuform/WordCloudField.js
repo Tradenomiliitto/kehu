@@ -14,6 +14,8 @@ export class WordCloudField extends PureComponent {
       .isRequired,
     placeholder: PropTypes.string.isRequired,
     values: PropTypes.array.isRequired,
+    // i18n props
+    t: PropTypes.func.isRequired,
   };
 
   constructor(props) {

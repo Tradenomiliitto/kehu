@@ -12,9 +12,9 @@
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
   display: none;
   list-style-type: none;
-  max-height: 120px;
-  overflow: scroll;
-  padding: 1rem;
+  max-height: 250px;
+  overflow: auto;
+  padding: 0;
   position: absolute;
   width: 100%;
   z-index: 5;
@@ -22,15 +22,28 @@
   &--open {
     display: block;
   }
+
+  li:nth-child(odd) {
+    background: $light-grey;
+  }
+}
+
+.GroupSelectionForm .Contacts {
+  // If both dropdowns are open simultaneously this should be on top
+  z-index: 6;
 }
 
 .Contacts-link {
+  background: none;
+  border: 0;
   color: $secondary;
+  cursor: pointer;
   font-size: 0.875rem;
+  padding: 0.2rem 1rem;
+  text-align: left;
+  width: 100%;
 
-  &:hover,
-  &:visited,
-  &:focus {
-    color: $secondary;
+  &:hover {
+    color: $dark-pink;
   }
 }

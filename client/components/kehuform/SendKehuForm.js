@@ -11,10 +11,11 @@ import TextField from "./TextField";
 import DateGivenField from "./DateGivenField";
 import WordCloudField from "./WordCloudField";
 import ReceiverNameField from "./ReceiverNameField";
+import GroupSelectionField from "./GroupSelectionField";
 import ReceiverEmailField from "./ReceiverEmailField";
-import RoleImage from "./RoleImage";
 import ContactsToggle from "./ContactsToggle";
 import { capitalizeText } from "../../util/TextUtil";
+import VisibilitySelection from "./VisibilitySelection";
 
 export class SendKehuForm extends Component {
   static propTypes = {
@@ -26,10 +27,15 @@ export class SendKehuForm extends Component {
       first_name: PropTypes.string.isRequired,
       last_name: PropTypes.string.isRequired,
       picture: PropTypes.string.isRequired,
+      email: PropTypes.string.isRequired,
     }).isRequired,
     roles: PropTypes.array.isRequired,
     situations: PropTypes.array.isRequired,
     tags: PropTypes.array.isRequired,
+    groups: PropTypes.array.isRequired,
+    targetGroup: PropTypes.string,
+    // i18n prop coming from withTranslation()
+    t: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -38,8 +44,10 @@ export class SendKehuForm extends Component {
       preview: false,
       giver_id: props.profile.id,
       giver_name: `${props.profile.first_name} ${props.profile.last_name}`,
+      group_name: props.targetGroup ?? "-",
       receiver_name: "",
       receiver_email: "",
+      isPrivate: null,
       role_id: null,
       text: "",
       date_given: moment(),
@@ -65,7 +73,7 @@ export class SendKehuForm extends Component {
           <b>
             {t(
               "modals.send-kehu.preview-receiver",
-              "Lähetetään kehun saajalle:"
+              "Lähetetään kehun saajalle:",
             )}
           </b>
           <br />
@@ -81,6 +89,7 @@ export class SendKehuForm extends Component {
             src={profile.picture}
             className="KehuDetails-image"
             alt={`${profile.first_name} ${profile.last_name}`}
+            referrerPolicy="no-referrer"
           />
           <span className="kehu-giver-name-nw">{this.renderGiverName()}</span>
           <br />
@@ -132,6 +141,7 @@ export class SendKehuForm extends Component {
 
   renderForm() {
     const {
+      group_name,
       receiver_name,
       receiver_email,
       text,
@@ -140,23 +150,65 @@ export class SendKehuForm extends Component {
       situations,
       role_id,
     } = this.state;
-    const { t, contacts, roles, profile } = this.props;
+    const { t, contacts, roles, profile, groups } = this.props;
+
+    const isGroupKehu = group_name !== "-";
+    const activeGroup = isGroupKehu
+      ? groups.find((group) => group.name === group_name)
+      : null;
+
+    // User can send the kehu to whole group. It a special member in the
+    // receiver list since it's not a real member of the group
+    const groupAsMember = {
+      name: t("modals.send-kehu.whole-group", "Koko yhteisö"),
+      email: null,
+    };
+    const isReceiverGroup =
+      receiver_name === groupAsMember.name &&
+      receiver_email === groupAsMember.email;
+
+    const groupMembers = activeGroup
+      ? [groupAsMember].concat(
+          activeGroup.members
+            // Remove the user from the list of group members
+            .filter((m) => m.user.email !== profile.email)
+            .map((m) => ({
+              name: `${m.user.first_name} ${m.user.last_name}`,
+              email: m.user.email,
+            })),
+        )
+      : null;
+
     return (
       <form className="Form form-js" onSubmit={this.togglePreview}>
         {this.renderErrors()}
+        <GroupSelectionField
+          value={group_name}
+          handleChange={this.selectGroup}
+        />
         <ReceiverNameField
           value={receiver_name}
           handleChange={this.handleChangeWithEvent("receiver_name")}
+          readOnly={isGroupKehu}
         >
           <ContactsToggle
-            contacts={contacts}
+            contacts={isGroupKehu ? groupMembers : contacts}
             handleSelect={this.selectContact}
           />
         </ReceiverNameField>
-        <ReceiverEmailField
-          value={receiver_email}
-          handleChange={this.handleChangeWithEvent("receiver_email")}
-        />
+        {!isGroupKehu && (
+          <ReceiverEmailField
+            value={receiver_email}
+            handleChange={this.handleChangeWithEvent("receiver_email")}
+          />
+        )}
+        {isGroupKehu && (
+          <VisibilitySelection
+            isPrivate={this.state.isPrivate}
+            isReceiverGroup={isReceiverGroup}
+            handleChange={this.handleChangeWithValue("isPrivate")}
+          />
+        )}
         <div className="Form-group">
           <label>
             {t("modals.send-kehu.sender-role-selection", "Olen Kehun saajan:")}
@@ -173,7 +225,11 @@ export class SendKehuForm extends Component {
           value={text}
           handleChange={this.handleChangeWithEvent("text")}
         />
-        <img src={profile.picture} className="SendKehuForm-profileImage" />
+        <img
+          src={profile.picture}
+          className="SendKehuForm-profileImage"
+          referrerPolicy="no-referrer"
+        />
         <DateGivenField
           value={date_given}
           handleChange={this.handleChangeWithValue("date_given")}
@@ -197,11 +253,11 @@ export class SendKehuForm extends Component {
           cloudItems={this.props.situations}
           label={t(
             "modals.wordcloud.label-situations",
-            "Kehu koskee tilannetta"
+            "Kehu koskee tilannetta",
           )}
           placeholder={t(
             "modals.wordcloud.placeholder-situations",
-            "Uusi tilanne"
+            "Uusi tilanne",
           )}
           values={situations}
           handleChange={this.handleChangeWithValue("situations")}
@@ -211,7 +267,7 @@ export class SendKehuForm extends Component {
           className="Button Button--fullWidth submit-kehu-nw"
           value={t(
             "modals.send-kehu.preview-and-submit-btn",
-            "Esikatsele ja lähetä"
+            "Esikatsele ja lähetä",
           )}
         />
       </form>
@@ -250,6 +306,15 @@ export class SendKehuForm extends Component {
     this.setState({ receiver_name, receiver_email });
   };
 
+  selectGroup = (group_name) => {
+    this.setState({
+      group_name,
+      receiver_name: "",
+      receiver_email: "",
+      isPrivate: null,
+    });
+  };
+
   handleRoleChange = (role_id) => {
     this.setState({ role_id });
   };
@@ -261,10 +326,31 @@ export class SendKehuForm extends Component {
 
   sendKehu = () => {
     const formData = {
-      ...this.state,
+      receiver_name: this.state.receiver_name,
+      receiver_email: this.state.receiver_email,
+      role_id: this.state.role_id,
+      text: this.state.text,
+      tags: this.state.tags,
+      situations: this.state.situations,
       date_given: moment(this.state.date_given).format(),
     };
-    delete formData.preview;
+
+    // Group kehu is going to different endpoint so modify parameters
+    const isGroupKehu = this.state.group_name !== "-";
+    if (isGroupKehu) {
+      const activeGroup = this.props.groups.find(
+        (group) => group.name === this.state.group_name,
+      );
+      formData.group_id = activeGroup.id;
+      formData.is_public = !this.state.isPrivate;
+
+      // If receiver email is null then the kehu is for the whole group
+      // --> replace the `modals.send-kehu.whole-group` string with the actual
+      // group name
+      if (this.state.receiver_email == null)
+        formData.receiver_name = activeGroup.name;
+    }
+
     this.props.sendKehu(formData);
   };
 }
@@ -276,6 +362,8 @@ const mapStateToProps = (state) => ({
   roles: state.profile.roles,
   situations: state.profile.situations,
   tags: state.profile.tags,
+  groups: state.group.groups,
+  targetGroup: state.portal.sendKehuPortalTargetGroup,
 });
 
 const mapDispatchToProps = {
@@ -284,5 +372,5 @@ const mapDispatchToProps = {
 
 export default compose(
   withTranslation(),
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(mapStateToProps, mapDispatchToProps),
 )(SendKehuForm);

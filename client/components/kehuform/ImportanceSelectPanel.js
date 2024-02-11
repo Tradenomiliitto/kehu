@@ -7,6 +7,8 @@ export class ImportanceSelectPanel extends Component {
   static propTypes = {
     handleClick: PropTypes.func.isRequired,
     value: PropTypes.number.isRequired,
+    // i18n props
+    t: PropTypes.func.isRequired,
   };
 
   constructor() {
@@ -44,7 +46,7 @@ export class ImportanceSelectPanel extends Component {
           onMouseOver={this.handleMouseOver(i)}
           onMouseOut={this.handleMouseOut}
           onClick={this.handleClick(i)}
-        />
+        />,
       );
     }
 

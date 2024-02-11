@@ -30,6 +30,18 @@ module.exports = {
     logout(browser);
   },
 
+  // Delete user to avoid cluttering Auth0 user database
+  DeleteUser: function (browser) {
+    loginWithNewUser(browser);
+
+    browser
+      .click(".profile-nw")
+      .waitForElementVisible(".delete-profile-nw")
+      .click(".delete-profile-nw")
+      .acceptAlert()
+      .waitForElementVisible(".register-nw");
+  },
+
   after: function (browser) {
     browser.closeWindow();
   },

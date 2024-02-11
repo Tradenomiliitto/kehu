@@ -4,15 +4,16 @@ import { connect } from "react-redux";
 import KehusTable from "../kehus/KehusTable";
 import SentKehusTable from "../kehus/SentKehusTable";
 import ErrorPanel from "../ErrorPanel";
+import { kehuPropType } from "../../util/PropTypes";
 
 export class KehusPanel extends Component {
   static propTypes = {
     sentTitle: PropTypes.string.isRequired,
     receivedTitle: PropTypes.string.isRequired,
     error: PropTypes.object,
-    kehus: PropTypes.array.isRequired,
+    kehus: PropTypes.arrayOf(kehuPropType).isRequired,
+    sentKehus: PropTypes.arrayOf(kehuPropType).isRequired,
     roles: PropTypes.array.isRequired,
-    sentKehus: PropTypes.array,
   };
 
   constructor() {
@@ -50,8 +51,8 @@ export class KehusPanel extends Component {
 
 const mapStateToProps = (state) => ({
   kehus: state.kehu.kehus,
-  roles: state.profile.roles,
   sentKehus: state.kehu.sentKehus,
+  roles: state.profile.roles,
 });
 
 export default connect(mapStateToProps, null)(KehusPanel);

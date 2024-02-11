@@ -34,18 +34,18 @@
 }
 
 .HeroSection {
-  background-image: url(/images/hero-section-mobile.svg);
+  background-image: url("/images/hero-section-mobile.svg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
   height: calc(100vh - #{$header-height});
 
   @include mq(sm) {
-    background-image: url(/images/hero-section-tablet.svg);
+    background-image: url("/images/hero-section-tablet.svg");
   }
 
   @include mq(md) {
-    background-image: url(/images/hero-section-desktop.svg);
+    background-image: url("/images/hero-section-desktop.svg");
   }
 }
 
@@ -108,7 +108,7 @@
 
 .LandingSection6 {
   @include mq(xl) {
-    background-image: url(/images/landing-section-6-image.png);
+    background-image: url("/images/landing-section-6-image.png");
     background-position: right;
     background-repeat: no-repeat;
     background-size: contain;

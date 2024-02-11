@@ -4,6 +4,7 @@ const { checkSchema, validationResult } = require("express-validator");
 const {
   addKehuSchema,
   sendKehuSchema,
+  sendGroupKehuSchema,
   updateReceivedKehuSchema,
 } = require("../../utils/ValidationSchemas");
 const KehuService = require("../../services/KehuService");
@@ -12,7 +13,7 @@ const logger = require("../../logger");
 router.get("/", async (req, res) => {
   try {
     const kehus = await KehuService.getKehus(req.user.id, req.t);
-    const sent_kehus = await KehuService.getSentKehus(req.user.id);
+    const sent_kehus = await KehuService.getSentKehus(req.user.id, req.t);
     res.json({ kehus, sent_kehus });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -33,25 +34,34 @@ router.post("/", checkSchema(addKehuSchema), async (req, res) => {
   }
 });
 
-router.post("/laheta", checkSchema(sendKehuSchema), async (req, res) => {
+router.post("/laheta", checkSchema(sendKehuSchema), validateAndSendKehu);
+router.post("/group", checkSchema(sendGroupKehuSchema), validateAndSendKehu);
+
+async function validateAndSendKehu(req, res) {
   try {
     const validations = validationResult(req);
     if (validations.isEmpty()) {
-      const kehu = await KehuService.sendKehu(req.body, req.t);
+      const giver_name = req.user.first_name + " " + req.user.last_name;
+      const data = { giver_id: req.user.id, giver_name, ...req.body };
+      const kehu = await KehuService.sendKehu(data, req.t);
       res.json({ kehu });
     } else {
-      res.status(422).json({ errors: validations.array() });
+      res
+        .status(422)
+        // Schema has only one error message for each parameter so we shouln't
+        // return the same message multiple times -> onlyFirstError: true
+        .json({ errors: validations.array({ onlyFirstError: true }) });
     }
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-});
+}
 
 router.get("/lisaa/:claim_id", async (req, res) => {
   try {
     const claimedKehu = await KehuService.claimKehu(
       req.user.id,
-      req.params.claim_id
+      req.params.claim_id,
     );
     const kehu = await KehuService.getKehu(req.user.id, claimedKehu.id, req.t);
     res.json({ kehu });
@@ -77,7 +87,7 @@ router.put("/:id", selectKehuSchema, async (req, res) => {
         req.user.id,
         req.params.id,
         req.body,
-        req.t
+        req.t,
       );
       res.json({ kehu });
     } else {
@@ -100,7 +110,7 @@ router.delete("/:id", async (req, res) => {
 
 router.get("/report", async (req, res) => {
   try {
-    const xlsxBuffer = await KehuService.excelReport(req.user.id, req.i18n);
+    const xlsxBuffer = await KehuService.excelReport(req.user.id, req.i18n.t);
     const fileName = req.t("excel-report.filename");
 
     res.writeHead(200, [

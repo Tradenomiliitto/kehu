@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { compose } from "redux";
 import { withTranslation } from "react-i18next";
 import { Provider, connect } from "react-redux";
-import { hot } from "react-hot-loader";
 import PropTypes from "prop-types";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
 import { createBrowserHistory } from "history";
@@ -18,10 +17,13 @@ import KehuSuccessPanel from "./components/kehuform/KehuSuccessPanel";
 import SendKehuSuccessPanel from "./components/kehuform/SendKehuSuccessPanel";
 import { getProfile } from "./redux/profile";
 import { getKehus } from "./redux/kehu";
+import { getGroups } from "./redux/group";
 import ClaimKehuPanel from "./ClaimKehuPanel";
 import KehusPanel from "./KehusPanel";
 import ProfilePanel from "./ProfilePanel";
 import ReportPanel from "./ReportPanel";
+import GroupsPanel from "./GroupsPanel";
+import GroupAdminPanel from "./GroupAdminPanel";
 import Spinner from "./components/Spinner";
 import { handlePageView } from "./util/AnalyticsUtil";
 import { supportedLanguages } from "./i18n";
@@ -40,6 +42,14 @@ export class App extends Component {
     getProfile: PropTypes.func.isRequired,
     getKehus: PropTypes.func.isRequired,
     kehuToEdit: PropTypes.object,
+    groupsLoading: PropTypes.bool.isRequired,
+    groupsLoaded: PropTypes.bool.isRequired,
+    groupsError: PropTypes.object,
+    getGroups: PropTypes.func.isRequired,
+    // i18n props coming from withTranslation()
+    t: PropTypes.func.isRequired,
+    i18n: PropTypes.object.isRequired,
+    tReady: PropTypes.bool,
   };
 
   state = {
@@ -49,14 +59,19 @@ export class App extends Component {
   };
 
   componentDidMount() {
-    this.loadProfileAndKehus();
+    this.loadProfileAndKehusAndGroups();
   }
 
   componentDidUpdate() {
-    this.loadProfileAndKehus();
+    this.loadProfileAndKehusAndGroups();
   }
 
-  loadProfileAndKehus() {
+  loadProfileAndKehusAndGroups() {
+    const { groupsLoaded, groupsLoading, groupsError } = this.props;
+    if (!groupsLoaded && !groupsLoading && !groupsError) {
+      this.props.getGroups();
+    }
+
     // Load profile and kehus only after translations are ready
     if (!this.props.tReady) return;
 
@@ -81,6 +96,7 @@ export class App extends Component {
     if (
       this.props.profileLoaded &&
       this.props.kehusLoaded &&
+      this.props.groupsLoaded &&
       this.state.loading
     ) {
       this.setState({ loading: false });
@@ -96,6 +112,16 @@ export class App extends Component {
   }
 
   defineContent() {
+    // TODO: Show proper error message and send email to web admin
+    if (!this.props.groupsLoaded && this.props.groupsError) {
+      return (
+        <>
+          Virhe yhteisöiden latauksessa:{" "}
+          {this.props.groupsError.responseJson?.message}
+        </>
+      );
+    }
+
     if (this.state.loading) {
       return <Spinner />;
     }
@@ -116,6 +142,12 @@ export class App extends Component {
             <Route exact path={`${lng}/kehut`} component={KehusPanel} />
             <Route exact path={`${lng}/profiili`} component={ProfilePanel} />
             <Route exact path={`${lng}/raportit`} component={ReportPanel} />
+            <Route exact path={`${lng}/yhteisot`} component={GroupsPanel} />
+            <Route
+              exact
+              path={`${lng}/yhteisot/admin/:groupId`}
+              component={GroupAdminPanel}
+            />
             <Route
               render={(props) =>
                 lngRedirect(this.props.i18n.language, props.location.pathname)
@@ -144,7 +176,7 @@ export class App extends Component {
         <KehuFormModal
           title={t(
             "modals.add-kehu.title-successfully-saved",
-            "Kehu tallennettu!"
+            "Kehu tallennettu!",
           )}
         >
           <KehuSuccessPanel kehu={this.props.successfullySavedKehu} />
@@ -192,25 +224,29 @@ const mapStateToProps = (state) => ({
   kehusLoaded: state.kehu.kehusLoaded,
   profileLoaded: state.profile.profileLoaded,
   kehuToEdit: state.portal.kehu,
+  groupsLoading: state.group.loading,
+  groupsLoaded: state.group.groupsLoaded,
+  groupsError: state.group.error,
 });
 
 const mapDispatchToProps = {
   getProfile,
   getKehus,
+  getGroups,
 };
 
 const AppContainer = compose(
   withTranslation(),
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(mapStateToProps, mapDispatchToProps),
 )(App);
 
-const HotApp = hot(module)(AppContainer);
-
-export default () => (
-  <Provider store={store}>
-    <HotApp />
-  </Provider>
-);
+export default function ProviderApp() {
+  return (
+    <Provider store={store}>
+      <AppContainer />
+    </Provider>
+  );
+}
 
 function lngRedirect(currentLng, pathname) {
   // Get language from path, e.g. '/fi/kehut' --> pathLng === 'fi'

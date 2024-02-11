@@ -25,6 +25,14 @@ module.exports = {
       },
     },
     {
+      files: "client/**/*.test.js",
+      globals: {
+        React: true,
+        shallow: true,
+        fetch: true,
+      },
+    },
+    {
       files: "client/**/*.js",
       parser: "@babel/eslint-parser",
       parserOptions: {
@@ -42,6 +50,9 @@ module.exports = {
         browser: true,
         jest: true,
       },
+      globals: {
+        cloudinary: true, // Cloudinary widget loaded in app.pug
+      },
       extends: [
         "plugin:import/recommended",
         "plugin:react/recommended", // General React linting
@@ -51,6 +62,14 @@ module.exports = {
       rules: {
         "react/jsx-uses-vars": "warn",
         "react/jsx-uses-react": "warn",
+        // Disable rule because named export is commonly used as default export.
+        // This is because e.g. `export default withTranslation()(FeedPanel);`
+        // is imported as FeedPanel.
+        "import/no-named-as-default": "off",
+        // Need to create alt texts and translations before this can be enabled
+        "jsx-a11y/alt-text": "off",
+        // Link tags are styled as button, needs refractoring
+        "jsx-a11y/anchor-is-valid": "off",
       },
     },
   ],

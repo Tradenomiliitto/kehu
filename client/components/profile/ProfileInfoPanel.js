@@ -5,6 +5,8 @@ import { withTranslation } from "react-i18next";
 export class ProfileInfoPanel extends Component {
   static propTypes = {
     profile: PropTypes.object.isRequired,
+    // i18n props
+    t: PropTypes.func.isRequired,
   };
 
   render() {

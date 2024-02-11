@@ -14,7 +14,7 @@ function setupPassport(passport) {
     },
     (accessToken, refreshToken, extraParams, profile, done) => {
       return done(null, profile);
-    }
+    },
   );
 
   passport.serializeUser(function (user, done) {
@@ -42,7 +42,7 @@ function setupPassport(passport) {
           });
 
           logger.info(
-            `Found ${oldProfiles.length} matching old Facebook profile(s)`
+            `Found ${oldProfiles.length} matching old Facebook profile(s)`,
           );
 
           for (const profile of oldProfiles) {
@@ -53,20 +53,20 @@ function setupPassport(passport) {
               currentUser.nickname === profile.nickname
             ) {
               const oldUser = await UserService.findUserByAuth0Id(
-                profile.user_id
+                profile.user_id,
               );
               if (oldUser) {
                 await UserService.updateAuth0Id(
                   oldUser.id,
-                  currentUser.user_id
+                  currentUser.user_id,
                 );
                 logger.info(
-                  `Profile ${oldUser.id} updated (old: ${profile.user_id}, new: ${currentUser.user_id})`
+                  `Profile ${oldUser.id} updated (old: ${profile.user_id}, new: ${currentUser.user_id})`,
                 );
                 break;
               } else {
                 logger.info(
-                  `Matching local profile for ${profile.user_id} not found`
+                  `Matching local profile for ${profile.user_id} not found`,
                 );
               }
             } else {

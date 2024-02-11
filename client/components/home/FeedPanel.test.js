@@ -4,12 +4,44 @@ import SentKehuItem from "./SentKehuItem";
 
 describe("client:components:home:FeedPanel", () => {
   let component;
+
+  const kehu = {
+    type: "received",
+    id: 1,
+    date_given: "2019-02-10",
+    giver_id: 1,
+    giver_name: "name",
+    receiver_name: "receiver name",
+    text: "text",
+    giver: {
+      picture: "/images/picture.svg",
+    },
+    situations: [],
+    tags: [],
+    is_public: false,
+  };
+
+  const sentKehu = {
+    type: "sent",
+    id: 1,
+    date_given: "2019-02-10",
+    giver_id: 1,
+    giver_name: "name",
+    receiver_name: "receiver name",
+    text: "text",
+    giver: {
+      picture: "/images/picture.svg",
+    },
+    situations: [],
+    tags: [],
+  };
+
   const items = [
-    { id: 1 },
-    { name: "name" },
-    { id: 2 },
-    { name: "other" },
-    { id: 3 },
+    { ...kehu, id: 1 },
+    { ...sentKehu },
+    { ...kehu, id: 2 },
+    { ...sentKehu },
+    { ...kehu, id: 3 },
   ];
 
   beforeEach(() => {

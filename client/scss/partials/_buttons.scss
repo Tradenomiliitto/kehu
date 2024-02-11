@@ -1,7 +1,5 @@
 .Button {
   background-color: $pink;
-  background-color: -moz-linear-gradient(45deg, $bg-pink 0%, $pink 100%);
-  background-color: -webkit-linear-gradient(45deg, $bg-pink 0%, $pink 100%);
   background-color: linear-gradient(45deg, $bg-pink 0%, $pink 100%);
   box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.1);
   filter: progid:dximagetransform.microsoft.gradient( startcolorstr='$bg-pink', endcolorstr='$pink',gradienttype=1 );
@@ -42,5 +40,17 @@
 
   &--fullWidth {
     width: 100%;
+  }
+
+  &--link {
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+
+    &:hover,
+    &:focus,
+    &:active {
+      text-decoration: underline;
+    }
   }
 }

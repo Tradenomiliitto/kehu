@@ -1,9 +1,14 @@
-import React, { Component } from "react";
+import { Component } from "react";
+import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
 
 const modalRoot = document.getElementById("portal");
 
 export default class Portal extends Component {
+  static propTypes = {
+    children: PropTypes.node.isRequired,
+  };
+
   constructor(props) {
     super(props);
     this.el = document.createElement("div");

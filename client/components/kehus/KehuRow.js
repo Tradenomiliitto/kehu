@@ -19,6 +19,8 @@ export class KehuRow extends Component {
     openEditKehuModal: PropTypes.func.isRequired,
     isKehuSelection: PropTypes.bool,
     unselectedKehus: PropTypes.object,
+    // i18n props
+    t: PropTypes.func.isRequired,
   };
 
   constructor() {
@@ -98,7 +100,7 @@ export class KehuRow extends Component {
           key={i}
           src={`/images/icon-star-${icon}.png`}
           className="KehusTable-star"
-        />
+        />,
       );
     }
 
@@ -155,5 +157,5 @@ export default compose(
     removeKehu,
     openEditKehuModal,
     selectKehu,
-  })
+  }),
 )(KehuRow);

@@ -15,11 +15,12 @@ import { FinnishDate } from "./util/TextUtil";
 import KehuFormModal from "./components/KehuFormModal";
 import SelectKehusPanel from "./components/report/SelectKehusPanel";
 import { countReportStatistics } from "./redux/report";
+import { kehuPropType } from "./util/PropTypes";
 
 export class ReportPanel extends Component {
   static propTypes = {
-    kehus: PropTypes.array.isRequired,
-    sentKehus: PropTypes.array,
+    kehus: PropTypes.arrayOf(kehuPropType).isRequired,
+    sentKehus: PropTypes.arrayOf(kehuPropType).isRequired,
     report: PropTypes.shape({
       numberOfKehus: PropTypes.number.isRequired,
       numberOfSentKehus: PropTypes.number.isRequired,
@@ -33,6 +34,8 @@ export class ReportPanel extends Component {
       first_name: PropTypes.string.isRequired,
       last_name: PropTypes.string.isRequired,
     }).isRequired,
+    // i18n props
+    t: PropTypes.func.isRequired,
   };
 
   constructor() {
@@ -68,7 +71,7 @@ export class ReportPanel extends Component {
                   <KehuCountPanel
                     text={t(
                       "report.number-of-kehus-title",
-                      "Sinulla on yhteensä"
+                      "Sinulla on yhteensä",
                     )}
                     number={report.numberOfKehus}
                   />
@@ -77,7 +80,7 @@ export class ReportPanel extends Component {
                   <ListItemsPanel
                     title={t(
                       "report.situations-title",
-                      "Kehutuimmat tilanteet"
+                      "Kehutuimmat tilanteet",
                     )}
                     items={report.situations.slice(0, 5)}
                   />
@@ -86,7 +89,7 @@ export class ReportPanel extends Component {
                   <KehuCountPanel
                     text={t(
                       "report.number-of-sent-kehus-title",
-                      "Olet lähettänyt"
+                      "Olet lähettänyt",
                     )}
                     number={report.numberOfSentKehus}
                   />
@@ -206,13 +209,13 @@ export class ReportPanel extends Component {
                           <div className="ReportTitle">
                             {t(
                               "report.load-report.report-title",
-                              "Osaamisprofiili"
+                              "Osaamisprofiili",
                             )}
                           </div>
                           <div className="ReportSubtitle">
                             {t(
                               "report.load-report.report-subtitle",
-                              "Tämä raportti on koottu yksilöiden antamien palautteiden, Kehujen, perusteella, ja kuvaa omistajansa osaamista ja vahvuuksia"
+                              "Tämä raportti on koottu yksilöiden antamien palautteiden, Kehujen, perusteella, ja kuvaa omistajansa osaamista ja vahvuuksia",
                             )}
                           </div>
                         </div>
@@ -244,7 +247,7 @@ export class ReportPanel extends Component {
                         <ListItemsPanel
                           title={t(
                             "report.situations-title",
-                            "Kehutuimmat tilanteet"
+                            "Kehutuimmat tilanteet",
                           )}
                           items={report.situations.slice(0, 5)}
                         />
@@ -256,7 +259,7 @@ export class ReportPanel extends Component {
                         <KehuCountPanel
                           text={t(
                             "report.number-of-kehus-title",
-                            "Sinulla on yhteensä"
+                            "Sinulla on yhteensä",
                           )}
                           number={report.numberOfKehus}
                         />
@@ -269,7 +272,7 @@ export class ReportPanel extends Component {
                         <KehuCountPanel
                           text={t(
                             "report.load-report.number-of-sent-kehus-title",
-                            "Olet lähettänyt Kehuja"
+                            "Olet lähettänyt Kehuja",
                           )}
                           number={report.numberOfSentKehus}
                         />
@@ -330,10 +333,10 @@ export class ReportPanel extends Component {
     } = this.props;
 
     const selectedKehus = kehus.filter(
-      (kehu) => !unselectedKehus.has(String(kehu.id))
+      (kehu) => !unselectedKehus.has(String(kehu.id)),
     );
     const selectedSentKehus = sentKehus.filter(
-      (kehu) => !unselectedSentKehus.has(String(kehu.id))
+      (kehu) => !unselectedSentKehus.has(String(kehu.id)),
     );
     return countReportStatistics(selectedKehus, selectedSentKehus);
   }
@@ -348,5 +351,5 @@ const mapStateToProps = (state) => ({
 
 export default compose(
   withTranslation(),
-  connect(mapStateToProps)
+  connect(mapStateToProps),
 )(ReportPanel);

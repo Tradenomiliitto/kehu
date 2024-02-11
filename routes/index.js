@@ -2,14 +2,23 @@ const blog = require("./blog");
 const user = require("./user");
 const userApi = require("./api/user");
 const kehuApi = require("./api/kehu");
+const groupApi = require("./api/group");
 const { ensureAuthenticated } = require("../utils/Middlewares");
 
 // Allowed routes which are redirected to React app
-const CLIENT_ROUTES = ["/kehut", "/kehut/lisaa/*", "/profiili", "/raportit"];
+const CLIENT_ROUTES = [
+  "/kehut",
+  "/kehut/lisaa/*",
+  "/profiili",
+  "/raportit",
+  "/yhteisot",
+  "/yhteisot/admin/*",
+];
 
 module.exports = function setupRoutes(app) {
   app.use("/api/v1/profiili", ensureAuthenticated, userApi);
   app.use("/api/v1/kehut", ensureAuthenticated, kehuApi);
+  app.use("/api/v1/yhteisot", ensureAuthenticated, groupApi);
 
   app.get("/kehut/lisaa/*", (req, res, next) => {
     if (req.user) {

@@ -4,15 +4,25 @@ describe("client:App", () => {
   let component;
   let getProfileStub;
   let getKehusStub;
+  let getGroupsStub;
 
   beforeEach(() => {
     getProfileStub = jest.fn();
     getKehusStub = jest.fn();
+    getGroupsStub = jest.fn();
   });
 
   describe("by default", () => {
     beforeEach(() => {
-      component = shallow(<App {...createProps(false, false)} />);
+      component = shallow(
+        <App
+          {...createProps({
+            profileLoaded: false,
+            kehusLoaded: false,
+            groupsLoaded: false,
+          })}
+        />,
+      );
     });
 
     it("fetches profile", () => {
@@ -21,6 +31,10 @@ describe("client:App", () => {
 
     it("fetches kehus", () => {
       expect(getKehusStub).toHaveBeenCalled();
+    });
+
+    it("fetches groups", () => {
+      expect(getGroupsStub).toHaveBeenCalled();
     });
 
     it("renders Spinner", () => {
@@ -31,7 +45,15 @@ describe("client:App", () => {
 
   describe("when profile is loaded", () => {
     beforeEach(() => {
-      component = shallow(<App {...createProps(true, false)} />);
+      component = shallow(
+        <App
+          {...createProps({
+            profileLoaded: true,
+            kehusLoaded: false,
+            groupsLoaded: false,
+          })}
+        />,
+      );
     });
 
     it("does not fetch profile", () => {
@@ -42,6 +64,10 @@ describe("client:App", () => {
       expect(getKehusStub).toHaveBeenCalled();
     });
 
+    it("fetches groups", () => {
+      expect(getGroupsStub).toHaveBeenCalled();
+    });
+
     it("renders Spinner", () => {
       expect(component.find("Spinner").exists()).toBeTruthy();
       expect(component.find(".App").exists()).toBeFalsy();
@@ -50,7 +76,15 @@ describe("client:App", () => {
 
   describe("when kehus are loaded", () => {
     beforeEach(() => {
-      component = shallow(<App {...createProps(false, true)} />);
+      component = shallow(
+        <App
+          {...createProps({
+            profileLoaded: false,
+            kehusLoaded: true,
+            groupsLoaded: false,
+          })}
+        />,
+      );
     });
 
     it("fetches profile", () => {
@@ -61,15 +95,58 @@ describe("client:App", () => {
       expect(getKehusStub).not.toHaveBeenCalled();
     });
 
+    it("fetches groups", () => {
+      expect(getGroupsStub).toHaveBeenCalled();
+    });
+
     it("renders Spinner", () => {
       expect(component.find("Spinner").exists()).toBeTruthy();
       expect(component.find(".App").exists()).toBeFalsy();
     });
   });
 
-  describe("when profile and kehus are loaded", () => {
+  describe("when groups are loaded", () => {
     beforeEach(() => {
-      component = shallow(<App {...createProps(true, true)} />);
+      component = shallow(
+        <App
+          {...createProps({
+            profileLoaded: false,
+            kehusLoaded: false,
+            groupsLoaded: true,
+          })}
+        />,
+      );
+    });
+
+    it("fetches profile", () => {
+      expect(getProfileStub).toHaveBeenCalled();
+    });
+
+    it("fetches kehus", () => {
+      expect(getKehusStub).toHaveBeenCalled();
+    });
+
+    it("does not fetch groups", () => {
+      expect(getGroupsStub).not.toHaveBeenCalled();
+    });
+
+    it("renders Spinner", () => {
+      expect(component.find("Spinner").exists()).toBeTruthy();
+      expect(component.find(".App").exists()).toBeFalsy();
+    });
+  });
+
+  describe("when profile, kehus and groups are loaded", () => {
+    beforeEach(() => {
+      component = shallow(
+        <App
+          {...createProps({
+            profileLoaded: true,
+            kehusLoaded: true,
+            groupsLoaded: true,
+          })}
+        />,
+      );
     });
 
     it("does not fetch profile", () => {
@@ -78,6 +155,10 @@ describe("client:App", () => {
 
     it("does not fetch kehus", () => {
       expect(getKehusStub).not.toHaveBeenCalled();
+    });
+
+    it("does not fetch groups", () => {
+      expect(getGroupsStub).not.toHaveBeenCalled();
     });
 
     it("renders App", () => {
@@ -110,14 +191,17 @@ describe("client:App", () => {
     });
   });
 
-  function createProps(profileLoaded, kehusLoaded) {
+  function createProps({ profileLoaded, kehusLoaded, groupsLoaded }) {
     return {
       isAddKehuPortalVisible: false,
       isSendKehuPortalVisible: false,
       profileLoaded,
       kehusLoaded,
+      groupsLoading: false,
+      groupsLoaded,
       getProfile: getProfileStub,
       getKehus: getKehusStub,
+      getGroups: getGroupsStub,
       tReady: true,
       t: (key) => key,
       i18n: {},

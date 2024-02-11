@@ -21,13 +21,13 @@ export default function WelcomePanel() {
           <p className="Welcome-text">
             {t(
               "home.welcome.text-2",
-              "Aloita Kehun käyttö lisäämällä uusi kehu - se voi olla jotain mitä sinulle on sanottu, kirjoitettu, annettu formaalina palautteena, tai minkä vain itse koet kehuksi."
+              "Aloita Kehun käyttö lisäämällä uusi kehu - se voi olla jotain mitä sinulle on sanottu, kirjoitettu, annettu formaalina palautteena, tai minkä vain itse koet kehuksi.",
             )}
           </p>
           <p className="Welcome-text">
             {t(
               "home.welcome.text-3",
-              "Aloita tiesi oman osaamisesi tilastoguruksi heti ja tallenna ensimmäinen kehusi!"
+              "Aloita tiesi oman osaamisesi tilastoguruksi heti ja tallenna ensimmäinen kehusi!",
             )}
           </p>
         </div>
@@ -37,7 +37,7 @@ export default function WelcomePanel() {
           <p className="Welcome-text">
             {t(
               "home.welcome.text-1",
-              "Huomioithan, että voit jatkossa liittää Kehu-tiliisi myös muita käytössäsi olevia sähköpostiosoitteita. Kehujen lähettämisen yhteydessä toimitetaan vastaanottajalle aina myös sähköposti, josta löytyy ohjaus osoitteen liittämiseen omaan tiliin. Tämä tarkoittaa myös, että sinun ei tarvitse tietää, mitä sähköpostiosoitetta esimerkiksi kollegasi käyttää Kehu-tilillään, sillä kaikki vastaanotetut kehut on mahdollista liittää samalle tilille."
+              "Huomioithan, että voit jatkossa liittää Kehu-tiliisi myös muita käytössäsi olevia sähköpostiosoitteita. Kehujen lähettämisen yhteydessä toimitetaan vastaanottajalle aina myös sähköposti, josta löytyy ohjaus osoitteen liittämiseen omaan tiliin. Tämä tarkoittaa myös, että sinun ei tarvitse tietää, mitä sähköpostiosoitetta esimerkiksi kollegasi käyttää Kehu-tilillään, sillä kaikki vastaanotetut kehut on mahdollista liittää samalle tilille.",
             )}
           </p>
         </div>

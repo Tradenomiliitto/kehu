@@ -6,6 +6,9 @@ export default class ContactsToggle extends Component {
   static propTypes = {
     contacts: PropTypes.array.isRequired,
     handleSelect: PropTypes.func.isRequired,
+    // Props to optionally open and close contacts outside of toggle
+    toggleContacts: PropTypes.func,
+    isOpen: PropTypes.bool,
   };
 
   constructor() {
@@ -18,7 +21,8 @@ export default class ContactsToggle extends Component {
   render() {
     const classNames = cn({
       Contacts: true,
-      "Contacts--open": this.state.open,
+      // Props will override the component internal state
+      "Contacts--open": this.props.isOpen ?? this.state.open,
     });
 
     return (
@@ -34,13 +38,13 @@ export default class ContactsToggle extends Component {
   renderContacts() {
     return this.props.contacts.map((contact, i) => (
       <li key={i}>
-        <a
-          href="#"
-          className="Contacts-link"
+        <button
           onClick={this.handleClick(contact.name, contact.email)}
+          className="Contacts-link"
         >
-          {contact.name} - {contact.email}
-        </a>
+          {contact.name}
+          {contact.email && ` - ${contact.email}`}
+        </button>
       </li>
     ));
   }
@@ -60,5 +64,7 @@ export default class ContactsToggle extends Component {
 
   toggleState = () => {
     this.setState((state) => ({ open: !state.open }));
+    // Update external state if it is used
+    if (this.props.toggleContacts) this.props.toggleContacts();
   };
 }

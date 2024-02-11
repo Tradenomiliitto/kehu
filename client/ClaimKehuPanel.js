@@ -18,6 +18,8 @@ export class ClaimKehuPanel extends Component {
         claim_id: PropTypes.string.isRequired,
       }).isRequired,
     }).isRequired,
+    // i18n props
+    t: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
@@ -43,7 +45,7 @@ export class ClaimKehuPanel extends Component {
         <ErrorPanel
           message={t(
             "modals.claim-kehu.error",
-            "Kehun lisäämisessä tapahtui virhe tai se on jo lisätty. Yritä myöhemmin uudelleen."
+            "Kehun lisäämisessä tapahtui virhe tai se on jo lisätty. Yritä myöhemmin uudelleen.",
           )}
         />
       );
@@ -79,5 +81,5 @@ const mapActionsToProps = {
 
 export default compose(
   withTranslation(),
-  connect(mapStateToProps, mapActionsToProps)
+  connect(mapStateToProps, mapActionsToProps),
 )(ClaimKehuPanel);

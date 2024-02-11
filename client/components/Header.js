@@ -16,6 +16,9 @@ export class Header extends Component {
     profile: PropTypes.object.isRequired,
     toggleAddKehuFormModal: PropTypes.func.isRequired,
     toggleSendKehuFormModal: PropTypes.func.isRequired,
+    // i18n props
+    t: PropTypes.func.isRequired,
+    i18n: PropTypes.object.isRequired,
   };
 
   constructor() {
@@ -30,13 +33,13 @@ export class Header extends Component {
       "Header-menu": true,
       "Header-menu--open": this.state.menuOpen,
     });
-    const { t, i18n, profile } = this.props;
+    const { t, profile } = this.props;
 
     return (
       <header className="Header">
         <div className="container">
           <div className="row">
-            <div className="col col-md-12 col-lg-2">
+            <div className="col col-md-12 col-lg-2 Header-logoCol">
               <Link to="/" onClick={this.closeMenu}>
                 <img src="/images/kehu-logo.png" className="Header-logo" />
               </Link>
@@ -44,7 +47,7 @@ export class Header extends Component {
                 <img src="/images/icon-menu.png" />
               </button>
             </div>
-            <div className="col col-md-12 col-lg-10">
+            <div className="col col-md-12 col-lg-10 Header-menuCol">
               <div className="Header-menuContainer">
                 <menu className={menuClass}>
                   <li className="Header-menuItem">
@@ -58,30 +61,28 @@ export class Header extends Component {
                     </a>
                   </li>
                   {this.renderMenuItem(
-                    "/raportit",
-                    t("header.report-link", "Raportit")
+                    "/yhteisot",
+                    t("header.groups-link", "Yhteisöni"),
                   )}
-                  {i18n.language === "fi" && (
-                    <li className="Header-menuItem">
-                      <a href={`/${i18n.language}/blogi`}>
-                        {t("header.blog-link", "Blogi")}
-                      </a>
-                    </li>
+                  {this.renderMenuItem(
+                    "/raportit",
+                    t("header.report-link", "Raportit"),
                   )}
                   {this.renderMenuItem(
                     "/kehut",
-                    t("header.kehut-link", "Kehut")
+                    t("header.kehut-link", "Kehut"),
                   )}
                   <LanguageSelector
                     device="mobile"
                     closeMenu={this.toggleMenu}
                   />
-                  <li className="Header-menuItem">
+                  <li className="Header-menuItem profile-nw">
                     <Link to="/profiili" onClick={this.closeMenu}>
                       {profile && profile.first_name}
                       <img
-                        src={profile && profile.picture}
+                        src={profile?.picture}
                         className="Header-profileImage"
+                        referrerPolicy="no-referrer"
                       />
                     </Link>
                   </li>
@@ -135,5 +136,5 @@ const mapStateToProps = (state) => ({
 
 export default compose(
   withTranslation(),
-  connect(mapStateToProps, { toggleAddKehuFormModal, toggleSendKehuFormModal })
+  connect(mapStateToProps, { toggleAddKehuFormModal, toggleSendKehuFormModal }),
 )(Header);

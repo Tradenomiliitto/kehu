@@ -11,6 +11,12 @@ import {
 import WelcomePanel from "./components/home/WelcomePanel";
 import FeedPanel from "./components/home/FeedPanel";
 import { capitalizeText } from "./util/TextUtil";
+import {
+  feedKehuPropType,
+  invitationWithGroupPropType,
+  tagPropType,
+} from "./util/PropTypes";
+import ActiveGroup from "./components/groups/ActiveGroup";
 
 export class HomePanel extends Component {
   static propTypes = {
@@ -20,11 +26,15 @@ export class HomePanel extends Component {
       }).isRequired,
       replace: PropTypes.func.isRequired,
     }).isRequired,
-    feedItems: PropTypes.array.isRequired,
+    feedItems: PropTypes.arrayOf(feedKehuPropType).isRequired,
     hasKehus: PropTypes.bool.isRequired,
-    tags: PropTypes.array.isRequired,
+    tags: PropTypes.arrayOf(tagPropType).isRequired,
+    invitations: PropTypes.arrayOf(invitationWithGroupPropType).isRequired,
     toggleAddKehuFormModal: PropTypes.func.isRequired,
     toggleSendKehuFormModal: PropTypes.func.isRequired,
+    // i18n props
+    t: PropTypes.func.isRequired,
+    i18n: PropTypes.object.isRequired,
   };
 
   componentDidMount() {
@@ -38,7 +48,7 @@ export class HomePanel extends Component {
         <div className="container">
           <div className="row">
             <div className="col col-xs-12 col-md-9">
-              <div className="row HomeButtons">
+              <div className="row HomeButtons Home-Card">
                 <div className="col col-xs-12 col-md-8">
                   <h1 className="HomeButtons-title">
                     {t("home.add-new-kehu-title", "Lisää uusi Kehu")}
@@ -46,7 +56,7 @@ export class HomePanel extends Component {
                   <p className="HomeButtons-text">
                     {t(
                       "home.add-new-kehu-text",
-                      "Älä pidä kehujasi vakan alla! Tallenna Kehu-pankkiisi kuulemasi kehu tai piristä kollegaa lähettämällä Kehu!"
+                      "Älä pidä kehujasi vakan alla! Tallenna Kehu-pankkiisi kuulemasi kehu tai piristä kollegaa lähettämällä Kehu!",
                     )}
                   </p>
                 </div>
@@ -60,13 +70,21 @@ export class HomePanel extends Component {
                     </button>
                     <button
                       className="Button send-kehu-nw"
-                      onClick={this.props.toggleSendKehuFormModal}
+                      onClick={() => this.props.toggleSendKehuFormModal()}
                     >
                       {t("home.send-new-kehu-btn", "Lähetä Kehu")}
                     </button>
                   </div>
                 </div>
               </div>
+              {this.props.invitations.map((invitation) => (
+                <ActiveGroup
+                  key={invitation.id}
+                  group={invitation.group}
+                  invitationId={invitation.id}
+                />
+              ))}
+
               {this.renderMainContent()}
             </div>
             <div className="col col-xs-12 col-md-3">
@@ -119,13 +137,13 @@ export class HomePanel extends Component {
           <p className="SidebarElement-text tags-text-js">
             {t(
               "home.sidebar.skills-no-skills-text1",
-              "Jokaiseen kehuun liitetään siihen liittyvät taidot tageina. Kun kehudataa alkaa kertyä, voit tarkastella mm. kehutuimpia taitojasi Kehu-raportistasi."
+              "Jokaiseen kehuun liitetään siihen liittyvät taidot tageina. Kun kehudataa alkaa kertyä, voit tarkastella mm. kehutuimpia taitojasi Kehu-raportistasi.",
             )}
           </p>
           <p className="SidebarElement-text">
             {t(
               "home.sidebar.skills-no-skills-text2",
-              "Kehu ei ole sosiaalinen media, eli raporttisi ja kaikki tallentamasi kehut näkyvät vain sinulle."
+              "Kehu ei ole sosiaalinen media, eli raporttisi ja kaikki tallentamasi kehut näkyvät vain sinulle.",
             )}
           </p>
         </Fragment>
@@ -134,19 +152,19 @@ export class HomePanel extends Component {
   }
 
   renderBlogElement() {
-    const { t, i18n } = this.props;
+    const { t } = this.props;
     return (
       <div className="SidebarElement">
         <h3 className="SidebarElement-title">
           {t(
             "home.sidebar.strengths-title",
-            "Omien vahvuuksien tunteminen on ehdoton valttikortti uralla"
+            "Omien vahvuuksien tunteminen on ehdoton valttikortti uralla",
           )}
         </h3>
         <p className="SidebarElement-text">
           {t(
             "home.sidebar.strengths-text",
-            "Lähetä kehu kollegalle, ystävälle, esimiehelle, asiakkaalle tai kenelle tahansa. Tarvitset vastaanottajan sähköpostiosoitteen."
+            "Lähetä kehu kollegalle, ystävälle, esimiehelle, asiakkaalle tai kenelle tahansa. Tarvitset vastaanottajan sähköpostiosoitteen.",
           )}
         </p>
         <img
@@ -154,11 +172,6 @@ export class HomePanel extends Component {
           alt="Blogi"
           className="SidebarElement-image"
         />
-        {i18n.language === "fi" && (
-          <a href="/blogi" className="Button Button--fullWidth">
-            {t("home.sidebar.strengths-read-more-btn", "Lue lisää blogista!")}
-          </a>
-        )}
       </div>
     );
   }
@@ -181,6 +194,7 @@ const mapStateToProps = (state) => ({
   feedItems: state.profile.feedItems,
   hasKehus: state.report.numberOfKehus > 0,
   tags: state.report.tags.slice(0, 5),
+  invitations: state.profile.invitations,
 });
 
 const mapActionsToProps = {
@@ -190,5 +204,5 @@ const mapActionsToProps = {
 
 export default compose(
   withTranslation(),
-  connect(mapStateToProps, mapActionsToProps)
+  connect(mapStateToProps, mapActionsToProps),
 )(HomePanel);

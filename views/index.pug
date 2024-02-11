@@ -38,16 +38,4 @@ block content
         .col.col-xs-12.col-md-6.LandingSectionContent.LandingSectionContent--padding
           button.Button.Button--rounded.Button--wide.register-js #{t('frontpage.create-account-btn')}
 
-  if language === 'fi'
-    .LandingSection6
-      .container
-        .row
-          .col.col-xs-12.col-xl-6.LandingSectionContent.LandingSectionContent--padding
-            .row
-              .col.col-xs-12.col-md-6.col-xl-12.LandingSectionContent
-                h2.Heading--secondary #{t('frontpage.title5-benefits', 'Mitä hyötyä kehujen keräämisestä on?')}
-                p #{t('frontpage.title5-benefits-text', 'Blogista löydät vinkkejä mm. oman osaamisen tunnistamiseen, työhakuun, palautteen antamiseen, kehityskeskusteluihin sekä työhakemuksen ja CV:n laadintaan.')}
-              .col.col-xs-12.col-md-6.col-xl-12.LandingSectionContent.BlogLinkSection
-                a(href=`/${language}/blogi/`).Button.Button--inverse.Button--wide #{t('frontpage.readblog-btn', 'Lue blogia')}
-
   include _footer

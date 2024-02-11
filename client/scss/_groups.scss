@@ -1,0 +1,516 @@
+.Groups {
+  margin: 2rem 0;
+}
+
+.GroupsPanel-title {
+  color: $secondary;
+  font-size: 2rem;
+  font-weight: normal;
+  margin-bottom: 1.5rem;
+}
+
+.GroupsPanel-dashedBox {
+  border: 2px dashed $medium-grey;
+  margin-bottom: 40px;
+  margin-top: 40px;
+  padding: 40px 30px;
+  text-align: center;
+}
+
+.GroupsPanel-emptyText {
+  margin: auto;
+  max-width: 700px;
+}
+
+.GroupsPanel-addGroupButton {
+  margin: 1rem;
+}
+
+.InviteMembersField-disclaimer {
+  font-size: x-small;
+}
+
+.InviteMembersField-input {
+  @extend .WordCloudField;
+}
+
+.InviteMembersField-addedEmail {
+  @extend .WordCloudValue;
+
+  display: block;
+  width: fit-content;
+}
+
+.InviteMembersField-removeEmailBtn {
+  @extend .WordCloudValue-removeButton;
+}
+
+.GroupsPanel-ErrorMessage {
+  color: red;
+  font-size: smaller;
+  margin-top: 0.2rem;
+}
+
+.GroupPicture {
+  background-color: transparent;
+  border: 0;
+  border-radius: 50%;
+  display: inline-block;
+  height: 100px;
+  margin-right: 15px;
+  margin-top: 15px;
+  overflow: hidden;
+  padding: 0;
+  width: 100px;
+
+  &.Selected {
+    outline: $dark-pink solid 3.5px;
+    outline-offset: 2px;
+  }
+}
+
+.GroupPicture-image {
+  height: 100%;
+  width: 100%;
+}
+
+.AddGroupPicture {
+  @extend .GroupPicture;
+
+  background-color: $white-bg;
+  border-style: dashed;
+  border-width: 2px;
+  font-size: x-small;
+  text-align: center;
+
+  .PlusSign {
+    font-size: large;
+  }
+}
+
+.GroupPicturePreview {
+  @extend .GroupPicture;
+
+  display: block;
+  margin: 20px auto 10px;
+}
+
+.CreateGroupPreview-GroupName {
+  font-size: larger;
+  font-weight: 500;
+  text-align: center;
+}
+
+.CreateGroupPreview-GroupDescription {
+  font-size: smaller;
+  font-weight: 500;
+  text-align: center;
+}
+
+.CreateGroupPreview-InviteMembers {
+  background-color: $light-grey;
+  margin: 20px -1rem;
+  padding: 10px 2rem;
+
+  .InviteMembersTitle {
+    color: $green;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  .MemberEmail {
+    font-weight: 300;
+  }
+}
+
+.CreateGroupPreview-PreviewInfo {
+  font-size: small;
+  margin: 0 1rem;
+}
+
+.MyGroups-Card {
+  @extend .Card;
+
+  position: relative;
+  margin: 0 0 1rem;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.MyGroups-title {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.MyGroups-OneGroup {
+  place-content: center flex-start;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  height: 80px;
+}
+
+.MyGroups-GroupPicture {
+  @extend .GroupPicture;
+
+  height: 50px;
+  margin-top: 0;
+  min-width: 50px;
+  width: 50px;
+}
+
+.MyGroups-GroupDetails {
+  display: inline-block;
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.MyGroups-GroupName {
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.MyGroups-InviteNotAccepted {
+  font-size: 10px;
+  color: $dark-pink;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.MyGroups-GroupInfo {
+  font-size: 10px;
+  font-weight: bold;
+}
+
+@include mq($from: md, $until: lg) {
+  .MyGroups-LatestKehu {
+    display: none;
+  }
+}
+
+.MyGroups-addNewGroupContainer {
+  margin-bottom: -0.5rem;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+.MyGroups-GroupButton {
+  background: none;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  outline: inherit;
+  padding: 0 0.5rem;
+  text-align: inherit;
+  width: 100%;
+
+  &.MyGroups-ActiveGroup {
+    background-color: $lighter-pink;
+  }
+}
+
+.MyGroups-SelectGroupArrow {
+  margin-right: 0.5rem;
+  transform: rotate(-90deg);
+}
+
+.MyGroups-SeparatorLine {
+  margin: 0 0.5rem;
+}
+
+.MyGroups-OneMember {
+  @extend .MyGroups-OneGroup;
+
+  height: auto;
+  padding: 0.5rem;
+
+  &.DarkRow {
+    background-color: $light-grey;
+  }
+}
+
+.MyGroups-MemberPicture {
+  @extend .GroupPicture;
+
+  height: 25px;
+  margin-top: 0;
+  min-width: 25px;
+  width: 25px;
+}
+
+.MemberPicture-image {
+  @extend .GroupPicture-image;
+
+  vertical-align: baseline;
+}
+
+.MyGroups-MemberDetails {
+  @extend .MyGroups-GroupDetails;
+}
+
+.MyGroups-MemberName {
+  @extend .MyGroups-GroupName;
+
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.MyGroups-MemberInfo {
+  @extend .MyGroups-GroupInfo;
+
+  font-weight: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.MyGroups-MemberAdmin {
+  color: $medium-dark-grey;
+  flex-shrink: 0;
+  font-size: 12px;
+}
+
+.MyGroups-GroupMemberOverview {
+  font-size: 12px;
+  font-weight: bold;
+  margin: 0 1rem 1rem;
+}
+
+.MyGroups-InvitationBanner {
+  background-color: $primary;
+  color: $white;
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 0.1rem;
+  position: absolute;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  top: 0.3rem;
+}
+
+.ActiveGroup-PictureContainer {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+
+  @include mq($until: sm) {
+    margin-bottom: 1rem;
+  }
+}
+
+.ActiveGroup-Picture {
+  @extend .GroupPicture;
+
+  height: auto;
+  margin: 0;
+  max-width: 165px;
+  width: auto;
+}
+
+.ActiveGroup-Description {
+  margin-bottom: 0.5rem;
+}
+
+.ActiveGroup-Details {
+  @include mq(sm) {
+    padding-left: 0;
+  }
+}
+
+.ActiveGroup-MemberPicture {
+  @extend .MyGroups-MemberPicture;
+
+  margin-right: -3px;
+}
+
+.ActiveGroup-Info {
+  font-size: 12px;
+  font-weight: bold;
+  overflow-wrap: anywhere;
+  padding-right: 0;
+}
+
+.ActiveGroup-InvitationNotAccepted {
+  color: $dark-pink;
+}
+
+.ActiveGroup-Buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+
+  .Button--inverse {
+    border-radius: 4px;
+    margin-right: 1rem;
+  }
+}
+
+.ErrorCard {
+  @extend .Card;
+
+  margin: 1rem;
+  text-align: center;
+}
+
+.GroupAdmin-Card {
+  @extend .Card;
+
+  margin: 0 0 1rem;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 2rem;
+}
+
+.GroupAdmin-SmallHeader {
+  color: $secondary;
+  font-size: small;
+  font-weight: 500;
+}
+
+.GroupAdmin-PictureContainer {
+  align-items: flex-start;
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+
+  @include mq($until: sm) {
+    margin-bottom: 1rem;
+  }
+}
+
+.GroupAdmin-ChangePicture {
+  @extend .GroupAdmin-SmallHeader;
+
+  display: block;
+  margin-top: 0.75rem;
+  width: 100%;
+}
+
+.GroupAdmin-GroupMemberOverview {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.GroupAdmin-GroupNameInput {
+  border: 0;
+  border-bottom: 1px solid #989898;
+  border-radius: 0;
+  font-size: 2rem;
+  height: auto;
+  padding: 0;
+}
+
+.GroupAdmin-GroupDescriptionInput {
+  @extend .GroupAdmin-GroupNameInput;
+
+  font-size: 1rem;
+  overflow: hidden;
+  resize: none;
+}
+
+.GroupAdmin-MemberDetailsHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2.5rem;
+}
+
+.GroupAdmin-SetAdmin {
+  flex-shrink: 0;
+  font-size: small;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  min-width: 8rem;
+  text-align: right;
+
+  @include mq($until: md) {
+    margin-left: 0;
+    padding-left: 0;
+  }
+}
+
+.GroupAdmin-Remove {
+  color: $primary;
+  flex-shrink: 0;
+  font-size: small;
+  padding-left: 0;
+  min-width: 8rem;
+  text-align: right;
+}
+
+.GroupAdmin-CancelInvitation {
+  color: $primary;
+  flex-shrink: 0;
+  font-size: small;
+  padding-left: 0;
+  min-width: 18rem;
+  text-align: right;
+}
+
+.GroupAdmin-OneMember {
+  @include mq($until: md) {
+    flex-wrap: wrap;
+  }
+}
+
+// Move button to new line on small screens
+.GroupAdmin-MemberListBreak {
+  @include mq($until: md) {
+    flex-basis: 100%;
+    height: 0;
+  }
+}
+
+.GroupAdmin-Separator {
+  color: $dark-grey;
+  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+}
+
+.GroupAdmin-Buttons {
+  column-gap: 1rem;
+  display: flex;
+  justify-content: flex-end;
+
+  button,
+  a {
+    border-radius: 4px;
+    display: inline-block;
+    margin-top: 2rem;
+  }
+}
+
+.GroupAdmin-ContentContainer {
+  max-width: 600px;
+}
+
+.GroupAdmin-AddMemberButtons {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  button,
+  a {
+    border-radius: 4px;
+    display: inline-block;
+    margin-top: 1rem;
+  }
+}
+
+.GroupAdmin-InviteMembers {
+  min-height: 300px;
+}
+
+.GroupAdmin-TextSpacing {
+  margin-bottom: 0.5rem;
+}
+
+.GroupAdmin-User {
+  font-weight: 500;
+}

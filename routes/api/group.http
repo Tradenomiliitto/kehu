@@ -1,0 +1,39 @@
+# Requests to test Group API endpoints. Requests can be sent easily using
+# [Rest Client VS Code extension](https://marketplace.visualstudio.com/items?itemName=humao.rest-client)
+# Note: Cookie header doesn't work unless
+# `"rest-client.rememberCookiesForSubsequentRequests": false` is set
+
+# Host variable
+@host = http://localhost:3000
+
+# Authentication and CSRF variables
+# connect.sid from cookie
+@authToken = s%3AZtFQB_BaL0plxU_mWNqDpbbLv1m0QBVf.BB%2FNaThX7%2BkcB28unYh4P1vhaimUXO%2FYbb7nliMRHEU
+# _csrf from cookie
+@csrfCookie= hrPwGYUOAC3b3hRQlodkz6LJ
+# CSRF from page meta tag
+@csrfToken = cLuVhlza-JjSUG0MQOE9riUg96cTutNR__ds
+
+# Header variables
+@Cookie = Cookie: connect.sid={{authToken}}; _csrf={{csrfCookie}};
+@CSRF-Token = CSRF-Token: {{csrfToken}}
+
+
+GET {{host}}/api/v1/yhteisot HTTP/1.1
+{{Cookie}}
+Accept: application/json
+###
+
+POST {{host}}/api/v1/yhteisot HTTP/1.1
+{{Cookie}}
+{{CSRF-Token}}
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name": "The Group",
+    "description": "Great group",
+    "picture": "https://res.cloudinary.com/hdrk5fx5w/image/upload/v1638771488/folder/picture.jpg",
+    "cloudinaryPublicId": "folder/picture",
+    "members": []
+}

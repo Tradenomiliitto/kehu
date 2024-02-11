@@ -1,12 +1,9 @@
 .Spinner {
   align-items: center;
-  bottom: 0;
+  inset: 0;
   display: inline-block;
   display: flex;
   justify-content: center;
-  left: 0;
   min-height: 80vh;
   position: absolute;
-  right: 0;
-  top: 0;
 }
