@@ -58,12 +58,14 @@ export function getGroups() {
   };
 }
 
-export function createGroup(data) {
+// `cb` callback function is used to close modal when creating a group
+export function createGroup(data, cb) {
   return async (dispatch) => {
     try {
       dispatch({ type: CREATE_GROUP });
       const group = await post("/yhteisot", data);
       dispatch({ type: CREATE_GROUP_SUCCESS, payload: group });
+      if (typeof cb === "function") cb();
     } catch (e) {
       dispatch({ type: CREATE_GROUP_ERROR, payload: e });
     }
