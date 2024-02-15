@@ -21,7 +21,11 @@ export function getText(url) {
       "content-type": "text",
     },
     credentials: "same-origin",
-  }).then((res) => res.text());
+  }).then((res) => {
+    // Redirect to home page if unauthorized
+    if (res.status === 401) window.location.href = "/";
+    return res.text();
+  });
 }
 
 export function del(url) {
@@ -72,14 +76,14 @@ function kehuFetch(endpoint, opts = { headers: {} }) {
 }
 
 function checkResponseStatus(response) {
-  if (response.status >= 200 && response.status < 400) {
-    return response;
-  } else {
-    return response.json().then((res) => {
-      const error = new Error(response.statusText);
-      error.response = response;
-      error.responseJson = res;
-      throw error;
-    });
-  }
+  if (response.status >= 200 && response.status < 400) return response;
+  // Redirect to home page if unauthorized
+  if (response.status === 401) window.location.href = "/";
+
+  return response.json().then((res) => {
+    const error = new Error(response.statusText);
+    error.response = response;
+    error.responseJson = res;
+    throw error;
+  });
 }
