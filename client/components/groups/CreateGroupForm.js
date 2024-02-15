@@ -202,8 +202,7 @@ export class CreateGroupForm extends Component {
     if (this.state.groupPicture.selectedPicture === USER_PICTURE)
       formData.cloudinaryPublicId = this.state.groupPicture.cloudinaryPublicId;
 
-    this.props.createGroup(formData);
-    this.closeForm();
+    this.props.createGroup(formData, this.closeForm);
   };
 
   validateInput() {
