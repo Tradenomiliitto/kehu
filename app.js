@@ -84,7 +84,14 @@ initializeI18n(app);
 app.use(csrfProtection);
 
 // Initialize redis client
-const redisClient = redis.createClient({ url: process.env.REDIS_URL });
+const redisUrl = process.env.REDIS_URL;
+const redisClient = redis.createClient({
+  url: redisUrl,
+  socket: {
+    tls: redisUrl.match(/rediss:/) != null,
+    rejectUnauthorized: false,
+  },
+});
 redisClient.on("error", (error) => {
   logger.error(`Redis client error`, error);
 });
