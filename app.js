@@ -88,7 +88,7 @@ const redisUrl = process.env.REDIS_URL;
 const redisClient = redis.createClient({
   url: redisUrl,
   socket: {
-    tls: redisUrl.match(/rediss:/) != null,
+    tls: redisUrl?.match(/rediss:/) != null,
     rejectUnauthorized: false,
   },
 });
