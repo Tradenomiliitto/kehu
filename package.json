@@ -109,6 +109,7 @@
     "lint-staged": "15.2.2",
     "mockdate": "3.0.5",
     "nightwatch": "3.4.0",
+    "nodemon": "3.1.10",
     "password-generator": "2.3.2",
     "postcss-scss": "4.0.9",
     "prettier": "3.2.5",
