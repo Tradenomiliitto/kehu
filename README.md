@@ -91,7 +91,7 @@ $ npx knex migrate:latest
 $ npx knex seed:run
 
 # Option 2: Restore database dump
-$ pg_restore --verbose --clean --no-acl --no-owner -h localhost -U YOUR_USERNAME -d DATABASE_NAME latest.dump
+$ pg_restore --verbose --no-acl --no-owner -h localhost -U YOUR_USERNAME -d DATABASE_NAME latest.dump
 ```
 
 Run [nodemon](https://nodemon.io) server for Express backend and Webpack for frontend in watch mode:
@@ -157,10 +157,10 @@ Export local database using Postgres custom compressed format
 $ pg_dump --host=localhost --username=YOUR_USERNAME --format=custom DATABASE_NAME > kehudb_`date +%Y%m%d`.dump
 ```
 
-### Import backup
+### Import backup to empty database
 
 ```bash
-$ pg_restore --verbose --clean --no-acl --no-owner -h localhost -U YOUR_USERNAME -d DATABASE_NAME latest.dump
+$ pg_restore --verbose --no-acl --no-owner -h localhost -U YOUR_USERNAME -d DATABASE_NAME latest.dump
 ```
 
 ## Database models
