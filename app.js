@@ -98,6 +98,12 @@ redisClient.on("reconnecting", () => logger.info("[redis] reconnecting…"));
 
 redisClient.connect().catch((err) => logger.error(err));
 
+// Heartbeat to prevent idle closed connections
+const HEARTBEAT_MS = 60000;
+setInterval(() => {
+  redisClient.ping().catch(() => {});
+}, HEARTBEAT_MS);
+
 // Initialize redis store
 const redisStore = new RedisStore({ client: redisClient });
 
