@@ -92,9 +92,9 @@ const redisClient = redis.createClient({
     rejectUnauthorized: false,
   },
 });
-redisClient.on("error", (error) => {
-  logger.error(`Redis client error`, error);
-});
+redisClient.on("error", (err) => logger.error("[redis] error:", err));
+redisClient.on("end", () => logger.warn("[redis] connection ended"));
+redisClient.on("reconnecting", () => logger.info("[redis] reconnecting…"));
 
 redisClient.connect().catch((err) => logger.error(err));
 
