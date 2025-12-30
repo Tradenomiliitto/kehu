@@ -90,7 +90,7 @@
     "babel-jest": "27.5.1",
     "babel-loader": "8.4.1",
     "babel-plugin-i18next-extract": "0.10.0",
-    "chromedriver": "120.0.2",
+    "chromedriver": "140.0.4",
     "css-loader": "6.11.0",
     "dotenv-webpack": "7.1.1",
     "enzyme": "3.11.0",
