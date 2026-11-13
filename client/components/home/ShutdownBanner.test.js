@@ -1,5 +1,5 @@
 import { ShutdownBanner } from "./ShutdownBanner";
-import { LangLink } from "../../util/LangLink";
+import ReportPdfDownload from "../report/ReportPdfDownload";
 
 describe("client:components:home:ShutdownBanner", () => {
   let component;
@@ -28,7 +28,24 @@ describe("client:components:home:ShutdownBanner", () => {
     );
   });
 
-  it("links to the PDF report preview", () => {
-    expect(component.find(LangLink).prop("to")).toEqual("/raportit?pdf");
+  it("does not render the PDF report by default", () => {
+    expect(component.find(ReportPdfDownload).exists()).toBeFalsy();
+  });
+
+  describe("when the PDF button is clicked", () => {
+    beforeEach(() => {
+      component.find("button").simulate("click");
+    });
+
+    it("downloads the PDF report", () => {
+      expect(component.find(ReportPdfDownload).exists()).toBeTruthy();
+      expect(component.find("button").prop("disabled")).toBe(true);
+    });
+
+    it("enables the button again when the download is done", () => {
+      component.find(ReportPdfDownload).prop("onDone")();
+      expect(component.find(ReportPdfDownload).exists()).toBeFalsy();
+      expect(component.find("button").prop("disabled")).toBe(false);
+    });
   });
 });

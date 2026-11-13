@@ -49,6 +49,12 @@ $element-height: 362px;
   margin: 1rem;
 }
 
+.PrintableReport-offscreen {
+  left: -10000px;
+  position: fixed;
+  top: 0;
+}
+
 .PrintableReport {
   background: $white;
   height: 297mm;

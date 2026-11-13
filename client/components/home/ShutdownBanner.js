@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { withTranslation } from "react-i18next";
-import { LangLink as Link } from "../../util/LangLink";
+import ReportPdfDownload from "../report/ReportPdfDownload";
 import { SHUTDOWN_BLOG_SLUG } from "../../../utils/Shutdown";
 
 export function ShutdownBanner({ t, i18n }) {
+  const [isDownloadingPdf, setIsDownloadingPdf] = useState(false);
   return (
     <div className="ShutdownBanner shutdown-banner-nw">
       <div className="container">
@@ -36,14 +37,21 @@ export function ShutdownBanner({ t, i18n }) {
               "Lataa kehut Excel-tiedostona",
             )}
           </a>
-          <Link className="ShutdownBanner-link" to="/raportit?pdf">
+          <button
+            className="ShutdownBanner-link"
+            disabled={isDownloadingPdf}
+            onClick={() => setIsDownloadingPdf(true)}
+          >
             {t(
               "home.shutdown-banner.pdf-link",
               "Lataa raportti PDF-tiedostona",
             )}
-          </Link>
+          </button>
         </div>
       </div>
+      {isDownloadingPdf && (
+        <ReportPdfDownload onDone={() => setIsDownloadingPdf(false)} />
+      )}
     </div>
   );
 }

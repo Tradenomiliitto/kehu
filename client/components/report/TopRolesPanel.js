@@ -6,14 +6,19 @@ import cn from "classnames";
 export class TopRolesPanel extends Component {
   static propTypes = {
     roles: PropTypes.array.isRequired,
+    animated: PropTypes.bool,
     // i18n props
     t: PropTypes.func.isRequired,
+  };
+
+  static defaultProps = {
+    animated: true,
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      animate: false,
+      animate: !props.animated,
     };
     this.MAX_COUNT = this.calculateMaxHeight(this.props.roles);
   }
@@ -30,6 +35,7 @@ export class TopRolesPanel extends Component {
   }
 
   componentDidMount() {
+    if (!this.props.animated) return;
     setTimeout(() => {
       this.setState({ animate: true });
     }, 0);

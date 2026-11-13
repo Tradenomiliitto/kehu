@@ -7,8 +7,13 @@ export class KehuCountPanel extends Component {
   static propTypes = {
     number: PropTypes.number.isRequired,
     text: PropTypes.string.isRequired,
+    animated: PropTypes.bool,
     // i18n props
     t: PropTypes.func.isRequired,
+  };
+
+  static defaultProps = {
+    animated: true,
   };
 
   render() {
@@ -16,11 +21,15 @@ export class KehuCountPanel extends Component {
     return (
       <div className="ReportElement KehuCount">
         <p className="KehuCount-text">{this.props.text}</p>
-        <CountUp
-          end={this.props.number}
-          duration={2}
-          className="KehuCount-count"
-        />
+        {this.props.animated ? (
+          <CountUp
+            end={this.props.number}
+            duration={2}
+            className="KehuCount-count"
+          />
+        ) : (
+          <span className="KehuCount-count">{this.props.number}</span>
+        )}
         <p className="KehuCount-bottom">
           {t("report.kehu", { count: this.props.number, defaultValue: "KEHU" })}
         </p>

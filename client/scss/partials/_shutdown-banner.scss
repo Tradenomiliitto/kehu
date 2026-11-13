@@ -35,4 +35,9 @@
   &:focus {
     color: $light-secondary;
   }
+
+  &:disabled {
+    cursor: progress;
+    opacity: 0.6;
+  }
 }

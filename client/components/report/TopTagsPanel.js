@@ -6,6 +6,11 @@ export default class TopTagsPanel extends Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
     tags: PropTypes.array.isRequired,
+    animated: PropTypes.bool,
+  };
+
+  static defaultProps = {
+    animated: true,
   };
 
   componentDidMount() {

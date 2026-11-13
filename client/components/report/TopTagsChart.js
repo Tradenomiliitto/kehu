@@ -12,6 +12,7 @@ export default class TopTagsChart {
       data,
       type: "pie",
       options: {
+        ...(props.animated ? {} : { animation: { duration: 0 } }),
         color: COLORS,
         legend: {
           display: false,
