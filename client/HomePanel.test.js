@@ -1,6 +1,7 @@
 import { HomePanel } from "./HomePanel";
 import FeedPanel from "./components/home/FeedPanel";
 import WelcomePanel from "./components/home/WelcomePanel";
+import ShutdownBanner from "./components/home/ShutdownBanner";
 
 describe("client:Homepanel", () => {
   let component;
@@ -27,6 +28,10 @@ describe("client:Homepanel", () => {
 
     it("does not replace location", () => {
       expect(replaceStub).not.toHaveBeenCalled();
+    });
+
+    it("renders shutdown banner", () => {
+      expect(component.find(ShutdownBanner).exists()).toBeTruthy();
     });
 
     it("renders Welcome element", () => {

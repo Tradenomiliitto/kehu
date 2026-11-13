@@ -36,6 +36,13 @@ export class ReportPanel extends Component {
     }).isRequired,
     // i18n props
     t: PropTypes.func.isRequired,
+    // react-router-dom
+    history: PropTypes.shape({
+      replace: PropTypes.func.isRequired,
+    }).isRequired,
+    location: PropTypes.shape({
+      search: PropTypes.string,
+    }).isRequired,
   };
 
   constructor() {
@@ -44,6 +51,13 @@ export class ReportPanel extends Component {
       preview: false,
       isSelectKehusModalVisible: false,
     };
+  }
+
+  componentDidMount() {
+    if (this.props.location.search === "?pdf") {
+      this.openPreview();
+      this.props.history.replace({ search: null });
+    }
   }
 
   render() {

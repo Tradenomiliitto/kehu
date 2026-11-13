@@ -120,6 +120,13 @@
       "title": "Viimeaikainen toiminta"
     },
     "send-new-kehu-btn": "Lähetä Kehu",
+    "shutdown-banner": {
+      "blog-link": "Lue lisää blogista",
+      "excel-link": "Lataa kehut Excel-tiedostona",
+      "pdf-link": "Lataa raportti PDF-tiedostona",
+      "text": "Lataa kehusi talteen ennen palvelun lopettamista.",
+      "title": "Kehu-palvelu lopetetaan 31.12.2026"
+    },
     "sidebar": {
       "skills-no-skills-text1": "Jokaiseen kehuun liitetään siihen liittyvät taidot tageina. Kun kehudataa alkaa kertyä, voit tarkastella mm. kehutuimpia taitojasi Kehu-raportistasi.",
       "skills-no-skills-text2": "Kehu ei ole sosiaalinen media, eli raporttisi ja kaikki tallentamasi kehut näkyvät vain sinulle.",

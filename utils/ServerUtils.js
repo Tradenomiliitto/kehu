@@ -1,5 +1,6 @@
 const moment = require("moment");
 moment.locale("fi");
+const { SHUTDOWN_BLOG_SLUG } = require("./Shutdown");
 
 function isAuth0User(user) {
   const prefix = user.auth0_id.split("|")[0];
@@ -11,6 +12,7 @@ function setupLocals(app, getVersionedPath) {
   app.locals.moment = moment;
   app.locals.getVersionedPath = getVersionedPath;
   app.locals.currentYear = new Date().getFullYear();
+  app.locals.shutdownBlogSlug = SHUTDOWN_BLOG_SLUG;
 }
 
 function addKehuType(kehus, userId) {

@@ -101,6 +101,12 @@
   "frontpage": {
     "create-account-btn": "Create account",
     "readblog-btn": "Read blog",
+    "shutdown-banner": {
+      "blog-link": "Read more in the blog",
+      "login-link": "Log in",
+      "text": "Log in and download your Kehus in Excel or PDF format before the service closes.",
+      "title": "The Kehu service will be shut down on 31 December 2026"
+    },
     "title": "Learn to recognise your strengths.",
     "title-text": "KEHU (Finnish for praise) is a completely free service available to everyone, in which you can send, receive and collect positive feedback. Listing positive feedback allows you to get a concrete idea of your skills and strengths. Furthermore, the service offers an easy way for you to spread good vibes. The service is personal, and the content you add is not visible to others.",
     "title2-data": "Positive feedback is valuable data",

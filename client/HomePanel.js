@@ -9,6 +9,7 @@ import {
   toggleSendKehuFormModal,
 } from "./redux/portal";
 import WelcomePanel from "./components/home/WelcomePanel";
+import ShutdownBanner from "./components/home/ShutdownBanner";
 import FeedPanel from "./components/home/FeedPanel";
 import { capitalizeText } from "./util/TextUtil";
 import {
@@ -44,56 +45,59 @@ export class HomePanel extends Component {
   render() {
     const { t } = this.props;
     return (
-      <div className="Home home-nw">
-        <div className="container">
-          <div className="row">
-            <div className="col col-xs-12 col-md-9">
-              <div className="row HomeButtons Home-Card">
-                <div className="col col-xs-12 col-md-8">
-                  <h1 className="HomeButtons-title">
-                    {t("home.add-new-kehu-title", "Lisää uusi Kehu")}
-                  </h1>
-                  <p className="HomeButtons-text">
-                    {t(
-                      "home.add-new-kehu-text",
-                      "Älä pidä kehujasi vakan alla! Tallenna Kehu-pankkiisi kuulemasi kehu tai piristä kollegaa lähettämällä Kehu!",
-                    )}
-                  </p>
-                </div>
-                <div className="col col-xs-12 col-md-4">
-                  <div className="HomeButtons-buttons">
-                    <button
-                      className="Button add-kehu-nw"
-                      onClick={this.props.toggleAddKehuFormModal}
-                    >
-                      {t("home.add-new-kehu-btn", "Lisää Kehu")}
-                    </button>
-                    <button
-                      className="Button send-kehu-nw"
-                      onClick={() => this.props.toggleSendKehuFormModal()}
-                    >
-                      {t("home.send-new-kehu-btn", "Lähetä Kehu")}
-                    </button>
+      <Fragment>
+        <ShutdownBanner />
+        <div className="Home home-nw">
+          <div className="container">
+            <div className="row">
+              <div className="col col-xs-12 col-md-9">
+                <div className="row HomeButtons Home-Card">
+                  <div className="col col-xs-12 col-md-8">
+                    <h1 className="HomeButtons-title">
+                      {t("home.add-new-kehu-title", "Lisää uusi Kehu")}
+                    </h1>
+                    <p className="HomeButtons-text">
+                      {t(
+                        "home.add-new-kehu-text",
+                        "Älä pidä kehujasi vakan alla! Tallenna Kehu-pankkiisi kuulemasi kehu tai piristä kollegaa lähettämällä Kehu!",
+                      )}
+                    </p>
+                  </div>
+                  <div className="col col-xs-12 col-md-4">
+                    <div className="HomeButtons-buttons">
+                      <button
+                        className="Button add-kehu-nw"
+                        onClick={this.props.toggleAddKehuFormModal}
+                      >
+                        {t("home.add-new-kehu-btn", "Lisää Kehu")}
+                      </button>
+                      <button
+                        className="Button send-kehu-nw"
+                        onClick={() => this.props.toggleSendKehuFormModal()}
+                      >
+                        {t("home.send-new-kehu-btn", "Lähetä Kehu")}
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-              {this.props.invitations.map((invitation) => (
-                <ActiveGroup
-                  key={invitation.id}
-                  group={invitation.group}
-                  invitationId={invitation.id}
-                />
-              ))}
+                {this.props.invitations.map((invitation) => (
+                  <ActiveGroup
+                    key={invitation.id}
+                    group={invitation.group}
+                    invitationId={invitation.id}
+                  />
+                ))}
 
-              {this.renderMainContent()}
-            </div>
-            <div className="col col-xs-12 col-md-3">
-              {this.renderTagsElement()}
-              {this.renderBlogElement()}
+                {this.renderMainContent()}
+              </div>
+              <div className="col col-xs-12 col-md-3">
+                {this.renderTagsElement()}
+                {this.renderBlogElement()}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </Fragment>
     );
   }
 

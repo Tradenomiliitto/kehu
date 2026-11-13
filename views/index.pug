@@ -2,6 +2,13 @@ extends layout
 
 block content
   include _header
+  .ShutdownBanner.shutdown-banner-nw
+    .container
+      h2.ShutdownBanner-title #{t('frontpage.shutdown-banner.title', 'Kehu-palvelu lopetetaan 31.12.2026')}
+      p.ShutdownBanner-text #{t('frontpage.shutdown-banner.text', 'Kirjaudu sisään ja lataa kehusi talteen Excel- tai PDF-muodossa ennen palvelun lopettamista.')}
+      .ShutdownBanner-links
+        a.ShutdownBanner-link(href=`/${language}/blogi/${shutdownBlogSlug}`) #{t('frontpage.shutdown-banner.blog-link', 'Lue lisää blogista')}
+        button.ShutdownBanner-link.login-js #{t('frontpage.shutdown-banner.login-link', 'Kirjaudu sisään')}
   .HeroSection
     .HeroSectionContent
       .container

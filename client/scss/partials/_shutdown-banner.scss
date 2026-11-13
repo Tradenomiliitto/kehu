@@ -1,0 +1,38 @@
+.ShutdownBanner {
+  background-color: $lighter-pink;
+  border-bottom: 2px solid $dark-pink;
+  padding: 1rem 0;
+}
+
+.ShutdownBanner-title {
+  color: $secondary;
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin: 0 0 0.5rem;
+}
+
+.ShutdownBanner-text {
+  margin: 0 0 0.5rem;
+}
+
+.ShutdownBanner-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 2rem;
+}
+
+.ShutdownBanner-link {
+  background: none;
+  border: 0;
+  color: $secondary;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 500;
+  padding: 0;
+  text-decoration: underline;
+
+  &:hover,
+  &:focus {
+    color: $light-secondary;
+  }
+}

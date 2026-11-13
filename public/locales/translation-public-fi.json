@@ -101,6 +101,12 @@
   "frontpage": {
     "create-account-btn": "Luo tili",
     "readblog-btn": "Lue blogia",
+    "shutdown-banner": {
+      "blog-link": "Lue lisää blogista",
+      "login-link": "Kirjaudu sisään",
+      "text": "Kirjaudu sisään ja lataa kehusi talteen Excel- tai PDF-muodossa ennen palvelun lopettamista.",
+      "title": "Kehu-palvelu lopetetaan 31.12.2026"
+    },
     "title": "Opi tuntemaan vahvuutesi.",
     "title-text": "Kehu on täysin ilmainen ja kaikille avoin palvelu, jonka avulla voit lähettää, vastaanottaa ja kirjata hyvää palautetta. Kehujen listaamisen kautta saat konkreettisen käsityksen omista taidoistasi ja vahvuuksistasi. Lisäksi voit levittää hyvää fiilistä ympärillesi helpolla tavalla. Palvelu on henkilökohtainen eikä lisäämäsi sisältö näy muille.",
     "title2-data": "Kerää positiivinen palaute hyödynnettäväksi dataksi",

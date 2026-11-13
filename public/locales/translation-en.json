@@ -120,6 +120,13 @@
       "title": "Recent actions"
     },
     "send-new-kehu-btn": "Send Kehu",
+    "shutdown-banner": {
+      "blog-link": "Read more in the blog",
+      "excel-link": "Download your Kehus as an Excel file",
+      "pdf-link": "Download your report as a PDF file",
+      "text": "Download your Kehus before the service closes.",
+      "title": "The Kehu service will be shut down on 31 December 2026"
+    },
     "sidebar": {
       "skills-no-skills-text1": "Skills are being added as tags to every Kehu associated with the skill. As data starts to pile up, you may view for example your most complimented skills in the Kehu report.",
       "skills-no-skills-text2": "Kehu is not a social media. Your Kehu report and the Kehus you have added are visible only to you.",
